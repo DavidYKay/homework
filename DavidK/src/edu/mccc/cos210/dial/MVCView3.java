@@ -9,6 +9,11 @@ public class MVCView3 extends JPanel implements MVCModelListener {
     //Init to -1 because we advance one lap right off the bat
     private static final int NUM_HOURS = 10;
     private static final int MINUTES_PER_HOUR = 100;
+    
+    private static final Color CLOCK_COLOR  = new Color(0x00, 0x99, 0x99);
+    private static final Color HAND_COLOR = new Color(0xff, 0xaa, 0x00);
+    //private static final Color TICK_COLOR  = new Color(0x00, 0xcc, 0x00);
+    private static final Color TICK_COLOR  = HAND_COLOR;
 	public MVCView3(MVCModel model) {
 		Debug.println("MVCView3()");
 		this.model = model;
@@ -35,9 +40,9 @@ public class MVCView3 extends JPanel implements MVCModelListener {
             getHeight() * .8
         );
 
-        g2d.setPaint(Color.WHITE);
+        g2d.setPaint(CLOCK_COLOR);
         g2d.fill(ring);
-        g2d.setPaint(Color.WHITE);
+        g2d.setPaint(Color.BLACK);
         g2d.draw(ring);
 
         //Transform graphics
@@ -57,9 +62,9 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         double degrees = tickToDegrees(value);
         Shape s = getRotateTransform(degrees).createTransformedShape(minuteLine);
 
-        g2d.setPaint(Color.BLUE);
+        g2d.setPaint(HAND_COLOR);
         g2d.fill(s);
-        g2d.setPaint(Color.BLUE);
+        g2d.setPaint(Color.BLACK);
         g2d.draw(s);
         
         //Shows how many 'laps', 'hours', or trips around the clock
@@ -75,9 +80,9 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         degrees = laps * 36;
         s = getRotateTransform(degrees).createTransformedShape(hourLine);
 
-        g2d.setPaint(Color.BLUE);
+        g2d.setPaint(HAND_COLOR);
         g2d.fill(s);
-        g2d.setPaint(Color.BLUE);
+        g2d.setPaint(Color.BLACK);
         g2d.draw(s);
 
         //Tick marks
@@ -115,9 +120,9 @@ public class MVCView3 extends JPanel implements MVCModelListener {
                 );
             }
             tick = at.createTransformedShape(tick);
-            g2d.setPaint(Color.BLACK);
+            g2d.setPaint(TICK_COLOR);
             g2d.fill(tick);
-            g2d.setPaint(Color.BLACK);
+            g2d.setPaint(TICK_COLOR);
             g2d.draw(tick);
         }
     }
