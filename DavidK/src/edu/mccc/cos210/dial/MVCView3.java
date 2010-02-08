@@ -15,6 +15,10 @@ public class MVCView3 extends JPanel implements MVCModelListener {
 		setLayout(null);
 		setBackground(Color.RED);
 	}
+	public Dimension getPreferredSize() {
+		Debug.println("MVCView3.getPreferredSize()");
+		return new Dimension(400, 400);
+	}
 	public void paintComponent(Graphics g) {
 		Debug.println("MVCView3.paintComponent()");
 		super.paintComponent(g);
@@ -40,7 +44,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         g2d.transform(getGraphicsTransform());
 
         //Shows the current value of the model, 
-        //analogous to the progressbar or counter
+        //same value as the progressbar or counter
         Path2D minuteLine = new Path2D.Double();
         minuteLine.moveTo(0,0);
         minuteLine.lineTo(-10,0);
@@ -49,6 +53,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         minuteLine.lineTo(0,0);
         minuteLine.closePath();
         
+        //Shows how many 'laps', 'hours', or trips around the clock
         Path2D hourLine = new Path2D.Double();
         hourLine.moveTo(0,0);
         hourLine.lineTo(-10,0);
@@ -57,7 +62,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         hourLine.lineTo(0,0);
         hourLine.closePath();
         //Draw/Transform minuteLine
-        double degrees = value * 3.6;
+        double degrees = tickToDegrees(value);
         Shape s = getRotateTransform(degrees).createTransformedShape(minuteLine);
 
         g2d.setPaint(Color.BLUE);
@@ -80,10 +85,15 @@ public class MVCView3 extends JPanel implements MVCModelListener {
 	}
     private void drawTicks(Graphics2D g2d) {
         for (int i = 1; i <= MINUTES_PER_HOUR; i++) {
-            AffineTransform at = getRotateTransform(i * 360 / MINUTES_PER_HOUR);
+            //AffineTransform at = getRotateTransform(i * 360 / MINUTES_PER_HOUR);
+            AffineTransform at = getRotateTransform(tickToDegrees(i));
             Shape tick;
             //Draw a tick at the current position on the clock face
             if (i % NUM_HOURS == 0) {
+                g2d.setStroke(
+                        new BasicStroke(5)
+                );
+
                 //HOUR tick
                 tick = new Line2D.Double(
                     0,
@@ -92,6 +102,9 @@ public class MVCView3 extends JPanel implements MVCModelListener {
                     getClockRadius() - 10
                 );
             } else {
+                g2d.setStroke(
+                        new BasicStroke(1)
+                );
                 //MINUTE tick
                 tick = new Line2D.Double(
                     0,
@@ -107,10 +120,6 @@ public class MVCView3 extends JPanel implements MVCModelListener {
             g2d.draw(tick);
         }
     }
-	public Dimension getPreferredSize() {
-		Debug.println("MVCView3.getPreferredSize()");
-		return new Dimension(400, 400);
-	}
 	public void stateChanged(MVCModelEvent e) {
 		Debug.println("MVCView3.stateChanged()");
 		repaint();
@@ -156,5 +165,8 @@ public class MVCView3 extends JPanel implements MVCModelListener {
     }
     private Dimension getCenter() {
         return new Dimension(getWidth() / 2, getHeight() / 2);
+    }
+    private double tickToDegrees(int tick) {
+        return (tick * 360 / MINUTES_PER_HOUR);
     }
 }
