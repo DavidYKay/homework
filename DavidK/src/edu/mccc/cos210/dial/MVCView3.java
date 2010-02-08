@@ -31,29 +31,31 @@ public class MVCView3 extends JPanel implements MVCModelListener {
             getHeight() * .8
         );
 
-        //g2d.setPaint(Color.BLACK);
-        //g2d.fill(ring);
-        //g2d.setPaint(Color.BLACK);
-        //g2d.draw(ring);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(ring);
+        g2d.setPaint(Color.WHITE);
+        g2d.draw(ring);
 
         //Transform graphics
         g2d.transform(getGraphicsTransform());
 
         //Shows the current value of the model, 
         //analogous to the progressbar or counter
-        Line2D minuteLine = new Line2D.Double(
-            0,
-            0,
-            0,
-            -getClockRadius()
-        );
-        //Advances by one tick after each lap around the clock
-        Line2D hourLine = new Line2D.Double(
-            0,
-            0,
-            0,
-            -getHourHandLength()
-        );
+        Path2D minuteLine = new Path2D.Double();
+        minuteLine.moveTo(0,0);
+        minuteLine.lineTo(-10,0);
+        minuteLine.lineTo(0, -getClockRadius());
+        minuteLine.lineTo(10,0);
+        minuteLine.lineTo(0,0);
+        minuteLine.closePath();
+        
+        Path2D hourLine = new Path2D.Double();
+        hourLine.moveTo(0,0);
+        hourLine.lineTo(-10,0);
+        hourLine.lineTo(0, -getHourHandLength());
+        hourLine.lineTo(10,0);
+        hourLine.lineTo(0,0);
+        hourLine.closePath();
         //Draw/Transform minuteLine
         double degrees = value * 3.6;
         Shape s = getRotateTransform(degrees).createTransformedShape(minuteLine);
@@ -131,7 +133,6 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         AffineTransform at = new AffineTransform();
         final double trans_x = getCenter().getWidth();
         final double trans_y = getCenter().getHeight();
-        //final double scale_x = 1.0;
         final double scale_x = (double) ((double) getWidth() / getHeight());
         final double scale_y = 1.0;
         try {
