@@ -7,7 +7,6 @@ import com.cbthinkx.util.Debug;
 public class MVCView3 extends JPanel implements MVCModelListener {
 	private MVCModel model;
     //Init to -1 because we advance one lap right off the bat
-    private int laps = -2;
     private static final int NUM_HOURS = 10;
     private static final int MINUTES_PER_HOUR = 100;
 	public MVCView3(MVCModel model) {
@@ -22,6 +21,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 
 		int value = this.model.getValue();
+		int laps  = this.model.getHours();
         if (value == 0) {
             laps++;
         }
@@ -56,7 +56,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
             0,
             0,
             0,
-            -(getCenter().getHeight() * .6)
+            -getHourHandLength()
         );
         //Draw/Transform minuteLine
         double degrees = value * 3.6;
