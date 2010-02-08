@@ -22,7 +22,6 @@ public class MVCView3 extends JPanel implements MVCModelListener {
 
 		int value = this.model.getValue();
 		int laps  = this.model.getHours();
-        System.out.println("laps are is: " + laps);
 
         //Draw the ring
         Ellipse2D.Double ring = new Ellipse2D.Double(
@@ -40,7 +39,6 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         //Transform graphics
         g2d.transform(getGraphicsTransform());
 
-        //System.out.println("Value is: " + value);
         //Shows the current value of the model, 
         //analogous to the progressbar or counter
         Line2D minuteLine = new Line2D.Double(
@@ -74,18 +72,37 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         g2d.setPaint(Color.BLUE);
         g2d.draw(s);
 
-        //drawNumbers(g2d);
+        drawTicks(g2d);
 
 		g2d.dispose();
 	}
-    private void drawNumbers(Graphics2D g2d) {
-        for (int i = 0; i < NUM_HOURS; i++) {
-            //Draw a number at the current position on the clock face
-        }
-    }
     private void drawTicks(Graphics2D g2d) {
-        for (int i = 0; i < MINUTES_PER_HOUR; i++) {
+        for (int i = 1; i <= MINUTES_PER_HOUR; i++) {
+            AffineTransform at = getRotateTransform(i * 360 / MINUTES_PER_HOUR);
+            Shape tick;
             //Draw a tick at the current position on the clock face
+            if (i % NUM_HOURS == 0) {
+                //HOUR tick
+                tick = new Line2D.Double(
+                    0,
+                    getClockRadius(),
+                    0,
+                    getClockRadius() - 10
+                );
+            } else {
+                //MINUTE tick
+                tick = new Line2D.Double(
+                    0,
+                    getClockRadius(),
+                    0,
+                    getClockRadius() -5
+                );
+            }
+            tick = at.createTransformedShape(tick);
+            g2d.setPaint(Color.MAGENTA);
+            g2d.fill(tick);
+            g2d.setPaint(Color.MAGENTA);
+            g2d.draw(tick);
         }
     }
 	public Dimension getPreferredSize() {
