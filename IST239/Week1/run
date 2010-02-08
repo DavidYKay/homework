@@ -1,0 +1,4 @@
+#!/bin/bash
+
+javac CheckerBoard.java
+java CheckerBoard
