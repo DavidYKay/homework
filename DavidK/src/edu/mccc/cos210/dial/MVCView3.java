@@ -31,10 +31,10 @@ public class MVCView3 extends JPanel implements MVCModelListener {
             getHeight() * .8
         );
 
-        g2d.setPaint(Color.BLACK);
-        g2d.fill(ring);
-        g2d.setPaint(Color.BLACK);
-        g2d.draw(ring);
+        //g2d.setPaint(Color.BLACK);
+        //g2d.fill(ring);
+        //g2d.setPaint(Color.BLACK);
+        //g2d.draw(ring);
 
         //Transform graphics
         g2d.transform(getGraphicsTransform());
@@ -99,9 +99,9 @@ public class MVCView3 extends JPanel implements MVCModelListener {
                 );
             }
             tick = at.createTransformedShape(tick);
-            g2d.setPaint(Color.MAGENTA);
+            g2d.setPaint(Color.BLACK);
             g2d.fill(tick);
-            g2d.setPaint(Color.MAGENTA);
+            g2d.setPaint(Color.BLACK);
             g2d.draw(tick);
         }
     }
@@ -113,7 +113,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
 		Debug.println("MVCView3.stateChanged()");
 		repaint();
 	}
-    public AffineTransform getRotateTransform(double degrees) {
+    private AffineTransform getRotateTransform(double degrees) {
         Debug.println("MVCView3.getShapeTransform()");
         AffineTransform at = new AffineTransform();
         try {
@@ -126,12 +126,13 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         }
         return at;
     }
-    public AffineTransform getGraphicsTransform() {
+    private AffineTransform getGraphicsTransform() {
         Debug.println("MVCView3.getGraphicsTransform()");
         AffineTransform at = new AffineTransform();
         final double trans_x = getCenter().getWidth();
         final double trans_y = getCenter().getHeight();
-        final double scale_x = 1.0;
+        //final double scale_x = 1.0;
+        final double scale_x = (double) ((double) getWidth() / getHeight());
         final double scale_y = 1.0;
         try {
             at.translate(
