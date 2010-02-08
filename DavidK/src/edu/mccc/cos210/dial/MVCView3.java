@@ -7,7 +7,7 @@ import com.cbthinkx.util.Debug;
 public class MVCView3 extends JPanel implements MVCModelListener {
 	private MVCModel model;
     //Init to -1 because we advance one lap right off the bat
-    private int laps = -1;
+    private int laps = -2;
 	public MVCView3(MVCModel model) {
 		Debug.println("MVCView3()");
 		this.model = model;
@@ -31,14 +31,14 @@ public class MVCView3 extends JPanel implements MVCModelListener {
             0,
             0,
             0,
-            -200
+            -(getCenter().getHeight())
         );
         //Advances by one tick after each lap around the clock
         Line2D lapLine = new Line2D.Double(
             0,
             0,
             0,
-            -120
+            -(getCenter().getHeight() * .6)
         );
         //Transform graphics
         g2d.transform(getGraphicsTransform());
@@ -86,14 +86,14 @@ public class MVCView3 extends JPanel implements MVCModelListener {
     public AffineTransform getGraphicsTransform() {
         Debug.println("MVCView3.getGraphicsTransform()");
         AffineTransform at = new AffineTransform();
-        final double trans_x = 200;
-        final double trans_y = 200;
+        final double trans_x = getCenter().getHeight();
+        final double trans_y = getCenter().getWidth();
         final double scale_x = 1.0;
         final double scale_y = 1.0;
         try {
             at.translate(
-                trans_x,
-                trans_y
+                trans_y,
+                trans_x
             );
             at.scale(
                 scale_x,
@@ -102,5 +102,8 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         } catch (NumberFormatException ex) {
         }
         return at;
+    }
+    private Dimension getCenter() {
+        return new Dimension(getWidth() / 2, getHeight() / 2);
     }
 }

@@ -23,6 +23,7 @@ public class DialTest {
 			BorderLayout.CENTER
 		);
 		jf.pack();
+		jf.setResizable(true);
 		jf.setVisible(true);
 	}
 	public static void main(String[] sa) {
