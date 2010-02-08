@@ -22,9 +22,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
 
 		int value = this.model.getValue();
 		int laps  = this.model.getHours();
-        if (value == 0) {
-            laps++;
-        }
+        System.out.println("laps are is: " + laps);
 
         //Draw the ring
         Ellipse2D.Double ring = new Ellipse2D.Double(
@@ -42,7 +40,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         //Transform graphics
         g2d.transform(getGraphicsTransform());
 
-        System.out.println("Value is: " + value);
+        //System.out.println("Value is: " + value);
         //Shows the current value of the model, 
         //analogous to the progressbar or counter
         Line2D minuteLine = new Line2D.Double(

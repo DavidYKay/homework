@@ -3,15 +3,26 @@ import java.awt.EventQueue;
 import javax.swing.event.EventListenerList;
 import com.cbthinkx.util.Debug;
 public class MVCModel {
-	private static final int MAX = 100;
+	private static final int MINUTE_MAX = 100;
+	private static final int HOUR_MAX = 10;
+	// Current minutes
 	private int value = 0;
+	// Current hours
+	private int hours = 0;
 	public int getValue() {
 		Debug.println("MVCModel.getValue()");
 		return this.value;
 	}
+	public int getHours() {
+		Debug.println("MVCModel.getHours()");
+		return this.hours;
+	}
 	public void setValue(int n) {
 		Debug.println("MVCModel.setValue()");
-		this.value = n % MAX;
+		this.value = n % MINUTE_MAX;
+		if (n == 100) {
+			this.hours = (hours + 1) % HOUR_MAX;
+		}
 		fireMVCModelStateChanged();
 	}
 	public int getMinimum() {
@@ -20,7 +31,7 @@ public class MVCModel {
 	}
 	public int getMaximum() {
 		Debug.println("MVCModel.getMinimum()");
-		return MAX - 1;
+		return MINUTE_MAX - 1;
 	}
 	private EventListenerList listenerList = new EventListenerList();
 	public void addMVCModelListener(MVCModelListener l) {
