@@ -7,7 +7,7 @@ public class MVCController implements ActionListener {
 	public MVCController(MVCModel model) {
 		Debug.println("MVCController()");
 		this.model = model;
-		new Timer(100, this).start();
+		new Timer(333, this).start();
 	}
 	public void actionPerformed(ActionEvent e) {
 		Debug.println("MVCController.actionPerformed()");

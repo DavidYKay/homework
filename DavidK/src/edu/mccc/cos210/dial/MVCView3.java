@@ -6,13 +6,10 @@ import java.awt.geom.*;
 import com.cbthinkx.util.Debug;
 public class MVCView3 extends JPanel implements MVCModelListener {
 	private MVCModel model;
-    //Init to -1 because we advance one lap right off the bat
     private static final int NUM_HOURS = 10;
     private static final int MINUTES_PER_HOUR = 100;
-    
-    private static final Color CLOCK_COLOR  = new Color(0x00, 0x99, 0x99);
+    private static final Color CLOCK_COLOR = new Color(0x00, 0x99, 0x99);
     private static final Color HAND_COLOR = new Color(0xff, 0xaa, 0x00);
-    //private static final Color TICK_COLOR  = new Color(0x00, 0xcc, 0x00);
     private static final Color TICK_COLOR  = HAND_COLOR;
 	public MVCView3(MVCModel model) {
 		Debug.println("MVCView3()");
@@ -48,7 +45,6 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         //Transform graphics
         g2d.transform(getGraphicsTransform());
 
-        //Shows the current value of the model, 
         //same value as the progressbar or counter
         Path2D minuteLine = new Path2D.Double();
         minuteLine.moveTo(0,0);
@@ -58,7 +54,6 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         minuteLine.lineTo(0,0);
         minuteLine.closePath();
 
-        // minuteLine
         double degrees = tickToDegrees(value);
         Shape s = getRotateTransform(degrees).createTransformedShape(minuteLine);
 
@@ -76,8 +71,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         hourLine.lineTo(0,0);
         hourLine.closePath();
 
-        // hourLine
-        degrees = laps * 36;
+        degrees = tickToDegrees(laps * 10);
         s = getRotateTransform(degrees).createTransformedShape(hourLine);
 
         g2d.setPaint(HAND_COLOR);
@@ -90,17 +84,16 @@ public class MVCView3 extends JPanel implements MVCModelListener {
 
 		g2d.dispose();
 	}
+    //Draw all ticks arond the clock face
     private void drawTicks(Graphics2D g2d) {
         for (int i = 1; i <= MINUTES_PER_HOUR; i++) {
             AffineTransform at = getRotateTransform(tickToDegrees(i));
             Shape tick;
-            //Draw a tick at the current position on the clock face
             if (i % NUM_HOURS == 0) {
+                //HOUR tick
                 g2d.setStroke(
                     new BasicStroke(5)
                 );
-
-                //HOUR tick
                 tick = new Line2D.Double(
                     0,
                     getClockRadius(),
@@ -116,7 +109,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
                     0,
                     getClockRadius(),
                     0,
-                    getClockRadius() -5
+                    getClockRadius() - 5
                 );
             }
             tick = at.createTransformedShape(tick);
