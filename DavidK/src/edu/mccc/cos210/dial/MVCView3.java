@@ -52,6 +52,15 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         minuteLine.lineTo(10,0);
         minuteLine.lineTo(0,0);
         minuteLine.closePath();
+
+        // minuteLine
+        double degrees = tickToDegrees(value);
+        Shape s = getRotateTransform(degrees).createTransformedShape(minuteLine);
+
+        g2d.setPaint(Color.BLUE);
+        g2d.fill(s);
+        g2d.setPaint(Color.BLUE);
+        g2d.draw(s);
         
         //Shows how many 'laps', 'hours', or trips around the clock
         Path2D hourLine = new Path2D.Double();
@@ -61,16 +70,8 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         hourLine.lineTo(10,0);
         hourLine.lineTo(0,0);
         hourLine.closePath();
-        //Draw/Transform minuteLine
-        double degrees = tickToDegrees(value);
-        Shape s = getRotateTransform(degrees).createTransformedShape(minuteLine);
 
-        g2d.setPaint(Color.BLUE);
-        g2d.fill(s);
-        g2d.setPaint(Color.BLUE);
-        g2d.draw(s);
-
-        //Draw/Transform hourLine
+        // hourLine
         degrees = laps * 36;
         s = getRotateTransform(degrees).createTransformedShape(hourLine);
 
@@ -79,19 +80,19 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         g2d.setPaint(Color.BLUE);
         g2d.draw(s);
 
+        //Tick marks
         drawTicks(g2d);
 
 		g2d.dispose();
 	}
     private void drawTicks(Graphics2D g2d) {
         for (int i = 1; i <= MINUTES_PER_HOUR; i++) {
-            //AffineTransform at = getRotateTransform(i * 360 / MINUTES_PER_HOUR);
             AffineTransform at = getRotateTransform(tickToDegrees(i));
             Shape tick;
             //Draw a tick at the current position on the clock face
             if (i % NUM_HOURS == 0) {
                 g2d.setStroke(
-                        new BasicStroke(5)
+                    new BasicStroke(5)
                 );
 
                 //HOUR tick
@@ -102,10 +103,10 @@ public class MVCView3 extends JPanel implements MVCModelListener {
                     getClockRadius() - 10
                 );
             } else {
-                g2d.setStroke(
-                        new BasicStroke(1)
-                );
                 //MINUTE tick
+                g2d.setStroke(
+                    new BasicStroke(1)
+                );
                 tick = new Line2D.Double(
                     0,
                     getClockRadius(),
@@ -142,7 +143,7 @@ public class MVCView3 extends JPanel implements MVCModelListener {
         AffineTransform at = new AffineTransform();
         final double trans_x = getCenter().getWidth();
         final double trans_y = getCenter().getHeight();
-        final double scale_x = (double) ((double) getWidth() / getHeight());
+        final double scale_x = ((double) getWidth() / getHeight());
         final double scale_y = 1.0;
         try {
             at.translate(
