@@ -20,9 +20,18 @@ public abstract class AbstractDrawFunction extends JPanel {
 
     /** Obtain points for x-coordinates 100 .. 300 */
     public void drawFunction() {
+        int domain = getWidth();
+        int range  = getHeight();
+
+        //This example assumes domain 200
+        //x is offset by 200, placing items between 100 and 300
+        //y axis is at 200 pix
+        //range = 
         for (int x = -100; x <= 100; x++) {
             p.addPoint(x + 200, 200 - (int)f(x));
         }
+
+        //range = width
     }
 
     /** Implement paintComponent to draw axes, labels, and
@@ -30,28 +39,47 @@ public abstract class AbstractDrawFunction extends JPanel {
      */ 
     protected void paintComponent(Graphics g) {
         //to be completed by you
+		////X Axis
+		//g.drawLine(
+		//	0,
+		//	getHeight() / 2,
+		//	getWidth(),
+		//	getHeight() / 2
+		//);
+		////Y Axis
+		//g.drawLine(
+		//	getWidth() / 2,
+		//	0,
+		//	getWidth() / 2,
+		//	getHeight()
+		//);
 		//X Axis
 		g.drawLine(
 			0,
-			getHeight() / 2,
+			200,
 			getWidth(),
-			getHeight() / 2
+			200
 		);
 		//Y Axis
 		g.drawLine(
-			getWidth() / 2,
+			200,
 			0,
-			getWidth() / 2,
+			200,
 			getHeight()
 		);
-		makePolygon(g);
+
+
+
+		//makePolyline(g);
 		g.drawPolygon(p);
     }
 
-	private void makePolygon(Graphics g) {
-		double scaleFactor = 0.1;
-		for (int x = -100; x<= 100; x++) {
-			p.addPoint(x + 200, 200 - (int)(scaleFactor * x));
+	private void makePolyline(Graphics g) {
+		int[] yPoints = null;
+		int[] xPoints = null;
+		for (int x = -100; x<= 100; x++) {          
+			xPoints[x] = x + 200;
+			yPoints[x] = 200 - (int)(x);
 		}
 	}
 }
