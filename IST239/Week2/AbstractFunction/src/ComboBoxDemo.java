@@ -12,7 +12,6 @@ import javax.swing.*;
  */
 public class ComboBoxDemo extends JPanel
 implements ActionListener {
-	JLabel picture;
 	JPanel funcPanel;
 
 	public ComboBoxDemo() {
@@ -34,21 +33,8 @@ implements ActionListener {
 
         funcPanel = new SquareDrawFunction();
 
-		//Set up the picture.
-		picture = new JLabel();
-		picture.setFont(picture.getFont().deriveFont(Font.ITALIC));
-		picture.setHorizontalAlignment(JLabel.CENTER);
-		updateLabel(functionStrings[funcOptionBox.getSelectedIndex()]);
-		picture.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
-
-		//The preferred size is hard-coded to be the width of the
-		//widest image and the height of the tallest image + the border.
-		//A real program would compute this.
-		picture.setPreferredSize(new Dimension(177, 122+10));
-
 		//Lay out the demo.
 		add(funcOptionBox, BorderLayout.PAGE_START);
-		add(picture, BorderLayout.PAGE_END);
 		add(funcPanel, BorderLayout.CENTER);
 		setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 	}
@@ -57,29 +43,14 @@ implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cb = (JComboBox)e.getSource();
 		String petName = (String)cb.getSelectedItem();
-		updateLabel(petName);
+		int index = cb.getSelectedIndex();
+		updateGraph(index);
 	}
 
-	protected void updateLabel(String name) {
-		ImageIcon icon = createImageIcon("images/" + name + ".gif");
-		picture.setIcon(icon);
-		picture.setToolTipText("A drawing of a " + name.toLowerCase());
-		if (icon != null) {
-			picture.setText(null);
-		} else {
-			picture.setText("Image not found");
-		}
-	}
-
-	/** Returns an ImageIcon, or null if the path was invalid. */
-	protected static ImageIcon createImageIcon(String path) {
-		java.net.URL imgURL = ComboBoxDemo.class.getResource(path);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL);
-		} else {
-			System.err.println("Couldn't find file: " + path);
-			return null;
-		}
+	protected void updateGraph(int index) {
+		//funcPanel.setToolTipText("A drawing of a " + name.toLowerCase());
+        System.out.println("Index selected " + index );
+        funcPanel = new MultiDrawFunction(index);
 	}
 
 	/**

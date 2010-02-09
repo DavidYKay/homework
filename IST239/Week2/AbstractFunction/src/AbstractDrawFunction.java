@@ -67,9 +67,6 @@ public abstract class AbstractDrawFunction extends JPanel {
 			200,
 			getHeight()
 		);
-
-
-
 		//makePolyline(g);
 		g.drawPolygon(p);
     }
