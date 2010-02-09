@@ -25,13 +25,13 @@ public class MultiDrawFunction extends AbstractDrawFunction {
 				value = x * x;
 				break;
 			case 1:
-				value = Math.sin(x);
+				value = 100 * Math.sin(myRadians(x));
 				break;
 			case 2:
-				value = Math.cos(x);
+				value = 100 * Math.cos(myRadians(x));
 				break;
 			case 3:
-				value = Math.tan(x);
+				value = 100 * Math.tan(myRadians(x));
 				break;
 			case 4:
 				value = Math.pow(x, 3);
@@ -47,4 +47,7 @@ public class MultiDrawFunction extends AbstractDrawFunction {
         System.out.println(out);
 		return value;
 	}
+    private double myRadians(double x) {
+        return x / 15.924;
+    }
 }
