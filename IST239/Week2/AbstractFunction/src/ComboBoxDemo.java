@@ -12,7 +12,7 @@ import javax.swing.*;
  */
 public class ComboBoxDemo extends JPanel
 implements ActionListener {
-	JPanel funcPanel;
+	MultiDrawFunction funcPanel;
 
 	public ComboBoxDemo() {
 		super(new BorderLayout());
@@ -22,16 +22,18 @@ implements ActionListener {
             "Sin(x)",
             "Cos(x)",
             "Tan(x)",
-            "X^3" 
+            "X^3",
+            "X"
         };
 
 		//Create the combo box, select the item at index 4.
 		//Indices start at 0, so 4 specifies the pig.
 		JComboBox funcOptionBox = new JComboBox(functionStrings);
-		funcOptionBox.setSelectedIndex(4);
+		funcOptionBox.setSelectedIndex(2);
 		funcOptionBox.addActionListener(this);
 
-        funcPanel = new SquareDrawFunction();
+        //funcPanel = new SquareDrawFunction();
+        funcPanel = new MultiDrawFunction(5);
 
 		//Lay out the demo.
 		add(funcOptionBox, BorderLayout.PAGE_START);
@@ -50,8 +52,11 @@ implements ActionListener {
 	protected void updateGraph(int index) {
 		//funcPanel.setToolTipText("A drawing of a " + name.toLowerCase());
         System.out.println("Index selected " + index );
-        funcPanel = new MultiDrawFunction(index);
-	}
+//        funcPanel = new MultiDrawFunction(index);
+        funcPanel.setFuncType(index);
+        funcPanel.repaint();
+        funcPanel.invalidate();
+	} 
 
 	/**
 	 * Create the GUI and show it.  For thread safety,

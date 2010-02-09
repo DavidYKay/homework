@@ -4,14 +4,14 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 public class DrawTest {
-	 public static void main(String[] args) {
-
-         javax.swing.SwingUtilities.invokeLater(new Runnable() {
-             public void run() {
-                 new DrawTest().test();
-             }
-         });
-     }
+//	 public static void main(String[] args) {
+//
+//         javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//             public void run() {
+//                 new DrawTest().test();
+//             }
+//         });
+//     }
 
 	    public void test() {
 	        JFrame frame = new JFrame();

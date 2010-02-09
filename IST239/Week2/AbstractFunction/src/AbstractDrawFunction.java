@@ -10,7 +10,6 @@ public abstract class AbstractDrawFunction extends JPanel {
     private Polygon p = new Polygon();
 
     protected AbstractDrawFunction () {
-        drawFunction();
         
         setPreferredSize(new Dimension(640, 480));
     }
@@ -20,13 +19,14 @@ public abstract class AbstractDrawFunction extends JPanel {
 
     /** Obtain points for x-coordinates 100 .. 300 */
     public void drawFunction() {
-        int domain = getWidth();
-        int range  = getHeight();
+//        int domain = getWidth();
+//        int range  = getHeight();
 
         //This example assumes domain 200
         //x is offset by 200, placing items between 100 and 300
         //y axis is at 200 pix
-        //range = 
+        //range =
+        p.reset();
         for (int x = -100; x <= 100; x++) {
             p.addPoint(x + 200, 200 - (int)f(x));
         }
@@ -38,6 +38,7 @@ public abstract class AbstractDrawFunction extends JPanel {
      *   connecting points
      */ 
     protected void paintComponent(Graphics g) {
+        drawFunction();
         //to be completed by you
 		////X Axis
 		//g.drawLine(
