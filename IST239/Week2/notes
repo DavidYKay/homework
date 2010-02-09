@@ -1,0 +1,113 @@
+Why custom graphics
+    Sometimes we need extra functionality
+    Represent data in a new manner
+Component
+    C1.getX(), C1.getY()
+        -Component's ORIGIN
+Graphics class
+    String, line, rect, oval, arc, polygon, polyline
+    Graphics2D
+    Subset of Graphics2D?
+
+PaintComponent
+    super.paintComponent() CLEARS THE SCREEN
+
+
+drawRoundRect
+    AW - arc width
+    AH - arc height
+fill3DRect
+    true - raised
+    false - depressed
+Arc
+    Piece of an oval
+    Provide dimensions, coordinates, start angle, arc angle
+        -Dimensions are dimensions of a bounding box for an OVAL we're slicing
+
+Polygon
+    fillPolygon
+    drawPolyline
+    drawPolygon
+        -connects first and last points
+
+math.Random - instantiates util.Random each time
+    use util.Random
+    -math.Random will generate CORRELATION problems, particularly when generating a lot of numbers over time
+
+drawString
+    use FontMetrics
+    Control over placement and styling
+    each font has a FontMetrics objec that describes font metadata
+        Leading
+            'leadding, now Lee-ding'
+        Ascent
+        baseline
+        Descent line
+    getFontMetrics(font)
+    getFontMetrics()
+    *Fonts are attached to a GRAPHICS object
+***CAN call class methods on instance objects
+
+java.awt.Image to paint images
+    Easiest way:
+        icon = new ImageIcon("image.png")
+        icon.getImage()
+    drawImage
+        observer
+            -send THIS as the observer
+        specify width and height
+ImageObserver
+    asynchronouse update intervace
+    receives notifications of image information as image is constructed
+    calls repaint() as image gets loaded to memory
+    ***Images off the internet
+        If we try to draw an image before it's done loading, BOOM!
+
+Assignment
+    14.9 p479 - Drawing fans
+        Gridlayout of four fans
+    14.11 p479 - Plot square function
+        
+    14.13 p480 - Plot functions using abstract methods
+        
+    public abstract class AbstractDrawFunction extends JPanel {
+        
+        /** Polygon to hold the points */
+        private Polygon p = new Polygon();
+
+        protected AbstractDrawFunction () {
+            drawFunction();
+        }
+
+        /** Return y coordinate */
+        abstract double f(double x);
+
+        /** Obtain points for x-coordinates 100 .. 300 */
+        public void drawFunction() {
+            for (int x = -100; x <= 100; x++) {
+                p.addPoint(x + 200, 200 - (int)f(x));
+            }
+        }
+        /** Implement paintComponent to draw axes, labels, and
+         *   connecting points
+         */ 
+         protected void paintComponent(Graphics g) {
+            //to be completed by you
+         }
+    }
+
+    test with:
+    f(x) = x^2
+    f(x) = sin(x)
+    f(x) = cos(x)
+    f(x) = tan(x)
+    f(x) = cos(x) + 5sin(x)
+    f(x) = 5cos(x) + sin(x)
+    f(x) = log(x) + x^2
+
+    Spiral
+        don't use Ovals
+        any colors we like
+        Make it pretty
+        24 per circle?
+
