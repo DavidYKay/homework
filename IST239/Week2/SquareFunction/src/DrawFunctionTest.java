@@ -18,11 +18,6 @@ implements ActionListener {
 	public DrawFunctionTest() {
 		super(new BorderLayout());
 
-        //Labels for the available functions
-		String[] functionStrings = { 
-            "X^2",        
-        };
-
         funcPanel = new SquareDrawFunction();
 
 		//Lay out the demo.
