@@ -8,7 +8,8 @@ import javax.swing.*;
  * The JComboBox is used to select which function to view
  * The JPanel then renders the appropriate graph
  *
- * Note: Basic code for ComboBox usage taken from Sun tutorial
+ * Note: Basic code for ComboBox, ContentPane, and EventQueue usage taken 
+ * from Sun tutorial
  */
 public class DrawFunctionTest extends JPanel
 implements ActionListener {
@@ -36,6 +37,7 @@ implements ActionListener {
 		funcOptionBox.setSelectedIndex(0);
 		funcOptionBox.addActionListener(this);
 
+        //Create the function panel
         funcPanel = new MultiDrawFunction(0);
 
 		//Lay out the demo.
@@ -44,13 +46,19 @@ implements ActionListener {
 		setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 	}
 
-	/** Listens to the combo box. */
+	/** 
+     * Listens to the combo box. 
+     * In our case, we call updateGraph
+     */
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cb = (JComboBox)e.getSource();
 		int index = cb.getSelectedIndex();
 		updateGraph(index);
 	}
 
+    /**
+     * Changes the graph to draw the selected function.
+     */
 	protected void updateGraph(int index) {
         //System.out.println("Index selected " + index );
         funcPanel.setFuncType(index);
