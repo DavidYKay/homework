@@ -23,6 +23,9 @@ implements ActionListener {
             "Cos(x)",
             "Tan(x)",
             "X^3",
+            "Cos(x) + 5Sin(x)",
+            "5Cos(x) + Sin(x)",
+            "Log(x) + X^2",
             "X"
         };
 
