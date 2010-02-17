@@ -160,6 +160,41 @@ public class MommasBadBoy extends Car {
         g2d.setPaint(Color.BLACK);
 		g2d.fill(s);
 
+        //TRIM
+		p2d = new Path2D.Double();
+        //Left side
+		p2d.moveTo(-0.3133, 0.1566);
+		p2d.lineTo(-0.1167, 0.52); //make quad
+		p2d.lineTo(-0.23, 0.6133); 
+		p2d.lineTo(-0.2533, 0.6133); 
+		p2d.lineTo(-0.25, 0.7167); 
+		p2d.lineTo(-0.2367, 0.73); 
+		p2d.lineTo(-0.1833, 0.73); 
+		p2d.lineTo(-0.1833, 0.7733); 
+		p2d.lineTo(-0.1533, 0.78); 
+		p2d.lineTo(-0.1033, 0.7733); 
+		p2d.lineTo(-0.0733, 0.8067); 
+
+        //Right side
+		p2d.lineTo(0.0733, 0.8067); 
+		p2d.lineTo(0.1033, 0.7733); 
+		p2d.lineTo(0.1533, 0.78); 
+		p2d.lineTo(0.1833, 0.7733); 
+		p2d.lineTo(0.1833, 0.73); 
+        p2d.lineTo(0.2367, 0.73); 
+        p2d.lineTo(0.25, 0.7167); 
+		p2d.lineTo(0.2533, 0.6133); 
+		p2d.lineTo(0.23, 0.6133); 
+		p2d.lineTo(0.1167, 0.52); //make quad
+		p2d.lineTo(0.3133, 0.1566);
+
+        s = p2d.createTransformedShape(at);
+        g2d.setPaint(Color.WHITE);
+		g2d.draw(s);
+        g2d.setPaint(Color.GRAY);
+		g2d.fill(s);
+
+
         //BODY
 		p2d = new Path2D.Double();
         //Left corner, above flames
