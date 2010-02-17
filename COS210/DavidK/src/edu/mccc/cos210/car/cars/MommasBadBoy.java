@@ -32,8 +32,14 @@ public class MommasBadBoy extends Car {
 
         //Tires
         //Front driver
-        RoundRectangle2D.Double r2d = new RoundRectangle2D.Double(
-            -0.8978,
+        RoundRectangle2D.Double rr2d = new RoundRectangle2D.Double(
+            //-0.8978,
+            //0.7833,
+            //-0.8978,
+            //0.5910,
+            //-0.9433,
+            //0.7833,
+            -0.46,
             0.7833,
             TIRE_WIDTH,
             TIRE_HEIGHT,
@@ -41,29 +47,43 @@ public class MommasBadBoy extends Car {
             TIRE_ARC_Y
         );
 		g2d.setPaint(Color.BLACK);
-		s = at.createTransformedShape(r2d);
+		s = at.createTransformedShape(rr2d);
         g2d.draw(s);
 		g2d.setPaint(Color.GRAY);
 		g2d.fill(s);
 
         //Front pass
-        r2d = new RoundRectangle2D.Double(
-            0.5591,
-            0.7867,
+        rr2d = new RoundRectangle2D.Double(
+            //0.5591,
+            //0.7867,
+            //0.57188,
+            //0.5911,
+            //-0.1767,
+            //0.7833,
+            0.2967,
+            0.7833,
             TIRE_WIDTH,
             TIRE_HEIGHT,
             TIRE_ARC_X,
             TIRE_ARC_Y
         );
 		g2d.setPaint(Color.BLACK);
-		s = at.createTransformedShape(r2d);
+		s = at.createTransformedShape(rr2d);
         g2d.draw(s);
 		g2d.setPaint(Color.GRAY);
 		g2d.fill(s);
         
         //Rear driver
-        r2d = new RoundRectangle2D.Double(
-            -0.9553,
+        rr2d = new RoundRectangle2D.Double(
+            //-0.9553,
+            //-0.4333,
+            //-0.9617,
+            //-1.767,
+            //-0.9617,
+            //-1.767,
+            //-0.9617,
+            //-1.767,
+            -0.52,
             -0.4333,
             TIRE_WIDTH,
             TIRE_HEIGHT,
@@ -71,14 +91,18 @@ public class MommasBadBoy extends Car {
             TIRE_ARC_Y
         );
 		g2d.setPaint(Color.BLACK);
-		s = at.createTransformedShape(r2d);
+		s = at.createTransformedShape(rr2d);
         g2d.draw(s);
 		g2d.setPaint(Color.GRAY);
 		g2d.fill(s);
 
         //Rear pass
-        r2d = new RoundRectangle2D.Double(
-            0.6102,
+        rr2d = new RoundRectangle2D.Double(
+            //0.6102,
+            //-0.4333,
+            //0.6230,
+            //-1.767,
+            0.3133,
             -0.4333,
             TIRE_WIDTH,
             TIRE_HEIGHT,
@@ -86,18 +110,68 @@ public class MommasBadBoy extends Car {
             TIRE_ARC_Y
         );
 		g2d.setPaint(Color.BLACK);
-		s = at.createTransformedShape(r2d);
+		s = at.createTransformedShape(rr2d);
         g2d.draw(s);
 		g2d.setPaint(Color.GRAY);
 		g2d.fill(s);
 
-        //Arrow
+        //TRIM
+        /*
 		p2d = new Path2D.Double();
-		p2d.moveTo(0.0, 0.0);
-		p2d.lineTo(1.0, 1.0);
-		g2d.setPaint(Color.RED);
+        //Left side, corner just below axel
+		p2d.moveTo(-0.4823, 0.6133);
+		p2d.lineTo(-0.4760, 0.7133);
+        p2d.quadTo(-0.4569, 0.7267, -0.4569, 0.7167);
+		p2d.lineTo(-0.3546, 0.7333);
+		p2d.lineTo(-0.3546, 0.77);
+		p2d.lineTo(-0.2843, 0.77);
+		p2d.lineTo(-0.1949, 0.7733);
+		p2d.lineTo(-0.1438, 0.8067);
+		
 		s = p2d.createTransformedShape(at);
+        g2d.setPaint(Color.RED);
 		g2d.draw(s);
+        g2d.setPaint(Color.BLACK);
+		g2d.fill(s);
+        */
+
+        //BODY
+
+        //SPOILER OLD
+		//p2d = new Path2D.Double();
+        ////Bottom left, above bump
+		//p2d.moveTo(-0.5847, -0.9833);
+		//p2d.lineTo(-0.5399, -0.82);
+		//p2d.lineTo(-0.5463, -0.7867);
+		//p2d.lineTo(-0.5272, -0.7733);
+		//p2d.lineTo(-0.4824, -0.7833);
+        ////Top right, left of bump
+		//p2d.lineTo(0.4824, -0.7833);
+		//p2d.lineTo(0.5272, -0.7733);
+		//p2d.lineTo(0.5463, -0.7867);
+		//p2d.lineTo(0.5399, -0.82);
+		//p2d.lineTo(0.5847, -0.9833);
+		////right bump
+        //p2d.lineTo(0.5718, -0.9933);
+        //p2d.lineTo(0.5208, -0.9767);
+        //p2d.lineTo(-0.5208, -0.9767);
+		//p2d.lineTo(-0.5847, -0.9833);
+        //
+		//g2d.setPaint(Color.BLACK);
+		//s = p2d.createTransformedShape(at);
+		//g2d.draw(s);
+
+        //SPOILER NEW
+		//p2d = new Path2D.Double();
+        Rectangle2D.Double r2d = new Rectangle2D.Double(
+                -0.2633, -0.8033,
+                0.5366, 0.16
+                );
+        
+		g2d.setPaint(Color.BLACK);
+		//s = r2d.createTransformedShape(at);
+		s = at.createTransformedShape(r2d);
+		g2d.fill(s);
 
         //Arrow
 		p2d = new Path2D.Double();
