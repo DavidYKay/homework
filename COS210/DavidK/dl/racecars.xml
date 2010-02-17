@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<racecars>
+  <racecar carname="MyCar" drivername="Junior Watson" hp="200" maxspeed="250" driverskill="ADVANCED" />
+</racecars>
