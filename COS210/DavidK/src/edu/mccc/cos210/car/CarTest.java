@@ -25,7 +25,6 @@ public class CarTest {
 			js,
 			BorderLayout.SOUTH
 		);
-        Debug.println("Car's name: " + car.getDriverName());
 		jf.setTitle(jf.getTitle() + " " + car.toString());
 		jf.pack();
 		jf.setVisible(true);
