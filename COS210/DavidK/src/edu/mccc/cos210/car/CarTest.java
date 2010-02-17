@@ -53,7 +53,8 @@ public class CarTest {
 		}
 		public Dimension getPreferredSize() {
 			Debug.println("MyJPanel:getPreferredSize()");
-			return new Dimension(384, 384);
+			//return new Dimension(384, 384);
+			return new Dimension(768, 768);
 		}
 		protected void paintComponent(Graphics g) {
 			Debug.println("MyJPanel:paintComponent()");
