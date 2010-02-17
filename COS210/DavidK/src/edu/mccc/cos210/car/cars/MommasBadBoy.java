@@ -4,6 +4,8 @@ import java.awt.geom.*;
 import javax.swing.*;
 import edu.mccc.cos210.car.*;
 import com.cbthinkx.util.Debug;
+import java.awt.font.*;
+
 public class MommasBadBoy extends Car {
 
     final private static int PICTURE_WIDTH  = 600;
@@ -13,6 +15,8 @@ public class MommasBadBoy extends Car {
     final private static double TIRE_HEIGHT = 0.29;
     final private static double TIRE_ARC_X  = 0.037;
     final private static double TIRE_ARC_Y  = 0.051;
+    
+    final private static Font REAR_FONT  = new Font("Helvetica", Font.PLAIN,  22);
 
 	protected void paintTop(JPanel jp, Graphics2D g2d, AffineTransform at) {
 		Debug.println("MommasBadBoy:paintTop()");
@@ -27,7 +31,6 @@ public class MommasBadBoy extends Car {
 		g2d.setPaint(Color.BLUE);
 		Shape s = p2d.createTransformedShape(at);
 		//g2d.fill(s);
-        
 		
         //Tires
         //Front driver
@@ -245,20 +248,6 @@ public class MommasBadBoy extends Car {
 		g2d.setPaint(Color.BLACK);
 		g2d.fill(s);
 
-        /*
-        //SPOILER inset
-		//Note that Rect2d should be drawn from bottom left corner in this implementation
-        Rectangle2D.Double r2d = new Rectangle2D.Double(
-                -0.2633, -0.9667,
-                0.5366, 0.16
-                );
-        
-		g2d.setPaint(Color.GRAY);
-		//s = r2d.createTransformedShape(at);
-		s = at.createTransformedShape(r2d);
-		g2d.fill(s);
-        */
-
         //Rear logo
         Ellipse2D.Double e2d = new Ellipse2D.Double(
             -0.2, -0.9333,
@@ -269,6 +258,30 @@ public class MommasBadBoy extends Car {
 		g2d.draw(s);
 		g2d.setPaint(Color.WHITE);
 		g2d.fill(s);
+
+        //Front oval
+        e2d = new Ellipse2D.Double(
+            -0.0333, 0.99,
+            0.060, 0.04
+        );
+		g2d.setPaint(Color.GRAY);
+		s = at.createTransformedShape(e2d);
+		g2d.draw(s);
+		g2d.setPaint(Color.WHITE);
+		g2d.fill(s);
+
+        /*
+        AffineTransform textAt = getTextTransform(-0.2,-0.933);
+        //g2d.drawString("First", -0.2f, -0.933f);
+		s = at.createTransformedShape(
+            //getTextShape(g2d, "First", REAR_FONT)
+            getTextShape(g2d, textAt , "First", REAR_FONT)
+        );
+        s = textAt.createTransformedShape(s);
+		g2d.setPaint(Color.BLUE);
+		g2d.draw(s);
+		g2d.fill(s);
+        */
 
         //Arrow
 		p2d = new Path2D.Double();
@@ -312,4 +325,33 @@ public class MommasBadBoy extends Car {
 		s = at.createTransformedShape(origin);
 		g2d.fill(s);
 	}
+    /**
+     * Takes a string and font and creates a shape, for ease of rendering
+     *
+     * Taken from www.exampledepot.com
+     */
+    private Shape getTextShape(Graphics2D g2d, AffineTransform at, String str, Font font) {
+        FontRenderContext frc = g2d.getFontRenderContext();
+        TextLayout tl = new TextLayout(str, font, frc);
+        //return tl.getOutline(at);
+        return tl.getOutline(null);
+    } 
+
+    private AffineTransform getTextTransform(double x, double y) {
+        AffineTransform at = new AffineTransform();
+        final double scale_x = 1.0;
+        final double scale_y = 1.0;
+        try {
+            at.translate(
+                x,
+                x
+            );
+            at.scale(
+                scale_x,
+                scale_y
+            );
+        } catch (NumberFormatException ex) {
+        }
+        return at;
+    }
 }
