@@ -39,7 +39,7 @@ public class MommasBadBoy extends Car {
             //0.5910,
             //-0.9433,
             //0.7833,
-            -0.46,
+            -0.4633,
             0.7833,
             TIRE_WIDTH,
             TIRE_HEIGHT,
@@ -137,41 +137,54 @@ public class MommasBadBoy extends Car {
 
         //BODY
 
-        //SPOILER OLD
-		//p2d = new Path2D.Double();
-        ////Bottom left, above bump
-		//p2d.moveTo(-0.5847, -0.9833);
-		//p2d.lineTo(-0.5399, -0.82);
-		//p2d.lineTo(-0.5463, -0.7867);
-		//p2d.lineTo(-0.5272, -0.7733);
-		//p2d.lineTo(-0.4824, -0.7833);
-        ////Top right, left of bump
-		//p2d.lineTo(0.4824, -0.7833);
-		//p2d.lineTo(0.5272, -0.7733);
-		//p2d.lineTo(0.5463, -0.7867);
-		//p2d.lineTo(0.5399, -0.82);
-		//p2d.lineTo(0.5847, -0.9833);
-		////right bump
-        //p2d.lineTo(0.5718, -0.9933);
-        //p2d.lineTo(0.5208, -0.9767);
-        //p2d.lineTo(-0.5208, -0.9767);
-		//p2d.lineTo(-0.5847, -0.9833);
-        //
-		//g2d.setPaint(Color.BLACK);
-		//s = p2d.createTransformedShape(at);
-		//g2d.draw(s);
+        //SPOILER
+		p2d = new Path2D.Double();
+        //Bottom left, above bump
+		p2d.moveTo(-0.3033, -0.9867);
+		p2d.lineTo(-0.28, -0.8233);
+		p2d.lineTo(-0.28, -0.7867);
+		p2d.quadTo(
+                -0.2467, -0.7867,
+                -0.2667, -0.7867
+        );
 
-        //SPOILER NEW
-		//p2d = new Path2D.Double();
+        //Top right, left of bump
+		p2d.lineTo(0.2533, -0.7867);
+		p2d.quadTo(
+                0.29, -0.7867,
+                0.2733, -0.7867
+        );
+        p2d.lineTo(0.28, -0.8233);
+        p2d.lineTo(0.303, -0.9867);
+		//right bump
+        p2d.quadTo(0.2733, -0.9767,
+                0.2933, -0.9733
+        );
+        //bottom left
+        p2d.lineTo(-0.27, -0.9733);
+        p2d.quadTo(-0.2733, -0.9767,
+                -0.2933, -0.9733
+        );
+        
+		g2d.setPaint(Color.GRAY);
+		s = p2d.createTransformedShape(at);
+		g2d.draw(s);
+		g2d.setPaint(Color.BLACK);
+		g2d.fill(s);
+
+        /*
+        //SPOILER inset
+		//Note that Rect2d should be drawn from bottom left corner in this implementation
         Rectangle2D.Double r2d = new Rectangle2D.Double(
-                -0.2633, -0.8033,
+                -0.2633, -0.9667,
                 0.5366, 0.16
                 );
         
-		g2d.setPaint(Color.BLACK);
+		g2d.setPaint(Color.GRAY);
 		//s = r2d.createTransformedShape(at);
 		s = at.createTransformedShape(r2d);
 		g2d.fill(s);
+        */
 
         //Arrow
 		p2d = new Path2D.Double();
