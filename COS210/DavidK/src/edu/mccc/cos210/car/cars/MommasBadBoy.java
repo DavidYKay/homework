@@ -305,7 +305,86 @@ public class MommasBadBoy extends Car {
 		g2d.setPaint(Color.WHITE);
 		g2d.fill(s);
 
+
+
+        //Driver
+		//(-0.0733, 0.3167)
+        //(0.0733, 0.0066)
+        rr2d = new RoundRectangle2D.Double(
+            -0.0733, 
+            //0.3167,
+            0.0066,
+            0.0733 * 2,
+            0.3167 - 0.0066,
+            TIRE_ARC_X,
+            TIRE_ARC_Y
+        );
+		g2d.setPaint(Color.BLACK);
+		s = at.createTransformedShape(rr2d);
+        g2d.draw(s);
+		g2d.setPaint(Color.GRAY);
+		g2d.fill(s);
+
+
+        //Steering wheel
+        rr2d = new RoundRectangle2D.Double(
+            -0.0333,
+            0.2667,
+            0.0333 * 2,
+            0.0167,
+            //0.0467,
+            TIRE_ARC_X,
+            TIRE_ARC_Y
+        );
+		g2d.setPaint(Color.BLACK);
+		s = at.createTransformedShape(rr2d);
+        g2d.draw(s);
+		g2d.setPaint(Color.red);
+		g2d.fill(s);
+
+        //body
+		p2d = new Path2D.Double();
+        //left shoulder, rear
+		p2d.moveTo(-0.02, 0.0233);
+		p2d.lineTo(-0.0433, 0.05);
+		p2d.lineTo(-0.0467, 0.17);
+		p2d.lineTo(-0.0433, 0.2467);
+		p2d.lineTo(-0.0267, 0.27);
+		p2d.lineTo(-0.0067, 0.0267);
+		p2d.lineTo(-0.0267, 0.24);
+		p2d.lineTo(-0.03, 0.1067);
+
+        //middle
+		//p2d.lineTo(0, 0.0867);
+
+		p2d.lineTo(0.03, 0.1067);
+		p2d.lineTo(0.0267, 0.24);
+		p2d.lineTo(0.0067, 0.0267);
+        p2d.lineTo(0.0267, 0.27);
+		p2d.lineTo(0.0433, 0.2467);
+		p2d.lineTo(0.0467, 0.17);
+		p2d.lineTo(0.0433, 0.05);
+		p2d.lineTo(0.02, 0.0233);
+        p2d.closePath();
+
+		g2d.setPaint(Color.WHITE);
+		s = p2d.createTransformedShape(at);
+		g2d.draw(s);
+		g2d.setPaint(Color.BLUE);
+		g2d.fill(s);
+
+        //head
+		e2d = new Ellipse2D.Double(
+                //-0.0333, 0.1,
+                -0.0333, 0.0333,
+                0.0333*2, 0.07
+        );
+		s = at.createTransformedShape(e2d);
+		g2d.setPaint(Color.RED);
+		g2d.fill(s);
+
         /*
+        //Text Logo
         AffineTransform textAt = getTextTransform(-0.2,-0.933);
         //g2d.drawString("First", -0.2f, -0.933f);
 		s = at.createTransformedShape(
@@ -319,18 +398,18 @@ public class MommasBadBoy extends Car {
         */
 
         //Arrow
-		p2d = new Path2D.Double();
-		p2d.moveTo(0.0, 0.75);
-		p2d.lineTo(0.5, 0.5);
-		p2d.moveTo(0.0, 0.75);
-		p2d.lineTo(-0.5, 0.5);
-		p2d.moveTo(0.0, 0.75);
-		p2d.lineTo(0.0, -0.75);
-		g2d.setPaint(Color.WHITE);
-		s = p2d.createTransformedShape(at);
-		g2d.draw(s);
+		//p2d = new Path2D.Double();
+		//p2d.moveTo(0.0, 0.75);
+		//p2d.lineTo(0.5, 0.5);
+		//p2d.moveTo(0.0, 0.75);
+		//p2d.lineTo(-0.5, 0.5);
+		//p2d.moveTo(0.0, 0.75);
+		//p2d.lineTo(0.0, -0.75);
+		//g2d.setPaint(Color.WHITE);
+		//s = p2d.createTransformedShape(at);
+		//g2d.draw(s);
 		Ellipse2D origin = new Ellipse2D.Double(-0.025, -0.025, 0.05, 0.05);
-		g2d.setPaint(Color.RED);
+		g2d.setPaint(Color.GREEN);
 		s = at.createTransformedShape(origin);
 		g2d.fill(s);
 	}
