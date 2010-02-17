@@ -17,8 +17,6 @@ public class MommasBadBoy extends Car {
 	protected void paintTop(JPanel jp, Graphics2D g2d, AffineTransform at) {
 		Debug.println("MommasBadBoy:paintTop()");
 
-        //g2d.transform(getGraphicsTransform());
-
         //Blue box
 		Path2D p2d = new Path2D.Double();
 		p2d.moveTo(-0.5, 0.75);
@@ -28,17 +26,11 @@ public class MommasBadBoy extends Car {
 		p2d.closePath();
 		g2d.setPaint(Color.BLUE);
 		Shape s = p2d.createTransformedShape(at);
-		g2d.fill(s);
+		//g2d.fill(s);
 
         //Tires
         //Front driver
         RoundRectangle2D.Double rr2d = new RoundRectangle2D.Double(
-            //-0.8978,
-            //0.7833,
-            //-0.8978,
-            //0.5910,
-            //-0.9433,
-            //0.7833,
             -0.4633,
             0.7833,
             TIRE_WIDTH,
@@ -54,12 +46,6 @@ public class MommasBadBoy extends Car {
 
         //Front pass
         rr2d = new RoundRectangle2D.Double(
-            //0.5591,
-            //0.7867,
-            //0.57188,
-            //0.5911,
-            //-0.1767,
-            //0.7833,
             0.2967,
             0.7833,
             TIRE_WIDTH,
@@ -75,14 +61,6 @@ public class MommasBadBoy extends Car {
         
         //Rear driver
         rr2d = new RoundRectangle2D.Double(
-            //-0.9553,
-            //-0.4333,
-            //-0.9617,
-            //-1.767,
-            //-0.9617,
-            //-1.767,
-            //-0.9617,
-            //-1.767,
             -0.52,
             -0.4333,
             TIRE_WIDTH,
@@ -98,10 +76,6 @@ public class MommasBadBoy extends Car {
 
         //Rear pass
         rr2d = new RoundRectangle2D.Double(
-            //0.6102,
-            //-0.4333,
-            //0.6230,
-            //-1.767,
             0.3133,
             -0.4333,
             TIRE_WIDTH,
@@ -136,6 +110,57 @@ public class MommasBadBoy extends Car {
         */
 
         //BODY
+		p2d = new Path2D.Double();
+        //Left corner, above flames
+		p2d.moveTo(-0.31, 0.1533);
+		p2d.lineTo(-0.19, 0.19);
+		p2d.lineTo(-0.1167, 0.29); //curve?
+		p2d.lineTo(-0.09, 0.5567); 
+		p2d.lineTo(-0.2267, 0.6533); 
+		p2d.lineTo(-0.2267, 0.6967); 
+		p2d.lineTo(-0.08, 0.7167); 
+		p2d.lineTo(-0.05, 0.9967); 
+		p2d.lineTo(0.0, 1.0); 
+		p2d.lineTo(0.05, 0.9967); 
+		p2d.lineTo(0.08, 0.7167); 
+		p2d.lineTo(0.2267, 0.6967); 
+		p2d.lineTo(0.2267, 0.6533); 
+        p2d.lineTo(0.09, 0.5567); 
+		p2d.lineTo(0.1167, 0.29); //curve?
+		p2d.lineTo(0.19, 0.19);
+        //right corner, above flames
+		p2d.lineTo(0.31, 0.1533);
+		p2d.lineTo(0.32, -0.0467);
+		p2d.lineTo(0.3367, -0.08);
+		p2d.lineTo(0.34, -0.3267);
+		p2d.lineTo(0.3767, -0.46);
+		p2d.lineTo(0.38, -0.5167);
+		p2d.lineTo(0.31, -0.566);
+		p2d.lineTo(0.27, -0.69);
+		p2d.lineTo(0.28, -0.71);
+		p2d.lineTo(0.1833, -0.7367);
+		p2d.lineTo(0.18, -0.7533);
+		p2d.lineTo(0.15, -0.7767);
+
+		p2d.lineTo(-0.15, -0.7767);
+		p2d.lineTo(-0.18, -0.7533);
+		p2d.lineTo(-0.1833, -0.7367);
+		p2d.lineTo(-0.28, -0.71);
+        p2d.lineTo(-0.27, -0.69);
+		p2d.lineTo(-0.31, -0.566); 
+		p2d.lineTo(-0.38, -0.5167);
+		p2d.lineTo(-0.3767, -0.46);
+		p2d.lineTo(-0.34, -0.3267);
+		p2d.lineTo(-0.3367, -0.08);
+		p2d.lineTo(-0.32, -0.0467);
+		p2d.lineTo(-0.31, 0.1533);
+
+        s = p2d.createTransformedShape(at);
+        g2d.setPaint(Color.RED);
+		g2d.draw(s);
+        g2d.setPaint(Color.BLACK);
+		//g2d.fill(s);
+
 
         //SPOILER
 		p2d = new Path2D.Double();
@@ -186,6 +211,17 @@ public class MommasBadBoy extends Car {
 		g2d.fill(s);
         */
 
+        //Rear logo
+        Ellipse2D.Double e2d = new Ellipse2D.Double(
+            -0.2, -0.9333,
+            0.4, 0.11
+        );
+		g2d.setPaint(Color.GRAY);
+		s = at.createTransformedShape(e2d);
+		g2d.draw(s);
+		g2d.setPaint(Color.WHITE);
+		g2d.fill(s);
+
         //Arrow
 		p2d = new Path2D.Double();
 		p2d.moveTo(0.0, 0.75);
@@ -228,34 +264,4 @@ public class MommasBadBoy extends Car {
 		s = at.createTransformedShape(origin);
 		g2d.fill(s);
 	}
-    
-    /**
-     * Produces
-     */
-    private AffineTransform getGraphicsTransform(boolean undo) {
-        AffineTransform at = new AffineTransform();
-        /*
-        if (undo) {
-
-        } else {
-            final double trans_x = getCenter().getWidth();
-            final double trans_y = getCenter().getHeight();
-            final double scale_x = 1.0 / (PICTURE_WIDTH  / 2);
-            final double scale_y = 1.0 / (PICTURE_HEIGHT / 2);
-            try {
-                at.translate(
-                        trans_x,
-                        trans_y
-                );
-                at.scale(
-                        scale_x,
-                        scale_y
-                );
-            } catch (NumberFormatException ex) {
-
-            }
-        }
-    */
-        return at;
-    }
 }
