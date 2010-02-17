@@ -27,7 +27,8 @@ public class MommasBadBoy extends Car {
 		g2d.setPaint(Color.BLUE);
 		Shape s = p2d.createTransformedShape(at);
 		//g2d.fill(s);
-
+        
+		
         //Tires
         //Front driver
         RoundRectangle2D.Double rr2d = new RoundRectangle2D.Double(
@@ -108,6 +109,53 @@ public class MommasBadBoy extends Car {
         g2d.setPaint(Color.BLACK);
 		g2d.fill(s);
         */
+
+        //CHIN SPOILER
+		p2d = new Path2D.Double();
+        //Left side 
+		p2d.moveTo(-0.0733, 0.8167);
+		p2d.lineTo(-0.12, 0.81);
+		p2d.lineTo(-0.1233, 0.8467);
+		p2d.lineTo(-0.17, 0.8433);
+		p2d.lineTo(-0.1733, 0.81);
+		p2d.quadTo(-0.2, 0.80667,
+                -0.1867, 0.80667
+        );
+		p2d.lineTo(-0.2, 0.8433);
+		p2d.lineTo(-0.2233, 0.8433);
+		p2d.lineTo(-0.23, 0.8233);
+		p2d.lineTo(-0.2533, 0.8233);
+		p2d.lineTo(-0.2533, 0.79);
+		p2d.lineTo(-0.28, 0.7967);
+		p2d.lineTo(-0.2933, 0.9633);
+		p2d.lineTo(-0.2633, 0.98);
+		p2d.lineTo(-0.0600, 0.9767);
+
+        //Right side
+		p2d.lineTo(0.0600, 0.9767);
+		p2d.lineTo(0.2633, 0.98);
+		p2d.lineTo(0.2933, 0.9633);
+		p2d.lineTo(0.28, 0.7967);
+		p2d.lineTo(0.2533, 0.79);
+		p2d.lineTo(0.2533, 0.8233);
+		p2d.lineTo(0.23, 0.8233);
+		p2d.lineTo(0.2233, 0.8433);
+		p2d.lineTo(0.2, 0.8433);
+
+		p2d.quadTo(0.2, 0.80667,
+                0.1867, 0.80667
+        );
+		p2d.lineTo(0.1733, 0.81);
+		p2d.lineTo(0.17, 0.8433);
+		p2d.lineTo(0.1233, 0.8467);
+		p2d.lineTo(0.12, 0.81);
+		p2d.lineTo(0.0733, 0.8167);
+		
+        s = p2d.createTransformedShape(at);
+        g2d.setPaint(Color.GRAY);
+		g2d.draw(s);
+        g2d.setPaint(Color.BLACK);
+		g2d.fill(s);
 
         //BODY
 		p2d = new Path2D.Double();
