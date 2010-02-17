@@ -1,0 +1,102 @@
+Chapter 15
+Event-Driven Programming
+
+Linking the guis into programs to perform task
+Very important
+    -Learn it well
+
+Event lifecycle
+    Event fired by component when user clicks
+    By default, eventListener is null
+    Must listen to handle it
+
+Event objects
+    Swing list events are the only odd one
+    Everything else is an AWTEvent
+    ActionEvent
+        Fired by buttons nad timers
+    AdjustmentEvent
+        Scrollbar/dial
+    ComponentEvent
+        Add/Remove/Resize
+        ContainerEvent
+        FocusEvent
+        InputEvent
+            MouseEvent
+            KeyEvent
+        WindowEvent
+            -Other than 'exit on close'
+    ItemEvent
+    TextEvent
+
+Events fired
+    Certain components can fire multiple events
+        JComboBox fires itemEvent, ActionEvent
+    All Components can fire:
+        MouseEvent
+        KeyEvent
+        FocusEvent
+        ComponentEvent
+    All events held in java.awt.event
+
+Source object fires event
+    Interested object listeners must register
+    *All listeners are interfaces
+
+WindowListener
+    Activated - gained focus
+    Deactivated - lost focus
+TimerListener
+
+Outer class
+    Not labeled public
+Inner class
+    can be defined inside of a method
+    only live as long as the life of the method
+    Same as outer class, but can touch the private variables of the parent
+
+Anonymous class
+    addActionListener(
+        new ButtonListener() {
+    });
+
+MouseAdapter
+    a Class that has implemented all the interface methods
+        -they do nothing by default
+        -This is useful because it makes overriding EZ-PZ
+
+Key Presses
+    KeyEvent.getKeyChar() 
+        Characters
+    KeyEvent.getKeyCode()
+        Key codes, like for ALT, HOME, etc
+    keyTyped()
+        Only drawable chars
+    keyPressed()
+    keyReleased()
+        Both do all keys
+
+JPanel.setFocusable(true)
+    **Must do this to accept key events
+
+Timers
+    Easy to use
+    Animations
+    Takes in a length of time and an actionListener
+
+Homework
+    15.18 eye-hand coordination
+        Radius 10 pixels
+        Filled with random color
+        random location on panel
+        Click on circle, displays new color new position
+        Display total time after 20 circles
+        Create array
+            Maintain array of reaction time for each circle, in addition to total time
+        Consider a circleMonitor class
+
+    15.23 closest pair of points
+        User clicks on panel to create points
+        when panel has two or more points, highlight the pair of closest points
+        When additional points are added, New closest pair is highlighted
+        Consider storying points in ArrayList
