@@ -46,7 +46,7 @@ public class MommasBadBoy extends Car {
 
         //Front pass
         rr2d = new RoundRectangle2D.Double(
-            0.2967,
+            0.4633 - TIRE_WIDTH,
             0.7833,
             TIRE_WIDTH,
             TIRE_HEIGHT,
@@ -76,7 +76,7 @@ public class MommasBadBoy extends Car {
 
         //Rear pass
         rr2d = new RoundRectangle2D.Double(
-            0.3133,
+            0.52 - TIRE_WIDTH,
             -0.4333,
             TIRE_WIDTH,
             TIRE_HEIGHT,
@@ -159,7 +159,7 @@ public class MommasBadBoy extends Car {
         g2d.setPaint(Color.RED);
 		g2d.draw(s);
         g2d.setPaint(Color.BLACK);
-		//g2d.fill(s);
+		g2d.fill(s);
 
 
         //SPOILER
