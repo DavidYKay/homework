@@ -1,2 +1,3 @@
-./compile.sh
-./doit.sh
+./compilecar.sh
+#./car.sh
+./card.sh
