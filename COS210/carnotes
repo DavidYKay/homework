@@ -1,0 +1,74 @@
+W - forward
+a - left
+d - right
+s - brake
+
+escape - return to initial position
+spacebar - pause
+
+up    - 
+down  - 
+left  - 
+right - 
+
+Car physics
+    Collision detection rather than avoidance
+Cars - squares
+    Velocity vector from center of vehicle
+    Options:
+        -Torque on each tire
+            -Too sophisticated for us
+        -Use rules of thumb
+            -Ignore that we have four tires
+            -Ignore center of mass
+            -Check intersect point of two shapes
+        
+Static initializer
+    guaranteed to be run before any references to this class are made
+    
+swing stuff
+    invokeAndWait
+        -static hangs around?
+    invokeLater
+        -use this most of the time
+
+    RequestFocus()
+
+Crash
+    MyJPanel implements KeyListener
+    affineTransform is a sum of everything that has happened
+        -not bounded
+    torque - used for right hand rule 3D math
+    direction could be extracted, but we keep it on hand for convenience
+    direction - 0 to 2pi
+    speed 
+    deltaR - how much to rotate per frame
+    crashR - duration crash?
+    crashX - crash vectors
+    crashY
+    crash - bool flag
+    
+    iniitialize them all to sane values
+        -factored to a separate method since it's called elsewhere
+
+    if crash in progress
+        background turns grey to white
+    **fadeCrash() - TEST
+        Decrements the amount of the crash
+        fixRotations
+        bumpDirection
+            -if we're not crashing, check if there's a collision in progress
+            -if we are crashing, window of opportunity to get away from the crash
+        
+        checkCollision
+            translationX, translationY = position
+            get distance between carA and carB
+            find the point - rough estimate of our collision point
+    
+    conform world coordinates to car coordinates
+        convertWorldToCar (or something?)
+    KeyListener
+        KeyTyped
+        key_released
+    Using Java3D for Physics
+        Vector3d

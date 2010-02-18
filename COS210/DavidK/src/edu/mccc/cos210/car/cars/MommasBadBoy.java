@@ -604,4 +604,20 @@ public class MommasBadBoy extends Car {
         }
         return at;
     }
+
+	public void paintShifter(JPanel jp, Graphics2D g2d, int gear, int maxGear) {
+		Debug.println("MyCar:paintShifter()");
+		String value = String.valueOf(gear);
+		String maxValue = String.valueOf(maxGear);
+		int w = SwingUtilities.computeStringWidth(
+			g2d.getFontMetrics(),
+			value
+		);
+		g2d.setPaint(Color.BLACK);
+		g2d.drawString(
+			value,
+			jp.getWidth() / 2 - w / 2,
+			jp.getHeight() / 2 + 8
+		);
+	}
 }
