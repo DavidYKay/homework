@@ -25,6 +25,8 @@ public class HandEyePanel extends JPanel {
     private int roundNum;
 
     public HandEyePanel(int xMax, int yMax) {
+        this.setLayout(null);
+
         this.xMax = xMax;
         this.yMax = yMax;
         random = new Random();
@@ -57,8 +59,19 @@ public class HandEyePanel extends JPanel {
         //    getRandomX(),
         //    getRandomY()
         //);
+        
         HandEyeBall ball = new HandEyeBall();
         //Add the ball to the panel
+        add(ball);
+        //ball.setLocation(200,200);
+        Container pane = this;
+        Insets insets = pane.getInsets();
+        Dimension size = ball.getPreferredSize();
+        ball.setBounds(
+            //25 + insets.left, 5 + insets.top,
+            getRandomX(), getRandomY(),
+            size.width, size.height
+        );
         
         //Mark the time
         roundStartTime = System.currentTimeMillis();
@@ -98,6 +111,9 @@ public class HandEyePanel extends JPanel {
                         nextRound();
                     }
             });
+        }
+        public Dimension getPreferredSize() {
+            return new Dimension(50, 50);
         }
     }
 }
