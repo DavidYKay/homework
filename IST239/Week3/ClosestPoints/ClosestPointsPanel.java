@@ -8,7 +8,9 @@ public class ClosestPointsPanel extends JPanel {
 
     private static final int POINT_RADIUS = 10;
 
+    /** Holds all points in the graph */
     private ArrayList<Point> points = new ArrayList<Point>();
+    /** Holds only the closest pair */
     private Point[] closest = new Point[2];
 
     /** The width of the game area, as specified by in the constructor */
@@ -76,6 +78,72 @@ public class ClosestPointsPanel extends JPanel {
         }
         return closestPair;
     }
+
+    private Point[] divideAndConquer() {
+        Point[] tempPoints = (Point[]) points.toArray();
+        int numPoints = tempPoints.length;
+        //1. Sort points along the x-coordinate
+        Arrays.sort(tempPoints, new PointComparator());
+        double minX = tempPoints[0].getX();
+        double maxX = tempPoints[numPoints - 1].getX();
+        //2. Split the set of points into two equal-sized subsets by a vertical line x = xmid
+        double xMid = (minX + maxX) / 2;
+
+        LinkedList<Point> tempLeft  = new LinkedList<Point>();
+        LinkedList<Point> tempRight = new LinkedList<Point>();
+        for (int i = 0; i < numPoints / 2; i++) {
+            if (tempPoints[i].getX() < xMid) {
+                tempLeft.add(tempPoints[i]);
+            } else {
+                tempRight.add(tempPoints[i]);
+            }
+        }
+        Point[] leftSubset  = (Point[]) tempLeft.toArray();
+        Point[] rightSubset = (Point[]) tempRight.toArray();
+
+        //3. Solve the problem recursively in the left and right subsets. This will give the left-side and right-side minimal distances dLmin and dRmin respectively.
+        double minLeft  = getMinDistanceFromSubset(leftSubset,  Double.POSITIVE_INFINITY);
+        double minRight = getMinDistanceFromSubset(rightSubset, Double.POSITIVE_INFINITY);
+
+        //4. Find the minimal distance dLRmin among the pair of points in which one point lies on the left of the dividing vertical and the second point lies to the right.
+        double minMid = rightSubset[0].getX() - leftSubset[leftSubset.length - 1].getX();
+
+        //5. The final answer is the minimum among dLmin, dRmin, and dLRmin.
+        double finalMin = Math.min(
+            minMid,
+            Math.min(minLeft, minRight)
+        );
+        System.out.println("Final min is: " + finalMin);
+        /*
+        */
+        Point[] closestPair = new Point[2];
+        return closestPair;
+    }
+    /**
+     * Recursive algorithm to get the min distance from a set of points
+     * On each recursion, the head (first index) is chopped off and the tail is
+     * fed back in.
+     */
+    private double getMinDistanceFromSubset(Point[] subset, double min) {
+        if (subset.length == 0) {
+            return min;
+        } else {
+            //We'll stash all of subset in here except the first entry,
+            //just like lisp's CDR operator
+            Point[] newSubset = new Point[subset.length - 1];
+
+            //Find the min dist from A to each B
+            for (int i = 1; i < subset.length; i++) {
+                double newMin = subset[0].distance(subset[1]);
+                if (newMin < min) {
+                    min = newMin;
+                }
+                newSubset[i - 1] = subset[i];
+            }
+            //Chop off A
+            return getMinDistanceFromSubset(newSubset, min);
+        }
+    }
     
     public Dimension getPreferredSize() {
         return new Dimension(xMax, yMax);
@@ -99,7 +167,7 @@ public class ClosestPointsPanel extends JPanel {
         ) {
             for (Point point : closest) {
                 int bigRadius = POINT_RADIUS + 3;
-                g.drawOval(
+                g.fillOval(
                     (int) point.getX() - (bigRadius / 2),
                     (int) point.getY() - (bigRadius / 2),
                     bigRadius,
