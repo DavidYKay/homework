@@ -27,11 +27,13 @@ public class HandEyePanel extends JPanel {
         this.xMax   = xMax;
         this.yMax   = yMax;
         this.random = new Random();
-        startGame();
+        newGame();
 	}
 
-    public void startGame() {
-        //Set up the playing area
+    public void newGame() {
+        //clear the JPanel
+        removeAll();
+        //Reset the round counter
         roundNum = -1;
         //Call nextRound
         nextRound(System.currentTimeMillis());

@@ -5,10 +5,9 @@ import javax.swing.*;
 /**
  * A Game that tests hand-eye coordination of the player
  */
-//public class HandEyeTest extends JPanel implements ActionListener {
-public class HandEyeTest extends JPanel {
+public class HandEyeTest extends JPanel implements NewGameListener {
     /** This is where the magic happens */
-	JComponent handEyePanel;
+	HandEyePanel handEyePanel;
 
 	public HandEyeTest() {
 		super(new BorderLayout());
@@ -17,8 +16,10 @@ public class HandEyeTest extends JPanel {
         handEyePanel = new HandEyePanel(400, 400);
         handEyePanel.setBackground(Color.RED);
 
+        OptionsPanel optionsPanel = new OptionsPanel(this);
         //Lay out the demo.
         add(handEyePanel, BorderLayout.CENTER);
+        add(optionsPanel, BorderLayout.WEST);
 		setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 	}
 
@@ -52,4 +53,8 @@ public class HandEyeTest extends JPanel {
 			}
 		});
 	}
+
+    public void newGameEvent() {
+        handEyePanel.newGame();
+    }
 }
