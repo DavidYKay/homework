@@ -53,10 +53,12 @@ public class ClosestPointsPanel extends JPanel {
 
     private void updateClosest() {
         closest = bruteForce();
-        System.out.print("The closest are: ");
-        System.out.print(closest[0]);
-        System.out.print(", ");
-        System.out.println(closest[1]);
+        if (closest != null) {
+            System.out.print("The closest are: ");
+            System.out.print(closest[0]);
+            System.out.print(", ");
+            System.out.println(closest[1]);
+        }
     }
 
     private Point[] bruteForce() {
@@ -81,13 +83,29 @@ public class ClosestPointsPanel extends JPanel {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.setColor(Color.BLACK);
         for (Point point : points) {
             g.fillOval(
-                (int) point.getX(),
-                (int) point.getY(),
+                (int) point.getX() - (POINT_RADIUS / 2),
+                (int) point.getY() - (POINT_RADIUS / 2),
                 POINT_RADIUS,
                 POINT_RADIUS
             );
+        }
+        g.setColor(Color.BLUE);
+        if (closest != null && 
+            closest[0] != null && 
+            closest[1] != null
+        ) {
+            for (Point point : closest) {
+                int bigRadius = POINT_RADIUS + 3;
+                g.drawOval(
+                    (int) point.getX() - (bigRadius / 2),
+                    (int) point.getY() - (bigRadius / 2),
+                    bigRadius,
+                    bigRadius
+                );
+            }
         }
     }
 }
