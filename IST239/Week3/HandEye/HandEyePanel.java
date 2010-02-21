@@ -103,10 +103,12 @@ public class HandEyePanel extends JPanel {
      * A clickable ball, used in the game
      */
     private class HandEyeBall extends JButton {
+        private Color color;
         /**
          * Returns a new ball in a given location on the screen
          */
         private HandEyeBall() {
+            color = randomColor();
             setBorder(
                 BorderFactory.createEmptyBorder(0, 0, 0, 0)
             );
@@ -128,9 +130,19 @@ public class HandEyePanel extends JPanel {
          * Draw the button as a round circle rather than a standard button
          */
         protected void paintComponent(Graphics g) {
-            g.fillOval(0, 0, 
-                    (int) getPreferredSize().getWidth(), 
-                    (int) getPreferredSize().getHeight()
+            g.setColor(color);
+            g.fillOval(
+                0, 
+                0, 
+                (int) getPreferredSize().getWidth(), 
+                (int) getPreferredSize().getHeight()
+            );
+        }
+        private Color randomColor() {
+            return new Color( 
+                random.nextInt(256),
+                random.nextInt(256),
+                random.nextInt(256)
             );
         }
     }
