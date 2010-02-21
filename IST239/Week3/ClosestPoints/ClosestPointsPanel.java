@@ -9,6 +9,7 @@ public class ClosestPointsPanel extends JPanel {
     private static final int POINT_RADIUS = 10;
 
     private ArrayList<Point> points = new ArrayList<Point>();
+    private Point[] closest = new Point[2];
 
     /** The width of the game area, as specified by in the constructor */
     private int xMax;
@@ -24,11 +25,11 @@ public class ClosestPointsPanel extends JPanel {
         addMouseListener(new MouseAdapter() { 
             public void mouseClicked(MouseEvent me) { 
                 //Add point at clicked location
-                //System.out.println(me); 
                 addPoint(
                     me.getX(),
                     me.getY()
                 );
+                //System.out.println(me); 
             } 
         }); 
 
@@ -39,31 +40,39 @@ public class ClosestPointsPanel extends JPanel {
         //clear the JPanel
         removeAll();
         points.clear();
+        repaint();
     }
 
     private void addPoint(int x, int y) {
         Point point = new Point(x, y);
         points.add(point);
         System.out.println(point); 
+        updateClosest();
         repaint();
     }
 
-    private void nextRound(long prevTime) {
-        //Create a new ball
-        //Add the ball to the panel
-        //add(ball);
-        Container pane = this;
-        //Insets insets = pane.getInsets();
-        //Dimension size = ball.getPreferredSize();
-        //ball.setBounds(
-        //    //25 + insets.left, 5 + insets.top,
-        //    getRandom(xMax, size.width), 
-        //    getRandom(yMax, size.height), 
-        //    size.width, 
-        //    size.height
-        //);
-        //Mark the time
-        repaint();
+    private void updateClosest() {
+        closest = bruteForce();
+        System.out.print("The closest are: ");
+        System.out.print(closest[0]);
+        System.out.print(", ");
+        System.out.println(closest[1]);
+    }
+
+    private Point[] bruteForce() {
+        Point[] closestPair = new Point[2];
+        double minDistance = Double.POSITIVE_INFINITY;
+        
+        for (Point a : points) {
+            for (Point b : points) {
+                if (a != b && a.distance(b) < minDistance) {
+                    minDistance = a.distance(b);
+                    closestPair[0] = a;
+                    closestPair[1] = b;
+                }
+            }
+        }
+        return closestPair;
     }
     
     public Dimension getPreferredSize() {
