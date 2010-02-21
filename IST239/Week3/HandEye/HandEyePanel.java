@@ -16,23 +16,17 @@ public class HandEyePanel extends JPanel {
     private int xMax;
     /** The height of the game area, as specified by in the constructor */
     private int yMax;
-
     /** RNG for placing circles */
     private Random random;
-    /** Used for calculating the user's response time*/
-    private long roundStartTime;
     /** What round are we on */
     private int roundNum;
 
     public HandEyePanel(int xMax, int yMax) {
+        //Null out layout manager for absolute positioning
         this.setLayout(null);
-
-        this.xMax = xMax;
-        this.yMax = yMax;
-        random = new Random();
-        //Initialize gui
-        //start thread
-        //new HandEyeThread().start();
+        this.xMax   = xMax;
+        this.yMax   = yMax;
+        this.random = new Random();
         startGame();
 	}
 
@@ -40,34 +34,31 @@ public class HandEyePanel extends JPanel {
         //Set up the playing area
         roundNum = -1;
         //Call nextRound
-        nextRound();
+        nextRound(System.currentTimeMillis());
     }
 
     private void nextRound(HandEyeBall ball) {
         remove(ball);
-        nextRound();
+        nextRound(ball.getStartTime());
     }
     /**
      * Executed when a circle has been clicked and it is time to bein the next round
      */
-    private void nextRound() {
+    private void nextRound(long prevTime) {
         if (roundNum >= NUM_ROUNDS) {
             endGame();
             return;
         } 
         long currentTime = System.currentTimeMillis();
-        if (roundNum == -1) {
-            roundStartTime = currentTime;
-        } else {
+        if (roundNum > -1) {
             //record reaction time
-            userScore[roundNum] = currentTime - roundStartTime;
-            roundStartTime = currentTime;
+            userScore[roundNum] = currentTime - prevTime;
             System.out.println("Current round: " + roundNum);
         }
         roundNum++;
 
         //Create a new ball
-        HandEyeBall ball = new HandEyeBall();
+        HandEyeBall ball = new HandEyeBall(currentTime);
         //Add the ball to the panel
         add(ball);
         Container pane = this;
@@ -87,10 +78,14 @@ public class HandEyePanel extends JPanel {
 
     private void endGame() {
         //Display user's score
+        
+        long sumScore = 0;
         //Show quit/new game buttons
         for (long score : userScore) {
+            sumScore += score;
             System.out.println(score);
         }
+        System.out.println("Final score is: " + sumScore);
     }
 
     private int getRandom(int max, int ballSize) {
@@ -110,23 +105,31 @@ public class HandEyePanel extends JPanel {
      */
     private class HandEyeBall extends JButton {
         private Color color;
+        /** 
+         * When was this ball rendered? 
+         * Used for calculating the user's response time 
+         */
+        private long startTime;
+
         /**
          * Returns a new ball in a given location on the screen
          */
-        private HandEyeBall() {
-            color = randomColor();
+        private HandEyeBall(long startTime) {
+            this.startTime = startTime;
+            this.color = randomColor();
             setBorder(
                 BorderFactory.createEmptyBorder(0, 0, 0, 0)
             );
-            //Start a new round when clicked
             addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        //Start a new round when clicked
                         nextRound(HandEyeBall.this);
-                        //((JFrame) getParent()).remove(HandEyeBall.this);
-                        //frame.remove(HandEyeBall.this);
                     }
             });
+        }
+        public long getStartTime() {
+            return startTime;
         }
         public Dimension getPreferredSize() {
             return new Dimension(50, 50);
@@ -144,6 +147,10 @@ public class HandEyePanel extends JPanel {
                 (int) getPreferredSize().getHeight()
             );
         }
+        /**
+         * Returns a random color, using RGB 0-255
+         * Note: This may appear invisible, by matching the background color identically
+         */
         private Color randomColor() {
             return new Color( 
                 random.nextInt(256),
