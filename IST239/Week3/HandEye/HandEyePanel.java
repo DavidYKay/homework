@@ -8,9 +8,9 @@ public class HandEyePanel extends JPanel {
     private static final int TICK_SPEED = 333;
 
     /** Number of rounds that will be played */
-    private static final int NUM_ROUNDS = 20;
+    private static final int NUM_ROUNDS = 5;
     /** Holds the score of the user from each round  */
-    private int[] userScore = new int[NUM_ROUNDS];
+    private long[] userScore = new long[NUM_ROUNDS];
 
     /** The width of the game area, as specified by in the constructor */
     private int xMax;
@@ -38,62 +38,68 @@ public class HandEyePanel extends JPanel {
 
     public void startGame() {
         //Set up the playing area
+        roundNum = -1;
         //Call nextRound
         nextRound();
-       // timer = new Timer(speed, this);
-       // timer.setInitialDelay(pause);
-       // timer.start(); 
     }
 
     private void nextRound(HandEyeBall ball) {
         remove(ball);
-        repaint();
         nextRound();
     }
     /**
      * Executed when a circle has been clicked and it is time to bein the next round
      */
     private void nextRound() {
-        if (roundNum > NUM_ROUNDS) {
+        if (roundNum >= NUM_ROUNDS) {
             endGame();
             return;
         } 
+        long currentTime = System.currentTimeMillis();
+        if (roundNum == -1) {
+            roundStartTime = currentTime;
+        } else {
+            //record reaction time
+            userScore[roundNum] = currentTime - roundStartTime;
+            roundStartTime = currentTime;
+            System.out.println("Current round: " + roundNum);
+        }
         roundNum++;
+
         //Create a new ball
-        //HandEyeBall ball = new HandEyeBall(
-        //    getRandomX(),
-        //    getRandomY()
-        //);
-        
         HandEyeBall ball = new HandEyeBall();
         //Add the ball to the panel
         add(ball);
-        //ball.setLocation(200,200);
         Container pane = this;
-        Insets insets = pane.getInsets();
+        //Insets insets = pane.getInsets();
         Dimension size = ball.getPreferredSize();
         ball.setBounds(
             //25 + insets.left, 5 + insets.top,
-            getRandomX(), getRandomY(),
-            size.width, size.height
+            getRandom(xMax, size.width), 
+            getRandom(yMax, size.height), 
+            size.width, 
+            size.height
         );
         
         //Mark the time
-        roundStartTime = System.currentTimeMillis();
+        repaint();
     }
 
     private void endGame() {
         //Display user's score
         //Show quit/new game buttons
+        for (long score : userScore) {
+            System.out.println(score);
+        }
     }
 
-    private int getRandomX() {
+    private int getRandom(int max, int ballSize) {
         //Add one since nextInt is non-enclusive
-        return random.nextInt(xMax + 1);
-    }
-    private int getRandomY() {
-        //Add one since nextInt is non-enclusive
-        return random.nextInt(yMax + 1);
+        int centerBall = random.nextInt(
+                (max + 1) - (ballSize)
+        );
+        //Shift 
+        return centerBall + (ballSize / 2);
     }
     public Dimension getPreferredSize() {
         return new Dimension(xMax + 20, yMax + 20);
