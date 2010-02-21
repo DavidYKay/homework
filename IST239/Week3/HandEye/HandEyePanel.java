@@ -45,6 +45,11 @@ public class HandEyePanel extends JPanel {
        // timer.start(); 
     }
 
+    private void nextRound(HandEyeBall ball) {
+        remove(ball);
+        repaint();
+        nextRound();
+    }
     /**
      * Executed when a circle has been clicked and it is time to bein the next round
      */
@@ -101,8 +106,6 @@ public class HandEyePanel extends JPanel {
         /**
          * Returns a new ball in a given location on the screen
          */
-        //private HandEyeBall(int x, int y) {
-        //    setLocation(x, y);
         private HandEyeBall() {
             setBorder(
                 BorderFactory.createEmptyBorder(0, 0, 0, 0)
@@ -111,7 +114,9 @@ public class HandEyePanel extends JPanel {
             addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        nextRound();
+                        nextRound(HandEyeBall.this);
+                        //((JFrame) getParent()).remove(HandEyeBall.this);
+                        //frame.remove(HandEyeBall.this);
                     }
             });
         }
