@@ -5,21 +5,27 @@ import javax.swing.*;
 /**
  * A Game that tests hand-eye coordination of the player
  */
-public class HandEyeTest extends JPanel implements NewGameListener {
+public class HandEyeTest extends JPanel implements NewGameListener, EndGameListener {
     /** This is where the magic happens */
-	HandEyePanel handEyePanel;
+	private HandEyePanel handEyePanel;
+    private JLabel scoreLabel;
 
 	public HandEyeTest() {
 		super(new BorderLayout());
 
         //Create the function panel
-        handEyePanel = new HandEyePanel(400, 400);
+        handEyePanel = new HandEyePanel(400, 400, this);
         handEyePanel.setBackground(Color.RED);
 
         OptionsPanel optionsPanel = new OptionsPanel(this);
+
+        scoreLabel = new JLabel();
+        updateScoreLabel(0);
+
         //Lay out the demo.
         add(handEyePanel, BorderLayout.CENTER);
         add(optionsPanel, BorderLayout.WEST);
+        add(scoreLabel, BorderLayout.SOUTH);
 		setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 	}
 
@@ -33,11 +39,8 @@ public class HandEyeTest extends JPanel implements NewGameListener {
 		JFrame frame = new JFrame("Hand-Eye Coordination");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
+
         frame.add(new HandEyeTest());
-		//frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
-		//JComponent newContentPane = new HandEyeTest();
-		//newContentPane.setOpaque(true); //content panes must be opaque
-		//frame.setContentPane(newContentPane);
 
 		//Display the window.
 		frame.pack();
@@ -54,7 +57,24 @@ public class HandEyeTest extends JPanel implements NewGameListener {
 		});
 	}
 
+    private void updateScoreLabel(long score) {
+        scoreLabel.setText("Score: " + Long.toString(score));
+    }
+
+    /**
+     * Handles the newgame event from the button
+     */
     public void newGameEvent() {
+        updateScoreLabel(0);
         handEyePanel.newGame();
+    }
+    /**
+     * Handles the endGame event from the button
+     */
+    public void endGameEvent(EndGameEvent e) {
+        //scoreLabel.setText("WOOT");
+        updateScoreLabel(e.getScore());
+        //display final score
+        System.out.println("endGameEvent executed!");
     }
 }

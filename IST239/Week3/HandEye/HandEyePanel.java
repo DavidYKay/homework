@@ -5,7 +5,9 @@ import java.util.Random;
 
 public class HandEyePanel extends JPanel {
 
-    private static final int TICK_SPEED = 333;
+    //private static final int TICK_SPEED = 333;
+
+    private EndGameListener endGameListener;
 
     /** Number of rounds that will be played */
     private static final int NUM_ROUNDS = 5;
@@ -21,12 +23,13 @@ public class HandEyePanel extends JPanel {
     /** What round are we on */
     private int roundNum;
 
-    public HandEyePanel(int xMax, int yMax) {
+    public HandEyePanel(int xMax, int yMax, EndGameListener endGameListener) {
         //Null out layout manager for absolute positioning
-        this.setLayout(null);
+        this.endGameListener = endGameListener;
         this.xMax   = xMax;
         this.yMax   = yMax;
         this.random = new Random();
+        this.setLayout(null);
         newGame();
 	}
 
@@ -44,10 +47,10 @@ public class HandEyePanel extends JPanel {
         nextRound(ball.getStartTime());
     }
     /**
-     * Executed when a circle has been clicked and it is time to bein the next round
+     * Executed when a circle has been clicked and it is time to begin the next round
      */
     private void nextRound(long prevTime) {
-        if (roundNum >= NUM_ROUNDS) {
+        if (roundNum >= NUM_ROUNDS - 1) {
             endGame();
             return;
         } 
@@ -73,33 +76,47 @@ public class HandEyePanel extends JPanel {
             size.width, 
             size.height
         );
-        
         //Mark the time
         repaint();
     }
 
     private void endGame() {
         //Display user's score
-        
+        long sumScore = getScore();
+        System.out.println("Final score is: " + sumScore);
+        endGameListener.endGameEvent(
+            new EndGameEvent(this, sumScore)
+        );
+    }
+    public long getScore() {
         long sumScore = 0;
         //Show quit/new game buttons
         for (long score : userScore) {
             sumScore += score;
-            System.out.println(score);
+            //System.out.println(score);
         }
-        System.out.println("Final score is: " + sumScore);
+        return sumScore;
     }
 
+    /**
+     * Returns a random point on the game surface in one dimension
+     *
+     * @param ballSize - used to shift the ball positioning 
+     * so it doesn't go off the screen
+     * @param max - max allowd position on this axis
+     */
     private int getRandom(int max, int ballSize) {
         //Add one since nextInt is non-enclusive
         int centerBall = random.nextInt(
-                (max + 1) - (ballSize)
+            (max + 1) - (ballSize)
         );
         //Shift 
-        return centerBall + (ballSize / 2);
+        //return centerBall + (ballSize / 2);
+        return centerBall;
     }
     public Dimension getPreferredSize() {
-        return new Dimension(xMax + 20, yMax + 20);
+        //return new Dimension(xMax + 20, yMax + 20);
+        return new Dimension(xMax, yMax);
     }
 
     /**
