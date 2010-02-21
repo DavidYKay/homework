@@ -104,6 +104,9 @@ public class HandEyePanel extends JPanel {
         //private HandEyeBall(int x, int y) {
         //    setLocation(x, y);
         private HandEyeBall() {
+            setBorder(
+                BorderFactory.createEmptyBorder(0, 0, 0, 0)
+            );
             //Start a new round when clicked
             addActionListener(
                 new ActionListener() {
@@ -114,6 +117,16 @@ public class HandEyePanel extends JPanel {
         }
         public Dimension getPreferredSize() {
             return new Dimension(50, 50);
+        }
+
+        /** 
+         * Draw the button as a round circle rather than a standard button
+         */
+        protected void paintComponent(Graphics g) {
+            g.fillOval(0, 0, 
+                    (int) getPreferredSize().getWidth(), 
+                    (int) getPreferredSize().getHeight()
+            );
         }
     }
 }
