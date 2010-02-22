@@ -879,29 +879,32 @@ public class MommasBadBoy extends Car {
 	public void paintShifter(JPanel jp, Graphics2D g2d, int gear, int maxGear) {
 		Debug.println("MyCar:paintShifter()");
 		String value = String.valueOf(gear);
-		String maxValue = String.valueOf(maxGear);
 		int w = SwingUtilities.computeStringWidth(
 			g2d.getFontMetrics(),
 			value
 		);
 		g2d.setPaint(Color.BLACK);
 
+        //Number of lines in our H
+        int numColumns = (maxGear + 2 - 1) / 2;
+        //Number of pixels per column
+        int columnWidth = jp.getWidth() / numColumns;
+
+        //Draw the horizontal bar of the H
+        g2d.drawLine(
+            columnWidth / 2,
+            jp.getHeight() / 2,
+            columnWidth * (numColumns - 1) + (columnWidth / 2),
+            jp.getHeight() / 2
+        );
+
         int ovalSize = Math.min(
             jp.getWidth()  / 8,
             jp.getHeight() / 8
         );
 
-        //Draw the horizontal bar of the H
-        g2d.drawLine(
-            0,
-            jp.getHeight() / 2,
-            widthPerGear(jp, maxGear) * maxGear,
-            jp.getHeight() / 2
-        );
-
-        int columnWidth = widthPerGear(jp, maxGear);
         for (int i = 1; i <= maxGear; i++) {
-            //int xPos = (widthPerGear(jp, maxGear) * ((i / 2) + 1));
+            //int xPos = (columnWidth * ((i / 2) + 1));
             //still need to center it within each column
             int column = (i / 2) - 0;
             //Length of an arm of the H
@@ -919,6 +922,7 @@ public class MommasBadBoy extends Car {
             //Center in each column
             int xPos = (columnWidth * column) + (columnWidth / 2);
 
+            g2d.setStroke(new BasicStroke(2.0f));
             //Draw the vertical arms of the H
             g2d.drawLine(
                 xPos,
@@ -926,10 +930,11 @@ public class MommasBadBoy extends Car {
                 xPos,
                 (jp.getHeight() / 2) + hLength
             );
+            g2d.setStroke(new BasicStroke(1.0f));
 
             g2d.fillOval(
-                xPos,
-                yPos,
+                xPos - ovalSize / 2,
+                yPos - ovalSize / 2,
                 ovalSize,
                 ovalSize
             );
@@ -938,19 +943,13 @@ public class MommasBadBoy extends Car {
             yPos += 8;
             //compensate for font width
             //xPos -= (w / 2);
-            xPos -= (w);
+            //xPos -= w;
+            xPos -= w;
             g2d.drawString(
                 String.valueOf(i),
                 xPos,
                 yPos
             );
-
         }
 	}
-    private int widthPerGear(JPanel jp, int maxGear) {
-        //How many columns in the H do we have?
-        int numH = (maxGear + 2 - 1) / 2;
-
-        return jp.getWidth() / numH;
-    }
 }
