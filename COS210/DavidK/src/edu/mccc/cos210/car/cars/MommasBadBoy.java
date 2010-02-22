@@ -592,10 +592,20 @@ public class MommasBadBoy extends Car {
             -0.1625, 0.485,
             -0.17,   0.445
         );
+        p2d.lineTo(-0.1775, 0.4125);
+        p2d.lineTo(-0.1875, 0.375);
+        p2d.lineTo(-0.0075, 0.3425);
+        p2d.lineTo(0.0275, 0.345);
+        p2d.lineTo(0.0675, 0.325);
+        p2d.lineTo(0.175, 0.3275);
+        p2d.curveTo(
+            0.235, 0.3475,
+            0.6075, 0.225,
+            0.655, 0.17
+        );
+        p2d.lineTo(0.63, 0.09);
+        p2d.lineTo(-0.4475, 0.1775);
         
-
-
-
 
 
         p2d.closePath();
