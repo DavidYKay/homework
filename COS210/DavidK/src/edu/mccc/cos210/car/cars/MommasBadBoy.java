@@ -705,6 +705,24 @@ public class MommasBadBoy extends Car {
                     1.3
             );
         }
+
+        //Draw cap edge
+        s = new Ellipse2D.Double(
+            -0.045,
+            -0.045,
+            //0.045,
+            //0.045
+            0.090,
+            0.090
+        );
+        
+        s = at.createTransformedShape(s);
+        s = gat.createTransformedShape(s);
+        g2d.setPaint(Color.GRAY);
+        g2d.draw(s);
+        g2d.setPaint(SHADOW_GRAY);
+        g2d.fill(s);
+
         //Draw center of cap
         s = new Ellipse2D.Double(
             -0.010,
@@ -724,7 +742,7 @@ public class MommasBadBoy extends Car {
             s = new Ellipse2D.Double(
                 0.015,
                 0.0,
-                0.08,
+                0.03,
                 0.01
             );
             
