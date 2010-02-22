@@ -1,5 +1,6 @@
-./compileCar.sh
-./car.sh
-#./card.sh
-#./compile.sh dddial
-#./doit.sh
+./compileCar
+./compile shifter
+./shifter
+#./card
+#./compile dddial
+#./doit

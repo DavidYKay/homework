@@ -885,10 +885,72 @@ public class MommasBadBoy extends Car {
 			value
 		);
 		g2d.setPaint(Color.BLACK);
-		g2d.drawString(
-			value,
-			jp.getWidth() / 2 - w / 2,
-			jp.getHeight() / 2 + 8
-		);
+
+        int ovalSize = Math.min(
+            jp.getWidth()  / 8,
+            jp.getHeight() / 8
+        );
+
+        //Draw the horizontal bar of the H
+        g2d.drawLine(
+            0,
+            jp.getHeight() / 2,
+            widthPerGear(jp, maxGear) * maxGear,
+            jp.getHeight() / 2
+        );
+
+        int columnWidth = widthPerGear(jp, maxGear);
+        for (int i = 1; i <= maxGear; i++) {
+            //int xPos = (widthPerGear(jp, maxGear) * ((i / 2) + 1));
+            //still need to center it within each column
+            int column = (i / 2) - 0;
+            //Length of an arm of the H
+            int hLength = jp.getHeight() / 3;
+            int yPos = 0;
+            //Even gears on bottom
+            if (i % 2 == 0) {
+                yPos = (jp.getHeight() * 7) / 8;
+                column--;
+            } else {
+                //Odd gears on top
+                yPos = (jp.getHeight() * 1) / 8;
+                hLength *= -1;
+            }
+            //Center in each column
+            int xPos = (columnWidth * column) + (columnWidth / 2);
+
+            //Draw the vertical arms of the H
+            g2d.drawLine(
+                xPos,
+                jp.getHeight() / 2,
+                xPos,
+                (jp.getHeight() / 2) + hLength
+            );
+
+            g2d.fillOval(
+                xPos,
+                yPos,
+                ovalSize,
+                ovalSize
+            );
+
+            //compensate for font height
+            yPos += 8;
+            //compensate for font width
+            //xPos -= (w / 2);
+            xPos -= (w);
+            g2d.drawString(
+                String.valueOf(i),
+                xPos,
+                yPos
+            );
+
+        }
 	}
+    private int widthPerGear(JPanel jp, int maxGear) {
+        //How many columns in the H do we have?
+        int numH = (maxGear + 2 - 1) / 2;
+
+        return jp.getWidth() / numH;
+    }
 }
