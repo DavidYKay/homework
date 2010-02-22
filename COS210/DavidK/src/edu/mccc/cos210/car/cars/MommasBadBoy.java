@@ -515,8 +515,26 @@ public class MommasBadBoy extends Car {
 		g2d.fill(s);
         */
 	}
+    private void paintGuidesSide(JPanel jp, Graphics2D g2d, AffineTransform at) {
 
-    private void paintGuides(JPanel jp, Graphics2D g2d, AffineTransform at) {
+		Shape s;
+		Path2D p2d;
+        //arrow
+		p2d = new Path2D.Double();
+		p2d.moveTo(0.75, 0.25);
+		p2d.lineTo(0.5, 0.5);
+		p2d.moveTo(0.75, 0.25);
+		p2d.lineTo(0.5, 0.0);
+		p2d.moveTo(0.75, 0.25);
+		p2d.lineTo(-0.75, 0.25);
+		g2d.setPaint(HIGHLIGHT_COLOR);
+		s = p2d.createTransformedShape(at);
+		g2d.draw(s);
+
+
+    }
+
+    private void paintGuidesTop(JPanel jp, Graphics2D g2d, AffineTransform at) {
         Path2D p2d;
         Shape s;
 
@@ -551,25 +569,18 @@ public class MommasBadBoy extends Car {
 
 	protected void paintSide(JPanel jp, Graphics2D g2d, AffineTransform at) {
 		Debug.println("MommasBadBoy:paintSide()");
-		Path2D p2d = new Path2D.Double();
+		Path2D p2d;
+		Shape s;
+        p2d = new Path2D.Double();
 		p2d.moveTo(-0.75, 0.5);
 		p2d.lineTo(0.75, 0.5);
 		p2d.lineTo(0.75, 0.0);
 		p2d.lineTo(-0.75, 0.0);
 		p2d.closePath();
 		g2d.setPaint(Color.BLUE);
-		Shape s = p2d.createTransformedShape(at);
+        s = p2d.createTransformedShape(at);
 		g2d.fill(s);
-		p2d = new Path2D.Double();
-		p2d.moveTo(0.75, 0.25);
-		p2d.lineTo(0.5, 0.5);
-		p2d.moveTo(0.75, 0.25);
-		p2d.lineTo(0.5, 0.0);
-		p2d.moveTo(0.75, 0.25);
-		p2d.lineTo(-0.75, 0.25);
-		g2d.setPaint(HIGHLIGHT_COLOR);
-		s = p2d.createTransformedShape(at);
-		g2d.draw(s);
+
 		Ellipse2D origin = new Ellipse2D.Double(-0.025, -0.025, 0.05, 0.05);
 		g2d.setPaint(Color.RED);
 		s = at.createTransformedShape(origin);
@@ -604,17 +615,27 @@ public class MommasBadBoy extends Car {
             0.655, 0.17
         );
         p2d.lineTo(0.63, 0.09);
-        p2d.lineTo(-0.4475, 0.1775);
-        
-
+        p2d.lineTo(0.3925, 0.0925);
 
         p2d.closePath();
-        
         s = p2d.createTransformedShape(at);
         g2d.setPaint(HIGHLIGHT_COLOR);
 		g2d.draw(s);
         g2d.setPaint(SHADOW_GRAY);
 		g2d.fill(s);
+
+        //Accents
+		p2d = new Path2D.Double();
+        p2d.moveTo(0.0525, 0.13);
+        p2d.lineTo(0.06, 0.1775);
+        p2d.lineTo(0.3025, 0.2425);
+        p2d.lineTo(0.2925, 0.1025);
+        
+
+        p2d.closePath();
+        s = p2d.createTransformedShape(at);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.draw(s);
 
 
         //Rear tire
@@ -640,7 +661,48 @@ public class MommasBadBoy extends Car {
 		g2d.setPaint(TIRE_COLOR);
 		g2d.fill(s);
 
+        drawHubCap(g2d, at, true);
+        drawHubCap(g2d, at, false);
 	}
+
+    private void drawHubCap(Graphics2D g2d, AffineTransform gat, boolean front) {
+        AffineTransform at = new AffineTransform();
+        if (front) {
+            //at.translate(0.4025, 0.2175);
+            at.translate(0.5225, 0.1175);
+        } else {
+            //at.translate(-0.6025, 0.1275);
+            at.translate(-0.5925, 0.1275);
+            at.scale(
+                    1.3, 
+                    1.3
+            );
+        }
+        for (int i = 1; i <= 8; i++) {
+        //for (int i = 1; i <= 2; i++) {
+            Shape s = new RoundRectangle2D.Double(
+                0.01,
+                0.0,
+                0.08,
+                0.01,
+                TIRE_ARC_X,
+                TIRE_ARC_Y
+            );
+            
+            s = at.createTransformedShape(s);
+            s = gat.createTransformedShape(s);
+            g2d.setPaint(Color.RED);
+            g2d.draw(s);
+            g2d.setPaint(Color.GREEN);
+            g2d.fill(s);
+
+            at.rotate(
+                Math.toRadians(45)
+            );
+        }
+
+    }
+
     /**
      * Takes a string and font and creates a shape, for ease of rendering
      *
