@@ -946,10 +946,10 @@ public class MommasBadBoy extends Car {
                 ovalSize
             );
             paintNumber(g2d, xPos, yPos, i, w, 8);
+            g2d.setPaint(Color.BLACK);
         }
 	}
     private void paintNumber(Graphics2D g2d, int xPos, int yPos, int gear, int fontWidth, int fontHeight) {
-        g2d.setPaint(Color.BLACK);
         //compensate for font height
         yPos += fontHeight;
 
