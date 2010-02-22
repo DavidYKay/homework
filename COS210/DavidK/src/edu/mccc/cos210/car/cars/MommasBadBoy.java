@@ -932,6 +932,9 @@ public class MommasBadBoy extends Car {
             );
             g2d.setStroke(new BasicStroke(1.0f));
 
+            if (i == gear) {
+                g2d.setPaint(Color.RED);
+            }
             g2d.fillOval(
                 xPos - ovalSize / 2,
                 yPos - ovalSize / 2,
@@ -939,6 +942,7 @@ public class MommasBadBoy extends Car {
                 ovalSize
             );
 
+            g2d.setPaint(Color.BLACK);
             //compensate for font height
             yPos += 8;
             //compensate for font width
