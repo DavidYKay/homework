@@ -25,9 +25,6 @@ public class HandEyeTest extends JPanel implements NewGameListener, GameScoreLis
 
         gameOverLabel = new JLabel("Game Over!");
         gameOverLabel.setVisible(false);
-        //final JPanel glass = (JPanel) ((JFrame) getParent()).getGlassPane();
-        //glass.add(gameOverLabel);
-        //glass.setVisible(true);
 
         //Lay out the demo.
         add(handEyePanel, BorderLayout.CENTER);

@@ -12,8 +12,6 @@ public class OptionsPanel extends JPanel {
 	public OptionsPanel(NewGameListener listener) {
 		this.listener = listener;
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		//setLayout(new FlowLayout());
-		//setLayout(new BorderLayout());
 
 		JButton button = new JButton("New Game");
 		button.addActionListener(
@@ -36,7 +34,6 @@ public class OptionsPanel extends JPanel {
 	}
 
 	private void notifyListeners() {
-		//ActionEvent e = new ActionEvent();
 		listener.newGameEvent();
 	}
 }
