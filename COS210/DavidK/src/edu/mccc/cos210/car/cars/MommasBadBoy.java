@@ -284,7 +284,8 @@ public class MommasBadBoy extends Car {
 
         //Front oval
         e2d = new Ellipse2D.Double(
-            -0.0333, 0.99,
+            //-0.0333, 0.99,
+            -0.0333, 0.95,
             0.060, 0.04
         );
 		g2d.setPaint(Color.GRAY);
@@ -523,6 +524,17 @@ public class MommasBadBoy extends Car {
 
 		Shape s;
 		Path2D p2d;
+
+        p2d = new Path2D.Double();
+		p2d.moveTo(-0.75, 0.5);
+		p2d.lineTo(0.75, 0.5);
+		p2d.lineTo(0.75, 0.0);
+		p2d.lineTo(-0.75, 0.0);
+		p2d.closePath();
+		g2d.setPaint(Color.BLUE);
+        s = p2d.createTransformedShape(at);
+		g2d.fill(s);
+
         //arrow
 		p2d = new Path2D.Double();
 		p2d.moveTo(0.75, 0.25);
@@ -539,7 +551,6 @@ public class MommasBadBoy extends Car {
 		g2d.setPaint(Color.RED);
 		s = at.createTransformedShape(origin);
 		g2d.fill(s);
-
     }
 
     private void paintGuidesTop(JPanel jp, Graphics2D g2d, AffineTransform at) {
@@ -582,15 +593,6 @@ public class MommasBadBoy extends Car {
 
 		Path2D p2d;
 		Shape s;
-        p2d = new Path2D.Double();
-		p2d.moveTo(-0.75, 0.5);
-		p2d.lineTo(0.75, 0.5);
-		p2d.lineTo(0.75, 0.0);
-		p2d.lineTo(-0.75, 0.0);
-		p2d.closePath();
-		g2d.setPaint(Color.BLUE);
-        s = p2d.createTransformedShape(at);
-		g2d.fill(s);
 
         //Body
 		p2d = new Path2D.Double();
