@@ -86,7 +86,8 @@ public class ClosestPointsPanel extends JPanel {
         Arrays.sort(tempPoints, new PointComparator());
         double minX = tempPoints[0].getX();
         double maxX = tempPoints[numPoints - 1].getX();
-        //2. Split the set of points into two equal-sized subsets by a vertical line x = xmid
+        //2. Split the set of points into two equal-sized subsets by a vertical
+        //line x = xmid
         double xMid = (minX + maxX) / 2;
 
         LinkedList<Point> tempLeft  = new LinkedList<Point>();
@@ -101,11 +102,15 @@ public class ClosestPointsPanel extends JPanel {
         Point[] leftSubset  = (Point[]) tempLeft.toArray();
         Point[] rightSubset = (Point[]) tempRight.toArray();
 
-        //3. Solve the problem recursively in the left and right subsets. This will give the left-side and right-side minimal distances dLmin and dRmin respectively.
+        //3. Solve the problem recursively in the left and right subsets. This 
+        //will give the left-side and right-side minimal distances 
+        //dLmin and dRmin respectively.
         double minLeft  = getMinDistanceFromSubset(leftSubset,  Double.POSITIVE_INFINITY);
         double minRight = getMinDistanceFromSubset(rightSubset, Double.POSITIVE_INFINITY);
 
-        //4. Find the minimal distance dLRmin among the pair of points in which one point lies on the left of the dividing vertical and the second point lies to the right.
+        //4. Find the minimal distance dLRmin among the pair of points in which
+        //one point lies on the left of the dividing vertical and the second 
+        //point lies to the right.
         double minMid = rightSubset[0].getX() - leftSubset[leftSubset.length - 1].getX();
 
         //5. The final answer is the minimum among dLmin, dRmin, and dLRmin.

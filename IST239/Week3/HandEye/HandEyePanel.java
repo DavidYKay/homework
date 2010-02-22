@@ -5,12 +5,10 @@ import java.util.Random;
 
 public class HandEyePanel extends JPanel {
 
-    //private static final int TICK_SPEED = 333;
-
-    private EndGameListener endGameListener;
+    private GameScoreListener gameScoreListener;
 
     /** Number of rounds that will be played */
-    private static final int NUM_ROUNDS = 5;
+    private static final int NUM_ROUNDS = 20;
     /** Holds the score of the user from each round  */
     private long[] userScore = new long[NUM_ROUNDS];
 
@@ -23,9 +21,9 @@ public class HandEyePanel extends JPanel {
     /** What round are we on */
     private int roundNum;
 
-    public HandEyePanel(int xMax, int yMax, EndGameListener endGameListener) {
+    public HandEyePanel(int xMax, int yMax, GameScoreListener gameScoreListener) {
         //Null out layout manager for absolute positioning
-        this.endGameListener = endGameListener;
+        this.gameScoreListener = gameScoreListener;
         this.xMax   = xMax;
         this.yMax   = yMax;
         this.random = new Random();
@@ -57,8 +55,13 @@ public class HandEyePanel extends JPanel {
         long currentTime = System.currentTimeMillis();
         if (roundNum > -1) {
             //record reaction time
-            userScore[roundNum] = currentTime - prevTime;
-            System.out.println("Current round: " + roundNum);
+            long score = currentTime - prevTime;
+            userScore[roundNum] = score;
+            System.out.print("Current round: " + roundNum);
+            System.out.println(", this round's score: " + score);
+            gameScoreListener.gameScoreEvent(
+                new GameScoreEvent(this, getScore())
+            );
         }
         roundNum++;
 
@@ -67,10 +70,8 @@ public class HandEyePanel extends JPanel {
         //Add the ball to the panel
         add(ball);
         Container pane = this;
-        //Insets insets = pane.getInsets();
         Dimension size = ball.getPreferredSize();
         ball.setBounds(
-            //25 + insets.left, 5 + insets.top,
             getRandom(xMax, size.width), 
             getRandom(yMax, size.height), 
             size.width, 
@@ -84,8 +85,8 @@ public class HandEyePanel extends JPanel {
         //Display user's score
         long sumScore = getScore();
         System.out.println("Final score is: " + sumScore);
-        endGameListener.endGameEvent(
-            new EndGameEvent(this, sumScore)
+        gameScoreListener.gameScoreEvent(
+            new GameScoreEvent(this, sumScore)
         );
     }
     public long getScore() {
@@ -151,7 +152,7 @@ public class HandEyePanel extends JPanel {
             return startTime;
         }
         public Dimension getPreferredSize() {
-            return new Dimension(50, 50);
+            return new Dimension(20, 20);
         }
 
         /** 

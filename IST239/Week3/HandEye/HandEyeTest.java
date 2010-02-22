@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * A Game that tests hand-eye coordination of the player
  */
-public class HandEyeTest extends JPanel implements NewGameListener, EndGameListener {
+public class HandEyeTest extends JPanel implements NewGameListener, GameScoreListener {
     /** This is where the magic happens */
 	private HandEyePanel handEyePanel;
     private JLabel scoreLabel;
@@ -71,10 +71,10 @@ public class HandEyeTest extends JPanel implements NewGameListener, EndGameListe
     /**
      * Handles the endGame event from the button
      */
-    public void endGameEvent(EndGameEvent e) {
+    public void gameScoreEvent(GameScoreEvent e) {
         //scoreLabel.setText("WOOT");
         updateScoreLabel(e.getScore());
         //display final score
-        System.out.println("endGameEvent executed!");
+        System.out.println("gameScoreEvent executed!");
     }
 }
