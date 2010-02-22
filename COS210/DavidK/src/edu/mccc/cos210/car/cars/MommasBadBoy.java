@@ -574,6 +574,31 @@ public class MommasBadBoy extends Car {
 		g2d.setPaint(Color.RED);
 		s = at.createTransformedShape(origin);
 		g2d.fill(s);
+
+        //Rear tire
+        Ellipse2D.Double e2d = new Ellipse2D.Double(
+            -0.74, 0.0,
+            0.3, 0.2625
+        );
+		g2d.setPaint(HIGHLIGHT_COLOR);
+		s = at.createTransformedShape(e2d);
+		g2d.draw(s);
+		g2d.setPaint(TIRE_COLOR);
+		g2d.fill(s);
+
+        //Front tire
+        //FIXME resize this
+         e2d = new Ellipse2D.Double(
+            0.405, 0.005,
+            //0.3, 0.2625
+            0.23, 0.22
+        );
+		g2d.setPaint(HIGHLIGHT_COLOR);
+		s = at.createTransformedShape(e2d);
+		g2d.draw(s);
+		g2d.setPaint(TIRE_COLOR);
+		g2d.fill(s);
+
 	}
     /**
      * Takes a string and font and creates a shape, for ease of rendering
