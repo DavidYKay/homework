@@ -688,6 +688,51 @@ public class MommasBadBoy extends Car {
         drawHubCap(g2d, at, true);
         drawHubCap(g2d, at, false);
 
+        //Driver
+        //Helmet
+         e2d = new Ellipse2D.Double(
+            -0.075, 0.3425,
+            0.08, .05
+        );
+        
+        s = at.createTransformedShape(e2d);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.draw(s);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.fill(s);
+    
+        //Hands
+        e2d = new Ellipse2D.Double(
+            0.02, 0.34,
+            0.035, 0.035
+        );
+        s = at.createTransformedShape(e2d);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.draw(s);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.fill(s);
+        
+
+        //Chin Spoiler
+
+		p2d = new Path2D.Double();
+        p2d.moveTo(0.6525, 0.1325);
+        p2d.lineTo(0.675, 0.125);
+        p2d.lineTo(0.725, 0.1325);
+        p2d.lineTo(0.7425, 0.12);
+        p2d.lineTo(0.735, 0.11);
+        p2d.lineTo(0.74, 0.0875);
+        p2d.lineTo(0.745, 0.075);
+        p2d.lineTo(0.635, 0.085);
+        p2d.lineTo(0.6325, 0.095);
+        
+        p2d.closePath();
+        s = p2d.createTransformedShape(at);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.draw(s);
+        g2d.setPaint(ACCENT_COLOR);
+		g2d.fill(s);
+        
 	}
 
     private void drawHubCap(Graphics2D g2d, AffineTransform gat, boolean front) {
@@ -696,7 +741,8 @@ public class MommasBadBoy extends Car {
         Shape s;
         if (front) {
             //at.translate(0.4025, 0.2175);
-            at.translate(0.5225, 0.1175);
+            //at.translate(0.5225, 0.1175);
+            at.translate(0.5225, 0.1125);
         } else {
             //at.translate(-0.6025, 0.1275);
             at.translate(-0.5925, 0.1275);
