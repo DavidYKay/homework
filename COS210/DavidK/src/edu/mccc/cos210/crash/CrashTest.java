@@ -17,7 +17,7 @@ public class CrashTest {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Car[] car = new Car[2];
 		car[0] = Car.loadCar("Car1");
-		//car[0] = Car.loadCar("Momma's Bad Boy");
+		//car[0] = Car.loadCar("MommasBadBoy");
 		car[1] = Car.loadCar("Car2");
 		MyJPanel mjp = new MyJPanel(car);
 		jf.add(

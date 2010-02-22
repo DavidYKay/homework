@@ -15,7 +15,7 @@ public class ShifterTest implements ShifterModelListener {
 		this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.getContentPane().setBackground(new Color(255, 128, 0));
 		//String s = "MyCar";
-		String s = "Momma's Bad Boy";
+		String s = "MommasBadBoy";
 		Car car = Car.loadCar(s);
 		int maxGear = 2;
 		try {
@@ -35,6 +35,7 @@ public class ShifterTest implements ShifterModelListener {
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
+        Debug.println("MaxGear: " + maxGear);
 		ShifterCoordinator sc = new ShifterCoordinator(car, maxGear);
 		sc.getModel().addShifterModelListener(this);
 		JComponent jcr = sc.getController();

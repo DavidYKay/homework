@@ -76,6 +76,7 @@ public abstract class Car {
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
+        Debug.println("Car loaded: " + car);
 		return car;
 	}
 	private void loadData(String s) {

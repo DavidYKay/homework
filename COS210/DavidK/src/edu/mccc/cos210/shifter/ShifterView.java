@@ -22,8 +22,13 @@ public class ShifterView extends JPanel implements ShifterModelListener {
 	}
 	public void paintComponent(Graphics g) {
 		Debug.println("ShifterView:paintComponent()");
+		Debug.println("Graphics: " + g);
 		super.paintComponent(g);
+		Debug.println("Finished paintComponent");
 		Graphics2D g2d = (Graphics2D) g.create();
+		Debug.println(this.gear);
+		Debug.println(this.maxGear);
+        
 		car.paintShifter(this, g2d, this.gear, this.maxGear);
 		g2d.dispose();
 	}
