@@ -11,7 +11,7 @@ public class CarTest {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel jp = new JPanel();
 		jp.setLayout(new GridLayout(1, 2));
-		Car car = Car.loadCar("MyCar");
+		Car car = Car.loadCar("MommasBadBoy");
 		MyJPanel mjp = new MyJPanel(car, Car.View.TOP_VIEW);
 		jp.add(mjp);
 		jp.add(new MyJPanel(car, Car.View.SIDE_VIEW));
