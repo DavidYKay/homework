@@ -575,6 +575,38 @@ public class MommasBadBoy extends Car {
 		s = at.createTransformedShape(origin);
 		g2d.fill(s);
 
+        //Body
+		p2d = new Path2D.Double();
+        //Rear tire, just above
+		p2d.moveTo(-0.675, 0.2375);
+		p2d.lineTo(-0.65, 0.3325);
+		p2d.lineTo(-0.7425, 0.315);
+		p2d.lineTo(-0.7425, 0.49);
+		p2d.lineTo(-0.6025, 0.4825);
+		p2d.lineTo(-0.6, 0.4325);
+        p2d.lineTo(-0.53, 0.4175);
+        p2d.lineTo(-0.53, 0.3825);
+        p2d.lineTo(-0.4175, 0.36);
+        p2d.curveTo(
+            -0.37,   0.4325,
+            -0.1625, 0.485,
+            -0.17,   0.445
+        );
+        
+
+
+
+
+
+        p2d.closePath();
+        
+        s = p2d.createTransformedShape(at);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.draw(s);
+        g2d.setPaint(SHADOW_GRAY);
+		g2d.fill(s);
+
+
         //Rear tire
         Ellipse2D.Double e2d = new Ellipse2D.Double(
             -0.74, 0.0,
@@ -590,7 +622,6 @@ public class MommasBadBoy extends Car {
         //FIXME resize this
          e2d = new Ellipse2D.Double(
             0.405, 0.005,
-            //0.3, 0.2625
             0.23, 0.22
         );
 		g2d.setPaint(HIGHLIGHT_COLOR);
