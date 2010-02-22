@@ -16,6 +16,8 @@ public class MommasBadBoy extends Car {
     final private static double TIRE_ARC_X  = 0.037;
     final private static double TIRE_ARC_Y  = 0.051;
     
+    final private static float H_STROKE_WIDTH  = 3.0f;
+    
     final private static Color DARK_RED  = new Color(0x18, 0x10, 0x10);
     final private static Color DARK_TAN  = new Color(0x18, 0x14, 0x10);
     final private static Color DARK_PURPLE  = new Color(0x13, 0x0D, 0x11);
@@ -891,12 +893,14 @@ public class MommasBadBoy extends Car {
         int columnWidth = jp.getWidth() / numColumns;
 
         //Draw the horizontal bar of the H
+        g2d.setStroke(new BasicStroke(H_STROKE_WIDTH));
         g2d.drawLine(
             columnWidth / 2,
             jp.getHeight() / 2,
             columnWidth * (numColumns - 1) + (columnWidth / 2),
             jp.getHeight() / 2
         );
+        g2d.setStroke(new BasicStroke(1.0f));
 
         int ovalSize = Math.min(
             jp.getWidth()  / 8,
@@ -922,7 +926,7 @@ public class MommasBadBoy extends Car {
             //Center in each column
             int xPos = (columnWidth * column) + (columnWidth / 2);
 
-            g2d.setStroke(new BasicStroke(2.0f));
+            g2d.setStroke(new BasicStroke(H_STROKE_WIDTH));
             //Draw the vertical arms of the H
             g2d.drawLine(
                 xPos,
@@ -941,19 +945,31 @@ public class MommasBadBoy extends Car {
                 ovalSize,
                 ovalSize
             );
-
-            g2d.setPaint(Color.BLACK);
-            //compensate for font height
-            yPos += 8;
-            //compensate for font width
-            //xPos -= (w / 2);
-            //xPos -= w;
-            xPos -= w;
-            g2d.drawString(
-                String.valueOf(i),
-                xPos,
-                yPos
-            );
+            paintNumber(g2d, xPos, yPos, i, w, 8);
         }
 	}
+    private void paintNumber(Graphics2D g2d, int xPos, int yPos, int gear, int fontWidth, int fontHeight) {
+        g2d.setPaint(Color.BLACK);
+        //compensate for font height
+        yPos += fontHeight;
+
+        int offset = (fontHeight * 7) / 2;
+        //Extra adjustment, to offset gear towards center
+        if (gear % 2 == 0) {
+            //Even, on bottom
+            yPos -= offset;
+        } else {
+            //Odd, on top
+            yPos += offset;
+        }
+        
+        //compensate for font width
+        //xPos -= (w / 2);
+        xPos -= fontWidth;
+        g2d.drawString(
+            String.valueOf(gear),
+            xPos,
+            yPos
+        );
+    }
 }
