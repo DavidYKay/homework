@@ -60,7 +60,7 @@ public class HandEyePanel extends JPanel {
             System.out.print("Current round: " + roundNum);
             System.out.println(", this round's score: " + score);
             gameScoreListener.gameScoreEvent(
-                new GameScoreEvent(this, getScore())
+                new GameScoreEvent(this, getScore(), false)
             );
         }
         roundNum++;
@@ -86,7 +86,7 @@ public class HandEyePanel extends JPanel {
         long sumScore = getScore();
         System.out.println("Final score is: " + sumScore);
         gameScoreListener.gameScoreEvent(
-            new GameScoreEvent(this, sumScore)
+            new GameScoreEvent(this, sumScore, true)
         );
     }
     public long getScore() {

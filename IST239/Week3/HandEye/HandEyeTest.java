@@ -9,6 +9,7 @@ public class HandEyeTest extends JPanel implements NewGameListener, GameScoreLis
     /** This is where the magic happens */
 	private HandEyePanel handEyePanel;
     private JLabel scoreLabel;
+    private JLabel gameOverLabel;
 
 	public HandEyeTest() {
 		super(new BorderLayout());
@@ -22,10 +23,17 @@ public class HandEyeTest extends JPanel implements NewGameListener, GameScoreLis
         scoreLabel = new JLabel();
         updateScoreLabel(0);
 
+        gameOverLabel = new JLabel("Game Over!");
+        gameOverLabel.setVisible(false);
+        //final JPanel glass = (JPanel) ((JFrame) getParent()).getGlassPane();
+        //glass.add(gameOverLabel);
+        //glass.setVisible(true);
+
         //Lay out the demo.
         add(handEyePanel, BorderLayout.CENTER);
         add(optionsPanel, BorderLayout.WEST);
         add(scoreLabel, BorderLayout.SOUTH);
+        add(gameOverLabel, BorderLayout.EAST);
 		setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 	}
 
@@ -61,10 +69,16 @@ public class HandEyeTest extends JPanel implements NewGameListener, GameScoreLis
         scoreLabel.setText("Score: " + Long.toString(score));
     }
 
+    private void setGameOver(boolean over) {
+        //Show gameOver status?
+        gameOverLabel.setVisible(over);
+    }
+
     /**
      * Handles the newgame event from the button
      */
     public void newGameEvent() {
+        setGameOver(false);
         updateScoreLabel(0);
         handEyePanel.newGame();
     }
@@ -72,9 +86,10 @@ public class HandEyeTest extends JPanel implements NewGameListener, GameScoreLis
      * Handles the endGame event from the button
      */
     public void gameScoreEvent(GameScoreEvent e) {
-        //scoreLabel.setText("WOOT");
+        //display cumulative score
         updateScoreLabel(e.getScore());
-        //display final score
-        System.out.println("gameScoreEvent executed!");
+        if (e.getGameOver()) {
+            setGameOver(e.getGameOver());
+        }
     }
 }
