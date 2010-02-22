@@ -759,7 +759,7 @@ public class MommasBadBoy extends Car {
         s = at.createTransformedShape(e2d);
         g2d.setPaint(HIGHLIGHT_COLOR);
 		g2d.draw(s);
-        g2d.setPaint(HIGHLIGHT_COLOR);
+        g2d.setPaint(SHADOW_GRAY);
 		g2d.fill(s);
     
         //Hands
@@ -770,7 +770,7 @@ public class MommasBadBoy extends Car {
         s = at.createTransformedShape(e2d);
         g2d.setPaint(HIGHLIGHT_COLOR);
 		g2d.draw(s);
-        g2d.setPaint(HIGHLIGHT_COLOR);
+        g2d.setPaint(SHADOW_GRAY);
 		g2d.fill(s);
         
 	}
