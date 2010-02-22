@@ -33,6 +33,8 @@ public class MommasBadBoy extends Car {
 	protected void paintTop(JPanel jp, Graphics2D g2d, AffineTransform at) {
 		Debug.println("MommasBadBoy:paintTop()");
 
+        g2d.setStroke(new BasicStroke(2.0f));
+
         Path2D p2d;
         Shape s;
 		
@@ -569,6 +571,9 @@ public class MommasBadBoy extends Car {
 
 	protected void paintSide(JPanel jp, Graphics2D g2d, AffineTransform at) {
 		Debug.println("MommasBadBoy:paintSide()");
+
+        g2d.setStroke(new BasicStroke(2.0f));
+
 		Path2D p2d;
 		Shape s;
         p2d = new Path2D.Double();
@@ -616,12 +621,13 @@ public class MommasBadBoy extends Car {
         );
         p2d.lineTo(0.63, 0.09);
         p2d.lineTo(0.3925, 0.0925);
-
+        p2d.lineTo(-0.4475, 0.1775);
+        
         p2d.closePath();
         s = p2d.createTransformedShape(at);
         g2d.setPaint(HIGHLIGHT_COLOR);
 		g2d.draw(s);
-        g2d.setPaint(SHADOW_GRAY);
+        g2d.setPaint(BODY_COLOR);
 		g2d.fill(s);
 
         //Accents
@@ -637,6 +643,24 @@ public class MommasBadBoy extends Car {
         g2d.setPaint(HIGHLIGHT_COLOR);
 		g2d.draw(s);
 
+
+        //Undercarriage
+		p2d = new Path2D.Double();
+        //p2d.moveTo(-0.145, 0.1425);
+        p2d.moveTo(-0.145, 0.145);
+        p2d.lineTo(-0.2075, 0.0575);
+        p2d.lineTo(-0.2075, 0.0575);
+        p2d.lineTo(-0.405, 0.0725);
+        p2d.lineTo(-0.4775, 0.035);
+        //p2d.lineTo(-0.4475, 0.17);
+        p2d.lineTo(-0.4475, 0.18);
+
+        p2d.closePath();
+        s = p2d.createTransformedShape(at);
+        g2d.setPaint(HIGHLIGHT_COLOR);
+		g2d.draw(s);
+        g2d.setPaint(DARK_GRAY);
+		g2d.fill(s);
 
         //Rear tire
         Ellipse2D.Double e2d = new Ellipse2D.Double(
@@ -663,10 +687,13 @@ public class MommasBadBoy extends Car {
 
         drawHubCap(g2d, at, true);
         drawHubCap(g2d, at, false);
+
 	}
 
     private void drawHubCap(Graphics2D g2d, AffineTransform gat, boolean front) {
+        Stroke origStroke = g2d.getStroke();
         AffineTransform at = new AffineTransform();
+        Shape s;
         if (front) {
             //at.translate(0.4025, 0.2175);
             at.translate(0.5225, 0.1175);
@@ -678,29 +705,41 @@ public class MommasBadBoy extends Car {
                     1.3
             );
         }
+        //Draw center of cap
+        s = new Ellipse2D.Double(
+            -0.010,
+            -0.010,
+            0.02,
+            0.02
+        );
+        s = at.createTransformedShape(s);
+        s = gat.createTransformedShape(s);
+        g2d.setPaint(DARK_TAN);
+        g2d.draw(s);
+        g2d.setPaint(DARK_RED);
+        g2d.fill(s);
+        
+        g2d.setStroke(new BasicStroke(2.0f));
         for (int i = 1; i <= 8; i++) {
-        //for (int i = 1; i <= 2; i++) {
-            Shape s = new RoundRectangle2D.Double(
-                0.01,
+            s = new Ellipse2D.Double(
+                0.015,
                 0.0,
                 0.08,
-                0.01,
-                TIRE_ARC_X,
-                TIRE_ARC_Y
+                0.01
             );
             
             s = at.createTransformedShape(s);
             s = gat.createTransformedShape(s);
-            g2d.setPaint(Color.RED);
+            g2d.setPaint(Color.GRAY);
             g2d.draw(s);
-            g2d.setPaint(Color.GREEN);
+            g2d.setPaint(ACCENT_COLOR);
             g2d.fill(s);
 
             at.rotate(
                 Math.toRadians(45)
             );
         }
-
+        g2d.setStroke(origStroke);
     }
 
     /**
