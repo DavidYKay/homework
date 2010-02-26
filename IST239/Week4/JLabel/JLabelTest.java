@@ -4,22 +4,20 @@ import java.awt.geom.*;
 import javax.swing.*;
 import java.util.*;
 
-public class TrafficLightTest {
-    
+public class JLabelTest {
+
     public static void main(String[] sa) {
-        new TrafficLightTest().doit();
+        new JLabelTest().doit();
     }
 
     public void doit() {
 		JFrame frame = new JFrame();
-		frame.setTitle("Traffic Light");
+		frame.setTitle("JLabel Demo");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setLayout(new FlowLayout());
 
-        TrafficLight trafficLight = new TrafficLight();
-        frame.add(trafficLight);
-        frame.add(new TrafficLight.ButtonPanel(trafficLight));
+        frame.add(new JLabelDemo());
 
 		frame.pack();
 		frame.setVisible(true);
