@@ -1,2 +1,2 @@
-javac *.java
+javac -g *.java
 java TrafficLightTest
