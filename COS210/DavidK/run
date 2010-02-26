@@ -1,7 +1,7 @@
-./compileCar
-./car
+#./compileCar
+#./car
 #./compile shifter
 #./shifter
 #./card
-#./compile dddial
-#./doit
+./compile dddial
+./doit
