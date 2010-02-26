@@ -57,7 +57,15 @@ public class CalendarPanel extends JPanel {
     private JComponent createCalendarComponent() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 7));
+        //panel.setLayout(new GridLayout(6, 8));
         
+        //Insert some blank days before the first of the month
+        int numBlanks = 6;
+        for (int i = 1; i <= numBlanks; i++) {
+            JComponent blank = new JLabel();
+            panel.add(blank);
+        }
+
         int monthMax = 31;
         for (int i = 1; i <= monthMax; i++) {
             JLabel label = new JLabel(
