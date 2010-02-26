@@ -13,14 +13,14 @@ public class CalendarPanel extends JPanel {
     public CalendarPanel() {
         this.calendar = new GregorianCalendar();
 
-        //this.monthLabel = new JLabel("Months go here");
         this.monthLabel = new JLabel(
             getMonthString(),
             JLabel.CENTER
         );
+        this.weekDays     = createWeekdaysComponent();
+        //this.mainCalendar = new JLabel("Main Calendar");
+        this.mainCalendar = createCalendarComponent();
 
-        weekDays        = createWeekdaysComponent();
-        mainCalendar    = new JLabel("Main Calendar");
         //Vertical BoxLayout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(monthLabel);
@@ -39,17 +39,14 @@ public class CalendarPanel extends JPanel {
     }
 
     private JComponent createWeekdaysComponent() {
-        //return new JLabel("Days of week");
-
         JPanel panel = new JPanel();
-        //panel.setLayout(new GridLayout(0, 1));
         panel.setLayout(new GridLayout(1, 0));
         
         for (DaysOfWeek day : DaysOfWeek.values()) {
-            //protoDeck.add(new Card(rank, suit));
             panel.add(
                 new JLabel(
-                    day.getName()
+                    day.getName(),
+                    JLabel.CENTER
                 )
             );
         }
@@ -57,21 +54,27 @@ public class CalendarPanel extends JPanel {
         return panel;
     }
 
-    public Dimension getPreferredSize() {
-        //return new Dimension(300, 300);
-        return new Dimension(600, 600);
+    private JComponent createCalendarComponent() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(6, 7));
+        
+        int monthMax = 31;
+        for (int i = 1; i <= monthMax; i++) {
+            JLabel label = new JLabel(
+                String.valueOf(i),
+                JLabel.RIGHT
+            );
+            label.setBorder(
+                BorderFactory.createLineBorder(Color.BLACK, 2) 
+            );
+            panel.add(label);
+        }
+
+        return panel;
     }
 
-    /*
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        
-        g.drawOval(
-                0,
-                0,
-                getWidth(),
-                getHeight()
-        );
+
+    public Dimension getPreferredSize() {
+        return new Dimension(600, 600);
     }
-    */
 }
