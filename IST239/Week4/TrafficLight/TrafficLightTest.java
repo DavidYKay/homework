@@ -5,11 +5,7 @@ import javax.swing.*;
 import java.util.*;
 
 public class TrafficLightTest {
-    private TrafficLight trafficLight;
     
-    public TrafficLightTest() {
-    }
-
     public static void main(String[] sa) {
         new TrafficLightTest().doit();
     }
@@ -19,11 +15,11 @@ public class TrafficLightTest {
 		frame.setTitle("Investment Calculator");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
-		//frame.setLayout();
+		frame.setLayout(new FlowLayout());
 
-        //frame.add(new TrafficLight.ButtonPanel(this));
-        //frame.add(new TrafficLight(this));
-        frame.add(new TrafficLight());
+        TrafficLight trafficLight = new TrafficLight();
+        frame.add(trafficLight);
+        frame.add(new TrafficLight.ButtonPanel(trafficLight));
 
 		frame.pack();
 		frame.setVisible(true);

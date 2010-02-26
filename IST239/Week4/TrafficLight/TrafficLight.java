@@ -2,9 +2,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
+import javax.swing.event.*;
 import java.util.*;
 
-public class TrafficLight extends JComponent {
+public class TrafficLight extends JComponent implements ActionListener {
     private TrafficLight.TrafficColor color;
     private static final int BORDER = 10;
 
@@ -53,11 +54,46 @@ public class TrafficLight extends JComponent {
             }
         }
     }
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("State changed!");
+    }
 
-    public class ButtonPanel {
-        public ButtonPanel() {
-            //use radio buttons
-            //Sends a TrafficLightEvent when clicked
+    public static class ButtonPanel extends JPanel {
+        String redString    = "Red";
+        String yellowString = "Yellow";
+        String greenString  = "Green";
+
+        public ButtonPanel(ActionListener listener) {
+            
+            JRadioButton redButton = new JRadioButton(redString);
+            redButton.setMnemonic(KeyEvent.VK_P);
+            redButton.setActionCommand(redString);
+
+            JRadioButton yellowButton = new JRadioButton(yellowString);
+            yellowButton.setMnemonic(KeyEvent.VK_P);
+            yellowButton.setActionCommand(yellowString);
+
+            JRadioButton greenButton = new JRadioButton(greenString);
+            greenButton.setMnemonic(KeyEvent.VK_P);
+            greenButton.setActionCommand(greenString);
+
+            //Group the radio buttons.
+            ButtonGroup group = new ButtonGroup();
+            group.add(redButton);
+            group.add(yellowButton);
+            group.add(greenButton);
+
+            JPanel radioPanel = new JPanel(new GridLayout(0, 1));
+            radioPanel.add(redButton);
+            radioPanel.add(yellowButton);
+            radioPanel.add(greenButton);
+
+            add(radioPanel);
+
+            //Register a listener for the radio buttons.
+               redButton.addActionListener(listener);
+            yellowButton.addActionListener(listener);
+             greenButton.addActionListener(listener);
         }
     }
 
@@ -65,7 +101,7 @@ public class TrafficLight extends JComponent {
         RED    ( 0, Color.RED ) ,
         YELLOW ( 1, Color.YELLOW ) ,
         GREEN  ( 2, Color.GREEN ) ;
-        
+
         private final int value; 
         private final Color color; 
         TrafficColor(int value, Color color) {
