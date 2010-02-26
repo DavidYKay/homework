@@ -10,7 +10,6 @@ public class Investment {
 		frame.setTitle("Investment Calculator");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
-		//frame.setLayout();
         frame.add(new InvestmentPanel(this));
 		frame.pack();
 		frame.setVisible(true);
