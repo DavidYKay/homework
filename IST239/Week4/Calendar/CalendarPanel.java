@@ -18,7 +18,6 @@ public class CalendarPanel extends JPanel {
             JLabel.CENTER
         );
         this.weekDays     = createWeekdaysComponent();
-        //this.mainCalendar = new JLabel("Main Calendar");
         this.mainCalendar = createCalendarComponent();
 
         //Vertical BoxLayout
@@ -26,14 +25,13 @@ public class CalendarPanel extends JPanel {
         add(monthLabel);
         add(weekDays);
         add(mainCalendar);
-                //GridLayout
-                //DayLabels
     }
 
     private String getMonthString() {
         return String.format(
             "%d / %d",
-            calendar.get(Calendar.MONTH) + 1, //Offset by one since it's 0-based
+            //Offset by one since it's 0-based
+            calendar.get(Calendar.MONTH) + 1, 
             calendar.get(Calendar.YEAR)
         );
     }
@@ -51,22 +49,25 @@ public class CalendarPanel extends JPanel {
             );
         }
 
+        panel.setBorder(
+            BorderFactory.createLineBorder(Color.BLACK, 1) 
+        );
         return panel;
     }
 
     private JComponent createCalendarComponent() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 7));
-        //panel.setLayout(new GridLayout(6, 8));
         
         //Insert some blank days before the first of the month
-        int numBlanks = 6;
+        int numBlanks = 3;
         for (int i = 1; i <= numBlanks; i++) {
             JComponent blank = new JLabel();
             panel.add(blank);
         }
 
-        int monthMax = 31;
+        int monthMax = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        System.out.println("Month max: " + monthMax);
         for (int i = 1; i <= monthMax; i++) {
             JLabel label = new JLabel(
                 String.valueOf(i),
@@ -78,9 +79,11 @@ public class CalendarPanel extends JPanel {
             panel.add(label);
         }
 
+        panel.setBorder(
+            BorderFactory.createLineBorder(Color.BLACK, 1) 
+        );
         return panel;
     }
-
 
     public Dimension getPreferredSize() {
         return new Dimension(600, 600);
