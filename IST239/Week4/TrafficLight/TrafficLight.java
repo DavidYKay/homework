@@ -21,6 +21,11 @@ public class TrafficLight extends JComponent implements ActionListener {
         //return new Dimension(200, 200);
     }
 
+    public void setColor(TrafficColor color) {
+        this.color = color;
+        repaint();
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int trafficWidth = (getWidth() / 2) - (2 * BORDER);
@@ -58,32 +63,8 @@ public class TrafficLight extends JComponent implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         actionCommand = actionCommand.toUpperCase();
+        System.out.println("Event ID: " + e.getID());
         //System.out.println("State changed: " + actionCommand);
-
-        //Enum reflection code modified from example on StackOverflow.com
-        try {
-            //Class<?> clz = Class.forName("test.PropertyEnum");
-            //Class<?> clz = Class.forName("TrafficLight.TrafficColor");
-            Class<?> clz = Class.forName("TrafficColor");
-            /* Use method added in Java 1.5. */
-            Object[] consts = clz.getEnumConstants();
-            /* Enum constants are in order of declaration. */
-            Class<?> sub = consts[0].getClass();
-
-            //Method mth = sub.getDeclaredMethod("getValue");
-            Method mth = sub.getDeclaredMethod("getColor");
-            //String val = (String) mth.invoke(consts[0]);
-            Color val = (Color) mth.invoke(consts[0]);
-            /* Prove it worked. */
-            //System.out.println("getDefaultValue " + val.equals(PropertyEnum.SYSTEM_PROPERTY_ONE.getDefaultValue()));
-            System.out.println("Class: " + clz);
-            System.out.println("Sub: " + sub);
-            System.out.println("Method: " + mth);
-            System.out.println("Result: " + val);
-
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
     }
 
     public static class ButtonPanel extends JPanel {
@@ -91,7 +72,12 @@ public class TrafficLight extends JComponent implements ActionListener {
         String yellowString = "Yellow";
         String greenString  = "Green";
 
-        public ButtonPanel(ActionListener listener) {
+        TrafficLight trafficLight;
+
+        //public ButtonPanel(ActionListener listener) {
+        public ButtonPanel(TrafficLight newLight) {
+
+            this.trafficLight = newLight;
             
             JRadioButton redButton = new JRadioButton(redString);
             redButton.setMnemonic(KeyEvent.VK_P);
@@ -118,10 +104,26 @@ public class TrafficLight extends JComponent implements ActionListener {
 
             add(radioPanel);
 
-            //Register a listener for the radio buttons.
-               redButton.addActionListener(listener);
-            yellowButton.addActionListener(listener);
-             greenButton.addActionListener(listener);
+            //Register a trafficLight for the radio buttons.
+            //   redButton.addActionListener(trafficLight);
+            //yellowButton.addActionListener(trafficLight);
+            // greenButton.addActionListener(trafficLight);
+
+            redButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    trafficLight.setColor(TrafficColor.RED);
+                }
+            });
+            yellowButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    trafficLight.setColor(TrafficColor.YELLOW);
+                }
+            });
+            greenButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    trafficLight.setColor(TrafficColor.GREEN);
+                }
+            });
         }
     }
 
