@@ -13,23 +13,16 @@ public class InvestmentPanel extends JPanel {
 
     private JTextField investmentAmount;
     private JTextField monthlyInterestRate;
-    private JTextField futureValue;
     private JTextField years;
+    private JLabel futureValue;
 
     public InvestmentPanel(Investment investment) {
         this.investment          = investment;
 
-        //LinkedList<JComponent> components = new LinkedList<JComponent>();
-        //components.add( new JTextField("Investment Amount"));
-        //components.add( new JTextField("Monthly Interest Rate"));
-        //components.add( new JTextField("Future Value"));
-        //components.add( new JTextField("Years"));
-
         this.investmentAmount    = new JTextField("Investment Amount");
         this.monthlyInterestRate = new JTextField("Monthly Interest Rate");
-        this.futureValue         = new JTextField("Future Value");
         this.years               = new JTextField("Years");
-
+        this.futureValue         = new JLabel("0");
 
         //setLayout(new FlowLayout());
         setLayout(new BoxLayout(
@@ -48,29 +41,27 @@ public class InvestmentPanel extends JPanel {
         inputPanel.add(monthlyInterestRate);
         inputPanel.add(new JLabel("Years"));
         inputPanel.add(years);
+        inputPanel.add(new JLabel("Future Value"));
+        inputPanel.add(futureValue);
 
         add(inputPanel);
 
         JButton compute = new JButton("Compute");
         compute.addActionListener( new ActionListener() {
             public void actionPerformed (ActionEvent e) {
-
                 futureValue.setText(
                     String.valueOf(
                         InvestmentPanel.this.investment.calculateInvestment(
-                            //String.valueOf(investmentAmount.getText()),
-                            //String.valueOf(monthlyInterestRate.getText()),
                             Double.parseDouble(investmentAmount.getText()),
                             Double.parseDouble(monthlyInterestRate.getText()),
                             Integer.parseInt(years.getText())
                         )
                     )
                 );
-                //futureValue.setText("Yahoo!");
             }
         });
         add(compute);
-        add(futureValue);
+        //add(futureValue);
     }
 
 }
