@@ -24,7 +24,6 @@ public class InvestmentPanel extends JPanel {
         this.years               = new JTextField("Years");
         this.futureValue         = new JLabel("0");
 
-        //setLayout(new FlowLayout());
         setLayout(new BoxLayout(
             this,
             BoxLayout.Y_AXIS
@@ -44,6 +43,9 @@ public class InvestmentPanel extends JPanel {
         inputPanel.add(new JLabel("Future Value"));
         inputPanel.add(futureValue);
 
+        inputPanel.setBorder(
+            BorderFactory.createLineBorder(Color.BLACK)
+        );
         add(inputPanel);
 
         JButton compute = new JButton("Compute");
@@ -60,8 +62,13 @@ public class InvestmentPanel extends JPanel {
                 );
             }
         });
-        add(compute);
-        //add(futureValue);
-    }
+        JPanel computePanel = new JPanel();
+        computePanel.setBorder(
+            BorderFactory.createLineBorder(Color.BLACK)
+        );
+        //setLayout(new FlowLayout());
 
+        computePanel.add(compute);
+        add(computePanel);
+    }
 }
