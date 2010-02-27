@@ -4,7 +4,10 @@ import java.awt.geom.*;
 import javax.swing.*;
 import java.util.*;
 
-public class JLabelDemo extends JPanel {
+public class JLabelDemo extends JPanel implements ActionListener {
+
+    private JButton mainButton;
+    private ArrayList<JComboBox> comboBoxes = new ArrayList<JComboBox>();
 
     String[] horizontalAlignStrings = { 
         "LEFT"    , 
@@ -14,23 +17,35 @@ public class JLabelDemo extends JPanel {
         "TRAILING"
     };
 
+    int[] horizontalAlignValues = { 
+        SwingConstants.LEFT    , 
+        SwingConstants.CENTER  ,
+        SwingConstants.RIGHT   , 
+        SwingConstants.LEADING , 
+        SwingConstants.TRAILING
+    };
+
     String[] verticalAlignStrings = { 
         "TOP"    , 
         "CENTER"  ,
         "BOTTOM"   
     };
 
+    int[] verticalAlignValues = { 
+        SwingConstants.TOP   , 
+        SwingConstants.CENTER,
+        SwingConstants.BOTTOM
+    };
+
     public JLabelDemo() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         /** Button, which holds our label */
-        JButton button = new JButton(
+        mainButton = new JButton(
             "Grapes",
             new ImageIcon("ussr.png")
         );
-        //button.setVerticalTextPosition(JButton.BOTTOM);
-        //button.setHorizontalTextPosition(JButton.CENTER);
-        add(button);
+        add(mainButton);
 
         JPanel bottomHalf = new JPanel();
         bottomHalf.add(createPanel(true));
@@ -69,15 +84,52 @@ public class JLabelDemo extends JPanel {
         /** Panel to hold the combo boxes */
         JPanel comboBoxPanel = new JPanel();
         comboBoxPanel.setLayout(new GridLayout(0,1));
-        comboBoxPanel.add(
-            new JComboBox(horizontalAlignStrings)
-        );
-        comboBoxPanel.add(
-            new JComboBox(verticalAlignStrings)
-        );
+
+        JComboBox comboBox = new JComboBox(horizontalAlignStrings);
+        comboBox.addActionListener(this);
+        comboBoxPanel.add(comboBox);
+
+        addBoxToList(comboBox);
+
+        comboBox = new JComboBox(verticalAlignStrings);
+        comboBox.addActionListener(this);
+        comboBoxPanel.add(comboBox);
+        
+        addBoxToList(comboBox);
+
         mainPanel.add(comboBoxPanel);
 
         return mainPanel;
     }
 
+    private void addBoxToList(JComboBox box) { 
+        comboBoxes.add(box);
+    }
+
+	public void actionPerformed(ActionEvent e) {
+		JComboBox cb = (JComboBox)e.getSource();
+		int index = cb.getSelectedIndex();
+        String command = e.getActionCommand();
+        Object source = e.getSource();
+        System.out.println("Command: " + command);
+        System.out.println("Source: " + source);
+        if (source == comboBoxes.get(0)) {
+            mainButton.setHorizontalAlignment(
+                horizontalAlignValues[index]
+            );
+        } else if (source == comboBoxes.get(1)) {
+            mainButton.setVerticalAlignment(
+                verticalAlignValues[index]
+            );
+        } else if (source == comboBoxes.get(2)) {
+            mainButton.setHorizontalTextPosition(
+                horizontalAlignValues[index]
+            );
+        } else if (source == comboBoxes.get(3)) {
+            mainButton.setVerticalTextPosition(
+                verticalAlignValues[index]
+            );
+        }
+        System.out.println("Index selected: " + index);
+	}
 }
