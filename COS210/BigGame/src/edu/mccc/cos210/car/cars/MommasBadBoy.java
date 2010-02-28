@@ -55,8 +55,8 @@ public class MommasBadBoy extends Car {
 		setTachometer(
             new MommasBadBoy.MyTachometer(
                 //new DefaultBoundedRangeModel(0, 5000, 0, 10000)
-                new DefaultBoundedRangeModel(0, 0, 0, MAX_RPM)
-                //new MommasBadBoy.SpeedoModel(MAX_RPM)
+                //new DefaultBoundedRangeModel(0, 0, 0, MAX_RPM)
+                new MommasBadBoy.SpeedoModel(MAX_RPM)
             )
         );
 		return getTachometer();
@@ -1025,9 +1025,17 @@ public class MommasBadBoy extends Car {
         public int getValue() {
             Debug.println("MommasBadBoy.SpeedoModel:getValue()");
             double unrounded = (double) currentSpeed / scalingFactor;
-            //System.out.println("unrounded value: " + unrounded);
-            //System.out.println("rounded value: " + (int) unrounded);
+            Debug.println("Current speed" + currentSpeed);
+            Debug.println("Current speed angle: " + unrounded);
             return (int) unrounded;
+        }
+        
+        /**
+         * Return the actual value that the gauge represents
+         */
+        public int getActualValue() {
+            Debug.println("MommasBadBoy.SpeedoModel:getActualValue()");
+            return currentSpeed;
         }
 
         @Override
@@ -1044,16 +1052,27 @@ public class MommasBadBoy extends Car {
 		public MySpeedometer(BoundedRangeModel model) {
             super(model);
             Debug.println("MommasBadBoy:Speedometer()");
-            //this.model = model;
-            //setCounterClockwise(true);
             setCounterClockwise(false);
         }
     }
     public class MyTachometer extends Car.Tachometer {
-        public MyTachometer(BoundedRangeModel model) {
+        public MyTachometer(SpeedoModel model) {
             super(model);
             Debug.println("MommasBadBoy:Tachometer()");
             setCounterClockwise(false);
         }
+		public void paintComponent(Graphics g) {
+            Debug.println("MommasBadBoy.MyTachometer.paintComponent()");
+            drawClockFace(g);
+            drawTicks(g);
+            drawSuperTicks(g);
+            drawNeedle(g, model.getValue());
+
+			Graphics2D g2d = (Graphics2D) g.create();
+			String value = String.valueOf(((SpeedoModel) model).getActualValue());
+			g2d.setPaint(Color.RED);
+			g2d.drawString(value, 90, 60);
+			g2d.dispose();
+		}
     }
 }
