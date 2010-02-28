@@ -39,11 +39,13 @@ public class MommasBadBoy extends Car {
     @Override
 	public Car.Speedometer createSpeedometer() {
 		Debug.println("MommasBadBoy:createSpeedometer()");
+        MommasBadBoy.Speedometer speedo = 
+        new MommasBadBoy.MySpeedometer(
+            new DefaultBoundedRangeModel(0, 0, 0, getMaxSpeed())
+            //new MommasBadBoy.SpeedoModel(getMaxSpeed())
+        );
 		setSpeedometer(
-            new MommasBadBoy.Speedometer(
-                new DefaultBoundedRangeModel(0, 0, 0, getMaxSpeed())
-                //new MommasBadBoy.SpeedoModel(getMaxSpeed())
-            )
+            speedo
         );
 		return getSpeedometer();
 	}
@@ -51,7 +53,7 @@ public class MommasBadBoy extends Car {
 	public Car.Tachometer createTachometer() {
 		Debug.println("MommasBadBoy:createTachometer()");
 		setTachometer(
-            new MommasBadBoy.Tachometer(
+            new MommasBadBoy.MyTachometer(
                 //new DefaultBoundedRangeModel(0, 5000, 0, 10000)
                 new DefaultBoundedRangeModel(0, 0, 0, MAX_RPM)
                 //new MommasBadBoy.SpeedoModel(MAX_RPM)
@@ -60,7 +62,7 @@ public class MommasBadBoy extends Car {
 		return getTachometer();
 	}
 	protected void paintTop(JPanel jp, Graphics2D g2d, AffineTransform at) {
-		Debug.println("MommasBadBoy:paintTop()");
+		Debug.println("MommasBadBoy.paintTop()");
 
         g2d.setStroke(new BasicStroke(2.0f));
 
@@ -613,7 +615,7 @@ public class MommasBadBoy extends Car {
     }
 
 	protected void paintSide(JPanel jp, Graphics2D g2d, AffineTransform at) {
-		Debug.println("MommasBadBoy:paintSide()");
+		Debug.println("MommasBadBoy.paintSide()");
 
         g2d.setStroke(new BasicStroke(2.0f));
 
@@ -907,7 +909,7 @@ public class MommasBadBoy extends Car {
     }
 
 	public void paintShifter(JPanel jp, Graphics2D g2d, int gear, int maxGear) {
-		Debug.println("MyCar:paintShifter()");
+		Debug.println("MommasBadBoy.paintShifter()");
 		String value = String.valueOf(gear);
 		int w = SwingUtilities.computeStringWidth(
 			g2d.getFontMetrics(),
@@ -1000,17 +1002,6 @@ public class MommasBadBoy extends Car {
             yPos
         );
     }
-    private class Speedometer extends Car.Speedometer {
-		public Speedometer(BoundedRangeModel model) {
-            super(model);
-            Debug.println("MommasBadBoy.Speedometer()");
-            //this.model = model;
-            //setBorderPainted(false);
-            //setOpaque(false);
-            //setCounterClockwise(true);
-            setCounterClockwise(false);
-        }
-    }
     /**
      * Overriden DefaultBoundedRangeModel, so that it returns values in 
      * degrees, while taking values in MPH/RPM.
@@ -1022,6 +1013,7 @@ public class MommasBadBoy extends Car {
         private int maxSpeed;
         private int currentSpeed;
         private SpeedoModel(int maxSpeed) {
+            Debug.println("MommasBadBoy.SpeedoModel:SpeedoModel()");
             this.maxSpeed = maxSpeed;
             scalingFactor = (double) maxSpeed / 360.0;
         }
@@ -1031,6 +1023,7 @@ public class MommasBadBoy extends Car {
          * Return a value in degrees
          */
         public int getValue() {
+            Debug.println("MommasBadBoy.SpeedoModel:getValue()");
             double unrounded = (double) currentSpeed / scalingFactor;
             //System.out.println("unrounded value: " + unrounded);
             //System.out.println("rounded value: " + (int) unrounded);
@@ -1042,23 +1035,25 @@ public class MommasBadBoy extends Car {
          * Take a value in MPH
          */
         public void setValue(int speed) {
+            Debug.println("MommasBadBoy.SpeedoModel:setValue()");
             currentSpeed = speed;
         }
     }
-    public class Tachometer extends Car.Tachometer {
-        public Tachometer(BoundedRangeModel model) {
+
+    private class MySpeedometer extends Car.Speedometer {
+		public MySpeedometer(BoundedRangeModel model) {
             super(model);
-            Debug.println("MommasBadBoy.Tachometer()");
-            //setRound(false);
+            Debug.println("MommasBadBoy:Speedometer()");
+            //this.model = model;
+            //setCounterClockwise(true);
+            setCounterClockwise(false);
         }
-        /*
-            //super(model);
-			//ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
-			//DDDial.SuperTicks redline = new DDDial.SuperTicks(MAX_RPM, Color.RED);
-			//DDDial.SuperTicks warning = new DDDial.SuperTicks(MAX_RPM - 45, Color.YELLOW);
-			//alst.add(redline);
-			//alst.add(warning);
+    }
+    public class MyTachometer extends Car.Tachometer {
+        public MyTachometer(BoundedRangeModel model) {
+            super(model);
+            Debug.println("MommasBadBoy:Tachometer()");
+            setCounterClockwise(false);
         }
-        */
     }
 }
