@@ -5,6 +5,8 @@ import javax.swing.*;
 import edu.mccc.cos210.car.*;
 import com.cbthinkx.util.Debug;
 import java.awt.font.*;
+import java.util.*;
+import edu.mccc.cos210.dddial.*;
 
 public class MommasBadBoy extends Car {
 
@@ -18,20 +20,45 @@ public class MommasBadBoy extends Car {
     
     final private static float H_STROKE_WIDTH  = 3.0f;
     
-    final private static Color DARK_RED  = new Color(0x18, 0x10, 0x10);
-    final private static Color DARK_TAN  = new Color(0x18, 0x14, 0x10);
-    final private static Color DARK_PURPLE  = new Color(0x13, 0x0D, 0x11);
-    final private static Color DARK_GRAY  = new Color(0x0C, 0x0A, 0x0A);
-    final private static Color SHADOW_GRAY  = new Color(0x08, 0x04, 0x00);
+    final private static Color DARK_RED    = new Color(0x18, 0x10, 0x10);
+    final private static Color DARK_TAN    = new Color(0x18, 0x14, 0x10);
+    final private static Color DARK_PURPLE = new Color(0x13, 0x0D, 0x11);
+    final private static Color DARK_GRAY   = new Color(0x0C, 0x0A, 0x0A);
+    final private static Color SHADOW_GRAY = new Color(0x08, 0x04, 0x00);
 
-    final private static Color TIRE_COLOR  = SHADOW_GRAY;
-    final private static Color BODY_COLOR  = DARK_GRAY;
-    final private static Color ACCENT_COLOR  = DARK_PURPLE;
-    final private static Color DRIVER_COLOR  = DARK_TAN;
-    final private static Color HIGHLIGHT_COLOR  = Color.DARK_GRAY;
+    final private static Color TIRE_COLOR      = SHADOW_GRAY;
+    final private static Color BODY_COLOR      = DARK_GRAY;
+    final private static Color ACCENT_COLOR    = DARK_PURPLE;
+    final private static Color DRIVER_COLOR    = DARK_TAN;
+    final private static Color HIGHLIGHT_COLOR = Color.DARK_GRAY;
     
     final private static Font REAR_FONT  = new Font("Helvetica", Font.PLAIN,  22);
 
+    static private final int MAX_RPM = 10000;
+
+    @Override
+	public Car.Speedometer createSpeedometer() {
+		Debug.println("MommasBadBoy:createSpeedometer()");
+		setSpeedometer(
+            new MommasBadBoy.Speedometer(
+                new DefaultBoundedRangeModel(0, 0, 0, getMaxSpeed())
+                //new MommasBadBoy.SpeedoModel(getMaxSpeed())
+            )
+        );
+		return getSpeedometer();
+	}
+    @Override
+	public Car.Tachometer createTachometer() {
+		Debug.println("MommasBadBoy:createTachometer()");
+		setTachometer(
+            new MommasBadBoy.Tachometer(
+                //new DefaultBoundedRangeModel(0, 5000, 0, 10000)
+                new DefaultBoundedRangeModel(0, 0, 0, MAX_RPM)
+                //new MommasBadBoy.SpeedoModel(MAX_RPM)
+            )
+        );
+		return getTachometer();
+	}
 	protected void paintTop(JPanel jp, Graphics2D g2d, AffineTransform at) {
 		Debug.println("MommasBadBoy:paintTop()");
 
@@ -505,7 +532,6 @@ public class MommasBadBoy extends Car {
         g2d.setPaint(Color.ORANGE);
 		g2d.fill(s);
 
-
         /*
         //Text Logo
         AffineTransform textAt = getTextTransform(-0.2,-0.933);
@@ -973,5 +999,66 @@ public class MommasBadBoy extends Car {
             xPos,
             yPos
         );
+    }
+    private class Speedometer extends Car.Speedometer {
+		public Speedometer(BoundedRangeModel model) {
+            super(model);
+            Debug.println("MommasBadBoy.Speedometer()");
+            //this.model = model;
+            //setBorderPainted(false);
+            //setOpaque(false);
+            //setCounterClockwise(true);
+            setCounterClockwise(false);
+        }
+    }
+    /**
+     * Overriden DefaultBoundedRangeModel, so that it returns values in 
+     * degrees, while taking values in MPH/RPM.
+     */
+    private class SpeedoModel extends DefaultBoundedRangeModel {
+        /** MPH per degree */
+        private double scalingFactor;
+        private static final int MIN_SPEED = 0;
+        private int maxSpeed;
+        private int currentSpeed;
+        private SpeedoModel(int maxSpeed) {
+            this.maxSpeed = maxSpeed;
+            scalingFactor = (double) maxSpeed / 360.0;
+        }
+
+        @Override
+        /**
+         * Return a value in degrees
+         */
+        public int getValue() {
+            double unrounded = (double) currentSpeed / scalingFactor;
+            //System.out.println("unrounded value: " + unrounded);
+            //System.out.println("rounded value: " + (int) unrounded);
+            return (int) unrounded;
+        }
+
+        @Override
+        /**
+         * Take a value in MPH
+         */
+        public void setValue(int speed) {
+            currentSpeed = speed;
+        }
+    }
+    public class Tachometer extends Car.Tachometer {
+        public Tachometer(BoundedRangeModel model) {
+            super(model);
+            Debug.println("MommasBadBoy.Tachometer()");
+            //setRound(false);
+        }
+        /*
+            //super(model);
+			//ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
+			//DDDial.SuperTicks redline = new DDDial.SuperTicks(MAX_RPM, Color.RED);
+			//DDDial.SuperTicks warning = new DDDial.SuperTicks(MAX_RPM - 45, Color.YELLOW);
+			//alst.add(redline);
+			//alst.add(warning);
+        }
+        */
     }
 }
