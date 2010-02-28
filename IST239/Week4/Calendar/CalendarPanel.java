@@ -12,6 +12,15 @@ public class CalendarPanel extends JPanel {
 
     public CalendarPanel() {
         this.calendar = new GregorianCalendar();
+        //Set to the first of the month, so that our day of week calculations are good
+        calendar.set(
+            Calendar.DAY_OF_MONTH,
+            1
+        );
+        calendar.add(
+            Calendar.MONTH,
+            0
+        );
 
         this.monthLabel = new JLabel(
             getMonthString(),
@@ -58,10 +67,17 @@ public class CalendarPanel extends JPanel {
     private JComponent createCalendarComponent() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 7));
+        //panel.setLayout(new GridLayout(5, 7));
         
         //Insert some blank days before the first of the month
-        int numBlanks = 3;
-        for (int i = 1; i <= numBlanks; i++) {
+        //int numBlanks = 3;
+        int numBlanks = calendar.get(
+            Calendar.DAY_OF_WEEK
+        );
+        numBlanks--;
+        System.out.println("numBlanks: " + numBlanks);
+        //for (int i = 1; i <= numBlanks; i++) {
+        for (int i = 0; i < numBlanks; i++) {
             JComponent blank = new JLabel();
             panel.add(blank);
         }

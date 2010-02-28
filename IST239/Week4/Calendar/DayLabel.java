@@ -6,6 +6,7 @@ import java.util.*;
 public class DayLabel extends JLabel {
 
     public DayLabel() {
+
     }
     //public Dimension getPreferredSize() {
     //    return new Dimension(200, 200);
