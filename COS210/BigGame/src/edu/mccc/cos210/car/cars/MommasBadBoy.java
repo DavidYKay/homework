@@ -34,18 +34,15 @@ public class MommasBadBoy extends Car {
     
     final private static Font REAR_FONT  = new Font("Helvetica", Font.PLAIN,  22);
 
-    static private final int MAX_RPM = 10000;
+    static private final int MAX_RPM = 5000;
 
     @Override
 	public Car.Speedometer createSpeedometer() {
 		Debug.println("MommasBadBoy:createSpeedometer()");
-        MommasBadBoy.Speedometer speedo = 
-        new MommasBadBoy.MySpeedometer(
-            new DefaultBoundedRangeModel(0, 0, 0, getMaxSpeed())
-            //new MommasBadBoy.SpeedoModel(getMaxSpeed())
-        );
 		setSpeedometer(
-            speedo
+            new MommasBadBoy.Speedometer(
+                new MommasBadBoy.SpeedoModel(getMaxSpeed())
+            )
         );
 		return getSpeedometer();
 	}
@@ -53,9 +50,7 @@ public class MommasBadBoy extends Car {
 	public Car.Tachometer createTachometer() {
 		Debug.println("MommasBadBoy:createTachometer()");
 		setTachometer(
-            new MommasBadBoy.MyTachometer(
-                //new DefaultBoundedRangeModel(0, 5000, 0, 10000)
-                //new DefaultBoundedRangeModel(0, 0, 0, MAX_RPM)
+            new MommasBadBoy.Tachometer(
                 new MommasBadBoy.SpeedoModel(MAX_RPM)
             )
         );
@@ -1048,21 +1043,46 @@ public class MommasBadBoy extends Car {
         }
     }
 
-    private class MySpeedometer extends Car.Speedometer {
-		public MySpeedometer(BoundedRangeModel model) {
+    private class Speedometer extends Car.Speedometer {
+        private final int FINAL_POSITION = 45;
+        private final int INIT_POSITION  = 270;
+        private final int EXTENT = INIT_POSITION - FINAL_POSITION;
+
+		public Speedometer(BoundedRangeModel model) {
             super(model);
             Debug.println("MommasBadBoy:Speedometer()");
             setCounterClockwise(false);
+            setAngleStart(45);
+            setAngleExtent(getMaxSpeedShown());
+
+            setAngleStart(FINAL_POSITION);
+            setAngleExtent(EXTENT);
+            setNeedleStart(360 - INIT_POSITION);
+
+			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
+			DDDial.SuperTicks dialMin = new DDDial.SuperTicks(
+                valueToDegree(0, getMaxSpeedShown(), EXTENT), 
+                //0,
+                Color.YELLOW
+            );
+			DDDial.SuperTicks dialMax = new DDDial.SuperTicks(
+                INIT_POSITION - valueToDegree(getMaxSpeedShown(), getMaxSpeedShown(), EXTENT), 
+                Color.GREEN
+            );
+			DDDial.SuperTicks maxSpeed = new DDDial.SuperTicks(
+                INIT_POSITION - valueToDegree(getMaxSpeed(), getMaxSpeedShown(), EXTENT), 
+                Color.RED
+            );
+			//alst.add(dialMin);
+			alst.add(maxSpeed);
+			alst.add(dialMax);
+			setSuperTicks(alst);
         }
-    }
-    public class MyTachometer extends Car.Tachometer {
-        public MyTachometer(SpeedoModel model) {
-            super(model);
-            Debug.println("MommasBadBoy:Tachometer()");
-            setCounterClockwise(false);
+        private int getMaxSpeedShown() {
+            return getMaxSpeed() + getMaxSpeed() / 10;
         }
 		public void paintComponent(Graphics g) {
-            Debug.println("MommasBadBoy.MyTachometer.paintComponent()");
+            Debug.println("MommasBadBoy.Speedometer.paintComponent()");
             drawClockFace(g);
             drawTicks(g);
             drawSuperTicks(g);
@@ -1074,5 +1094,53 @@ public class MommasBadBoy extends Car {
 			g2d.drawString(value, 90, 60);
 			g2d.dispose();
 		}
+    }
+    public class Tachometer extends Car.Tachometer {
+        private final int FINAL_POSITION = 45;
+        private final int INIT_POSITION  = 270;
+        private final int EXTENT = INIT_POSITION - FINAL_POSITION;
+        public Tachometer(SpeedoModel model) {
+            super(model);
+            Debug.println("MommasBadBoy:Tachometer()");
+
+            setAngleStart(FINAL_POSITION);
+            setAngleExtent(EXTENT);
+            setNeedleStart(360 - INIT_POSITION);
+
+			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
+			DDDial.SuperTicks redline = new DDDial.SuperTicks(
+                INIT_POSITION - valueToDegree(4000, MAX_RPM, EXTENT), 
+                Color.RED
+            );
+			DDDial.SuperTicks warning = new DDDial.SuperTicks(
+                INIT_POSITION - valueToDegree(MAX_RPM, MAX_RPM, EXTENT), 
+                Color.YELLOW
+            );
+			alst.add(redline);
+			alst.add(warning);
+			setSuperTicks(alst);
+
+            setCounterClockwise(false);
+        }
+		public void paintComponent(Graphics g) {
+            Debug.println("MommasBadBoy.Tachometer.paintComponent()");
+            drawClockFace(g);
+            drawTicks(g);
+            drawSuperTicks(g);
+            drawNeedle(g, model.getValue());
+
+			Graphics2D g2d = (Graphics2D) g.create();
+			String value = String.valueOf(((SpeedoModel) model).getActualValue());
+			g2d.setPaint(Color.RED);
+			g2d.drawString(value, 90, 60);
+			g2d.dispose();
+		}
+    }
+    private int valueToDegree(int value, int max, int maxAngle) {
+        double fraction = (double) value / max;
+        return (int) (fraction * maxAngle);
+    }
+    private int valueToDegree(int value, int max) {
+        return valueToDegree(value, max, 360);
     }
 }
