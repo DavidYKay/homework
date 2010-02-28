@@ -1,1 +1,0 @@
-java -Dcom.cbthinkx.debug -classpath .;c:/cos210;vecmath.jar edu.mccc.cos210.biggame.BigGame %1 %2 %3 %4 %5 %6 %7 %8 %9
