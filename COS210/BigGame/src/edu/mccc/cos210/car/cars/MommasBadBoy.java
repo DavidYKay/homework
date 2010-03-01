@@ -1048,7 +1048,8 @@ public class MommasBadBoy extends Car {
 
     private class Speedometer extends Car.Speedometer {
         private final int INIT_POSITION  = 315;
-        private final int EXTENT = getMaxSpeed();
+        //private final int EXTENT = getMaxSpeed();
+        private final int EXTENT = getMaxSpeedShown();
         private final int FINAL_POSITION = INIT_POSITION - EXTENT;
 
 		public Speedometer(BoundedRangeModel model) {
@@ -1057,11 +1058,11 @@ public class MommasBadBoy extends Car {
             setCounterClockwise(false);
             //setAngleStart(INIT_POSITION);
             setAngleStart(FINAL_POSITION);
-            //setAngleExtent(getMaxSpeedShown());
-            setAngleExtent(getMaxSpeed());
+            setAngleExtent(EXTENT);
+            //setAngleExtent(getMaxSpeed());
             //setNeedleStart( 360 - (FINAL_POSITION + EXTENT));
-            //setNeedleStart(360 - INIT_POSITION );
-            setNeedleStart(360 - 315 );
+            setNeedleStart(360 - INIT_POSITION );
+            //setNeedleStart(360 - 315 );
 
 			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
 			DDDial.SuperTicks dialMin = new DDDial.SuperTicks(
