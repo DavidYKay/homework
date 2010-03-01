@@ -1046,14 +1046,14 @@ public class MommasBadBoy extends Car {
     }
 
     private class Speedometer extends Car.Speedometer {
-        private final int INIT_POSITION  = 315;
-        //private final int EXTENT = getMaxSpeed();
-        private final int EXTENT = getMaxSpeedShown();
-        private final int FINAL_POSITION = INIT_POSITION - EXTENT;
-
 		public Speedometer(BoundedRangeModel model) {
             super(model);
             Debug.println("MommasBadBoy:Speedometer()");
+
+            final int INIT_POSITION  = 315;
+            final int EXTENT         = getMaxSpeedShown();
+            final int FINAL_POSITION = INIT_POSITION - EXTENT;
+
             setCounterClockwise(false);
             setAngleStart(FINAL_POSITION);
             setAngleExtent(EXTENT);
@@ -1062,16 +1062,15 @@ public class MommasBadBoy extends Car {
 			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
 			DDDial.SuperTicks dialMin = new DDDial.SuperTicks(
                 INIT_POSITION,
-                Color.YELLOW
+                Color.GREEN
             );
 			DDDial.SuperTicks dialMax = new DDDial.SuperTicks(
-                //INIT_POSITION - valueToDegree(getMaxSpeedShown(), getMaxSpeedShown(), EXTENT), 
                 FINAL_POSITION,
-                Color.GREEN
+                Color.RED
             );
 			DDDial.SuperTicks maxSpeed = new DDDial.SuperTicks(
                 INIT_POSITION - valueToDegree(getMaxSpeed(), getMaxSpeedShown(), EXTENT), 
-                Color.RED
+                Color.YELLOW
             );
 			alst.add(dialMin);
 			alst.add(maxSpeed);
@@ -1100,7 +1099,6 @@ public class MommasBadBoy extends Car {
             super(model);
             Debug.println("MommasBadBoy:Tachometer()");
 
-            //this.extent = extent;
             //This creates a directly vertical redline
             int finalPosition = 90 - (extent / 5);
             int initPosition  = finalPosition + extent;
@@ -1118,8 +1116,13 @@ public class MommasBadBoy extends Car {
                 initPosition - valueToDegree(MAX_RPM, MAX_RPM, extent), 
                 Color.YELLOW
             );
+			DDDial.SuperTicks min = new DDDial.SuperTicks(
+                initPosition, 
+                Color.GREEN
+            );
 			alst.add(redline);
 			alst.add(warning);
+			alst.add(min);
 			setSuperTicks(alst);
 
             setCounterClockwise(false);
