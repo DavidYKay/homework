@@ -2,8 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+//Create a calculator for investment
 public class Investment {
-    //Create a calculator for investment
 
 	public void doit() {
 		JFrame frame = new JFrame();
@@ -20,8 +20,8 @@ public class Investment {
 	}
 
     public double calculateInvestment( double investmentAmount, double monthlyInterestRate, int years) {
-        double futureValue = investmentAmount * Math.pow((1 + monthlyInterestRate),  12);
         //futureValue = investmentAmount * (1 + monthlyInterestRate) ^ (years * 12)
+        double futureValue = investmentAmount * Math.pow((1 + monthlyInterestRate),  years * 12);
         return futureValue;
     }
 }

@@ -19,9 +19,9 @@ public class InvestmentPanel extends JPanel {
     public InvestmentPanel(Investment investment) {
         this.investment          = investment;
 
-        this.investmentAmount    = new JTextField("Investment Amount");
-        this.monthlyInterestRate = new JTextField("Monthly Interest Rate");
-        this.years               = new JTextField("Years");
+        this.investmentAmount    = new JTextField();
+        this.monthlyInterestRate = new JTextField();
+        this.years               = new JTextField();
         this.futureValue         = new JLabel("0");
 
         setLayout(new BoxLayout(
@@ -66,8 +66,6 @@ public class InvestmentPanel extends JPanel {
         computePanel.setBorder(
             BorderFactory.createLineBorder(Color.BLACK)
         );
-        //setLayout(new FlowLayout());
-
         computePanel.add(compute);
         add(computePanel);
     }
