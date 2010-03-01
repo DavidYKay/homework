@@ -1096,30 +1096,26 @@ public class MommasBadBoy extends Car {
 		}
     }
     public class Tachometer extends Car.Tachometer {
-        private  int FINAL_POSITION;
-        private  int EXTENT ;
-        private  int INIT_POSITION;
-        //private  int EXTENT = INIT_POSITION - FINAL_POSITION;
         public Tachometer(SpeedoModel model, int extent) {
             super(model);
             Debug.println("MommasBadBoy:Tachometer()");
 
-            FINAL_POSITION = 36;
-            EXTENT = extent;
-            INIT_POSITION  = FINAL_POSITION + EXTENT;
+            //this.extent = extent;
+            //This creates a directly vertical redline
+            int finalPosition = 90 - (extent / 5);
+            int initPosition  = finalPosition + extent;
 
-
-            setAngleStart(FINAL_POSITION);
-            setAngleExtent(EXTENT);
-            setNeedleStart(360 - INIT_POSITION);
+            setAngleStart(finalPosition);
+            setAngleExtent(extent);
+            setNeedleStart(360 - initPosition);
 
 			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
 			DDDial.SuperTicks redline = new DDDial.SuperTicks(
-                INIT_POSITION - valueToDegree(4000, MAX_RPM, EXTENT), 
+                initPosition - valueToDegree(4000, MAX_RPM, extent), 
                 Color.RED
             );
 			DDDial.SuperTicks warning = new DDDial.SuperTicks(
-                INIT_POSITION - valueToDegree(MAX_RPM, MAX_RPM, EXTENT), 
+                initPosition - valueToDegree(MAX_RPM, MAX_RPM, extent), 
                 Color.YELLOW
             );
 			alst.add(redline);
