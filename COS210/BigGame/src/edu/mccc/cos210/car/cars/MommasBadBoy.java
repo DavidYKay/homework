@@ -35,16 +35,14 @@ public class MommasBadBoy extends Car {
     final private static Font REAR_FONT  = new Font("Helvetica", Font.PLAIN,  22);
 
     static private final int MAX_RPM = 5000;
-
-    static private final int SPEEDO_EXTENT = 276;
-    static private final int TACH_EXTENT   = 180;
+    static private final int TACH_EXTENT = 270;
 
     @Override
 	public Car.Speedometer createSpeedometer() {
 		Debug.println("MommasBadBoy:createSpeedometer()");
 		setSpeedometer(
             new MommasBadBoy.Speedometer(
-                new MommasBadBoy.SpeedoModel(getMaxSpeed(), SPEEDO_EXTENT)
+                new MommasBadBoy.SpeedoModel(getMaxSpeed(), getMaxSpeed())
             )
         );
 		return getSpeedometer();
@@ -54,7 +52,8 @@ public class MommasBadBoy extends Car {
 		Debug.println("MommasBadBoy:createTachometer()");
 		setTachometer(
             new MommasBadBoy.Tachometer(
-                new MommasBadBoy.SpeedoModel(MAX_RPM, TACH_EXTENT)
+                new MommasBadBoy.SpeedoModel(MAX_RPM, TACH_EXTENT),
+                TACH_EXTENT
             )
         );
 		return getTachometer();
@@ -1097,12 +1096,18 @@ public class MommasBadBoy extends Car {
 		}
     }
     public class Tachometer extends Car.Tachometer {
-        public final int FINAL_POSITION = 45;
-        public final int INIT_POSITION  = 270;
-        public final int EXTENT         = INIT_POSITION - FINAL_POSITION;
-        public Tachometer(SpeedoModel model) {
+        private  int FINAL_POSITION;
+        private  int EXTENT ;
+        private  int INIT_POSITION;
+        //private  int EXTENT = INIT_POSITION - FINAL_POSITION;
+        public Tachometer(SpeedoModel model, int extent) {
             super(model);
             Debug.println("MommasBadBoy:Tachometer()");
+
+            FINAL_POSITION = 36;
+            EXTENT = extent;
+            INIT_POSITION  = FINAL_POSITION + EXTENT;
+
 
             setAngleStart(FINAL_POSITION);
             setAngleExtent(EXTENT);
