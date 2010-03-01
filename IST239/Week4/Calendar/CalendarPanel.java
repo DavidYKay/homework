@@ -17,11 +17,6 @@ public class CalendarPanel extends JPanel {
             Calendar.DAY_OF_MONTH,
             1
         );
-        calendar.add(
-            Calendar.MONTH,
-            6
-        );
-
         this.monthLabel = new JLabel(
             getMonthString(),
             JLabel.CENTER
@@ -69,18 +64,16 @@ public class CalendarPanel extends JPanel {
         int weeks = calendar.getActualMaximum(
             Calendar.WEEK_OF_MONTH
         );
+        //Size the grid to the number of weeks in the month
         panel.setLayout(new GridLayout(weeks, 7));
-        //panel.setLayout(new GridLayout(6, 7));
-        //panel.setLayout(new GridLayout(5, 7));
         
-        //Insert some blank days before the first of the month
-        //int numBlanks = 3;
+        //Insert some blank days before the first of the month, to 
+        //line up the day of the week
         int numBlanks = calendar.get(
             Calendar.DAY_OF_WEEK
         );
+        //Decrement by one since we need a zero-based value for the loop
         numBlanks--;
-        System.out.println("numBlanks: " + numBlanks);
-        //for (int i = 1; i <= numBlanks; i++) {
         for (int i = 0; i < numBlanks; i++) {
             JComponent blank = new JLabel();
             panel.add(blank);
