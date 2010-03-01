@@ -1056,29 +1056,25 @@ public class MommasBadBoy extends Car {
             super(model);
             Debug.println("MommasBadBoy:Speedometer()");
             setCounterClockwise(false);
-            //setAngleStart(INIT_POSITION);
             setAngleStart(FINAL_POSITION);
             setAngleExtent(EXTENT);
-            //setAngleExtent(getMaxSpeed());
-            //setNeedleStart( 360 - (FINAL_POSITION + EXTENT));
             setNeedleStart(360 - INIT_POSITION );
-            //setNeedleStart(360 - 315 );
 
 			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
 			DDDial.SuperTicks dialMin = new DDDial.SuperTicks(
-                valueToDegree(0, getMaxSpeedShown(), EXTENT), 
-                //0,
+                INIT_POSITION,
                 Color.YELLOW
             );
 			DDDial.SuperTicks dialMax = new DDDial.SuperTicks(
-                INIT_POSITION - valueToDegree(getMaxSpeedShown(), getMaxSpeedShown(), EXTENT), 
+                //INIT_POSITION - valueToDegree(getMaxSpeedShown(), getMaxSpeedShown(), EXTENT), 
+                FINAL_POSITION,
                 Color.GREEN
             );
 			DDDial.SuperTicks maxSpeed = new DDDial.SuperTicks(
                 INIT_POSITION - valueToDegree(getMaxSpeed(), getMaxSpeedShown(), EXTENT), 
                 Color.RED
             );
-			//alst.add(dialMin);
+			alst.add(dialMin);
 			alst.add(maxSpeed);
 			alst.add(dialMax);
 			setSuperTicks(alst);
