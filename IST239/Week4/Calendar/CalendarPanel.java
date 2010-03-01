@@ -19,7 +19,7 @@ public class CalendarPanel extends JPanel {
         );
         calendar.add(
             Calendar.MONTH,
-            0
+            6
         );
 
         this.monthLabel = new JLabel(
@@ -66,7 +66,11 @@ public class CalendarPanel extends JPanel {
 
     private JComponent createCalendarComponent() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6, 7));
+        int weeks = calendar.getActualMaximum(
+            Calendar.WEEK_OF_MONTH
+        );
+        panel.setLayout(new GridLayout(weeks, 7));
+        //panel.setLayout(new GridLayout(6, 7));
         //panel.setLayout(new GridLayout(5, 7));
         
         //Insert some blank days before the first of the month
