@@ -38,13 +38,18 @@ public class JLabelDemo extends JPanel implements ActionListener {
     };
 
     public JLabelDemo() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new GridLayout(2,0));
 
         /** Button, which holds our label */
         mainButton = new JButton(
             "Grapes",
-            new ImageIcon("ussr.png")
+            new ImageIcon("eclipsesmall.png")
         );
+        //Set alignment and position to match combobox initial settings
+        mainButton.setHorizontalAlignment(JButton.LEFT);
+        mainButton.setVerticalAlignment(JButton.TOP);
+        mainButton.setHorizontalTextPosition(JButton.LEFT);
+        mainButton.setVerticalTextPosition(JButton.TOP);
         add(mainButton);
 
         JPanel bottomHalf = new JPanel();
@@ -86,12 +91,14 @@ public class JLabelDemo extends JPanel implements ActionListener {
         comboBoxPanel.setLayout(new GridLayout(0,1));
 
         JComboBox comboBox = new JComboBox(horizontalAlignStrings);
+        //comboBox.setSelectedIndex(1);
         comboBox.addActionListener(this);
         comboBoxPanel.add(comboBox);
 
         addBoxToList(comboBox);
 
         comboBox = new JComboBox(verticalAlignStrings);
+        //comboBox.setSelectedIndex(1);
         comboBox.addActionListener(this);
         comboBoxPanel.add(comboBox);
         
@@ -130,6 +137,9 @@ public class JLabelDemo extends JPanel implements ActionListener {
                 verticalAlignValues[index]
             );
         }
-        System.out.println("Index selected: " + index);
 	}
+
+    public Dimension getPreferredSize() {
+        return new Dimension(400, 300);
+    }
 }

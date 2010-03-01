@@ -15,7 +15,6 @@ public class JLabelTest {
 		frame.setTitle("JLabel Demo");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
-		frame.setLayout(new FlowLayout());
 
         frame.add(new JLabelDemo());
 
