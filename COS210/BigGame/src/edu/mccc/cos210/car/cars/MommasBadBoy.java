@@ -36,12 +36,15 @@ public class MommasBadBoy extends Car {
 
     static private final int MAX_RPM = 5000;
 
+    static private final int SPEEDO_EXTENT = 276;
+    static private final int TACH_EXTENT   = 180;
+
     @Override
 	public Car.Speedometer createSpeedometer() {
 		Debug.println("MommasBadBoy:createSpeedometer()");
 		setSpeedometer(
             new MommasBadBoy.Speedometer(
-                new MommasBadBoy.SpeedoModel(getMaxSpeed())
+                new MommasBadBoy.SpeedoModel(getMaxSpeed(), SPEEDO_EXTENT)
             )
         );
 		return getSpeedometer();
@@ -51,7 +54,7 @@ public class MommasBadBoy extends Car {
 		Debug.println("MommasBadBoy:createTachometer()");
 		setTachometer(
             new MommasBadBoy.Tachometer(
-                new MommasBadBoy.SpeedoModel(MAX_RPM)
+                new MommasBadBoy.SpeedoModel(MAX_RPM, TACH_EXTENT)
             )
         );
 		return getTachometer();
@@ -1007,10 +1010,10 @@ public class MommasBadBoy extends Car {
         private static final int MIN_SPEED = 0;
         private int maxSpeed;
         private int currentSpeed;
-        private SpeedoModel(int maxSpeed) {
+        private SpeedoModel(int maxSpeed, int extent) {
             Debug.println("MommasBadBoy.SpeedoModel:SpeedoModel()");
             this.maxSpeed = maxSpeed;
-            scalingFactor = (double) maxSpeed / 360.0;
+            scalingFactor = (double) maxSpeed / extent;
         }
 
         @Override
@@ -1044,20 +1047,21 @@ public class MommasBadBoy extends Car {
     }
 
     private class Speedometer extends Car.Speedometer {
-        private final int FINAL_POSITION = 45;
-        private final int INIT_POSITION  = 270;
-        private final int EXTENT = INIT_POSITION - FINAL_POSITION;
+        private final int INIT_POSITION  = 315;
+        private final int EXTENT = getMaxSpeed();
+        private final int FINAL_POSITION = INIT_POSITION - EXTENT;
 
 		public Speedometer(BoundedRangeModel model) {
             super(model);
             Debug.println("MommasBadBoy:Speedometer()");
             setCounterClockwise(false);
-            setAngleStart(45);
-            setAngleExtent(getMaxSpeedShown());
-
+            //setAngleStart(INIT_POSITION);
             setAngleStart(FINAL_POSITION);
-            setAngleExtent(EXTENT);
-            setNeedleStart(360 - INIT_POSITION);
+            //setAngleExtent(getMaxSpeedShown());
+            setAngleExtent(getMaxSpeed());
+            //setNeedleStart( 360 - (FINAL_POSITION + EXTENT));
+            //setNeedleStart(360 - INIT_POSITION );
+            setNeedleStart(360 - 315 );
 
 			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
 			DDDial.SuperTicks dialMin = new DDDial.SuperTicks(
@@ -1096,9 +1100,9 @@ public class MommasBadBoy extends Car {
 		}
     }
     public class Tachometer extends Car.Tachometer {
-        private final int FINAL_POSITION = 45;
-        private final int INIT_POSITION  = 270;
-        private final int EXTENT = INIT_POSITION - FINAL_POSITION;
+        public final int FINAL_POSITION = 45;
+        public final int INIT_POSITION  = 270;
+        public final int EXTENT         = INIT_POSITION - FINAL_POSITION;
         public Tachometer(SpeedoModel model) {
             super(model);
             Debug.println("MommasBadBoy:Tachometer()");
