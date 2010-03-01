@@ -33,8 +33,9 @@ public class MommasBadBoy extends Car {
     final private static Color HIGHLIGHT_COLOR = Color.DARK_GRAY;
     
     final private static Font REAR_FONT  = new Font("Helvetica", Font.PLAIN,  22);
-
-    static private final int MAX_RPM = 5000;
+    //Gauge constants
+    static private final int MAX_RPM     = 5000;
+    static private final int REDLINE_RPM = 4000;
     static private final int TACH_EXTENT = 270;
 
     @Override
@@ -1109,7 +1110,7 @@ public class MommasBadBoy extends Car {
 
 			ArrayList<DDDial.SuperTicks> alst = new ArrayList<DDDial.SuperTicks>();
 			DDDial.SuperTicks redline = new DDDial.SuperTicks(
-                initPosition - valueToDegree(4000, MAX_RPM, extent), 
+                initPosition - valueToDegree(REDLINE_RPM, MAX_RPM, extent), 
                 Color.RED
             );
 			DDDial.SuperTicks warning = new DDDial.SuperTicks(
@@ -1135,9 +1136,25 @@ public class MommasBadBoy extends Car {
             drawNeedle(g, model.getValue());
 
 			Graphics2D g2d = (Graphics2D) g.create();
-			String value = String.valueOf(((SpeedoModel) model).getActualValue());
+			//String value = String.valueOf(((SpeedoModel) model).getActualValue());
 			g2d.setPaint(Color.RED);
-			g2d.drawString(value, 90, 60);
+			//g2d.drawString(value, 90, 60);
+            final int ovalSize = 15;
+            if (getRPM() > (REDLINE_RPM - 100)) {
+                g2d.fillOval(
+                    (getWidth() / 2) - (ovalSize / 2), 
+                    32,
+                    ovalSize,
+                    ovalSize
+                );
+            } else {
+                g2d.drawOval(
+                    (getWidth() / 2) - (ovalSize / 2), 
+                    32,
+                    ovalSize,
+                    ovalSize
+                );
+            }
 			g2d.dispose();
 		}
     }
