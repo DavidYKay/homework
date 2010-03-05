@@ -26,6 +26,15 @@ public class QuizPanel extends JPanel {
             JRadioButton button = new JRadioButton(type.name());
             group.add(button);
             radioPanel.add(button);
+            button.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        typeChanged(
+                            QuizType.valueOf(e.getActionCommand())
+                        );
+                    }
+                }
+            );
         }
         typePanel.add(radioPanel);
 
@@ -40,13 +49,21 @@ public class QuizPanel extends JPanel {
         group = new ButtonGroup();
         radioPanel = new JPanel(new GridLayout(0, 1));
         for (QuizLevel level : QuizLevel.values()) {
-            //JRadioButton button = new JRadioButton(level.name());
             JRadioButton button = new JRadioButton(level.description());
+            button.setActionCommand(level.name());
             group.add(button);
             radioPanel.add(button);
+            button.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        levelChanged(
+                            QuizLevel.valueOf(e.getActionCommand())
+                        );
+                    }
+                }
+            );
         }
         levelPanel.add(radioPanel);
-
 
         topPanel.add(typePanel);
         topPanel.add(levelPanel);
@@ -124,5 +141,12 @@ public class QuizPanel extends JPanel {
         //Add to main panel
         add(topPanel);
         add(bottomPanel);
+    }
+
+    private void typeChanged(QuizType type) {
+        System.out.println(type);
+    }
+    private void levelChanged(QuizLevel level) {
+        System.out.println(level);
     }
 }
