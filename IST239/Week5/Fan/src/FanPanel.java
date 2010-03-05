@@ -1,9 +1,7 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class FanPanel extends JPanel {
 

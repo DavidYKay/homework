@@ -16,9 +16,9 @@ public class Fans {
 
         JPanel fansPanel = new JPanel();
         fansPanel.setLayout(new GridLayout(1, 3));
-        fansPanel.add(new FanPanel());
-        fansPanel.add(new FanPanel());
-        fansPanel.add(new FanPanel());
+        fansPanel.add(new FanControlPanel());
+        fansPanel.add(new FanControlPanel());
+        fansPanel.add(new FanControlPanel());
 
 		frame.add(
             fansPanel,
