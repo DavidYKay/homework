@@ -20,6 +20,15 @@ public class QuizPanel extends JPanel {
             )
         );
 
+        ButtonGroup group = new ButtonGroup();
+        JPanel radioPanel = new JPanel(new GridLayout(0, 1));
+        for (QuizType type : QuizType.values()) {
+            JRadioButton button = new JRadioButton(type.name());
+            group.add(button);
+            radioPanel.add(button);
+        }
+        typePanel.add(radioPanel);
+
         //Choose a level
         JPanel levelPanel = new JPanel();
         levelPanel.setBorder(
@@ -27,6 +36,17 @@ public class QuizPanel extends JPanel {
                 "Choose a level"
             )
         );
+
+        group = new ButtonGroup();
+        radioPanel = new JPanel(new GridLayout(0, 1));
+        for (QuizLevel level : QuizLevel.values()) {
+            //JRadioButton button = new JRadioButton(level.name());
+            JRadioButton button = new JRadioButton(level.description());
+            group.add(button);
+            radioPanel.add(button);
+        }
+        levelPanel.add(radioPanel);
+
 
         topPanel.add(typePanel);
         topPanel.add(levelPanel);
