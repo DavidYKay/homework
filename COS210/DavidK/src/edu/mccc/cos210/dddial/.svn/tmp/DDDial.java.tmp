@@ -1,0 +1,221 @@
+package edu.mccc.cos210.dddial;
+import java.util.*;
+import java.awt.*;
+import java.awt.geom.*;
+import javax.swing.*;
+import com.cbthinkx.util.Debug;
+public abstract class DDDial extends JProgressBar {
+	private BoundedRangeModel model;
+	private ArrayList<SuperTicks> superTicks = new ArrayList<SuperTicks>();
+
+	private int angleStart = 0;
+	private int angleExtent = 360;
+	private boolean round = true;
+	private boolean ticks = true;
+	private int tickInterval = 10;
+	private int xCenter;
+	private int yCenter;
+
+	public void setangleStart(int n) {
+		if (n > 360) {
+			this.angleStart = 360;
+		} else {
+			this.angleStart = n;
+		}
+		if (n < 0) {
+			this.angleStart = 0;
+		}else {
+			this.angleStart = n;
+		}
+	}
+	public void setAngleExtent(int n) {
+		if (n > 360) {
+			this.angleExtent = 360;
+		} else {
+			this.angleExtent = n;
+		}
+		if (n < 0) {
+			this.angleExtent = 0;
+		}else {
+			this.angleExtent = n;
+		}
+	}
+	public void setRound(boolean b) {
+		this.round = b;
+	}
+	public void setTicks(boolean b, int i) {
+		this.ticks =b;
+		if (i < 0 ) {
+			this.tickInterval = 1;
+		} else {
+			this.tickInterval = i;
+		}
+		if (i > this.angleExtent) {
+			this.tickInterval = this.angleExtent;
+		}
+	}
+	public void setSuperTicks(ArrayList <SuperTicks> superTicks) {
+        this.superTicks = superTicks;
+    }
+	public void paintComponent(Graphics g) {
+		Debug.println("DDDial3.paintComponent()");
+		super.paintComponent(g);
+		double clockRadius = 63.5;
+		xCenter = getWidth() / 2;
+  		yCenter = getHeight() / 2;
+		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.setStroke(new BasicStroke(1));
+		AffineTransform at = new AffineTransform();
+		//at.translate(xCenter,yCenter);
+		Shape s = new Ellipse2D.Double(
+			(double) 0,
+			(double) 0,
+			(double) clockRadius * 2,
+			(double) clockRadius * 2
+		);
+		s = at.createTransformedShape(s);
+        g2d.setPaint(Color.BLACK);
+		g2d.draw(s);
+
+        //Draws ticks around the face
+		drawTicks(g2d, clockRadius);
+
+		g2d.setStroke(new BasicStroke(3));
+        //Middle small ring
+		s = new Ellipse2D.Double(
+			(double) xCenter - (clockRadius / 10) / 2,
+			(double) yCenter - (clockRadius / 10) / 2,
+			(double) clockRadius / 10,
+			(double) clockRadius / 10
+		);
+		g2d.fill(s);
+		g2d.draw(s);
+		g2d.dispose();
+	}
+<<<<<<< .mine
+    private void drawSuperTicks(Graphics2D g2d, double radius) {
+        double tickLength = radius / 2.5;
+        double tickWidth  = radius / 30;
+        //Create a tickmark in the top left of the screen, leaving blank space as a 'pivot arm'
+        Shape tick = new Rectangle2D.Double(
+                radius - tickLength,  //Pivot arm
+                0,
+                tickLength, 
+                tickWidth
+                );
+        AffineTransform at = new AffineTransform();
+        //Translate our tickmark circle from the top left to the center 
+        at.translate(
+                radius, 
+                radius - (tickWidth / 2)
+                );
+        //Rotate the 'pivot arm,' draw each tick
+        for (SuperTicks superTick : superTicks) {
+            g2d.setPaint(superTick.getColor());
+            Shape s = at.createTransformedShape(tick);
+            g2d.fill(s);
+            at.rotate(Math.toRadians(tickInterval));
+        }
+    }
+    private void drawClockFace(Graphics2D g2d, double radius) {
+=======
+    private void drawSuperTicks(Graphics2D g2d, double radius) {
+        double tickLength = radius / 2.5;
+        double tickWidth  = radius / 30;
+        //Create a tickmark in the top left of the screen, leaving blank space as a 'pivot arm'
+        Shape tick = new Rectangle2D.Double(
+            radius - tickLength,  //Pivot arm
+            0,
+            tickLength, 
+            tickWidth
+        );
+        AffineTransform at = new AffineTransform();
+        //Translate our tickmark circle from the top left to the center 
+        at.translate(
+            radius, 
+            radius - (tickWidth / 2)
+        );
+        //Rotate the 'pivot arm,' draw each tick
+        for (SuperTicks superTick : superTicks) {
+            g2d.setPaint(superTick.getColor());
+            Shape s = at.createTransformedShape(tick);
+            g2d.fill(s);
+            at.rotate(Math.toRadians(tickInterval));
+        }
+    }
+    private void drawTicks(Graphics2D g2d, double radius) {
+>>>>>>> .r10
+        double tickLength = radius / 5;
+        double tickWidth  = radius / 60;
+        //Create a tickmark in the top left of the screen, leaving blank space as a 'pivot arm'
+        Shape tick = new Rectangle2D.Double(
+            radius - tickLength,  //Pivot arm
+            0,
+            tickLength, 
+            tickWidth
+        );
+        AffineTransform at = new AffineTransform();
+        //Translate our tickmark circle from the top left to the center 
+        at.translate(
+            radius, 
+            radius - (tickWidth / 2)
+        );
+        g2d.setPaint(Color.BLACK);
+        //Rotate the 'pivot arm,' draw each tick
+        for (int angle = angleStart; angle < angleStart + angleExtent; angle += tickInterval) {
+            Shape s = at.createTransformedShape(tick);
+<<<<<<< .mine
+            g2d.setPaint(Color.BLACK);
+            g2d.draw(s);
+=======
+>>>>>>> .r10
+            g2d.fill(s);
+            at.rotate(Math.toRadians(tickInterval));
+        }
+    }
+	public void stateChanged(MVCModelEvent e) {
+		Debug.println("DDDial3.stateChanged()");
+		repaint();
+	}
+	public Dimension getPreferredSize() {
+		Debug.println("DDDial3.getPreferredSize()");
+        if (round == true) {
+            return new Dimension(128, 128);
+        } else {
+            return new Dimension(128, 64);
+        }
+	}
+	private class Hand {
+		private Path2D p2d = new Path2D.Double();
+		public Hand() {
+			this.p2d.moveTo(0.0, 0.0);
+			this.p2d.lineTo(2.0, 0.0);
+			this.p2d.lineTo(2.0, -30.0);
+			this.p2d.lineTo(5.0, -40.0);
+			this.p2d.lineTo(10.0, -30.0);
+			this.p2d.lineTo(0.0, -60.0);
+			this.p2d.lineTo(-10.0, -30.0);;
+			this.p2d.lineTo(-5.0, -40.0);
+			this.p2d.lineTo(-2.0, -30.0);
+			this.p2d.lineTo(-2.0, 0.0);
+			this.p2d.closePath();
+		}
+		public Shape getShape() {
+			return this.p2d;
+		}
+	}
+    class SuperTicks {
+        private int value;
+        private Color color;
+        public SuperTicks(int value, Color color) {
+            this.value = value;
+            this.color = color;
+        }
+        public int getValue() {
+            return this.value;
+        }
+        public Color getColor() {
+            return this.color;
+        }
+    }
+}

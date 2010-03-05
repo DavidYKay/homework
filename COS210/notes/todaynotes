@@ -1,0 +1,97 @@
+Collision Code
+Speed of the car - gearing
+Didn't apply the experience code - wacky turning code
+Need to add timeout code -- we haven't
+    Like a heartbeat 5 pulses
+
+
+Has been added:
+    Penalize going off-track
+    Server view has been added
+
+TODO:
+    Stress test on bostain's machine
+    
+Overall - nice job
+
+
+Java 6 API
+    Java SE
+    Remember frames/ no frames
+    
+DDDial Mk 2
+    new constructor:
+        value extent min max round direction interval
+    Ticks
+        Arraylist of colors
+        Pattern of colors, alternating
+
+HOMEWORK
+    due Sunday night
+
+    Background:
+        Big signs over the road: "Moose in the highway" "Snow ahead" "Congestion"
+            Usually made out of individual LCDS
+            old ones were mechanical
+    80 x 10 LEDs
+    Take a script:
+        Code COLON String of Text
+            Example:
+                0:COS210
+                1:Hello World
+                2:Mr. Fish goes to town
+                3:Tommy Tuttle
+    Display that string on a display board
+    We're going to have transitions
+    Transition into the message
+        Top down, left to right, one letter at a time, column at a time, bounce animation, etc.
+   
+    Bostain's code:
+        Read file
+        Get the LEDs up
+        Two utility methods
+            Turn all on
+            Turn all off
+        
+                
+
+    Our code:
+        Transitions
+
+
+TOUR
+    new Thread((Runnable) jc).start();
+    LEDDisplay
+        creates a new LEDDisplayQueue
+        loadsQueue from script
+        this.view = new LEDDIsplayView(queue)
+    
+    queue.enqueue(
+    new LEDDisplayItem(
+        value1, 
+        getTransition(value2)
+    ))
+
+LEDDisplayQueue
+    LinkedList to implement a queue
+        offer()
+        poll()
+
+Our transitions extend LEDDisplayTransition
+    -hasA factory method
+    go(view, leds)
+        -called to show the leds
+
+LEDDisplayView
+    has LEDDisplayQueue, 10x80 array of LEDs
+    clearLEDS, setLEDS - both for turning all on
+
+final in method context means no override
+
+***
+    0:Flash a couple times, then solid. Words centered.
+    1:Message comes in from the top, remain in the middle for some time, out the bottom
+    2:Scroll in from right, out the left
+    3:"Surprise me" - "Make me smile" - "Artsy"
+    4,5,6 - optional
+
