@@ -1,0 +1,90 @@
+Very popular in 95
+
+class files sent over the wire
+Extend JApplet instead of JFrame
+    JApplet serves a direct drop-in to JFrame
+
+No main method - because they're loaded into special instance of JVM
+    Instead
+        Constructor
+        init()
+            called after constructor
+            initialization, load resources, ***get string params from applet tag
+        start()
+            called every time the page gets active/navigated to
+            Start threads/animation here
+        stop()
+            Navigate away from page
+            Stop threads/animation here
+        destroy()
+            exit browser
+            Applet removed from the JVM here
+            Usually don't have to override this
+            ***close server files nicely here
+
+        
+attributes
+    codebase
+        foreign url, anywhere on the internet
+    code = ".class"
+        exists in same directory as html
+    width
+    height
+    archive="jarname.jar"
+        jar contains .class
+        reduces loadtime by sending one file
+    vspace
+    hspace
+        spacing/padding around the applet
+    align
+        left, right, top, texttop, middle, absmiddle, baseline, bottom, absbottom
+        
+    alt
+        Like img alt text
+<applet
+    attributes
+    >
+    <param />
+    <param />
+</applet>
+
+param tag
+    Just like String[] args
+    can pass data from webpage into applet
+
+JFrames can contain JApplets, Applets can't contain frames
+    main calls init() then start()
+    Create a jframe, jframe.add(applet)
+
+Applet security
+    Applets not allowed to read/write from file system
+    Applets not allowed to invoke local programs
+    Applet not allowed t oconnect to other systems
+    *Trusted Applets can bypass security
+        but it's a PITA
+        Can self-sign
+        Can go to an authority, too
+        *Linked in slides
+
+Pathing
+    //On the websever
+    //this.getClass() - highly introspective call
+    //Dynamic reflection
+    //Consider "Java Reflection in action" book
+    URL iconURL = this.getClass().getResource("images/icon.jpg")
+    ImageIcon icon = new ImageIcon(iconURL);
+
+Audio
+    contained in Applet class
+    start stop loop 
+        only methods
+    use AudioClip class
+    wav, aiff, midi, au, rmf
+
+Lab
+    17.4 - Multiple windows
+Inter
+    17.12 - Fan Control
+Adv
+    17.26 - Math quiz
+
