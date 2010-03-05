@@ -3,9 +3,11 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class FanControlPanel extends JPanel implements AdjustmentListener {
+public class FanControlPanel extends JPanel implements ActionListener, AdjustmentListener {
 
-    FanPanel fanPanel;
+    private FanPanel fanPanel;
+    private Timer fanTimer;
+    private boolean forwards;
     public FanControlPanel() {
         setLayout(
             new BoxLayout(
@@ -49,7 +51,16 @@ public class FanControlPanel extends JPanel implements AdjustmentListener {
         //The fan itself
         fanPanel = new FanPanel();
 
-        JScrollBar scrollBar = new JScrollBar(JScrollBar.HORIZONTAL);
+        //JScrollBar scrollBar = new JScrollBar(JScrollBar.HORIZONTAL);
+        //JScrollBar(int orientation, int value, int extent, int min, int max) 
+        JScrollBar scrollBar = new JScrollBar(
+            JScrollBar.HORIZONTAL,
+            180,
+            0,
+            0,
+            360
+        );
+
         scrollBar.addAdjustmentListener(this);
         add(buttonPanel);
         add(fanPanel);
@@ -58,16 +69,35 @@ public class FanControlPanel extends JPanel implements AdjustmentListener {
         setBorder(
             BorderFactory.createLineBorder(Color.BLACK)
         );
+        
+        fanTimer = new Timer(100, this);
     }
 
     private void startFan() {
         System.out.println("start fan!");
+        fanTimer.start();
     }
     private void stopFan() {
         System.out.println("stop fan!");
+        fanTimer.stop();
     }
     private void reverseFan() {
         System.out.println("reverse fan!");
+        forwards = !forwards;
+    }
+
+    /**
+     * Called by the timer event
+     */
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Timer event!");
+        int newAngle;
+        if (forwards) {
+            newAngle = fanPanel.getCurrentAngle() + 10;
+        } else {
+            newAngle = fanPanel.getCurrentAngle() - 10;
+        }
+        fanPanel.setCurrentAngle(newAngle);
     }
 
     /**
@@ -75,5 +105,6 @@ public class FanControlPanel extends JPanel implements AdjustmentListener {
      */
     public void adjustmentValueChanged(AdjustmentEvent e) {
         System.out.println("Adjusted!");
+        fanPanel.setCurrentAngle(e.getValue());
     }
 }

@@ -11,6 +11,8 @@ public class FanPanel extends JPanel {
 	private static final int PREFERRED_X = 320;
 	private static final int PREFERRED_Y = 320;
 
+    private int currentAngle = 20;
+
 	public FanPanel() {		
 		Dimension preferredSize = new Dimension(PREFERRED_X, PREFERRED_Y);
 		setPreferredSize(preferredSize);		
@@ -29,7 +31,7 @@ public class FanPanel extends JPanel {
 				(int) box.getHeight()
 		);
 		//Draw four fan blades
-		for(int startAngle = 0; startAngle < 360; startAngle += 90) {
+		for(int startAngle = currentAngle; startAngle < 360 + currentAngle; startAngle += 90) {
 			g.fillArc(
 					(int) box.getX(),
 					(int) box.getY(),
@@ -54,4 +56,12 @@ public class FanPanel extends JPanel {
 				(getHeight() * .8)
 		);
 	}
+
+    public void setCurrentAngle(int angle) {
+        this.currentAngle = angle;
+        repaint();
+    }
+    public int getCurrentAngle() {
+        return this.currentAngle;
+    }
 }
