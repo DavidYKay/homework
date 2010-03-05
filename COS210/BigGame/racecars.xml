@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<racecars>
+  <racecar carname="Zubenelgenubi" drivername="MatthewV" hp="250" gears="3" maxspeed="200" driverskill="AVERAGE" />
+  <racecar carname="TasteOfDestruction" drivername="CherylH" hp="275" gears="3" maxspeed="200" driverskill="AVERAGE" />
+  <!--<racecar carname="DistantThunder" drivername="FabianP" hp="300" gears="4" maxspeed="225" driverskill="INTERMEDIATE" />-->
+  <racecar carname="BoneCrusher" drivername="RyanS" hp="325" gears="3" maxspeed="225" driverskill="INTERMEDIATE" />
+  <racecar carname="NuclearMeltdown" drivername="ByronA" hp="350" gears="5" maxspeed="250" driverskill="INTERMEDIATE" />
+  <racecar carname="LightningBolt" drivername="DanielS" hp="375" gears="4" maxspeed="250" driverskill="ADVANCED" />
+  <!--<racecar carname="Richter10.0" drivername="DaveU" hp="400" gears="5" maxspeed="275" driverskill="ADVANCED" />-->
+  <racecar carname="MommasBadBoy" drivername="DavidK" hp="400" gears="5" maxspeed="275" driverskill="ADVANCED" />
+  <racecar carname="WeedWacker" drivername="MarcVM" hp="400" gears="5" maxspeed="300" driverskill="ADVANCED" />
+  <racecar carname="H1N1" drivername="BilalB" hp="425" gears="5" maxspeed="300" driverskill="ADVANCED" />
+  <racecar carname="WidowMaker" drivername="AngelD" hp="450" gears="6" maxspeed="350" driverskill="PRO" />
+  <racecar carname="FlamingBurrito" drivername="ScottL" hp="450" gears="6" maxspeed="350" driverskill="PRO" />
+  <racecar carname="TestosteroneEliminator" drivername="DavidA" hp="900" gears="7" maxspeed="500" driverskill="EXPERT" />
+  <racecar carname="BeepBeep" drivername="WalterCR" hp="90" gears="2" maxspeed="99" driverskill="EASY" />
+  <racecar carname="MisterBear" drivername="IsaacY" hp="1000" gears="2" maxspeed="750" driverskill="EXPERT" />
+</racecars>
