@@ -3,9 +3,22 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class QuizPanel extends JPanel {
+public class QuizPanel extends JPanel implements QuizListener {
+    private QuizModel model;
 
-    public QuizPanel() {
+    /** Questions answered correctly */
+    private JLabel scoreLabel;
+    /** Shows the current question */
+    private JLabel questionLabel;
+    /** Time spent since start */
+    private JLabel timeLabel;
+
+    public QuizPanel(QuizModel model) {
+        //Model stuff
+        this.model = model;
+        model.addListener(this);
+        
+        //View stuff
         setLayout(new GridLayout(2, 1));
 
         //Top half
@@ -49,7 +62,7 @@ public class QuizPanel extends JPanel {
         group = new ButtonGroup();
         radioPanel = new JPanel(new GridLayout(0, 1));
         for (QuizLevel level : QuizLevel.values()) {
-            JRadioButton button = new JRadioButton(level.description());
+            JRadioButton button = new JRadioButton(level.getDescription());
             button.setActionCommand(level.name());
             group.add(button);
             radioPanel.add(button);
@@ -78,7 +91,7 @@ public class QuizPanel extends JPanel {
 
         //Question panel
         JPanel qPanel = new JPanel();
-        JLabel questionLabel = new JLabel("Question will be shown");
+        questionLabel = new JLabel("Question will be shown");
         qPanel.add(questionLabel);
         qPanel.setBorder(
             BorderFactory.createTitledBorder(
@@ -92,10 +105,26 @@ public class QuizPanel extends JPanel {
             new GridLayout(2, 0)
         );
         JButton startButton = new JButton("Start");
-        JButton stopButton = new JButton("Stop");
+        startButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    QuizPanel.this.model.startQuiz();
+                }
+            }
+        );
+        JButton stopButton  = new JButton("Stop");
+        stopButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    QuizPanel.this.model.stopQuiz();
+                }
+            }
+        );
+
         JTextField inputField = new JTextField();
 
         JPanel buttonPanel = new JPanel();
+
         buttonPanel.add(startButton);
         buttonPanel.add(stopButton);
 
@@ -112,29 +141,29 @@ public class QuizPanel extends JPanel {
         qaPanel.add(aPanel);
 
         //Correct Count + Time Spent
-        JPanel countSpentPanel = new JPanel();
-        countSpentPanel.setLayout(new GridLayout(1, 2));
-        JLabel countLabel = new JLabel("Correct count will be shown");
-        countLabel.setBorder(
+        JPanel scoreTimePanel = new JPanel();
+        scoreTimePanel.setLayout(new GridLayout(1, 2));
+        scoreLabel = new JLabel("Correct count will be shown");
+        scoreLabel.setBorder(
             BorderFactory.createTitledBorder(
                 "Correct Count"
             )
         );
-        countSpentPanel.add(countLabel);
-        JLabel spentLabel = new JLabel("Time spent will be shown");
-        spentLabel.setBorder(
+        scoreTimePanel.add(scoreLabel);
+        timeLabel = new JLabel("Time spent will be shown");
+        timeLabel.setBorder(
             BorderFactory.createTitledBorder(
                 "Time Spent"
             )
         );
-        countSpentPanel.add(spentLabel);
+        scoreTimePanel.add(timeLabel);
 
         bottomPanel.add(
             qaPanel,
             BorderLayout.CENTER
         );
         bottomPanel.add(
-            countSpentPanel,
+            scoreTimePanel,
             BorderLayout.SOUTH
         );
 
@@ -145,8 +174,35 @@ public class QuizPanel extends JPanel {
 
     private void typeChanged(QuizType type) {
         System.out.println(type);
+        model.setType(type);
     }
     private void levelChanged(QuizLevel level) {
         System.out.println(level);
+        model.setLevel(level);
+    }
+
+    private void updateView() {
+        //Update score
+        scoreLabel.setText(
+            String.valueOf(model.getScore())
+            //"1"
+        );
+        //Update time
+        timeLabel.setText(
+            String.valueOf(model.getTimeElapsed())
+            //"1"
+        );
+        //Update question
+        questionLabel.setText(
+            model.getProblem().getQuestionString()
+            //"1"
+        );
+    }
+
+    /**
+     * On model change
+     */
+    public void stateChanged(QuizEvent e) {
+        updateView();
     }
 }
