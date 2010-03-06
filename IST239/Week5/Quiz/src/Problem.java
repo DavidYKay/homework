@@ -40,7 +40,6 @@ public class Problem {
 	 */
 	public String getQuestionString() {
 		return String.format(
-			//"%i %s %i = ",
 			"%d %s %d = ",
 			a,
 			operation.getSymbol(),

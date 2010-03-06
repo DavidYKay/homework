@@ -12,11 +12,27 @@ public class QuizPanel extends JPanel implements QuizListener {
     private JLabel questionLabel;
     /** Time spent since start */
     private JLabel timeLabel;
+    /** Place to capture answer input */
+    private JTextField answerField;
 
     public QuizPanel(QuizModel model) {
         //Model stuff
         this.model = model;
         model.addListener(this);
+
+        addKeyListener(
+            new KeyAdapter() {
+                keyPressed(KeyEvent e) {
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_ENTER:
+                            model.answerProblem(
+                                answer
+                            );
+                            break;
+                    }
+                }
+            }
+        );
         
         //View stuff
         setLayout(new GridLayout(2, 1));
@@ -121,14 +137,14 @@ public class QuizPanel extends JPanel implements QuizListener {
             }
         );
 
-        JTextField inputField = new JTextField();
+        answerField = new JTextField();
 
         JPanel buttonPanel = new JPanel();
 
         buttonPanel.add(startButton);
         buttonPanel.add(stopButton);
 
-        aPanel.add(inputField);
+        aPanel.add(answerField);
         aPanel.add(buttonPanel);
 
         aPanel.setBorder(
@@ -185,17 +201,14 @@ public class QuizPanel extends JPanel implements QuizListener {
         //Update score
         scoreLabel.setText(
             String.valueOf(model.getScore())
-            //"1"
         );
         //Update time
         timeLabel.setText(
             String.valueOf(model.getTimeElapsed())
-            //"1"
         );
         //Update question
         questionLabel.setText(
             model.getProblem().getQuestionString()
-            //"1"
         );
     }
 
