@@ -34,12 +34,14 @@ public class QuizModel {
 
 	public void setType(QuizType quizType) {
 		this.quizType = quizType;
+		//nextProblem();
 	}
 	public QuizType getType() {
 		return this.quizType;
 	}
 	public void setLevel(QuizLevel quizLevel) {
 		this.quizLevel = quizLevel;
+		//nextProblem();
 	}
 	public QuizLevel getLevel() {
 		return this.quizLevel;

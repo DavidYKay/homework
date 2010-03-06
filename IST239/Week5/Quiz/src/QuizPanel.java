@@ -20,19 +20,6 @@ public class QuizPanel extends JPanel implements QuizListener {
         this.model = model;
         model.addListener(this);
 
-        addKeyListener(
-            new KeyAdapter() {
-                keyPressed(KeyEvent e) {
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_ENTER:
-                            model.answerProblem(
-                                answer
-                            );
-                            break;
-                    }
-                }
-            }
-        );
         
         //View stuff
         setLayout(new GridLayout(2, 1));
@@ -138,6 +125,22 @@ public class QuizPanel extends JPanel implements QuizListener {
         );
 
         answerField = new JTextField();
+        answerField.addKeyListener(
+            new KeyAdapter() {
+                public void keyPressed(KeyEvent e) {
+                    System.out.println("answerField.keyPressed()");
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_ENTER:
+                            QuizPanel.this.model.answerProblem(
+                                Integer.parseInt(
+                                    answerField.getText().trim()
+                                )
+                            );
+                            break;
+                    }
+                }
+            }
+        );
 
         JPanel buttonPanel = new JPanel();
 
