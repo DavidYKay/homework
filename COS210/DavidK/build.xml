@@ -1,9 +1,9 @@
-<project name="BigGame" default="compile">
-    <property name="src"     location="src"/>
+<project name="LED" default="compile">
+    <property name="src"     location="src/edu/mccc/cos210/leddisplay"/>
     <property name="build"   location="build"/>
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
-    <property name="classpath"  value="${build}/jar/${ant.project.name}}.jar:.:/home/dk/Documents/COS210:vecmath.jar:${classes}" />
+    <property name="classpath"  value="${build}/jar/${ant.project.name}}.jar:.:${classes}" />
 
     <target name="clean">
         <delete dir="${build}"/>
@@ -12,6 +12,7 @@
     <target name="compile">
         <mkdir dir="${classes}"/>
         <javac srcdir="${src}" destdir="${classes}" debug="true">
+            <compilerarg value="-g"/>
             <!--
             <compilerarg value="-Xlint:all"/>
             <compilerarg value="-Xlint"/>
@@ -30,51 +31,36 @@
 
     <target name="run" depends="compile">
         <java 
-            classname="edu.mccc.cos210.biggame.BigGame"
+            classname="edu.mccc.cos210.leddisplay.LEDDisplayTest"
             classpath="${classpath}"
             fork="true" >
-            <arg value="MommasBadBoy" />
         </java>
     </target>
 
     <target name="rund" depends="compile">
         <java 
-            classname="edu.mccc.cos210.biggame.BigGame"
+            classname="edu.mccc.cos210.leddisplay.LEDDisplayTest"
             classpath="${classpath}"
             fork="true" >
-            <arg value="MommasBadBoy" />
 
             <sysproperty 
                 key= "com.cbthinkx.debug" 
                 value= "true" />
             <!--
-            <arg value="-Dcom.cbthinkx.debug" />
+                <arg value="MommasBadBoy" />
+                <arg value="-Dcom.cbthinkx.debug" />
             -->
         </java>
     </target>
 
-    
-    <target name="server" depends="compile">
-        <java 
-            classname="edu.mccc.cos210.biggame.BigGameServer"
-            classpath="${classpath}"
-            fork="true"
-        />
+    <target name="debug" depends="compile">
+         <property name="executable-full-path"
+             location="/usr/bin/jdb"/>
+         <exec executable="${executable-full-path}">
+             <arg value="-sourcepath ./src/" />
+             <arg value="-classpath .:build/classes" />
+             <arg value="edu.mccc.cos210.leddisplay.LEDDisplayTest"/>
+         </exec>
+
     </target>
-
-    <target name="serverd" depends="compile">
-        <java 
-            classname="edu.mccc.cos210.biggame.BigGameServer"
-            classpath="${classpath}"
-            fork="true"
-            >
-
-            <sysproperty 
-                key= "com.cbthinkx.debug" 
-                value= "true" 
-            />
-        </java>
-    </target>
-
-
 </project>
