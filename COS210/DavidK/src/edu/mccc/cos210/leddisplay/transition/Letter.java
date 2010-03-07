@@ -172,6 +172,7 @@ public class Letter {
         }
         return bitmap;
     }
+    /*
     private boolean[][] trimWhiteSpace(boolean[][] bitmap) {
         boolean[][] newBmp;
         int leftBound = 0;
@@ -217,4 +218,5 @@ public class Letter {
 
         return newBmp;
     }
+    */
 }

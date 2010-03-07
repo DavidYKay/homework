@@ -49,9 +49,9 @@ public class Blitter {
         blitBitmap(
             bitmap,
             0,
-            bitmap.length,
+            bitmap.length - 1,
             0,
-            bitmap[0].length,
+            bitmap[0].length - 1,
             scrollBack
         );
 
