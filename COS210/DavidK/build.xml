@@ -3,7 +3,7 @@
     <property name="build"   location="build"/>
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
-    <property name="classpath"  value="${build}/jar/${ant.project.name}}.jar:.:${classes}" />
+    <property name="classpath"  value="${build}/jar/${ant.project.name}}.jar:${classes}:.:.." />
 
     <target name="clean">
         <delete dir="${build}"/>
@@ -17,6 +17,10 @@
             <compilerarg value="-Xlint:all"/>
             <compilerarg value="-Xlint"/>
             -->
+            <classpath>
+                <pathelement path="${classpath}" />
+            </classpath>
+
         </javac>
     </target>
 
