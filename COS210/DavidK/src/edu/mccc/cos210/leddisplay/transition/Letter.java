@@ -19,7 +19,7 @@ public class Letter {
         try {
             font = ImageIO.read(
                 new FileInputStream(
-                    "font.bmp"
+                    "res/font.bmp"
                 )
             );
         } catch (Exception ex) {

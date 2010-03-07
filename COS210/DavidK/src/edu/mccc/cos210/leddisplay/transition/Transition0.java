@@ -16,7 +16,8 @@ public class Transition0 extends LEDDisplayTransition {
 
         flashLEDs(view);
 
-        String toWrite = getData();
+        //String toWrite = getData();
+        String toWrite = "Kento!";
         LinkedList<boolean[][]> bitmaps = new LinkedList<boolean[][]>();
         /** Measures the length of the word in pixels */
         int wordLength = 0;
@@ -35,7 +36,7 @@ public class Transition0 extends LEDDisplayTransition {
         }
 
 		try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
 		} catch (Exception ex) {
 		}
         flashLEDs(view);
