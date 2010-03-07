@@ -1,5 +1,7 @@
 import java.util.Random;
+import java.awt.event.*;
 import javax.swing.event.*;
+import javax.swing.Timer;
 
 /**
  * Responsible for maintaining current state
@@ -7,11 +9,14 @@ import javax.swing.event.*;
 public class QuizModel {
 	private QuizType  quizType;
 	private QuizLevel quizLevel;
-	private boolean running;
 	
 	private int score;
 	/** Current math problem */
 	private Problem problem;
+	/** Time elapsed */
+	private int seconds;
+
+	private Timer timer;
 
 	private Random rand;
 
@@ -19,17 +24,26 @@ public class QuizModel {
 		this.quizType  = QuizType.ADD;
 		this.quizLevel = QuizLevel.ZERO_FIVE;
 		this.rand = new Random();
+		this.timer = new Timer(
+			1000,
+			new ActionListener() {
+				public void actionPerformed (ActionEvent e) {
+					updateTime();
+				}
+			}
+		);
 	}
 	
 	public void startQuiz() {
 		//Clear out the score
 		score = 0;
-		running = true;
+		seconds = 0;
 		nextProblem();
+		timer.start();
 	}
 	public void stopQuiz() {
-		running = false;
 		//Stop timer
+		timer.stop();
 	}
 
 	public void setType(QuizType quizType) {
@@ -53,8 +67,7 @@ public class QuizModel {
 		return this.score;
 	}
 	public int getTimeElapsed() {
-		//FIXME make this work!
-		return 2;
+		return this.seconds;
 	}
 	public void answerProblem(int answer) {
 		if (answer == problem.getAnswer()) {
@@ -62,7 +75,10 @@ public class QuizModel {
 		}
 		nextProblem();
 	}
-
+	private void updateTime() {
+		seconds++;
+		notifyListeners();
+	}
 	private void nextProblem() {
 		int a = generateLegalNum();
 		int b = generateLegalNum();
@@ -81,7 +97,7 @@ public class QuizModel {
 	}
 
 	/**
-	 * Event listener code modified from MVC example from 
+	 * Event listener code modified from Prof Bostain's MVC example 
 	 * available at:
 	 * http://cos210.drbco.com/mccc/COS210/DaveB/MVC/mvc.jar
 	 */
