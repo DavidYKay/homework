@@ -10,37 +10,32 @@ public class Letter {
     public Letter(char letter) {
         switch (letter) {
             case 'i':
-                //bitmap = new BitSet[1];
-                bitmap = new boolean[1][10];
+                bitmap = new boolean[1][HEIGHT];
                 for (int i = 0; i < bitmap.length; i++) {
-                    //bitmap[0] = new BitSet(HEIGHT);
-                        for (int j = 0; j < HEIGHT; j++) {
-                            switch (j) {
-                                case 0:
-                                case 1:
-                                case 3:
-                                    break;
-                                default:
-                                    //bitmap[i].set(j);
-                                    bitmap[i][j] = true;
-                            }
+                    for (int j = 0; j < HEIGHT; j++) {
+                        switch (j) {
+                            case 0:
+                            case 1:
+                            case 3:
+                                break;
+                            default:
+                                bitmap[i][j] = true;
                         }
+                    }
                 }
                 break;
 
-                /*
             case 'A':
-                bitmap = new BitSet[8];
+                bitmap = new boolean[8][HEIGHT];
                 for (int i = 0; i < bitmap.length; i++) {
-                    bitmap[i] = new BitSet(HEIGHT);
 
                     switch (i) {
                         case 0: 
                         case 7: 
                             for (int j = 8; j < 10; j++) {
-                                bitmap[i].set(j);
+                                bitmap[i][j] = true;
 
-                                if (bitmap[i].get(j)) {
+                                if (bitmap[i][j]) {
                                     System.out.print(1);
                                 } else {
                                     System.out.print(0);
@@ -50,9 +45,9 @@ public class Letter {
                         case 1: 
                         case 6: 
                             for (int j = 5; j < 8; j++) {
-                                bitmap[i].set(j);
+                                bitmap[i][j] = true;
 
-                                if (bitmap[i].get(j)) {
+                                if (bitmap[i][j]) {
                                     System.out.print(1);
                                 } else {
                                     System.out.print(0);
@@ -62,9 +57,9 @@ public class Letter {
                         case 2: 
                         case 5: 
                             for (int j = 2; j < 6; j++) {
-                                bitmap[i].set(j);
+                                bitmap[i][j] = true;
 
-                                if (bitmap[i].get(j)) {
+                                if (bitmap[i][j]) {
                                     System.out.print(1);
                                 } else {
                                     System.out.print(0);
@@ -73,20 +68,17 @@ public class Letter {
                             break;
                         case 3: 
                         case 4: 
-                            bitmap[i].set(0);
-                            bitmap[i].set(1);
-                            bitmap[i].set(5);
+                            bitmap[i][0] = true;
+                            bitmap[i][1] = true;
+                            bitmap[i][5] = true;
                             break;
                         //default:
                     }
                     System.out.println();
                 }
                 break;
-                            */
         }
     }
-
-    //public BitSet[] getBitmap() {
     public boolean[][] getBitmap() {
         return bitmap;
     }

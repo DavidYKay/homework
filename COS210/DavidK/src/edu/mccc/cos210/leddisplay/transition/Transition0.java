@@ -19,14 +19,12 @@ public class Transition0 extends LEDDisplayTransition {
         Blitter blitter = new Blitter(leds, 0);
         Letter ltrA = new Letter('A');
         Letter ltrI = new Letter('i');
-        //BitSet[] aBmp = ltrA.getBitmap();
-        //BitSet[] iBmp = ltrI.getBitmap();
-        //boolean[][] aBmp = ltrA.getBitmap();
+        boolean[][] aBmp = ltrA.getBitmap();
         boolean[][] iBmp = ltrI.getBitmap();
 
-        //blitter.blitBitmap(aBmp);
+        blitter.blitBitmap(aBmp);
         blitter.blitBitmap(iBmp);
-        //blitter.blitBitmap(aBmp);
+        blitter.blitBitmap(aBmp);
         blitter.blitBitmap(iBmp);
 
 		try {
