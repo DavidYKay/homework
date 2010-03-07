@@ -4,14 +4,16 @@ import java.util.*;
 
 public class Letter {
     private static final int HEIGHT = 10;
-    private BitSet[] bitmap;
+    //private BitSet[] bitmap;
+    private boolean[][] bitmap;
 
     public Letter(char letter) {
         switch (letter) {
             case 'i':
-                bitmap = new BitSet[1];
+                //bitmap = new BitSet[1];
+                bitmap = new boolean[1][10];
                 for (int i = 0; i < bitmap.length; i++) {
-                    bitmap[0] = new BitSet(HEIGHT);
+                    //bitmap[0] = new BitSet(HEIGHT);
                         for (int j = 0; j < HEIGHT; j++) {
                             switch (j) {
                                 case 0:
@@ -19,13 +21,14 @@ public class Letter {
                                 case 3:
                                     break;
                                 default:
-                                    bitmap[i].set(j);
+                                    //bitmap[i].set(j);
+                                    bitmap[i][j] = true;
                             }
                         }
                 }
                 break;
 
-            //case 'a':
+                /*
             case 'A':
                 bitmap = new BitSet[8];
                 for (int i = 0; i < bitmap.length; i++) {
@@ -74,17 +77,17 @@ public class Letter {
                             bitmap[i].set(1);
                             bitmap[i].set(5);
                             break;
-
-
-                        default:
+                        //default:
                     }
                     System.out.println();
                 }
                 break;
+                            */
         }
     }
 
-    public BitSet[] getBitmap() {
+    //public BitSet[] getBitmap() {
+    public boolean[][] getBitmap() {
         return bitmap;
     }
 }
