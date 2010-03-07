@@ -9,39 +9,45 @@ import java.awt.font.*;
 import java.util.*;
 
 public class Transition0 extends LEDDisplayTransition {
+    private static final int FLASH_TIME = 100;
+    private static final int NUM_FLASHES = 3;
 	public void go(LEDDisplayView view, LEDDisplayView.LED[][] leds) {
 		Debug.println("Transition0.go()");
-        int numFlashes = 3;
 
-        Letter a = new Letter('a');
-        BitSet[] bitmap = a.getBitmap();
+        flashLEDs(view);
 
-        for (int i = 0; i < bitmap.length; i++) {
-            for (int j = 0; j < bitmap[i].length(); j++) {
-                //LED - row, column
-                //bitmap - column, row
-                leds[j][i].setState(
-                    bitmap[i].get(j)
-                );
-            }
-        }
+        Blitter blitter = new Blitter(leds, 0);
+        Letter ltrA = new Letter('A');
+        Letter ltrI = new Letter('i');
+        BitSet[] aBmp = ltrA.getBitmap();
+        BitSet[] iBmp = ltrI.getBitmap();
 
-        /*
+        blitter.blitBitmap(aBmp);
+        blitter.blitBitmap(iBmp);
+        blitter.blitBitmap(aBmp);
+        blitter.blitBitmap(iBmp);
+
 		try {
-            view.clearLEDs();
-            for (int i = 0; i < numFlashes; i++) {
-                view.setLEDs();
-                Thread.sleep(100);
-                view.clearLEDs();
-                Thread.sleep(100);
-            }
-            //Milliseconds
+            Thread.sleep(1000);
 		} catch (Exception ex) {
 		}
-        */
+        flashLEDs(view);
         System.out.println("One write completed");
 	}
-
+    private void flashLEDs(LEDDisplayView view) {
+		try {
+            for (int i = 0; i < NUM_FLASHES; i++) {
+                view.setLEDs();
+                Thread.sleep(FLASH_TIME);
+                view.clearLEDs();
+                Thread.sleep(FLASH_TIME);
+            }
+		} catch (Exception ex) {
+		}
+    }
+    /**
+     * Attempt 
+     */
     private void getGlyph() {
         AffineTransform at = new AffineTransform();
         Font font = new Font(
