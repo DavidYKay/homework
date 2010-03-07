@@ -29,6 +29,10 @@ public class Letter {
     //if (font.getRGB(x, y) == -1) { }
 
     public Letter(char letter) {
+        this.bitmap = getBitmapFromFont(letter);
+    }
+    /*
+    public Letter(char letter) {
         switch (letter) {
             case 'i':
                 bitmap = new boolean[1][HEIGHT];
@@ -103,7 +107,7 @@ public class Letter {
                 bitmap = getBitmapFromFont(letter);
         }
     }
-
+    */
 
     public boolean[][] getBitmap() {
         return bitmap;
@@ -153,7 +157,6 @@ public class Letter {
         }
     }
     private boolean[][] getBitmapFromFont(char letter) {
-        //if (track.getRGB(x, y) == -1) { }
         int offset = 9 * letter;
         
         final int width = 8;
@@ -168,5 +171,50 @@ public class Letter {
             }
         }
         return bitmap;
+    }
+    private boolean[][] trimWhiteSpace(boolean[][] bitmap) {
+        boolean[][] newBmp;
+        int leftBound = 0;
+        int rightBound = bitmap.length;
+
+    leftSearch:
+        for (int i = 0; i < bitmap.length; i++) {
+            for (int j = 0; j < bitmap[i].length; j++) {
+                //once we find a black dot, we know where the starting point is
+                //
+                //if (font.getRGB(x, y) == -1) { 
+                if (font.getRGB(i, j) == -1) { 
+                    leftBound = i;
+                    break leftSearch;
+                }
+            }
+        }
+
+    rightSearch:
+        for (int i = bitmap.length - 1; i >= 0; i--) {
+            for (int j = bitmap[i].length - 1; j >= 0; j--) {
+                //once we find a black dot, we know where the ending point is
+                //if (font.getRGB(x, y) == -1) { 
+                if (font.getRGB(i, j) == -1) { 
+                    rightBound = i;
+                    break rightSearch;
+                }
+            }
+        }
+        int width = rightBound - leftBound;
+        //Create new bitmap for the cropped area
+        newBmp = new boolean[width][bitmap[0].length];
+        //blit the contents over
+        Blitter blitter = new Blitter(newBmp);
+        blitter.blitBitmap(
+            bitmap,
+            leftBound,
+            rightBound,
+            0,
+            bitmap[0].length,
+            false
+        );
+
+        return newBmp;
     }
 }
