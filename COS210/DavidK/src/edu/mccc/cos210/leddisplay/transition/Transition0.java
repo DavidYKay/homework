@@ -16,16 +16,23 @@ public class Transition0 extends LEDDisplayTransition {
 
         flashLEDs(view);
 
+        String toWrite = getData();
+        LinkedList<boolean[][]> bitmaps = new LinkedList<boolean[][]>();
+        /** Measures the length of the word in pixels */
+        int wordLength = 0;
+        for (char character : toWrite.toCharArray()) {
+            Letter letter = new Letter(character);
+            boolean[][] bmp = letter.getBitmap();
+            bitmaps.add(bmp);
+            wordLength += bmp.length;
+        }
+        int offset = (leds[0].length - wordLength) / 2;
         Blitter blitter = new Blitter(leds, 0);
-        Letter ltrA = new Letter('A');
-        Letter ltrI = new Letter('i');
-        boolean[][] aBmp = ltrA.getBitmap();
-        boolean[][] iBmp = ltrI.getBitmap();
+        blitter.incrementOffset(offset, 0);
 
-        blitter.blitBitmap(aBmp);
-        blitter.blitBitmap(iBmp);
-        blitter.blitBitmap(aBmp);
-        blitter.blitBitmap(iBmp);
+        for (boolean[][] bmp : bitmaps) {
+            blitter.blitBitmap(bmp);
+        }
 
 		try {
             Thread.sleep(1000);
@@ -44,51 +51,5 @@ public class Transition0 extends LEDDisplayTransition {
             }
 		} catch (Exception ex) {
 		}
-    }
-    /**
-     * Attempt 
-     */
-    private void getGlyph() {
-        AffineTransform at = new AffineTransform();
-        Font font = new Font(
-            "Dialog",
-            Font.PLAIN,
-            10
-        );
-        FontRenderContext frc = new FontRenderContext(
-            at,
-            false,
-            false
-        );
-
-        //String input = "Hello World";
-        //String input = "ABC";
-        String input = "A";
-        GlyphVector gv = font.createGlyphVector(
-            frc,
-            input
-        );
-        for (int i = 0; i < input.length(); i++) {
-            Shape s = gv.getGlyphOutline(i);
-            //Iterator iter = s.getPathIterator(at);
-            PathIterator iter = s.getPathIterator(at);
-
-            while ( !iter.isDone() ){
-                iter.next();
-                //Pairs of coordinates
-                //double[] coords = new double[10];
-                double[] coords = new double[4];
-                int code = iter.currentSegment(coords);
-
-                for (int j = 0; j < coords.length - 1; j += 2) {
-                    System.out.println( 
-                        coords[j] + ", " + coords[j+1] 
-                    );
-                }
-            }
-
-        }
-
-
     }
 }

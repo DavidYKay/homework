@@ -5,10 +5,6 @@ import com.cbthinkx.util.Debug;
 
 import java.util.*;
 
-//import java.awt.Graphics.*;
-//import java.awt.*;
-//import java.awt.geom.*;
-//import java.awt.font.*;
 
 public class Blitter {
     /** Horizontal offset, 0-based */
@@ -17,7 +13,6 @@ public class Blitter {
     private LED[][] leds;
 
     //TODO Add vertical/horiz offset?
-
     public Blitter(LED[][] leds) {
         this(leds, 0);
     }
