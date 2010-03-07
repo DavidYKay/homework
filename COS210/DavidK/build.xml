@@ -1,0 +1,66 @@
+<project name="LED" default="compile">
+    <property name="src"     location="src/edu/mccc/cos210/leddisplay"/>
+    <property name="build"   location="build"/>
+    <property name="classes" location="${build}/classes"/>
+    <property name="dist"    location="dist"/>
+    <property name="classpath"  value="${build}/jar/${ant.project.name}}.jar:.:${classes}" />
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes}"/>
+        <javac srcdir="${src}" destdir="${classes}" debug="true">
+            <compilerarg value="-g"/>
+            <!--
+            <compilerarg value="-Xlint:all"/>
+            <compilerarg value="-Xlint"/>
+            -->
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${build}/jar"/>
+        <jar destfile="${build}/jar/${ant.project.name}}.jar" basedir="${classes}">
+            <manifest>
+                <attribute name="Main-Class" value="NBody"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="compile">
+        <java 
+            classname="edu.mccc.cos210.leddisplay.LEDDisplayTest"
+            classpath="${classpath}"
+            fork="true" >
+        </java>
+    </target>
+
+    <target name="rund" depends="compile">
+        <java 
+            classname="edu.mccc.cos210.leddisplay.LEDDisplayTest"
+            classpath="${classpath}"
+            fork="true" >
+
+            <sysproperty 
+                key= "com.cbthinkx.debug" 
+                value= "true" />
+            <!--
+                <arg value="MommasBadBoy" />
+                <arg value="-Dcom.cbthinkx.debug" />
+            -->
+        </java>
+    </target>
+
+    <target name="debug" depends="compile">
+         <property name="executable-full-path"
+             location="/usr/bin/jdb"/>
+         <exec executable="${executable-full-path}">
+             <arg value="-sourcepath ./src/" />
+             <arg value="-classpath .:build/classes" />
+             <arg value="edu.mccc.cos210.leddisplay.LEDDisplayTest"/>
+         </exec>
+
+    </target>
+</project>
