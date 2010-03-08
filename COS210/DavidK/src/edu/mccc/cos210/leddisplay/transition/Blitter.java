@@ -53,27 +53,20 @@ public class Blitter {
     }
     public void blitBitmap(boolean[][] bitmap, int xStart, int xEnd, int yStart, int yEnd, boolean scrollBack) {
         
-        //System.out.println(
-        //    String.format(
-        //        "SIZES: leds(%d,%d) bitmap(%d,%d)",
-        //        leds.length,
-        //        leds[0].length,
-        //        bitmap.length,
-        //        bitmap[0].length
-        //    )
-        //);
+        System.out.println(
+            String.format(
+                "SIZES: leds(%d,%d) bitmap(%d,%d)",
+                leds.length,
+                leds[0].length,
+                bitmap.length,
+                bitmap[0].length
+            )
+        );
 
         //for (int i = xStart; i <= xEnd; i++) {
         //    for (int j = yStart; j <= yEnd; j++) {
         for (int i = yStart; i <= yEnd; i++) {
             for (int j = xStart; j <= xEnd; j++) {
-                //int y = j + yOffset;
-                //int x = i + xOffset;
-                //int x = i + xOffset;
-                //int y = j + yOffset;
-
-                //int x = i + xOffset;
-                //int y = j + yOffset;
                 int x = j + xOffset;
                 int y = i + yOffset;
 
@@ -82,23 +75,13 @@ public class Blitter {
                     x < leds[i].length && 
                     (y < leds.length)
                 ) {
-                    //System.out.println(
-                    //    String.format(
-                    //        "leds(%d,%d) bitmap(%d,%d)",
-                    //        x,
-                    //        y,
-                    //        i,
-                    //        j
-                    //    )
-                    //);
                     leds[y][x] = bitmap[i][j];
-                    //leds[x][y] = bitmap[i][j];
-                    //leds[i][j] = bitmap[i][j];
                 }
             }
         }
         if (!scrollBack) {
-            incrementOffset(bitmap.length, 0);
+            //incrementOffset(bitmap.length, 0);
+            incrementOffset(bitmap[0].length, 0);
         }
     }
 

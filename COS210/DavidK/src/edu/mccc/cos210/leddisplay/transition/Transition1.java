@@ -31,13 +31,11 @@ public class Transition1 extends LEDDisplayTransition {
         //Loop, sliding text
         for (int i = 0; i < leds[0].length; i++) {
             for (boolean[][] bmp : bitmaps) {
-                //blitter.blitBitmap(bmp, true);
-                blitter.blitBitmap(bmp, false);
+                blitter.blitBitmap(bmp, true);
             }
-            blitter.incrementOffset(1 - wordLength, 0);
+            blitter.incrementOffset(1, 0);
             blitter.blitToBoard(leds);
             try {
-                //Thread.sleep(100);
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
