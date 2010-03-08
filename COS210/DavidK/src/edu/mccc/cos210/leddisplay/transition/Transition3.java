@@ -26,7 +26,12 @@ public class Transition3 extends DKTransition {
 
         Drawable[] rouletteDrawables = getRouletteDrawables(leds);
 
-
+        dropletBlank(leds, true);
+        dropletDraw(
+            leds,
+            rouletteDrawables[0].getBitmap(),
+            false
+        );
         try {
             for (int i = 0; i <= numInversions; i++) {
                 //Thread.sleep(1000);
@@ -66,22 +71,46 @@ public class Transition3 extends DKTransition {
             Thread.sleep(5000);
         } catch (Exception ex) {
         }
-        dropletBlank(leds);
+        dropletBlank(leds, false);
     }
 
-    private void dropletBlank(LEDDisplayView.LED[][] leds) {
-        //Generate
-        //There are 80 x 10 total squares
-        ArrayList<LEDDisplayView.LED> array = new ArrayList<LEDDisplayView.LED>();
+    private void dropletDraw(LEDDisplayView.LED[][] leds, boolean[][] bitmap, boolean red) {
+        ArrayList<LEDDisplayView.LED> aList = new ArrayList<LEDDisplayView.LED>();
         for (int i = 0; i < leds.length; i++) {
             for (int j = 0; j < leds[i].length; j++) {
-                array.add(leds[i][j]);
+                
+                if (bitmap[i][j]) {
+                    
+                } else {
+                    aList.add(leds[i][j]);
+                }
             }
         }
-        Collections.shuffle(array);
-        while (!array.isEmpty()) {
-            LEDDisplayView.LED led = array.remove(0);
-            led.setState(true);
+        Collections.shuffle(aList);
+
+        while (!aList.isEmpty()) {
+            LEDDisplayView.LED led = aList.remove(0);
+            led.setState(red);
+            try {
+                Thread.sleep(10);
+            } catch (Exception ex) {
+            }
+        }
+    }
+
+    private void dropletBlank(LEDDisplayView.LED[][] leds, boolean red) {
+        //Generate
+        //There are 80 x 10 total squares
+        ArrayList<LEDDisplayView.LED> aList = new ArrayList<LEDDisplayView.LED>();
+        for (int i = 0; i < leds.length; i++) {
+            for (int j = 0; j < leds[i].length; j++) {
+                aList.add(leds[i][j]);
+            }
+        }
+        Collections.shuffle(aList);
+        while (!aList.isEmpty()) {
+            LEDDisplayView.LED led = aList.remove(0);
+            led.setState(red);
             try {
                 Thread.sleep(10);
             } catch (Exception ex) {
