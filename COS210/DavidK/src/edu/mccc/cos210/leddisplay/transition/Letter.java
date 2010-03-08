@@ -185,22 +185,24 @@ public class Letter {
             }
         }
 
-        //bitmap = trimWhiteSpace(bitmap);
+        bitmap = trimWhiteSpace(bitmap);
         return bitmap;
     }
     private boolean[][] trimWhiteSpace(boolean[][] bitmap) {
         boolean[][] newBmp;
         int leftBound = 0;
-        int rightBound = bitmap.length - 1;
+        int rightBound = bitmap[0].length - 1;
 
     leftSearch:
         for (int i = 0; i < bitmap.length; i++) {
             for (int j = 0; j < bitmap[i].length; j++) {
+
+                int y = i;
+                int x = j;
                 //once we find a black dot, we know where the starting point is
                 //
-                //if (font.getRGB(x, y) == -1) { 
-                if (font.getRGB(i, j) == -1) { 
-                    leftBound = i;
+                if (font.getRGB(x, y) == -1) { 
+                    leftBound = x;
                     break leftSearch;
                 }
             }
@@ -210,9 +212,10 @@ public class Letter {
         for (int i = bitmap.length - 1; i >= 0; i--) {
             for (int j = bitmap[i].length - 1; j >= 0; j--) {
                 //once we find a black dot, we know where the ending point is
-                //if (font.getRGB(x, y) == -1) { 
-                if (font.getRGB(i, j) == -1) { 
-                    rightBound = i;
+                int y = i;
+                int x = j;
+                if (font.getRGB(x, y) == -1) { 
+                    rightBound = x;
                     break rightSearch;
                 }
             }
@@ -230,7 +233,8 @@ public class Letter {
         );
 
         //Create new bitmap for the cropped area
-        newBmp = new boolean[width][bitmap[0].length];
+        //newBmp = new boolean[width][bitmap[0].length];
+        newBmp = new boolean[bitmap.length][width];
         //blit the contents over
         Blitter blitter = new Blitter(newBmp);
         //blitter.blitBitmap(
