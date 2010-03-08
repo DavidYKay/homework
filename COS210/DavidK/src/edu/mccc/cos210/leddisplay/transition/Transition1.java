@@ -3,14 +3,15 @@ import edu.mccc.cos210.leddisplay.*;
 import com.cbthinkx.util.Debug;
 
 import java.util.*;
+/**
+ * Vertical scroll, entering from top, leaving through the bottom.
+ */
 public class Transition1 extends LEDDisplayTransition {
 	public void go(LEDDisplayView view, LEDDisplayView.LED[][] leds) {
 		Debug.println("Transition1.go()");
 
         view.clearLEDs();
 
-        //String toWrite = "ABC";
-        //String toWrite = "A";
         String toWrite = getData();
         LinkedList<boolean[][]> bitmaps = new LinkedList<boolean[][]>();
         /** Measures the length of the word in pixels */
@@ -30,14 +31,13 @@ public class Transition1 extends LEDDisplayTransition {
             0
         );
         //Loop, sliding text
-        for (int i = 0; i < leds[0].length; i++) {
+        for (int i = 0; i <= leds.length; i++) {
             for (boolean[][] bmp : bitmaps) {
-                //blitter.blitBitmap(bmp);
-                //blitter.blitBitmap(bmp, true);
                 blitter.blitBitmap(bmp, false);
             }
-            blitter.incrementOffset(1 - wordLength, 0);
-            //blitter.incrementOffset(1, 0);
+            //Increment by one, but roll back to where the word began
+            //blitter.incrementOffset(1 - wordLength, 0);
+            blitter.incrementOffset(- wordLength, 1);
             blitter.blitToBoard(leds);
             try {
                 Thread.sleep(50);

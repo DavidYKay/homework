@@ -1,7 +1,4 @@
-1:Dba
+1:Vertical
 0:Hello World!
-2:Abba
-3:
-2:
-0:AiAiAi
-1:
+2:Horizontal
+3:Pretty
