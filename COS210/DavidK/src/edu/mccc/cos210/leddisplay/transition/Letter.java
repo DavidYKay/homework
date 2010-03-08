@@ -10,7 +10,7 @@ import java.awt.Graphics.*;
 import java.awt.geom.*;
 import java.awt.font.*;
 
-public class Letter extends Blitter {
+public class Letter extends Drawable {
     private static final int HEIGHT = 10;
 
     private static BufferedImage font;
@@ -34,7 +34,7 @@ public class Letter extends Blitter {
                 bitmap = new boolean[1][4];
                 break;
             default:
-                bitmap = getBitmapFromFont(letter);
+                bitmap = getDrawableFromFont(letter);
         }
         return new Letter(bitmap);
     }
@@ -46,7 +46,7 @@ public class Letter extends Blitter {
     /**
      * Attempt to programatically generate font bitmaps
      */
-    private void getGlyph() {
+    private static void getGlyph() {
         AffineTransform at = new AffineTransform();
         Font font = new Font(
             "Dialog",
@@ -85,8 +85,8 @@ public class Letter extends Blitter {
 
         }
     }
-    //private boolean[][] getBitmapFromFont(char letter) {
-    private static boolean[][] getBitmapFromFont(char letter) {
+    //private boolean[][] getDrawableFromFont(char letter) {
+    private static boolean[][] getDrawableFromFont(char letter) {
         int offset = 9 * letter;
         
         final int width = 8;
@@ -154,7 +154,7 @@ public class Letter extends Blitter {
         //Create new bitmap for the cropped area
         newBmp = new boolean[bitmap.length][width];
         //blit the contents over
-        Blitter blitter = new Blitter(newBmp);
+        Drawable blitter = new Drawable(newBmp);
         blitter.incrementOffset(-leftBound, 0);
         blitter.blitBitmap(
             bitmap,

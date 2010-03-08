@@ -18,13 +18,13 @@ public class Transition1 extends LEDDisplayTransition {
         int wordLength = 0;
         for (char character : toWrite.toCharArray()) {
             Letter letter = Letter.makeLetterWithChar(character);
-            boolean[][] bmp = letter.getBitmap();
+            boolean[][] bmp = letter.getDrawable();
             bitmaps.add(bmp);
             wordLength += bmp[0].length;
         }
         System.out.println("Characters in list: " + bitmaps.size());
 
-        Blitter blitter = new Blitter(
+        Drawable blitter = new Drawable(
             new boolean[leds.length][leds[0].length], 
             0
         );
@@ -40,7 +40,7 @@ public class Transition1 extends LEDDisplayTransition {
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
-            blitter.clearBitmap();
+            blitter.clearDrawable();
         }
 
         //Freeze image in center
