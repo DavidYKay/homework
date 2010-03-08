@@ -25,6 +25,21 @@ public class Transition3 extends DKTransition {
         );
 
         Drawable[] rouletteDrawables = getRouletteDrawables(leds);
+
+
+        try {
+            for (int i = 0; i <= numInversions; i++) {
+                //Thread.sleep(1000);
+                //view.clearLEDs();
+                for (Drawable blittable : rouletteDrawables) {
+                    blittable.blitToBoard(leds);
+                    Thread.sleep(100);
+                }
+            }
+
+        } catch (Exception ex) {
+        }
+
         for (int i = 0; i <= numInversions; i++) {
             try {
                 for (Drawable blittable : alterEgo) {
@@ -48,20 +63,29 @@ public class Transition3 extends DKTransition {
         }
 
         try {
-            for (int i = 0; i <= numInversions; i++) {
-                //Thread.sleep(1000);
-                //view.clearLEDs();
-                for (Drawable blittable : rouletteDrawables) {
-                    blittable.blitToBoard(leds);
-                    Thread.sleep(100);
-                }
-            }
-
-        } catch (Exception ex) {
-        }
-        try {
             Thread.sleep(5000);
         } catch (Exception ex) {
+        }
+        dropletBlank(leds);
+    }
+
+    private void dropletBlank(LEDDisplayView.LED[][] leds) {
+        //Generate
+        //There are 80 x 10 total squares
+        ArrayList<LEDDisplayView.LED> array = new ArrayList<LEDDisplayView.LED>();
+        for (int i = 0; i < leds.length; i++) {
+            for (int j = 0; j < leds[i].length; j++) {
+                array.add(leds[i][j]);
+            }
+        }
+        Collections.shuffle(array);
+        while (!array.isEmpty()) {
+            LEDDisplayView.LED led = array.remove(0);
+            led.setState(true);
+            try {
+                Thread.sleep(10);
+            } catch (Exception ex) {
+            }
         }
     }
 
