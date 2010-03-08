@@ -11,13 +11,21 @@ public class Blitter {
     //private LED[][] leds;
     private boolean[][] leds;
 
-    //TODO Add vertical/horiz offset?
     public Blitter(boolean[][] leds) {
         this(leds, 0);
     }
     public Blitter(boolean[][] leds, int xOffset) {
         this.leds = leds;
         this.xOffset = xOffset;
+    }
+
+    public void clearBitmap() {
+        //leds = new boolean[leds.length][leds[0].length];
+        for (int i = 0; i < leds.length; i++) {
+            for (int j = 0; j < leds[i].length; j++) {
+                leds[i][j] = false;
+            }
+        }
     }
 
     public void blitBitmap(boolean[][] bitmap) {
@@ -46,9 +54,6 @@ public class Blitter {
                     x < leds[i].length && 
                     (y < leds.length)
                 ) {
-                    //leds[y][x].setState(
-                    //    bitmap[i][j]
-                    //);
                     leds[y][x] = bitmap[i][j];
                 }
             }
@@ -73,12 +78,15 @@ public class Blitter {
                     x < leds[i].length && 
                     (y < leds.length)
                 ) {
-                    board[y][x].setState(
-                        leds[i][j]
-                    );
+                    if (board[y][x].isOn() != leds[i][j]) {
+                        board[y][x].setState(
+                            leds[i][j]
+                        );
+                    }
                 }
             }
         }
+        System.out.println(this);
         //if (!scrollBack) {
         //    incrementOffset(bitmap.length, 0);
         //}
@@ -87,5 +95,23 @@ public class Blitter {
     public void incrementOffset(int x, int y) {
         xOffset += x;
         yOffset += y;
+    }
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < leds.length; i++) {
+            for (int j = 0; j < leds[i].length; j++) {
+                if (leds[i][j]) {
+                    sb.append(
+                        '1'
+                    );
+                } else {
+                    sb.append(
+                        '0'
+                    );
+                }
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

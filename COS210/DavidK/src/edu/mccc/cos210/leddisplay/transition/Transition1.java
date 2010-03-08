@@ -23,7 +23,6 @@ public class Transition1 extends LEDDisplayTransition {
 
         //Blitter blitter = new Blitter(leds, 0);
         Blitter blitter = new Blitter(
-            //leds, 
             new boolean[leds.length][leds[0].length], 
             0
         );
@@ -41,14 +40,13 @@ public class Transition1 extends LEDDisplayTransition {
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
+            blitter.clearBitmap();
         }
-
 
         //Freeze image in center
 		try {
             Thread.sleep(3000);
 		} catch (Exception ex) {
 		}
-
 	}
 }
