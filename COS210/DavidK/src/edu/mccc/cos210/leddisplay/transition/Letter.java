@@ -37,7 +37,6 @@ public class Letter {
                 this.bitmap = getBitmapFromFont(letter);
         }
     }
-
     public boolean[][] getBitmap() {
         return bitmap;
     }
