@@ -19,10 +19,12 @@ public class Transition2 extends DKTransition {
         Drawable blitter = new Drawable(
             new boolean [leds.length][leds[0].length]
         );
-        int offset = (leds[0].length - wordLength) / 2;
-        blitter.incrementOffset(offset + leds[0].length, 0);
+        //int offset = (leds[0].length - wordLength) / 2;
+        //blitter.incrementOffset(offset + leds[0].length, 0);
+        blitter.incrementOffset(leds[0].length, 0);
         //Loop, sliding text in
-        for (int i = 0; i <= leds[0].length; i++) {
+        //for (int i = 0; i <= leds[0].length; i++) {
+        for (int i = 0; i <= wordLength; i++) {
             for (Drawable drawable : bitmaps) {
                 blitter.blitBitmap(drawable.getBitmap(), false);
             }
@@ -37,10 +39,10 @@ public class Transition2 extends DKTransition {
         }
 
         //Freeze image in center
-		try {
-            Thread.sleep(3000);
-		} catch (Exception ex) {
-		}
+		//try {
+        //    Thread.sleep(3000);
+		//} catch (Exception ex) {
+		//}
         //Loop, sliding text out
         for (int i = 0; i <= leds[0].length; i++) {
             for (Drawable drawable : bitmaps) {
