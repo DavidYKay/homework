@@ -10,7 +10,8 @@ import java.awt.Graphics.*;
 import java.awt.geom.*;
 import java.awt.font.*;
 
-public class Letter extends Drawable {
+//public class Letter extends Drawable {
+public class Letter {
     private static final int HEIGHT = 10;
 
     private static BufferedImage font;
@@ -27,7 +28,7 @@ public class Letter extends Drawable {
     }
     //if (font.getRGB(x, y) == -1) { }
 
-    public static Letter makeLetterWithChar(char letter) {
+    public static Drawable makeLetterWithChar(char letter) {
         boolean[][] bitmap = null;
         switch (letter) {
             case ' ':
@@ -36,11 +37,7 @@ public class Letter extends Drawable {
             default:
                 bitmap = getDrawableFromFont(letter);
         }
-        return new Letter(bitmap);
-    }
-
-    public Letter(boolean[][] bitmap) {
-        super(bitmap);
+        return new Drawable(bitmap);
     }
 
     /**

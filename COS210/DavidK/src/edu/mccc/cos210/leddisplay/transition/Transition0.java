@@ -21,7 +21,7 @@ public class Transition0 extends LEDDisplayTransition {
         /** Measures the length of the word in pixels */
         int wordLength = 0;
         for (char character : toWrite.toCharArray()) {
-            Letter letter = Letter.makeLetterWithChar(character);
+            Drawable letter = Letter.makeLetterWithChar(character);
             bitmaps.add(letter);
             wordLength += letter.getWidth();
         }
