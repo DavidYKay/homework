@@ -8,7 +8,7 @@ import java.awt.geom.*;
 import java.awt.font.*;
 import java.util.*;
 
-public class Transition0 extends LEDDisplayTransition {
+public class Transition0 extends DKTransition {
     private static final int FLASH_TIME = 100;
     private static final int NUM_FLASHES = 3;
 	public void go(LEDDisplayView view, LEDDisplayView.LED[][] leds) {
@@ -16,15 +16,9 @@ public class Transition0 extends LEDDisplayTransition {
 
         flashLEDs(view);
 
-        String toWrite = getData();
-        LinkedList<Drawable> bitmaps = new LinkedList<Drawable>();
+        LinkedList<Drawable> bitmaps = getWordDrawableList();
+        int wordLength = getWordLength(bitmaps);
         /** Measures the length of the word in pixels */
-        int wordLength = 0;
-        for (char character : toWrite.toCharArray()) {
-            Drawable letter = Letter.makeLetterWithChar(character);
-            bitmaps.add(letter);
-            wordLength += letter.getWidth();
-        }
         //Offset to center bitmap in frame
         int offset = (leds[0].length - wordLength) / 2;
 
@@ -34,7 +28,7 @@ public class Transition0 extends LEDDisplayTransition {
         blitter.incrementOffset(offset, 0);
 
         for (Drawable blittable : bitmaps) {
-            blitter.blitBitmap(blittable.getDrawable());
+            blitter.blitBitmap(blittable.getBitmap());
         }
         blitter.blitToBoard(leds);
 

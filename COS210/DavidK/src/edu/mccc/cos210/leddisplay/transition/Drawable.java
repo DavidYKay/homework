@@ -23,7 +23,7 @@ public class Drawable {
         this.xOffset = xOffset;
     }
 
-    public boolean[][] getDrawable() {
+    public boolean[][] getBitmap() {
         return leds;
     }
     public int getHeight() {
