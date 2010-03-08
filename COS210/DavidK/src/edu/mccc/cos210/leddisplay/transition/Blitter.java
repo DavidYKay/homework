@@ -8,7 +8,7 @@ public class Blitter {
     /** Horizontal offset, 0-based */
     private int xOffset;
     private int yOffset;
-    private boolean[][] leds;
+    protected boolean[][] leds;
 
     public Blitter(boolean[][] leds) {
         this(leds, 0);
@@ -16,6 +16,10 @@ public class Blitter {
     public Blitter(boolean[][] leds, int xOffset) {
         this.leds = leds;
         this.xOffset = xOffset;
+    }
+
+    public boolean[][] getBitmap() {
+        return leds;
     }
 
     public void clearBitmap() {
@@ -94,10 +98,6 @@ public class Blitter {
                 }
             }
         }
-        //System.out.println(this);
-        //if (!scrollBack) {
-        //    incrementOffset(bitmap.length, 0);
-        //}
     }
 
     public void incrementOffset(int x, int y) {

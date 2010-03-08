@@ -10,10 +10,8 @@ import java.awt.Graphics.*;
 import java.awt.geom.*;
 import java.awt.font.*;
 
-public class Letter {
-//public class Letter extends Blitter {
+public class Letter extends Blitter {
     private static final int HEIGHT = 10;
-    private boolean[][] bitmap;
 
     private static BufferedImage font;
     static {
@@ -29,17 +27,20 @@ public class Letter {
     }
     //if (font.getRGB(x, y) == -1) { }
 
-    public Letter(char letter) {
+    public static Letter makeLetterWithChar(char letter) {
+        boolean[][] bitmap = null;
         switch (letter) {
             case ' ':
-                this.bitmap = new boolean[1][4];
+                bitmap = new boolean[1][4];
                 break;
             default:
-                this.bitmap = getBitmapFromFont(letter);
+                bitmap = getBitmapFromFont(letter);
         }
+        return new Letter(bitmap);
     }
-    public boolean[][] getBitmap() {
-        return bitmap;
+
+    public Letter(boolean[][] bitmap) {
+        super(bitmap);
     }
 
     /**
@@ -59,7 +60,6 @@ public class Letter {
         );
 
         //String input = "Hello World";
-        //String input = "ABC";
         String input = "A";
         GlyphVector gv = font.createGlyphVector(
             frc,
@@ -85,30 +85,18 @@ public class Letter {
 
         }
     }
-    private boolean[][] getBitmapFromFont(char letter) {
+    //private boolean[][] getBitmapFromFont(char letter) {
+    private static boolean[][] getBitmapFromFont(char letter) {
         int offset = 9 * letter;
         
         final int width = 8;
-        //boolean[][] bitmap = new boolean[width][HEIGHT];
-        //for (int i = 0; i < width; i++) {
-        //    int x = offset + i;
-        //    for (int j = 0; j < HEIGHT; j++) {
-        //        int y = j;
-        //        if (font.getRGB(x, y) == -1) { 
-        //            bitmap[i][j] = true;
-        //        }
-        //    }
-        //}
 
         boolean[][] bitmap = new boolean[HEIGHT][width];
         for (int i = 0; i < HEIGHT; i++) {
-            //int x = offset + i;
             int y = i;
             for (int j = 0; j < width; j++) {
-                //int y = j;
                 int x = offset + j;
                 if (font.getRGB(x, y) == -1) { 
-                    //bitmap[i][j] = true;
                     bitmap[i][j] = true;
                 }
             }
@@ -117,7 +105,7 @@ public class Letter {
         bitmap = trimWhiteSpace(bitmap);
         return bitmap;
     }
-    private boolean[][] trimWhiteSpace(boolean[][] bitmap) {
+    private static boolean[][] trimWhiteSpace(boolean[][] bitmap) {
         boolean[][] newBmp;
         int leftBound = 0;
         int rightBound = bitmap[0].length - 1;
@@ -164,7 +152,6 @@ public class Letter {
         );
 
         //Create new bitmap for the cropped area
-        //newBmp = new boolean[width][bitmap[0].length];
         newBmp = new boolean[bitmap.length][width];
         //blit the contents over
         Blitter blitter = new Blitter(newBmp);
@@ -174,19 +161,9 @@ public class Letter {
             leftBound,
             rightBound,
             0,
-            //bitmap[0].length - 1,
             bitmap.length - 1,
             false
         );
-
-        //blitter.blitBitmap(
-        //    bitmap,
-        //    false
-        //);
-
         return newBmp;
-    }
-    public String toString() {
-        return Blitter.bitsToString(bitmap);
     }
 }
