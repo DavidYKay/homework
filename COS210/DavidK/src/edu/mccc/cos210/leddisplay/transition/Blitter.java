@@ -8,13 +8,14 @@ public class Blitter {
     /** Horizontal offset, 0-based */
     private int xOffset;
     private int yOffset;
-    private LED[][] leds;
+    //private LED[][] leds;
+    private boolean[][] leds;
 
     //TODO Add vertical/horiz offset?
-    public Blitter(LED[][] leds) {
+    public Blitter(boolean[][] leds) {
         this(leds, 0);
     }
-    public Blitter(LED[][] leds, int xOffset) {
+    public Blitter(boolean[][] leds, int xOffset) {
         this.leds = leds;
         this.xOffset = xOffset;
     }
@@ -45,15 +46,42 @@ public class Blitter {
                     x < leds[i].length && 
                     (y < leds.length)
                 ) {
-                    leds[y][x].setState(
-                        bitmap[i][j]
-                    );
+                    //leds[y][x].setState(
+                    //    bitmap[i][j]
+                    //);
+                    leds[y][x] = bitmap[i][j];
                 }
             }
         }
         if (!scrollBack) {
             incrementOffset(bitmap.length, 0);
         }
+    }
+
+    /**
+     * Blit own content to a lightboard
+     */
+    public void blitToBoard(LED[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                //LED - row, column
+                //bitmap - column, row
+                int y = i;
+                int x = j;
+                //Ensure that X and Y are legal points
+                if (x >= 0 && y >= 0 &&
+                    x < leds[i].length && 
+                    (y < leds.length)
+                ) {
+                    board[y][x].setState(
+                        leds[i][j]
+                    );
+                }
+            }
+        }
+        //if (!scrollBack) {
+        //    incrementOffset(bitmap.length, 0);
+        //}
     }
 
     public void incrementOffset(int x, int y) {

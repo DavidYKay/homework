@@ -29,12 +29,19 @@ public class Transition0 extends LEDDisplayTransition {
         }
         //Offset to center bitmap in frame
         int offset = (leds[0].length - wordLength) / 2;
-        Blitter blitter = new Blitter(leds, 0);
+        //Blitter blitter = new Blitter(leds, 0);
+
+        Blitter blitter = new Blitter(
+            //leds, 
+            new boolean[leds.length][leds[0].length], 
+            0
+        );
         blitter.incrementOffset(offset, 0);
 
         for (boolean[][] bmp : bitmaps) {
             blitter.blitBitmap(bmp);
         }
+        blitter.blitToBoard(leds);
 
 		try {
             Thread.sleep(3000);

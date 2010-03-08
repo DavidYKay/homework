@@ -21,7 +21,12 @@ public class Transition1 extends LEDDisplayTransition {
             wordLength += bmp.length;
         }
 
-        Blitter blitter = new Blitter(leds, 0);
+        //Blitter blitter = new Blitter(leds, 0);
+        Blitter blitter = new Blitter(
+            //leds, 
+            new boolean[leds.length][leds[0].length], 
+            0
+        );
         //Loop, sliding text
         for (int i = 0; i < leds[0].length; i++) {
             //int offset = (leds[0].length - wordLength) / 2;
@@ -30,12 +35,15 @@ public class Transition1 extends LEDDisplayTransition {
             for (boolean[][] bmp : bitmaps) {
                 blitter.blitBitmap(bmp, true);
             }
+            blitter.blitToBoard(leds);
             try {
                 //Thread.sleep(100);
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
         }
+
+
         //Freeze image in center
 		try {
             Thread.sleep(3000);
