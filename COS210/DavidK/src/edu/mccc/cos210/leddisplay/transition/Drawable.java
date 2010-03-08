@@ -57,15 +57,15 @@ public class Drawable {
      * Method takes a boolean array to blit onto current bitmap surface
      */
     public void blitBitmap(boolean[][] bitmap, int xStart, int xEnd, int yStart, int yEnd, boolean scrollBack) {
-        System.out.println(
-            String.format(
-                "SIZES: leds(%d,%d) bitmap(%d,%d)",
-                leds.length,
-                leds[0].length,
-                bitmap.length,
-                bitmap[0].length
-            )
-        );
+        //System.out.println(
+        //    String.format(
+        //        "SIZES: leds(%d,%d) bitmap(%d,%d)",
+        //        leds.length,
+        //        leds[0].length,
+        //        bitmap.length,
+        //        bitmap[0].length
+        //    )
+        //);
         for (int i = yStart; i <= yEnd; i++) {
             for (int j = xStart; j <= xEnd; j++) {
                 int x = j + xOffset;

@@ -137,16 +137,16 @@ public class Letter {
         }
         int width = 1 + rightBound - leftBound;
 
-        System.out.println(
-            String.format(
-                "rightBound: %d leftBound: %d bitmap.length: %d bitmap[0].length: %d WIDTH: %d",
-                rightBound,
-                leftBound,
-                bitmap.length,
-                bitmap[0].length,
-                width
-            )
-        );
+        //System.out.println(
+        //    String.format(
+        //        "rightBound: %d leftBound: %d bitmap.length: %d bitmap[0].length: %d WIDTH: %d",
+        //        rightBound,
+        //        leftBound,
+        //        bitmap.length,
+        //        bitmap[0].length,
+        //        width
+        //    )
+        //);
 
         //Create new bitmap for the cropped area
         newBmp = new boolean[bitmap.length][width];

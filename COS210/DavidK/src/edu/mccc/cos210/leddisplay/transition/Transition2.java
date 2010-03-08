@@ -17,16 +17,17 @@ public class Transition2 extends DKTransition {
         int wordLength = getWordLength(bitmaps);
 
         Drawable blitter = new Drawable(
-            new boolean [leds.length][leds[0].length], 
-            0
+            new boolean [leds.length][leds[0].length]
         );
+        int offset = (leds[0].length - wordLength) / 2;
+        blitter.incrementOffset(offset + leds[0].length, 0);
         //Loop, sliding text
         for (int i = 0; i <= leds[0].length; i++) {
             for (Drawable drawable : bitmaps) {
                 blitter.blitBitmap(drawable.getBitmap(), false);
             }
             //Increment by one, but roll back to where the word began
-            blitter.incrementOffset(1 - wordLength, 0);
+            blitter.incrementOffset(-1 - wordLength, 0);
             blitter.blitToBoard(leds);
             try {
                 Thread.sleep(50);
@@ -40,5 +41,19 @@ public class Transition2 extends DKTransition {
             Thread.sleep(3000);
 		} catch (Exception ex) {
 		}
+        //Loop, sliding text
+        for (int i = 0; i <= leds[0].length; i++) {
+            for (Drawable drawable : bitmaps) {
+                blitter.blitBitmap(drawable.getBitmap(), false);
+            }
+            //Increment by one, but roll back to where the word began
+            blitter.incrementOffset(-1 - wordLength, 0);
+            blitter.blitToBoard(leds);
+            try {
+                Thread.sleep(50);
+            } catch (Exception ex) {
+            }
+            blitter.clearDrawable();
+        }
 	}
 }

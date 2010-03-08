@@ -18,8 +18,7 @@ public class Transition1 extends DKTransition {
         int wordLength = getWordLength(bitmaps);
 
         Drawable blitter = new Drawable(
-            new boolean[leds.length][leds[0].length], 
-            0
+            new boolean[leds.length][leds[0].length]
         );
         int offset = (leds[0].length - wordLength) / 2;
         blitter.incrementOffset(offset, -leds.length);
