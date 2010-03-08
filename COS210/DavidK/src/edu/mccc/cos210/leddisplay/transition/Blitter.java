@@ -33,12 +33,21 @@ public class Blitter {
         blitBitmap(bitmap, false);
     }
     public void blitBitmap(boolean[][] bitmap, boolean scrollBack) {
+        //blitBitmap(
+        //    bitmap,
+        //    0,
+        //    bitmap.length - 1,
+        //    0,
+        //    bitmap[0].length - 1,
+        //    scrollBack
+        //);
+
         blitBitmap(
             bitmap,
             0,
-            bitmap.length - 1,
-            0,
             bitmap[0].length - 1,
+            0,
+            bitmap.length - 1,
             scrollBack
         );
     }
@@ -53,15 +62,19 @@ public class Blitter {
                 bitmap[0].length
             )
         );
-        for (int i = xStart; i <= xEnd; i++) {
-            for (int j = yStart; j <= yEnd; j++) {
+        //for (int i = xStart; i <= xEnd; i++) {
+        //    for (int j = yStart; j <= yEnd; j++) {
+        for (int i = yStart; i <= yEnd; i++) {
+            for (int j = xStart; j <= xEnd; j++) {
                 //int y = j + yOffset;
                 //int x = i + xOffset;
                 //int x = i + xOffset;
                 //int y = j + yOffset;
 
-                int x = i + xOffset;
-                int y = j + yOffset;
+                //int x = i + xOffset;
+                //int y = j + yOffset;
+                int x = j + xOffset;
+                int y = i + yOffset;
 
                 //Ensure that X and Y are legal points
                 if (x >= 0 && y >= 0 &&

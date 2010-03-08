@@ -25,7 +25,8 @@ public class Transition0 extends LEDDisplayTransition {
             Letter letter = new Letter(character);
             boolean[][] bmp = letter.getBitmap();
             bitmaps.add(bmp);
-            wordLength += bmp.length;
+            //wordLength += bmp.length;
+            wordLength += bmp[0].length;
         }
         //Offset to center bitmap in frame
         int offset = (leds[0].length - wordLength) / 2;

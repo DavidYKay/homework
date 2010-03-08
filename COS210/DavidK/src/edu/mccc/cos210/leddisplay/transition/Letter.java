@@ -160,34 +160,32 @@ public class Letter {
         int offset = 9 * letter;
         
         final int width = 8;
-        boolean[][] bitmap = new boolean[width][HEIGHT];
-        for (int i = 0; i < width; i++) {
-            int x = offset + i;
-            for (int j = 0; j < HEIGHT; j++) {
-                int y = j;
-                if (font.getRGB(x, y) == -1) { 
-                    bitmap[i][j] = true;
-                }
-            }
-        }
-
-        //boolean[][] bitmap = new boolean[HEIGHT][width];
-        //for (int i = 0; i < HEIGHT; i++) {
-        //    //int x = offset + i;
-        //    int y = i;
+        //boolean[][] bitmap = new boolean[width][HEIGHT];
+        //for (int i = 0; i < width; i++) {
+        //    int x = offset + i;
         //    for (int j = 0; j < HEIGHT; j++) {
-        //        //int y = j;
-        //        int x = offset + j;
+        //        int y = j;
         //        if (font.getRGB(x, y) == -1) { 
-        //            //bitmap[i][j] = true;
         //            bitmap[i][j] = true;
         //        }
         //    }
         //}
 
+        boolean[][] bitmap = new boolean[HEIGHT][width];
+        for (int i = 0; i < HEIGHT; i++) {
+            //int x = offset + i;
+            int y = i;
+            for (int j = 0; j < width; j++) {
+                //int y = j;
+                int x = offset + j;
+                if (font.getRGB(x, y) == -1) { 
+                    //bitmap[i][j] = true;
+                    bitmap[i][j] = true;
+                }
+            }
+        }
 
-
-        bitmap = trimWhiteSpace(bitmap);
+        //bitmap = trimWhiteSpace(bitmap);
         return bitmap;
     }
     private boolean[][] trimWhiteSpace(boolean[][] bitmap) {
