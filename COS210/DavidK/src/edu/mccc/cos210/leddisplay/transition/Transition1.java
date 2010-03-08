@@ -34,7 +34,7 @@ public class Transition1 extends DKTransition {
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
-            blitter.clearDrawable();
+            blitter.clearBitmap();
         }
 
         //Freeze image in center
@@ -55,7 +55,7 @@ public class Transition1 extends DKTransition {
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
-            blitter.clearDrawable();
+            blitter.clearBitmap();
         }
 
 		try {

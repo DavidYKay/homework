@@ -32,7 +32,7 @@ public class Drawable {
     public int getWidth() {
         return leds[0].length;
     }
-    public void clearDrawable() {
+    public void clearBitmap() {
         for (int i = 0; i < leds.length; i++) {
             for (int j = 0; j < leds[i].length; j++) {
                 leds[i][j] = false;

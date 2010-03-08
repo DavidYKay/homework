@@ -2,12 +2,7 @@ package edu.mccc.cos210.leddisplay.transition;
 import edu.mccc.cos210.leddisplay.*;
 import com.cbthinkx.util.Debug;
 
-import java.awt.Graphics.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.font.*;
 import java.util.*;
-
 public class Transition0 extends DKTransition {
     private static final int FLASH_TIME = 100;
     private static final int NUM_FLASHES = 3;
@@ -19,12 +14,12 @@ public class Transition0 extends DKTransition {
         LinkedList<Drawable> bitmaps = getWordDrawableList();
         int wordLength = getWordLength(bitmaps);
         /** Measures the length of the word in pixels */
-        //Offset to center bitmap in frame
-        int offset = (leds[0].length - wordLength) / 2;
 
         Drawable blitter = new Drawable(
             new boolean[leds.length][leds[0].length]
         );
+        //Offset to center bitmap in frame
+        int offset = (leds[0].length - wordLength) / 2;
         blitter.incrementOffset(offset, 0);
 
         for (Drawable blittable : bitmaps) {

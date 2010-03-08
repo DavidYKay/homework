@@ -21,7 +21,7 @@ public class Transition2 extends DKTransition {
         );
         int offset = (leds[0].length - wordLength) / 2;
         blitter.incrementOffset(offset + leds[0].length, 0);
-        //Loop, sliding text
+        //Loop, sliding text in
         for (int i = 0; i <= leds[0].length; i++) {
             for (Drawable drawable : bitmaps) {
                 blitter.blitBitmap(drawable.getBitmap(), false);
@@ -33,7 +33,7 @@ public class Transition2 extends DKTransition {
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
-            blitter.clearDrawable();
+            blitter.clearBitmap();
         }
 
         //Freeze image in center
@@ -41,7 +41,7 @@ public class Transition2 extends DKTransition {
             Thread.sleep(3000);
 		} catch (Exception ex) {
 		}
-        //Loop, sliding text
+        //Loop, sliding text out
         for (int i = 0; i <= leds[0].length; i++) {
             for (Drawable drawable : bitmaps) {
                 blitter.blitBitmap(drawable.getBitmap(), false);
@@ -53,7 +53,7 @@ public class Transition2 extends DKTransition {
                 Thread.sleep(50);
             } catch (Exception ex) {
             }
-            blitter.clearDrawable();
+            blitter.clearBitmap();
         }
 	}
 }
