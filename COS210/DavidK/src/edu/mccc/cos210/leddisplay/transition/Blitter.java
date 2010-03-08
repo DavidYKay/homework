@@ -19,28 +19,6 @@ public class Blitter {
         this.xOffset = xOffset;
     }
 
-    public void blitBitmap(BitSet[] bitmap) {
-        for (int i = 0; i < bitmap.length; i++) {
-            for (int j = 0; j < bitmap[i].length(); j++) {
-                //LED - row, column
-                //bitmap - column, row
-
-                int y = j + yOffset;
-                int x = i + xOffset;
-                //Ensure that X and Y are legal points
-                if (x >= 0 && y >= 0 &&
-                    x < leds[i].length && 
-                    (y < leds.length)
-                ) {
-                    leds[y][x].setState(
-                        bitmap[i].get(j)
-                    );
-                }
-            }
-        }
-        incrementOffset(bitmap.length, 0);
-    }
-
     public void blitBitmap(boolean[][] bitmap) {
         //assume user wants typewriter style
         blitBitmap(bitmap, false);
@@ -54,29 +32,6 @@ public class Blitter {
             bitmap[0].length - 1,
             scrollBack
         );
-
-        /*
-        for (int i = 0; i < bitmap.length; i++) {
-            for (int j = 0; j < bitmap[i].length; j++) {
-                //LED - row, column
-                //bitmap - column, row
-                int y = j + yOffset;
-                int x = i + xOffset;
-                //Ensure that X and Y are legal points
-                if (x >= 0 && y >= 0 &&
-                    x < leds[i].length && 
-                    (y < leds.length)
-                ) {
-                    leds[y][x].setState(
-                        bitmap[i][j]
-                    );
-                }
-            }
-        }
-        if (!scrollBack) {
-            incrementOffset(bitmap.length, 0);
-        }
-        */
     }
     public void blitBitmap(boolean[][] bitmap, int xStart, int xEnd, int yStart, int yEnd, boolean scrollBack) {
         for (int i = xStart; i <= xEnd; i++) {
