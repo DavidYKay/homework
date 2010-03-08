@@ -9,7 +9,8 @@ public class Transition1 extends LEDDisplayTransition {
 
         view.clearLEDs();
 
-        String toWrite = "ABC";
+        //String toWrite = "ABC";
+        String toWrite = "A";
         //String toWrite = getData();
         LinkedList<boolean[][]> bitmaps = new LinkedList<boolean[][]>();
         /** Measures the length of the word in pixels */
@@ -29,8 +30,6 @@ public class Transition1 extends LEDDisplayTransition {
         );
         //Loop, sliding text
         for (int i = 0; i < leds[0].length; i++) {
-            //int offset = (leds[0].length - wordLength) / 2;
-            //int offset = leds[0].length - i;
             for (boolean[][] bmp : bitmaps) {
                 //blitter.blitBitmap(bmp, true);
                 blitter.blitBitmap(bmp, false);

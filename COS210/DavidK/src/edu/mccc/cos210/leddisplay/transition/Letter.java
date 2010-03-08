@@ -170,13 +170,30 @@ public class Letter {
                 }
             }
         }
+
+        //boolean[][] bitmap = new boolean[HEIGHT][width];
+        //for (int i = 0; i < HEIGHT; i++) {
+        //    //int x = offset + i;
+        //    int y = i;
+        //    for (int j = 0; j < HEIGHT; j++) {
+        //        //int y = j;
+        //        int x = offset + j;
+        //        if (font.getRGB(x, y) == -1) { 
+        //            //bitmap[i][j] = true;
+        //            bitmap[i][j] = true;
+        //        }
+        //    }
+        //}
+
+
+
+        //bitmap = trimWhiteSpace(bitmap);
         return bitmap;
     }
-    /*
     private boolean[][] trimWhiteSpace(boolean[][] bitmap) {
         boolean[][] newBmp;
         int leftBound = 0;
-        int rightBound = bitmap.length;
+        int rightBound = bitmap.length - 1;
 
     leftSearch:
         for (int i = 0; i < bitmap.length; i++) {
@@ -202,7 +219,18 @@ public class Letter {
                 }
             }
         }
-        int width = rightBound - leftBound;
+        int width = 1 + rightBound - leftBound;
+
+        System.out.println(
+            String.format(
+                "rightBound: %d leftBound: %d bitmap.length: %d bitmap[0].length: %d",
+                rightBound,
+                leftBound,
+                bitmap.length,
+                bitmap[0].length
+            )
+        );
+
         //Create new bitmap for the cropped area
         newBmp = new boolean[width][bitmap[0].length];
         //blit the contents over
@@ -212,11 +240,10 @@ public class Letter {
             leftBound,
             rightBound,
             0,
-            bitmap[0].length,
+            bitmap[0].length - 1,
             false
         );
 
         return newBmp;
     }
-    */
 }
