@@ -71,21 +71,12 @@ public class Blitter {
                     //System.out.println(
                     //    String.format(
                     //        "leds(%d,%d) bitmap(%d,%d)",
-                    //        y,
                     //        x,
+                    //        y,
                     //        i,
                     //        j
                     //    )
                     //);
-                    System.out.println(
-                        String.format(
-                            "leds(%d,%d) bitmap(%d,%d)",
-                            x,
-                            y,
-                            i,
-                            j
-                        )
-                    );
                     leds[y][x] = bitmap[i][j];
                     //leds[x][y] = bitmap[i][j];
                     //leds[i][j] = bitmap[i][j];
@@ -120,7 +111,7 @@ public class Blitter {
                 }
             }
         }
-        System.out.println(this);
+        //System.out.println(this);
         //if (!scrollBack) {
         //    incrementOffset(bitmap.length, 0);
         //}
@@ -131,10 +122,13 @@ public class Blitter {
         yOffset += y;
     }
     public String toString() {
+        return Blitter.bitsToString(leds);
+    }
+    public static String bitsToString(boolean[][] array) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < leds.length; i++) {
-            for (int j = 0; j < leds[i].length; j++) {
-                if (leds[i][j]) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (array[i][j]) {
                     sb.append(
                         '1'
                     );

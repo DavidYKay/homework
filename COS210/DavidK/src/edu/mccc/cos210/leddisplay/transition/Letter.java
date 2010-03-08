@@ -187,7 +187,7 @@ public class Letter {
 
 
 
-        //bitmap = trimWhiteSpace(bitmap);
+        bitmap = trimWhiteSpace(bitmap);
         return bitmap;
     }
     private boolean[][] trimWhiteSpace(boolean[][] bitmap) {
@@ -235,15 +235,22 @@ public class Letter {
         newBmp = new boolean[width][bitmap[0].length];
         //blit the contents over
         Blitter blitter = new Blitter(newBmp);
+        //blitter.blitBitmap(
+        //    bitmap,
+        //    leftBound,
+        //    rightBound,
+        //    0,
+        //    bitmap[0].length - 1,
+        //    false
+        //);
         blitter.blitBitmap(
             bitmap,
-            leftBound,
-            rightBound,
-            0,
-            bitmap[0].length - 1,
             false
         );
 
         return newBmp;
+    }
+    public String toString() {
+        return Blitter.bitsToString(bitmap);
     }
 }
