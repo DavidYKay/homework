@@ -17,26 +17,24 @@ public class Transition0 extends LEDDisplayTransition {
         flashLEDs(view);
 
         String toWrite = getData();
-        LinkedList<boolean[][]> bitmaps = new LinkedList<boolean[][]>();
+        LinkedList<Blitter> bitmaps = new LinkedList<Blitter>();
         /** Measures the length of the word in pixels */
         int wordLength = 0;
         for (char character : toWrite.toCharArray()) {
             Letter letter = Letter.makeLetterWithChar(character);
-            boolean[][] bmp = letter.getBitmap();
-            bitmaps.add(bmp);
-            wordLength += bmp[0].length;
+            bitmaps.add(letter);
+            wordLength += letter.getWidth();
         }
         //Offset to center bitmap in frame
         int offset = (leds[0].length - wordLength) / 2;
 
         Blitter blitter = new Blitter(
-            new boolean[leds.length][leds[0].length], 
-            0
+            new boolean[leds.length][leds[0].length]
         );
         blitter.incrementOffset(offset, 0);
 
-        for (boolean[][] bmp : bitmaps) {
-            blitter.blitBitmap(bmp);
+        for (Blitter blittable : bitmaps) {
+            blitter.blitBitmap(blittable.getBitmap());
         }
         blitter.blitToBoard(leds);
 

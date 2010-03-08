@@ -21,6 +21,12 @@ public class Blitter {
     public boolean[][] getBitmap() {
         return leds;
     }
+    public int getHeight() {
+        return leds.length;
+    }
+    public int getWidth() {
+        return leds[0].length;
+    }
 
     public void clearBitmap() {
         for (int i = 0; i < leds.length; i++) {
