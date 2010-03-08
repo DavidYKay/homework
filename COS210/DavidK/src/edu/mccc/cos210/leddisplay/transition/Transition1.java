@@ -20,12 +20,10 @@ public class Transition1 extends LEDDisplayTransition {
             Letter letter = new Letter(character);
             boolean[][] bmp = letter.getBitmap();
             bitmaps.add(bmp);
-            //wordLength += bmp.length;
             wordLength += bmp[0].length;
         }
         System.out.println("Characters in list: " + bitmaps.size());
 
-        //Blitter blitter = new Blitter(leds, 0);
         Blitter blitter = new Blitter(
             new boolean[leds.length][leds[0].length], 
             0
@@ -36,7 +34,6 @@ public class Transition1 extends LEDDisplayTransition {
                 blitter.blitBitmap(bmp, false);
             }
             //Increment by one, but roll back to where the word began
-            //blitter.incrementOffset(1 - wordLength, 0);
             blitter.incrementOffset(- wordLength, 1);
             blitter.blitToBoard(leds);
             try {

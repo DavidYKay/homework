@@ -20,12 +20,10 @@ public class Transition2 extends LEDDisplayTransition {
             Letter letter = new Letter(character);
             boolean[][] bmp = letter.getBitmap();
             bitmaps.add(bmp);
-            //wordLength += bmp.length;
             wordLength += bmp[0].length;
         }
         System.out.println("Characters in list: " + bitmaps.size());
 
-        //Blitter blitter = new Blitter(leds, 0);
         Blitter blitter = new Blitter(
             new boolean[leds.length][leds[0].length], 
             0
@@ -50,7 +48,5 @@ public class Transition2 extends LEDDisplayTransition {
             Thread.sleep(3000);
 		} catch (Exception ex) {
 		}
-
-
 	}
 }

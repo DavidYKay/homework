@@ -8,7 +8,6 @@ public class Blitter {
     /** Horizontal offset, 0-based */
     private int xOffset;
     private int yOffset;
-    //private LED[][] leds;
     private boolean[][] leds;
 
     public Blitter(boolean[][] leds) {
@@ -20,7 +19,6 @@ public class Blitter {
     }
 
     public void clearBitmap() {
-        //leds = new boolean[leds.length][leds[0].length];
         for (int i = 0; i < leds.length; i++) {
             for (int j = 0; j < leds[i].length; j++) {
                 leds[i][j] = false;
@@ -33,15 +31,6 @@ public class Blitter {
         blitBitmap(bitmap, false);
     }
     public void blitBitmap(boolean[][] bitmap, boolean scrollBack) {
-        //blitBitmap(
-        //    bitmap,
-        //    0,
-        //    bitmap.length - 1,
-        //    0,
-        //    bitmap[0].length - 1,
-        //    scrollBack
-        //);
-
         blitBitmap(
             bitmap,
             0,
@@ -63,8 +52,6 @@ public class Blitter {
             )
         );
 
-        //for (int i = xStart; i <= xEnd; i++) {
-        //    for (int j = yStart; j <= yEnd; j++) {
         for (int i = yStart; i <= yEnd; i++) {
             for (int j = xStart; j <= xEnd; j++) {
                 int x = j + xOffset;
@@ -80,7 +67,6 @@ public class Blitter {
             }
         }
         if (!scrollBack) {
-            //incrementOffset(bitmap.length, 0);
             incrementOffset(bitmap[0].length, 0);
         }
     }

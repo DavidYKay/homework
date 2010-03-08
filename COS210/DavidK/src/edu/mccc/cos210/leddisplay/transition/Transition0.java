@@ -16,7 +16,6 @@ public class Transition0 extends LEDDisplayTransition {
 
         flashLEDs(view);
 
-        //String toWrite = "Kento!";
         String toWrite = getData();
         LinkedList<boolean[][]> bitmaps = new LinkedList<boolean[][]>();
         /** Measures the length of the word in pixels */
@@ -25,15 +24,12 @@ public class Transition0 extends LEDDisplayTransition {
             Letter letter = new Letter(character);
             boolean[][] bmp = letter.getBitmap();
             bitmaps.add(bmp);
-            //wordLength += bmp.length;
             wordLength += bmp[0].length;
         }
         //Offset to center bitmap in frame
         int offset = (leds[0].length - wordLength) / 2;
-        //Blitter blitter = new Blitter(leds, 0);
 
         Blitter blitter = new Blitter(
-            //leds, 
             new boolean[leds.length][leds[0].length], 
             0
         );

@@ -11,6 +11,7 @@ import java.awt.geom.*;
 import java.awt.font.*;
 
 public class Letter {
+//public class Letter extends Blitter {
     private static final int HEIGHT = 10;
     private boolean[][] bitmap;
 
