@@ -194,14 +194,14 @@ public class Letter {
         int rightBound = bitmap[0].length - 1;
 
     leftSearch:
-        for (int i = 0; i < bitmap.length; i++) {
-            for (int j = 0; j < bitmap[i].length; j++) {
+        for (int j = 0; j < bitmap[0].length; j++) {
+            for (int i = 0; i < bitmap.length; i++) {
 
                 int y = i;
                 int x = j;
                 //once we find a black dot, we know where the starting point is
-                //
-                if (font.getRGB(x, y) == -1) { 
+                //if (font.getRGB(x, y) == -1) { 
+                if (bitmap[i][j]) { 
                     leftBound = x;
                     break leftSearch;
                 }
@@ -209,12 +209,13 @@ public class Letter {
         }
 
     rightSearch:
-        for (int i = bitmap.length - 1; i >= 0; i--) {
-            for (int j = bitmap[i].length - 1; j >= 0; j--) {
+            for (int j = bitmap[0].length - 1; j >= 0; j--) {
+                for (int i = bitmap.length - 1; i >= 0; i--) {
                 //once we find a black dot, we know where the ending point is
                 int y = i;
                 int x = j;
-                if (font.getRGB(x, y) == -1) { 
+                //if (font.getRGB(x, y) == -1) { 
+                if (bitmap[i][j]) { 
                     rightBound = x;
                     break rightSearch;
                 }
@@ -224,11 +225,12 @@ public class Letter {
 
         System.out.println(
             String.format(
-                "rightBound: %d leftBound: %d bitmap.length: %d bitmap[0].length: %d",
+                "rightBound: %d leftBound: %d bitmap.length: %d bitmap[0].length: %d WIDTH: %d",
                 rightBound,
                 leftBound,
                 bitmap.length,
-                bitmap[0].length
+                bitmap[0].length,
+                width
             )
         );
 

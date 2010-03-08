@@ -53,15 +53,16 @@ public class Blitter {
     }
     public void blitBitmap(boolean[][] bitmap, int xStart, int xEnd, int yStart, int yEnd, boolean scrollBack) {
         
-        System.out.println(
-            String.format(
-                "SIZES: leds(%d,%d) bitmap(%d,%d)",
-                leds.length,
-                leds[0].length,
-                bitmap.length,
-                bitmap[0].length
-            )
-        );
+        //System.out.println(
+        //    String.format(
+        //        "SIZES: leds(%d,%d) bitmap(%d,%d)",
+        //        leds.length,
+        //        leds[0].length,
+        //        bitmap.length,
+        //        bitmap[0].length
+        //    )
+        //);
+
         //for (int i = xStart; i <= xEnd; i++) {
         //    for (int j = yStart; j <= yEnd; j++) {
         for (int i = yStart; i <= yEnd; i++) {
