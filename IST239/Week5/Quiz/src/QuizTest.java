@@ -3,7 +3,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class QuizTest {
+public class QuizTest extends JApplet {
+
+    public void init() {
+		setLayout(new BorderLayout());
+        add(
+            new QuizPanel(new QuizModel()),
+            BorderLayout.CENTER
+        );
+    }
 
 	public static void main(String[] args) {
 		new QuizTest().test();
