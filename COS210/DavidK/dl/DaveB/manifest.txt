@@ -1,3 +1,0 @@
-Main-Class: edu.mccc.cos210.car.CarTest
-Class-Path: .. .
-
