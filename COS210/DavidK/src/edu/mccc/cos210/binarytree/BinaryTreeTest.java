@@ -10,6 +10,7 @@ public class BinaryTreeTest {
 	public static void main(String[] sa) throws BinaryTreeException {
 		Debug.println("BinaryTreeTest.main()");
 		BinaryTreeTest btt = new BinaryTreeTest();
+        btt.testConstruction();
 		btt.displayTreePreOrder(btt.binaryTree);
 		btt.displayTreeInOrder(btt.binaryTree);
 		btt.displayTreePostOrder(btt.binaryTree);
@@ -39,4 +40,28 @@ public class BinaryTreeTest {
 		TreeNode<String> l = bts.insertRight(k, "L");
 		TreeNode<String> m = bts.insertLeft(g, "M");
 	}
+
+    private void testConstruction() {
+        Debug.println("BEGAN CONSTRUCTION TEST");
+        if (binaryTree.root().toString().equals("A")) {
+            Debug.println("Root: created/retrieved correctly!");
+        } else {
+            Debug.println("Root: created/retrieved INCORRECTLY!");
+        }
+        if (binaryTree.left(
+                binaryTree.root()
+            ).toString().equals("B")) {
+            Debug.println("LEFT: created/retrieved correctly!");
+        } else {
+            Debug.println("LEFT: created/retrieved INCORRECTLY!");
+        }
+        if (binaryTree.right(
+                binaryTree.root()
+            ).toString().equals("C")) {
+            Debug.println("RIGHT: created/retrieved correctly!");
+        } else {
+            Debug.println("RIGHT: created/retrieved INCORRECTLY!");
+        }
+        Debug.println("END CONSTRUCTION TEST");
+    }
 }
