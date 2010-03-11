@@ -1,5 +1,7 @@
 <project name="binarytree" default="compile">
     <property name="src"     location="src/edu/mccc/cos210/${ant.project.name}"/>
+    <property name="binarysrc"     location="src/edu/mccc/cos210/${ant.project.name}"/>
+    <property name="prioritysrc"   location="src/edu/mccc/cos210/priorityqueue"/>
     <property name="build"   location="build"/>
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
@@ -22,7 +24,17 @@
             <classpath>
                 <pathelement path="${classpath}" />
             </classpath>
-
+        </javac>
+        <javac srcdir="${prioritysrc}" destdir="${classes}" debug="true">
+            <compilerarg value="-g"/>
+            <!--
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:all"/>
+            <compilerarg value="-Xlint"/>
+            -->
+            <classpath>
+                <pathelement path="${classpath}" />
+            </classpath>
         </javac>
     </target>
 
