@@ -15,6 +15,7 @@
         <javac srcdir="${src}" destdir="${classes}" debug="true">
             <compilerarg value="-g"/>
             <!--
+            <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xlint:all"/>
             <compilerarg value="-Xlint"/>
             -->
@@ -62,10 +63,11 @@
          <property name="executable-full-path"
              location="/usr/bin/jdb"/>
          <exec executable="${executable-full-path}">
+             <!--
              <arg value="-sourcepath ./src/" />
+             -->
              <arg value="-classpath .:build/classes" />
              <arg value="edu.mccc.cos210.${ant.project.name}.${executable}"/>
          </exec>
-
     </target>
 </project>

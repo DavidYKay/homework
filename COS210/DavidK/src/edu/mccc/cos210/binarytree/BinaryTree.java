@@ -22,20 +22,36 @@ public class BinaryTree<E> {
 	public TreeNode<E> parent(TreeNode<E> treeNode) {
 		// return the parent of treeNode
 		Debug.println("BinaryTree.parent()");
-		return null;
+        int childIndex = arrayList.indexOf(treeNode);
+        if (childIndex == -1) {
+            return null;
+        } else {
+            int parentIndex = parentIndex(childIndex);
+            return getLegalNode(parentIndex);
+        }
 	}
 	public Iterable<TreeNode<E>> children(TreeNode<E> treeNode) {
 		// return the children of treeNode as an Iterable
 		Debug.println("BinaryTree.children()");
-		return null;
+        LinkedList<TreeNode<E>> tempList = new LinkedList<TreeNode<E>>();
+        tempList.add(
+            left(treeNode)
+        );
+        tempList.add(
+            right(treeNode)
+        );
+		return tempList;
 	}
 	public boolean isInternal(TreeNode<E> treeNode) {
 		// is internal?
 		Debug.println("BinaryTree.isInternal()");
         //has left or has right
         if (
-            (left(treeNode) != null) ||
-            (right(treeNode) != null)
+            (
+                isLegalNode(left(treeNode)) ||
+                isLegalNode(right(treeNode)) 
+            ) &&
+                isLegalNode(parent(treeNode))
         ) {
             return true;
         } else {
@@ -55,21 +71,26 @@ public class BinaryTree<E> {
 	}
 	public int size() {
 		// current size, not capacity
-		Debug.println("BinaryTree.size()");
-        //TODO Remove 'placeholder' nodes
-		return arrayList.size();
+		//Debug.println("BinaryTree.size()");
+        int count = 0;
+        for (TreeNode<E> node : arrayList) {
+            if (isLegalNode(node)) {
+                count++;
+            }
+        }
+		return count;
 	}
 	public boolean isEmpty() {
 		// it the tree empty?
 		Debug.println("BinaryTree.isEmpty()");
-		return arrayList.isEmpty();
+		return size() == 0;
 	}
 	public Iterator<E> iterator() {
 		// return an iterator
 		Debug.println("BinaryTree.iterator()");
         LinkedList<E> tempList = new LinkedList<E>();
         for (TreeNode<E> node : arrayList) {
-            if (!isPlaceholder(node)) {
+            if (isLegalNode(node)) {
                 tempList.add(node.element());
             }
         }
@@ -78,13 +99,30 @@ public class BinaryTree<E> {
 	public Iterable<TreeNode<E>> nodes() {
 		// return all the nodes in the tree as an Iterable
 		Debug.println("BinaryTree.nodes()");
-        //TODO Remove placeholders?
-		return arrayList;
+        LinkedList<TreeNode<E>> tempList = new LinkedList<TreeNode<E>>();
+        for (TreeNode<E> node : arrayList) {
+            if (isLegalNode(node)) {
+                tempList.add(node);
+            }
+        }
+		return tempList;
 	}
 	public E replace(TreeNode<E> treeNode, E element) {
 		// replace the element stored in treeNode and return old element
 		Debug.println("BinaryTree.TreeNode()");
-		return null;
+        int index = arrayList.indexOf(treeNode);
+        try {
+            if (index == -1) {
+                throw new BinaryTreeException();
+            } else {
+                E old = arrayList.get(index).element();
+                arrayList.set(index, new TreeNode<E>(element));
+                return old;
+            }
+        } catch (BinaryTreeException e) {
+            //FIXME Handle this in a more robust way?
+            return null;
+        }
 	}
 	public TreeNode<E> left(TreeNode<E> treeNode) {
 		// return the left child of treeNode
@@ -93,14 +131,11 @@ public class BinaryTree<E> {
             return null;
         } else {
             int parentIndex = arrayList.indexOf(treeNode);
-            int childIndex = leftChildIndex(parentIndex);
-            if (childIndex <= lastIndex()) {
-                return arrayList.get(
-                    childIndex
-                );
-            } else {
+            if (parentIndex == -1) {
                 return null;
             }
+            int childIndex = leftChildIndex(parentIndex);
+            return getLegalNode(childIndex);
         }
 	}
 	public TreeNode<E> right(TreeNode<E> treeNode) {
@@ -110,32 +145,37 @@ public class BinaryTree<E> {
             return null;
         } else {
             int parentIndex = arrayList.indexOf(treeNode);
-            int childIndex = rightChildIndex(parentIndex);
-            if (childIndex <= lastIndex()) {
-                return arrayList.get(
-                    childIndex
-                );
-            } else {
+            if (parentIndex == -1) {
                 return null;
             }
+            int childIndex = rightChildIndex(parentIndex);
+            return getLegalNode(childIndex);
         }
 	}
 	public boolean hasLeft(TreeNode<E> treeNode) {
 		// does treeNode have a left child?
 		Debug.println("BinaryTree.hasLeft()");
-		return false;
+        if (isLegalNode(left(treeNode))) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 	public boolean hasRight(TreeNode<E> treeNode) {
 		// does treeNode have a right child?
 		Debug.println("BinaryTree.hasRight()");
-		return false;
+        if (isLegalNode(right(treeNode))) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 	public TreeNode<E> addRoot(E element) throws BinaryTreeException {
 		// create and return a new TreeNode storing element and
 		// make it the root of this BinaryTree
 		// throw exception if root exists
 		Debug.println("BinaryTree.addRoot()");
-        if (root() != null) {
+        if (isLegalNode(root())) {
             throw new BinaryTreeException();
         } else {
             if (size() == 0) {
@@ -155,9 +195,7 @@ public class BinaryTree<E> {
 		// add it as the left child of treeNode
 		// throw exception if left child exists
 		Debug.println("BinaryTree.insertLeft()");
-        if (left(treeNode) != null && 
-            !isPlaceholder(left(treeNode))
-        ) {
+        if (hasLeft(treeNode)) {
             throw new BinaryTreeException();
         } else {
             int parentIndex = arrayList.indexOf(treeNode);
@@ -167,9 +205,9 @@ public class BinaryTree<E> {
             } else {
                 int childIndex = leftChildIndex(parentIndex);
                 //insertPlaceholders to ensure that childIndex fits
-                insertPlaceholders(childIndex - lastIndex());
+                insertPlaceholders(childIndex);
                 TreeNode<E> node = new TreeNode<E>(element);
-                arrayList.add(childIndex, node);
+                arrayList.set(childIndex, node);
                 return node;
             }
         }
@@ -179,9 +217,7 @@ public class BinaryTree<E> {
 		// add it as the right child of treeNode
 		// throw exception if right child exists
 		Debug.println("BinaryTree.insertRight()");
-        if (right(treeNode) != null &&
-            !isPlaceholder(left(treeNode))
-        ) {
+        if (hasRight(treeNode)) {
             throw new BinaryTreeException();
         } else {
             int parentIndex = arrayList.indexOf(treeNode);
@@ -191,39 +227,39 @@ public class BinaryTree<E> {
             } else {
                 int childIndex = rightChildIndex(parentIndex);
                 //insertPlaceholders to ensure that childIndex fits
-                insertPlaceholders(childIndex - lastIndex());
+                insertPlaceholders(childIndex);
                 TreeNode<E> node = new TreeNode<E>(element);
-                arrayList.add(childIndex, node);
+                arrayList.set(childIndex, node);
                 return node;
             }
         }
 	}
-
     private int lastIndex() {
-        return size() - 1;
+		Debug.println("BinaryTree.lastIndex()");
+        return arrayList.size() - 1;
     }
     private int leftChildIndex(int parentIndex) {
-            //left child:
-            //2n + 1
+		Debug.println("BinaryTree.leftChildIndex()");
         return 2 * parentIndex + 1;
     }
     private int rightChildIndex(int parentIndex) {
-        //right child:
-        //2n + 2
+		Debug.println("BinaryTree.rightChildIndex()");
         return 2 * parentIndex + 2;
     }
     /**
      * Get the index of the parent node of this node
      */
     private int parentIndex(int childIndex) {
-        //return Math.floor((childIndex - 1) / 2);
+		Debug.println("BinaryTree.parentIndex()");
         return (childIndex - 1) / 2;
     }
     /**
      * Adds placeholder nodes so that the arraylist doesn't complain about empty indicies
      */
-    private void insertPlaceholders(int n) {
-        for (int i = 1; i <= n; i++) {
+    private void insertPlaceholders(int index) {
+        Debug.println("insertPlaceholders: " + index);
+        int delta = index - lastIndex();
+        for (int i = 1; i <= delta; i++) {
             //Is null a valid element?
             arrayList.add(new TreeNode<E>(null));
         }
@@ -232,10 +268,31 @@ public class BinaryTree<E> {
      * Currently, we're defining placeholders as nodes with null elements
      */
     private boolean isPlaceholder(TreeNode<E> treeNode) {
+		Debug.println("BinaryTree.isPlaceholder()");
         if (treeNode.element() == null) {
             return true;
         } else {
             return false;
         }
+    }
+    private boolean isLegalNode(TreeNode<E> treeNode) {
+		Debug.println("BinaryTree.isLegalNode()");
+        if (treeNode != null &&
+            !isPlaceholder(treeNode)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private TreeNode<E> getLegalNode(int index) {
+		Debug.println("BinaryTree.getLegalNode()");
+        if (index <= lastIndex()) {
+            TreeNode<E> node = arrayList.get(index);
+            if (isLegalNode(node)) {
+                return node;
+            } 
+        } 
+        return null;
     }
 }
