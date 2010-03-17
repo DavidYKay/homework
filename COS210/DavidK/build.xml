@@ -2,6 +2,7 @@
     <property name="src"     location="src/edu/mccc/cos210/${ant.project.name}"/>
     <property name="binarysrc"     location="src/edu/mccc/cos210/${ant.project.name}"/>
     <property name="prioritysrc"   location="src/edu/mccc/cos210/priorityqueue"/>
+    <property name="heapsrc"   location="src/edu/mccc/cos210/heap"/>
     <property name="build"   location="build"/>
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
@@ -15,6 +16,17 @@
     <target name="compile">
         <mkdir dir="${classes}"/>
         <javac srcdir="${src}" destdir="${classes}" debug="true">
+            <compilerarg value="-g"/>
+            <!--
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:all"/>
+            <compilerarg value="-Xlint"/>
+            -->
+            <classpath>
+                <pathelement path="${classpath}" />
+            </classpath>
+        </javac>
+        <javac srcdir="${heapsrc}" destdir="${classes}" debug="true">
             <compilerarg value="-g"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
