@@ -27,4 +27,8 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
         TreeNode<E> node = arrayList.remove(lastIndex());
 		return node.element();
 	}
+    public String toString() {
+        Debug.println("CompleteBinaryTree.toString()");
+        return super.toString();
+    }
 }

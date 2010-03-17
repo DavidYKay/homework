@@ -45,10 +45,8 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         Entry<E> nodeElement = node.element();
 
         //is entry lower than parent?
-        //if (node.element().key() < parent.element().key()) {
         if (node.element().key() < parent.element().key()) {
             Debug.println("Swapping!");
-
             //if so, swap 
             replace(node, parentElement);
             replace(parent, nodeElement);
@@ -77,6 +75,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             System.err.println(ex);
             return;
         }
+        System.out.println(this.toString());
         replace(root(), lastEntry);
         recurseDown(root());
         //start with root
@@ -88,16 +87,23 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 	}
     private void recurseDown(TreeNode<Entry<E>> node) {
         Iterable<TreeNode<Entry<E>>> children = children(node);
+        Entry<E> nodeElement = node.element();
 
         for (TreeNode<Entry<E>> child : children) {
+            if (child == null) {
+                continue;
+            }
+            Entry<E> childElement = null;
+            Debug.println(child);
+            childElement = child.element();
             //is entry lower than parent?
-            if (node.element().key() > child.element().key()) {
+            if (nodeElement.key() > childElement.key()) {
                 Debug.println("Swapping!");
                 //if so, swap 
-                replace(node, child.element());
-                replace(child, node.element());
+                replace(node, childElement);
+                replace(child, nodeElement);                
                 //then recurse
-                recurseUp(node);
+                recurseDown(node);
             } else {
                 Debug.println("Not Swapping!");
                 Debug.println(
@@ -109,5 +115,9 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
                 );
             }
         }
+    }
+    public String toString() {
+        Debug.println("Heap.toString()");
+        return super.toString();
     }
 }

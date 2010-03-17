@@ -30,8 +30,11 @@ public class HeapTest {
         map.put( 14, "J");
         map.put( 15, "L");
         map.put( 16, "C");
+
+        //Integer[] keys = (Integer[]) map.keySet().toArray();
         //add
-        //Set<Integer> keySet = map.keySet():
+        //for (int i = keys.length - 1; i >= 0; i--) {
+            //Integer key = keys[i];
         for (Integer key : map.keySet()) {
             String letter = map.get(key);
             Debug.println("Inserting letter: " + letter + " index: " + key);
@@ -51,7 +54,7 @@ public class HeapTest {
         Debug.println(heap);
         //remove
         TreeSet<Integer> sortedSet = new TreeSet<Integer>(map.keySet());
-        //for (int i = letters.length - 1; i >= 0; i--) {
+        int successes = 0;
         for (Integer key : sortedSet) {
             String letter = map.get(key);
             String element = heap.removeMin();
@@ -60,6 +63,8 @@ public class HeapTest {
                 Debug.println("Received: " + element);
                 throw new BinaryTreeException();
             }
+            successes++;
+            Debug.println("Successes: " + successes);
         }
         Debug.println("heapTest Finished removal!");
 	}
