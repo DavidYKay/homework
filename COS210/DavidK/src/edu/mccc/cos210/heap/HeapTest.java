@@ -34,6 +34,7 @@ public class HeapTest {
         //Set<Integer> keySet = map.keySet():
         for (Integer key : map.keySet()) {
             String letter = map.get(key);
+            Debug.println("Inserting letter: " + letter + " index: " + key);
             Entry<String> entry = heap.insert(key, letter);
             if (entry.element() != letter) {
                 Debug.println("Expected: " + letter);
@@ -47,6 +48,7 @@ public class HeapTest {
             }
         }
         Debug.println("heapTest Finished construction!");
+        Debug.println(heap);
         //remove
         TreeSet<Integer> sortedSet = new TreeSet<Integer>(map.keySet());
         //for (int i = letters.length - 1; i >= 0; i--) {
