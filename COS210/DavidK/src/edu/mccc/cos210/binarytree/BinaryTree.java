@@ -113,14 +113,17 @@ public class BinaryTree<E> {
         int index = arrayList.indexOf(treeNode);
         try {
             if (index == -1) {
+                Debug.println("Replace exception!");
                 throw new BinaryTreeException();
             } else {
+                Debug.println("Replace success!");
                 E old = arrayList.get(index).element();
                 arrayList.set(index, new TreeNode<E>(element));
                 return old;
             }
         } catch (BinaryTreeException e) {
             //FIXME Handle this in a more robust way?
+            Debug.println("Replace failed!");
             return null;
         }
 	}

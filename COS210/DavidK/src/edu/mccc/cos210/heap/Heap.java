@@ -18,7 +18,9 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 	}
 	public E removeMin() throws BinaryTreeException {
 		Debug.println("Heap.removeMin()");
-        Entry<E> entry = remove();
+        //Entry<E> entry = remove();
+        TreeNode<Entry<E>> root = root();
+        Entry<E> entry = root.element();
         E element = entry.element();
         bubbleDown();
 		return element;
@@ -32,20 +34,51 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
     }
     private void recurseUp(TreeNode<Entry<E>> node) {
         TreeNode<Entry<E>> parent = parent(node);
+        Debug.println(
+            String.format(
+                "Node: %s Parent: %s",
+                node.toString(),
+                parent.toString()
+            )
+        );
+        Entry<E> parentElement = parent.element();
+        Entry<E> nodeElement = node.element();
+
         //is entry lower than parent?
+        //if (node.element().key() < parent.element().key()) {
         if (node.element().key() < parent.element().key()) {
             Debug.println("Swapping!");
+
             //if so, swap 
-            replace(node, parent.element());
-            replace(parent, node.element());
+            replace(node, parentElement);
+            replace(parent, nodeElement);
             //then recurse
-            recurseUp(node);
+            //recurseUp(node);
+            //FIXME Test
+            recurseUp(parent);
         } else {
             Debug.println("Not Swapping!");
+            Debug.println(
+                String.format(
+                    "Child: %d, Parent: %d",
+                    node.element().key(),
+                    parent.element().key()
+                )
+            );
         }
     }
 	private void bubbleDown() {
 		Debug.println("Heap.bubbleDown()");
+        //Pluck the last entry and set it as the root
+        Entry<E> lastEntry = null;
+        try {
+            lastEntry = remove();
+        } catch (BinaryTreeException ex) {
+            System.err.println(ex);
+            return;
+        }
+        replace(root(), lastEntry);
+        recurseDown(root());
         //start with root
         //is root lower than left?
         //if not, swap with
@@ -53,4 +86,28 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         //if not, swap with
         //else, done
 	}
+    private void recurseDown(TreeNode<Entry<E>> node) {
+        Iterable<TreeNode<Entry<E>>> children = children(node);
+
+        for (TreeNode<Entry<E>> child : children) {
+            //is entry lower than parent?
+            if (node.element().key() > child.element().key()) {
+                Debug.println("Swapping!");
+                //if so, swap 
+                replace(node, child.element());
+                replace(child, node.element());
+                //then recurse
+                recurseUp(node);
+            } else {
+                Debug.println("Not Swapping!");
+                Debug.println(
+                    String.format(
+                        "Child: %d, Parent: %d",
+                        node.element().key(),
+                        child.element().key()
+                    )
+                );
+            }
+        }
+    }
 }

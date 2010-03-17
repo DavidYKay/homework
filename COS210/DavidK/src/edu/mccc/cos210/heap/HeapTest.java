@@ -61,5 +61,6 @@ public class HeapTest {
                 throw new BinaryTreeException();
             }
         }
+        Debug.println("heapTest Finished removal!");
 	}
 }
