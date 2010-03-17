@@ -16,13 +16,13 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
             return null;
         }
 	}
-	public E remove() throws CompleteBinaryTreeException {
+	public E remove() throws BinaryTreeException {
 		Debug.println("CompleteBinaryTree.remove()");
 		// remove the last TreeNode stored in this
 		// CompleteBinaryTree and return its element
 		// throw exception if tree is empty
         if (isEmpty()) {
-            throw new CompleteBinaryTreeException();
+            throw new BinaryTreeException();
         }
         TreeNode<E> node = arrayList.remove(lastIndex());
 		return node.element();

@@ -18,7 +18,6 @@ public class CompleteBinaryTreeTest {
 
 	private void buildTree(CompleteBinaryTree<String> bts) throws CompleteBinaryTreeException {
 		Debug.println("CompleteBinaryTreeTest.buildTree()");
-
         String letters[] = new String[] {
             "A",
             "B",
@@ -34,7 +33,6 @@ public class CompleteBinaryTreeTest {
             "L",
             "M",
         };
-
         //add
         for (String letter : letters) {
             TreeNode<String> node = bts.add(letter);

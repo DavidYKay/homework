@@ -8,11 +8,20 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 	}
 	public Entry<E> insert(Integer key, E element) {
 		Debug.println("Heap.insert()");
-		return null;
+        Entry<E> entry = new Entry<E>(key, element);
+        if (super.add(entry) != null) {
+            bubbleUp();
+            return entry;
+        } else {
+            return null;
+        }
 	}
 	public E removeMin() throws BinaryTreeException {
 		Debug.println("Heap.removeMin()");
-		return null;
+        Entry<E> entry = remove();
+        E element = entry.element();
+        bubbleDown();
+		return element;
 	}
 	private void bubbleUp() {
 		Debug.println("Heap.bubbleUp()");
