@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import com.cbthinkx.util.Debug;
 public class BinaryTree<E> {
-    private ArrayList<TreeNode<E>> arrayList;
+    protected ArrayList<TreeNode<E>> arrayList;
 	public BinaryTree() {
 		// construct a BinaryTree implemented using a ArrayList<TreeNode<E>>
 		Debug.println("BinaryTree.BinaryTree()");
@@ -50,8 +50,8 @@ public class BinaryTree<E> {
             (
                 isLegalNode(left(treeNode)) ||
                 isLegalNode(right(treeNode)) 
-            ) &&
-                isLegalNode(parent(treeNode))
+            ) 
+            //&& isLegalNode(parent(treeNode))
         ) {
             return true;
         } else {
@@ -234,7 +234,7 @@ public class BinaryTree<E> {
             }
         }
 	}
-    private int lastIndex() {
+    protected int lastIndex() {
 		Debug.println("BinaryTree.lastIndex()");
         return arrayList.size() - 1;
     }
