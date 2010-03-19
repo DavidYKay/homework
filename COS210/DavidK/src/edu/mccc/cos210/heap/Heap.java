@@ -97,6 +97,8 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         //else, done
 	}
     private void recurseDown(TreeNode<Entry<E>> node) {
+        System.out.println("RecurseDown");
+        System.out.println(this);
         Iterable<TreeNode<Entry<E>>> children = children(node);
         Entry<E> nodeElement = node.element();
 
@@ -108,13 +110,16 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             Entry<E> childElement = child.element();
             //is entry lower than parent?
             if (nodeElement.key() > childElement.key()) {
+                int childIndex = ((ArrayListTreeNode) child).getIndex();
                 Debug.println("Swapping!");
                 //if so, swap 
                 replace(node, childElement);
                 replace(child, nodeElement);                
                 //then recurse
-                recurseDown(child);
                 //recurseDown(left(child));
+                recurseDown(
+                    arrayList.get(childIndex)
+                );
                 break;
             } else {
                 Debug.println("Not Swapping!");

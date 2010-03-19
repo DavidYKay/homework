@@ -100,6 +100,7 @@ public class BinaryTree<E> {
 	public E replace(TreeNode<E> treeNode, E element) {
 		Debug.println("BinaryTree.replace()");
 		int index = ((ArrayListTreeNode<E>) treeNode).getIndex();
+		Debug.println("BinaryTree.replace() index: " + index);
 		this.arrayList.set(index, new ArrayListTreeNode<E>(new TreeNode<E>(element), index));
 		return treeNode.element();
 	}
