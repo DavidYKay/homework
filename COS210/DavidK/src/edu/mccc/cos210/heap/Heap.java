@@ -118,13 +118,20 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             } else {
                 Debug.println("Not Swapping!");
             }
-                Debug.println(
-                    String.format(
-                        "Child: %s, Parent: %s,",
-                        child.element(),
-                        node.element()
-                    )
-                );
+            Debug.println(
+                String.format(
+                    "Child: %s, Parent: %s,",
+                    child.element(),
+                    node.element()
+                )
+            );
+            //Debug.println(
+            //    String.format(
+            //        "Child: %s, Parent: %s,",
+            //        child.hashCode(),
+            //        node.hashCode()
+            //    )
+            //);
         }
     }
     public String toString() {
