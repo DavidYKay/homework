@@ -24,6 +24,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         Entry<E> entry = root.element();
         E element = entry.element();
         bubbleDown();
+        size--;
 		return element;
 	}
 	private void bubbleUp() {
