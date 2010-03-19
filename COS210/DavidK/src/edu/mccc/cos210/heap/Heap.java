@@ -103,9 +103,8 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             if (child == null) {
                 continue;
             }
-            Entry<E> childElement = null;
             Debug.println(child);
-            childElement = child.element();
+            Entry<E> childElement = child.element();
             //is entry lower than parent?
             if (nodeElement.key() > childElement.key()) {
                 Debug.println("Swapping!");
@@ -113,17 +112,19 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
                 replace(node, childElement);
                 replace(child, nodeElement);                
                 //then recurse
-                recurseDown(node);
+                recurseDown(child);
+                //recurseDown(left(child));
+                break;
             } else {
                 Debug.println("Not Swapping!");
+            }
                 Debug.println(
                     String.format(
-                        "Child: %d, Parent: %d",
-                        node.element().key(),
-                        child.element().key()
+                        "Child: %s, Parent: %s,",
+                        child.element(),
+                        node.element()
                     )
                 );
-            }
         }
     }
     public String toString() {
