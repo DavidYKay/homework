@@ -3,20 +3,20 @@ import com.cbthinkx.util.Debug;
 import java.util.*;
 public class CompleteBinaryTreeTest {
 	private CompleteBinaryTree<String> completeBinaryTree;
-	public CompleteBinaryTreeTest() throws CompleteBinaryTreeException {
+	public CompleteBinaryTreeTest() throws BinaryTreeException {
 		Debug.println("CompleteBinaryTreeTest.CompleteBinaryTreeTest()");
 		this.completeBinaryTree = new CompleteBinaryTree<String>();
 		buildTree(this.completeBinaryTree);
         Debug.println("CompleteBinaryTreeTest SUCCESS!");
 	}
-	public static void main(String[] sa) throws CompleteBinaryTreeException {
+	public static void main(String[] sa) throws BinaryTreeException {
 		Debug.println("CompleteBinaryTreeTest.main()");
 		CompleteBinaryTreeTest cbtt = new CompleteBinaryTreeTest();
         //cbtt.testConstruction();
         //cbtt.testRetrieval();
 	}
 
-	private void buildTree(CompleteBinaryTree<String> bts) throws CompleteBinaryTreeException {
+	private void buildTree(CompleteBinaryTree<String> bts) throws BinaryTreeException {
 		Debug.println("CompleteBinaryTreeTest.buildTree()");
         String letters[] = new String[] {
             "A",
@@ -39,7 +39,7 @@ public class CompleteBinaryTreeTest {
             if (node.element() != letter) {
                 Debug.println("Expected: " + letter);
                 Debug.println("Received: " + node.element());
-                throw new CompleteBinaryTreeException();
+                throw new BinaryTreeException();
             }
         }
         Debug.println("CompleteBinaryTreeTest Finished construction!");
@@ -50,7 +50,7 @@ public class CompleteBinaryTreeTest {
             if (!letter.equals(element)) {
                 Debug.println("Expected: " + letter);
                 Debug.println("Received: " + element);
-                throw new CompleteBinaryTreeException();
+                throw new BinaryTreeException();
             }
         }
 	}

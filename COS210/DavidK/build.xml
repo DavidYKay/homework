@@ -1,4 +1,4 @@
-<project name="heap" default="compile">
+<project name="binarytree" default="compile">
     <property name="src"     location="src/edu/mccc/cos210/${ant.project.name}"/>
     <property name="binarysrc"     location="src/edu/mccc/cos210/${ant.project.name}"/>
     <property name="prioritysrc"   location="src/edu/mccc/cos210/priorityqueue"/>
@@ -7,7 +7,7 @@
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
     <property name="classpath"  value="${build}/jar/${ant.project.name}.jar:${classes}:.:.." />
-    <property name="executable"  value="HeapTest" />
+    <property name="executable"  value="BinaryTreeTest" />
 
     <target name="clean">
         <delete dir="${build}"/>

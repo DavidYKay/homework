@@ -3,5 +3,6 @@
 #./compile shifter
 #./shifter
 #./card
-./compile dddial
-./doit
+#./compile dddial
+#./doit
+ant run
