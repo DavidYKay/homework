@@ -9,7 +9,12 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
 		Debug.println("CompleteBinaryTree.add()");
 		// create and return a new TreeNode storing element as
 		// the last node of this CompleteBinaryTree
-        TreeNode<E> node = new TreeNode<E>(element);
+        
+        //TreeNode<E> node = new TreeNode<E>(element);
+        ArrayListTreeNode<E> node = new ArrayListTreeNode<E>( 
+            new TreeNode<E>(element),
+            arrayList.size() - 1
+        );
         if (arrayList.add(node)) {
             return node;
         } else {

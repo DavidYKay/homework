@@ -1,15 +1,15 @@
-<project name="heap" default="compile">
+<project name="binarytree" default="compile">
     <property name="src"     location="src/edu/mccc/cos210/${ant.project.name}"/>
-    <property name="binarysrc"     location="src/edu/mccc/cos210/${ant.project.name}"/>
+    <property name="binarysrc"     location="src/edu/mccc/cos210/binarytree"/>
     <property name="prioritysrc"   location="src/edu/mccc/cos210/priorityqueue"/>
     <property name="heapsrc"   location="src/edu/mccc/cos210/heap"/>
     <property name="build"   location="build"/>
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
     <property name="classpath"  value="${build}/jar/${ant.project.name}.jar:${classes}:.:.." />
-    <property name="executable"  value="HeapTest" />
-    <!--
     <property name="executable"  value="BinaryTreeTest" />
+    <!--
+    <property name="executable"  value="HeapTest" />
     -->
 
     <target name="clean">
@@ -18,8 +18,20 @@
 
     <target name="compile">
         <mkdir dir="${classes}"/>
+            <!--
         <javac srcdir="${src}" destdir="${classes}" debug="true">
             <compilerarg value="-g"/>
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:all"/>
+            <compilerarg value="-Xlint"/>
+            <classpath>
+                <pathelement path="${classpath}" />
+            </classpath>
+        </javac>
+            -->
+        <javac srcdir="${binarysrc}" destdir="${classes}" debug="true">
+            <compilerarg value="-g"/>
+            <compilerarg value="-Xlint:unchecked"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xlint:all"/>
