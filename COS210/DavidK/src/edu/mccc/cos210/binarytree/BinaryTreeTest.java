@@ -13,6 +13,7 @@ public class BinaryTreeTest {
 		BinaryTreeTest btt = new BinaryTreeTest();
         //btt.testConstruction();
         //btt.testRetrieval();
+        btt.testParents();
         System.out.println("PreOrder");
 		btt.displayTreePreOrder(btt.binaryTree);
         System.out.println("InOrder");
@@ -23,10 +24,11 @@ public class BinaryTreeTest {
 	private void displayTreePreOrder(BinaryTree<String> bts) {
 		Debug.println("BinaryTreeTest.displayTreePreOrder()");
         preOrder(bts.root(), bts);
+        System.out.println();
 	}
     private void preOrder(TreeNode<String> node, BinaryTree<String> bts) {
 		Debug.println("BinaryTreeTest.preOrder()");
-        System.out.println(node.element());
+        System.out.print(node.element());
         if (bts.left(node) != null) {
             preOrder(bts.left(node), bts);
         } 
@@ -37,13 +39,14 @@ public class BinaryTreeTest {
 	private void displayTreeInOrder(BinaryTree<String> bts) {
 		Debug.println("BinaryTreeTest.displayTreeInOrder()");
         inOrder(bts.root(), bts);
+        System.out.println();
 	}
     private void inOrder(TreeNode<String> node, BinaryTree<String> bts) {
 		Debug.println("BinaryTreeTest.inOrder()");
         if (bts.left(node) != null) {
             inOrder(bts.left(node), bts);
         } 
-        System.out.println(node.element());
+        System.out.print(node.element());
         if (bts.right(node) != null) {
             inOrder(bts.right(node), bts);
         } 
@@ -60,7 +63,7 @@ public class BinaryTreeTest {
         if (bts.right(node) != null) {
             postOrder(bts.right(node), bts);
         } 
-        System.out.println(node.element());
+        System.out.print(node.element());
     }
 	private void buildTree(BinaryTree<String> bts) throws BinaryTreeException {
 		Debug.println("BinaryTreeTest.buildTree()");
@@ -79,7 +82,6 @@ public class BinaryTreeTest {
 		TreeNode<String> m = bts.insertLeft(g, "M");
 	}
 
-    /*
     private void testConstruction() {
         Debug.println("BEGIN CONSTRUCTION TEST");
 
@@ -111,8 +113,8 @@ public class BinaryTreeTest {
             Debug.println("RIGHT: created/retrieved INCORRECTLY!");
         }
 
-        ArrayList<TreeNode<String>> arrayList = binaryTree.getArrayList();
-        Debug.println("ArrayList size " + arrayList.size());
+        //ArrayList<TreeNode<String>> arrayList = binaryTree.getArrayList();
+        //Debug.println("ArrayList size " + arrayList.size());
 
         HashMap<String, Integer> letterMap = new HashMap<String, Integer>();
         letterMap.put("A", 0);
@@ -134,46 +136,72 @@ public class BinaryTreeTest {
         Debug.println("END CONSTRUCTION TEST");
     }
 
-    // Verifies that the letters are at the anticipated locations
-    private void testLetters(HashMap<String, Integer> map) {
-        Iterator it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry)it.next();
-
-            TreeNode<String> node = binaryTree.getLegalNode((Integer) pairs.getValue());
-            if (node != null) {
-                String element = node.element();
-                if (element != null &&
-                        element.equals(pairs.getKey())
-                   ) {
-                    Debug.println(
-                        String.format(
-                            "%s was found at the correct position, %d",
-                            pairs.getKey(),
-                            pairs.getValue() 
-                        )
-                    );
-                } else {
-                    Debug.println(
-                        String.format(
-                            "%s DID NOT MATCH value at the POSITION, %d",
-                            pairs.getKey(),
-                            pairs.getValue() 
-                        )
-                    );
-                }
-            } else {
-                Debug.println(
-                    String.format(
-                        "%s was NOT FOUND at the POSITION, %d",
-                        pairs.getKey(),
-                        pairs.getValue() 
-                    )
-                );
-            }
+    private void testParents() throws BinaryTreeException {
+        boolean success =testParents(
+            binaryTree.root(),
+            null
+        );
+       if (success) {
+           Debug.println("testParents - SUCCESS");
+       } else {
+           throw new BinaryTreeException();
+       }
+    }
+    private boolean testParents(TreeNode<String> node, TreeNode<String>parent) {
+        if (node == null||
+            parent == null
+        ) {
+            return true;
         }
+        if (!parent.equals(binaryTree.parent(node))) {
+            return false;
+        }
+        TreeNode<String> left  = binaryTree.left(node);
+        TreeNode<String> right = binaryTree.right(node);
+        return (testParents(left, node) && testParents(right, node));
     }
 
+    // Verifies that the letters are at the anticipated locations
+    private void testLetters(HashMap<String, Integer> map) {
+        //Iterator it = map.entrySet().iterator();
+        //while (it.hasNext()) {
+        //    Map.Entry pairs = (Map.Entry)it.next();
+
+        //    TreeNode<String> node = binaryTree.getLegalNode((Integer) pairs.getValue());
+        //    if (node != null) {
+        //        String element = node.element();
+        //        if (element != null &&
+        //                element.equals(pairs.getKey())
+        //           ) {
+        //            Debug.println(
+        //                String.format(
+        //                    "%s was found at the correct position, %d",
+        //                    pairs.getKey(),
+        //                    pairs.getValue() 
+        //                )
+        //            );
+        //        } else {
+        //            Debug.println(
+        //                String.format(
+        //                    "%s DID NOT MATCH value at the POSITION, %d",
+        //                    pairs.getKey(),
+        //                    pairs.getValue() 
+        //                )
+        //            );
+        //        }
+        //    } else {
+        //        Debug.println(
+        //            String.format(
+        //                "%s was NOT FOUND at the POSITION, %d",
+        //                pairs.getKey(),
+        //                pairs.getValue() 
+        //            )
+        //        );
+        //    }
+        //}
+    }
+
+    /*
     private void testRetrieval() {
         Debug.println("BEGIN RETRIEVAL TEST");
 
