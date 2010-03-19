@@ -8,12 +8,13 @@ public class HeapTest {
 		Debug.println("HeapTest.HeapTest()");
 		this.binaryTree = new Heap<String>();
 		buildTree(this.binaryTree);
+        System.out.println("Heap:");
+        System.out.println(binaryTree);
 	}
 	public static void main(String[] sa) throws BinaryTreeException {
 		Debug.println("HeapTest.main()");
 		HeapTest btt = new HeapTest();
 	}
-
 	private void buildTree(Heap<String> heap) throws BinaryTreeException {
 		Debug.println("heapTest.buildTree()");
         HashMap<Integer, String> map = new HashMap<Integer, String>();
@@ -55,12 +56,18 @@ public class HeapTest {
         //remove
         TreeSet<Integer> sortedSet = new TreeSet<Integer>(map.keySet());
         int successes = 0;
+        ArrayList<String> expected = new ArrayList<String>();
+        ArrayList<String> received = new ArrayList<String>();
         for (Integer key : sortedSet) {
             String letter = map.get(key);
             String element = heap.removeMin();
+            expected.add(letter);
+            received.add(element);
             if (!letter.equals(element)) {
-                Debug.println("Expected: " + letter);
-                Debug.println("Received: " + element);
+                //Debug.println("Expected: " + letter);
+                //Debug.println("Received: " + element);
+                Debug.println("Expected: " + expected);
+                Debug.println("Received: " + received);
                 throw new BinaryTreeException();
             }
             successes++;

@@ -20,7 +20,12 @@ public class BinaryTreeTest {
 		btt.displayTreeInOrder(btt.binaryTree);
         System.out.println("PostOrder");
 		btt.displayTreePostOrder(btt.binaryTree);
+        System.out.println("toString:");
+        System.out.println(btt.getBinaryTree());
 	}
+    private BinaryTree<String> getBinaryTree() {
+        return binaryTree;
+    }
 	private void displayTreePreOrder(BinaryTree<String> bts) {
 		Debug.println("BinaryTreeTest.displayTreePreOrder()");
         preOrder(bts.root(), bts);
@@ -54,6 +59,7 @@ public class BinaryTreeTest {
 	private void displayTreePostOrder(BinaryTree<String> bts) {
 		Debug.println("BinaryTreeTest.displayTreePostOrder()");
         postOrder(bts.root(), bts);
+        System.out.println();
 	}
     private void postOrder(TreeNode<String> node, BinaryTree<String> bts) {
 		Debug.println("BinaryTreeTest.postOrder()");

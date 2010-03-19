@@ -298,26 +298,22 @@ public class BinaryTree<E> {
         } 
         return null;
     }
-    //public String toString() {
-    //    Debug.println("BinaryTree.toString()");
-    //    StringBuilder sb = new StringBuilder();
-    //    int powerOfTwo = 1;
-    //    for (int i = 0; i < arrayList.size(); i++) {
-    //        if (i == powerOfTwo) {
-    //            i *= 2;
-    //            sb.append("\n");
-    //        }
-    //        TreeNode<E> node = arrayList.get(i);
-    //        if (!isLegalNode(node)) {
-
-    //        } else {
-    //            sb.append(node);
-    //        }
-    //    }
-    //    return sb.toString();
-    //}
     public String toString() {
         Debug.println("BinaryTree.toString()");
-        return "Hello";
+        StringBuilder sb = new StringBuilder();
+        int powerOfTwo = 0;
+        for (int i = 0; i < arrayList.size(); i++) {
+            TreeNode<E> node = arrayList.get(i);
+            if (!isLegalNode(node)) {
+                sb.append("_");
+            } else {
+                sb.append(node);
+            }
+            if (i == powerOfTwo) {
+                sb.append("\n");
+                powerOfTwo = (powerOfTwo * 2) + 2;
+            }
+        }
+        return sb.toString();
     }
 }
