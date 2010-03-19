@@ -73,7 +73,7 @@ public class BinaryTree<E> {
 	public boolean isEmpty() {
 		// it the tree empty?
 		Debug.println("BinaryTree.isEmpty()");
-		return size == 0;
+		return (size == 0);
 	}
 	public Iterator<E> iterator() {
 		// return an iterator
@@ -214,7 +214,12 @@ public class BinaryTree<E> {
 
     protected int lastIndex() {
 		Debug.println("BinaryTree.lastIndex()");
-        return arrayList.size() - 1;
+        int index = arrayList.size() - 1;
+        if (index < 0) {
+            return 0;
+        } else {
+            return index;
+        }
     }
     //private int leftChildIndex(int parentIndex) {
 	//	Debug.println("BinaryTree.leftChildIndex()");

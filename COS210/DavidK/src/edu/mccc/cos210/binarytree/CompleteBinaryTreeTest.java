@@ -43,6 +43,7 @@ public class CompleteBinaryTreeTest {
             }
         }
         Debug.println("CompleteBinaryTreeTest Finished construction!");
+        Debug.println(bts);
         //remove
         for (int i = letters.length - 1; i >= 0; i--) {
             String letter = letters[i];

@@ -7,7 +7,7 @@
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
     <property name="classpath"  value="${build}/jar/${ant.project.name}.jar:${classes}:.:.." />
-    <property name="executable"  value="BinaryTreeTest" />
+    <property name="executable"  value="CompleteBinaryTreeTest" />
     <!--
     <property name="executable"  value="HeapTest" />
     -->

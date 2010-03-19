@@ -13,9 +13,10 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
         //TreeNode<E> node = new TreeNode<E>(element);
         ArrayListTreeNode<E> node = new ArrayListTreeNode<E>( 
             new TreeNode<E>(element),
-            arrayList.size() - 1
+            lastIndex()
         );
         if (arrayList.add(node)) {
+            size++;
             return node;
         } else {
             return null;
@@ -29,7 +30,9 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
         if (isEmpty()) {
             throw new BinaryTreeException();
         }
-        TreeNode<E> node = arrayList.remove(lastIndex());
+        //TreeNode<E> node = arrayList.remove(lastIndex());
+        ArrayListTreeNode<E> node = arrayList.remove(lastIndex());
+        size--;
 		return node.element();
 	}
     public String toString() {
