@@ -15,7 +15,6 @@
     <target name="compile">
         <mkdir dir="${classes}"/>
         <javac srcdir="${src}" destdir="${classes}" debug="true">
-            <compilerarg value="-g"/>
             <!--
             <compilerarg value="-Xlint:all"/>
             <compilerarg value="-Xlint"/>

@@ -21,8 +21,9 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 		System.out.println("Heap.removeMin()");
         //Entry<E> entry = remove();
         TreeNode<Entry<E>> root = root();
-        Entry<E> entry = root.element();
-        E element = entry.element();
+        //Entry<E> entry = root.element();
+        //E element = entry.element();
+        E element = root.element().element();
         bubbleDown();
         size--;
 		return element;
@@ -83,7 +84,10 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             System.err.println(ex);
             return;
         }
+        System.out.println("Root index: " + ((ArrayListTreeNode) root()).getIndex());
+        System.out.println("Root before: " + root());
         replace(root(), lastEntry);
+        System.out.println("Root after: " + root());
         System.out.println("After pluck:");
         System.out.println(this);
         recurseDown(root());
@@ -101,7 +105,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         System.out.println(this);
         Iterable<TreeNode<Entry<E>>> children = children(node);
         Entry<E> nodeElement = node.element();
-
+        
         for (TreeNode<Entry<E>> child : children) {
             if (child == null) {
                 continue;

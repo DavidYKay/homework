@@ -13,7 +13,8 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
         //TreeNode<E> node = new TreeNode<E>(element);
         ArrayListTreeNode<E> node = new ArrayListTreeNode<E>( 
             new TreeNode<E>(element),
-            lastIndex() + 1
+            //lastIndex() + 1
+            size()
         );
         if (arrayList.add(node)) {
             size++;

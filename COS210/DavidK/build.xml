@@ -31,7 +31,6 @@
         </javac>
             -->
         <javac srcdir="${binarysrc}" destdir="${classes}" debug="true">
-            <compilerarg value="-g"/>
             <compilerarg value="-Xlint:unchecked"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
@@ -42,8 +41,7 @@
                 <pathelement path="${classpath}" />
             </classpath>
         </javac>
-        <javac srcdir="${heapsrc}" destdir="${classes}" debug="true">
-            <compilerarg value="-g"/>
+        <javac srcdir="${heapsrc}" destdir="${classes}" debug="true" debuglevel="lines,var,source">
             <compilerarg value="-Xlint:unchecked"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
@@ -55,7 +53,6 @@
             </classpath>
         </javac>
         <javac srcdir="${prioritysrc}" destdir="${classes}" debug="true">
-            <compilerarg value="-g"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xlint:all"/>
@@ -101,14 +98,29 @@
     </target>
 
     <target name="debug" depends="compile">
+        <java 
+            classname="edu.mccc.cos210.${ant.project.name}.${executable}"
+            classpath="${classpath}"
+            fork="true" >
+
+            <sysproperty 
+                key= "com.cbthinkx.debug" 
+                value= "true" />
+            <arg value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y" />
+            <!--
+                <arg value="MommasBadBoy" />
+                <arg value="-Dcom.cbthinkx.debug" />
+            -->
+        </java>
+    </target>
+    <!--
+    <target name="debug" depends="compile">
          <property name="executable-full-path"
              location="/usr/bin/jdb"/>
          <exec executable="${executable-full-path}">
-             <!--
-             <arg value="-sourcepath ./src/" />
-             -->
-             <arg value="-classpath .:build/classes" />
              <arg value="edu.mccc.cos210.${ant.project.name}.${executable}"/>
+             <arg value="-classpath build/classes:." />
          </exec>
-    </target>
+     </target>
+     -->
 </project>
