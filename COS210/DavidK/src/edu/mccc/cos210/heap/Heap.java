@@ -19,13 +19,12 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 	public E removeMin() throws BinaryTreeException {
 		Debug.println("Heap.removeMin()");
 		System.out.println("Heap.removeMin()");
-        //Entry<E> entry = remove();
         TreeNode<Entry<E>> root = root();
         //Entry<E> entry = root.element();
         //E element = entry.element();
         E element = root.element().element();
         bubbleDown();
-        size--;
+        //size--;
 		return element;
 	}
 	private void bubbleUp() {
@@ -84,7 +83,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             System.err.println(ex);
             return;
         }
-        System.out.println("Root index: " + ((ArrayListTreeNode) root()).getIndex());
+        //System.out.println("Root index: " + ((ArrayListTreeNode) root()).getIndex());
         System.out.println("Root before: " + root());
         replace(root(), lastEntry);
         System.out.println("Root after: " + root());
@@ -101,49 +100,66 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         //else, done
 	}
     private void recurseDown(TreeNode<Entry<E>> node) {
-        System.out.println("RecurseDown");
-        System.out.println(this);
-        Iterable<TreeNode<Entry<E>>> children = children(node);
+        Debug.println("RecurseDown");
+        //System.out.println(this);
         Entry<E> nodeElement = node.element();
-        
-        for (TreeNode<Entry<E>> child : children) {
-            if (child == null) {
-                continue;
-            }
-            Debug.println(child);
-            Entry<E> childElement = child.element();
-            //is entry lower than parent?
-            if (nodeElement.key() > childElement.key()) {
-                int childIndex = ((ArrayListTreeNode) child).getIndex();
-                Debug.println("Swapping!");
-                //if so, swap 
-                replace(node, childElement);
-                replace(child, nodeElement);                
-                //then recurse
-                if (childIndex < lastIndex()) {
-                    recurseDown(
-                        arrayList.get(childIndex)
-                    );
-                }
-                break;
-            } else {
-                Debug.println("Not Swapping!");
-            }
-            Debug.println(
-                String.format(
-                    "Child: %s, Parent: %s,",
-                    child.element(),
-                    node.element()
-                )
-            );
-            //Debug.println(
-            //    String.format(
-            //        "Child: %s, Parent: %s,",
-            //        child.hashCode(),
-            //        node.hashCode()
-            //    )
-            //);
+        TreeNode<Entry<E>> left  = left(node);
+        TreeNode<Entry<E>> right = right(node);
+        if (left == null) {
+            //Bottom row
+            return;
         }
+        Debug.println("Left: " + left);
+        Debug.println("Right: " + right);
+        Entry<E> leftElement = left.element();
+        Entry<E> rightElement = null;
+        if (right != null) {
+            rightElement = right.element();
+        }
+
+        TreeNode<Entry<E>> child = null;
+        if ( 
+            rightElement != null &&
+            leftElement.key() > rightElement.key()
+        ) { 
+            //right is greater
+            child = right;
+        } else {
+            //equal or left is lesser
+            child = left;
+        }
+        //Debug.println(child);
+        Entry<E> childElement = child.element();
+        //is entry lower than parent?
+        if (nodeElement.key() > childElement.key()) {
+            int childIndex = ((ArrayListTreeNode) child).getIndex();
+            Debug.println("Swapping!");
+            //if so, swap 
+            replace(node, childElement);
+            replace(child, nodeElement);                
+            //then recurse
+            if (childIndex < lastIndex()) {
+                recurseDown(
+                    arrayList.get(childIndex)
+                );
+            }
+        } else {
+            Debug.println("Not Swapping!");
+        }
+        Debug.println(
+            String.format(
+                "Child: %s, Parent: %s,",
+                child.element(),
+                node.element()
+            )
+        );
+        //Debug.println(
+        //    String.format(
+        //        "Child: %s, Parent: %s,",
+        //        child.hashCode(),
+        //        node.hashCode()
+        //    )
+        //);
     }
     public String toString() {
         Debug.println("Heap.toString()");

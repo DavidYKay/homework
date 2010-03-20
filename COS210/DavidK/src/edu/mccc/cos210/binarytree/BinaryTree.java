@@ -17,6 +17,7 @@ public class BinaryTree<E> {
 		if (!isEmpty()) {
 			return this.arrayList.get(0);
 		} else {
+            Debug.println("BinaryTree.root() null, size: " + size);
 			return null;
 		}
 	}
@@ -114,6 +115,7 @@ public class BinaryTree<E> {
 		Debug.println("BinaryTree.replace()");
 		int index = ((ArrayListTreeNode<E>) treeNode).getIndex();
 		Debug.println("BinaryTree.replace() index: " + index);
+		Debug.println("BinaryTree.replace() value: " + treeNode);
 		this.arrayList.set(index, new ArrayListTreeNode<E>(new TreeNode<E>(element), index));
 		return treeNode.element();
 	}
@@ -325,7 +327,7 @@ public class BinaryTree<E> {
 			this.index = n;
 		}
 		public String toString() {
-			Debug.println("ArrayListTreeNode.toString()");
+			//Debug.println("ArrayListTreeNode.toString()");
 			return "[" + super.toString() + ":" + getIndex() + "]";
 		}
 	}
