@@ -31,8 +31,21 @@ public class BinaryTree<E> {
 		Debug.println("BinaryTree.children()");
 		ArrayList<TreeNode<E>> kids = new ArrayList<TreeNode<E>>();
 		int index = ((ArrayListTreeNode<E>) treeNode).getIndex();
-		TreeNode<E> left = validate(this.arrayList.get(2 * (index + 1) - 1));
-		TreeNode<E> right = validate(this.arrayList.get(2 * (index + 1)));
+        int leftIndex  = leftChildIndex(index);
+        int rightIndex = rightChildIndex(index);
+        
+        TreeNode<E> left  = null;
+        TreeNode<E> right = null;
+        if (leftIndex <= lastIndex()) {
+            left = validate(
+                this.arrayList.get(leftIndex)
+            );
+        }
+        if (rightIndex <= lastIndex()) {
+            right = validate(
+                this.arrayList.get(rightIndex)
+            );
+        }
 		if (left != null) {
 			kids.add(left);
 		}
@@ -222,21 +235,21 @@ public class BinaryTree<E> {
             return index;
         }
     }
-    //private int leftChildIndex(int parentIndex) {
-	//	Debug.println("BinaryTree.leftChildIndex()");
-    //    return 2 * parentIndex + 1;
-    //}
-    //private int rightChildIndex(int parentIndex) {
-	//	Debug.println("BinaryTree.rightChildIndex()");
-    //    return 2 * parentIndex + 2;
-    //}
-    ///**
-    // * Get the index of the parent node of this node
-    // */
-    //private int parentIndex(int childIndex) {
-	//	Debug.println("BinaryTree.parentIndex()");
-    //    return (childIndex - 1) / 2;
-    //}
+    private int leftChildIndex(int parentIndex) {
+		Debug.println("BinaryTree.leftChildIndex()");
+        return 2 * parentIndex + 1;
+    }
+    private int rightChildIndex(int parentIndex) {
+		Debug.println("BinaryTree.rightChildIndex()");
+        return 2 * parentIndex + 2;
+    }
+    /**
+     * Get the index of the parent node of this node
+     */
+    private int parentIndex(int childIndex) {
+		Debug.println("BinaryTree.parentIndex()");
+        return (childIndex - 1) / 2;
+    }
     ///**
     // * Adds placeholder nodes so that the arraylist doesn't complain about empty indicies
     // */

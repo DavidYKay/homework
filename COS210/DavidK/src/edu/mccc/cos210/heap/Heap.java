@@ -120,10 +120,11 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
                 replace(node, childElement);
                 replace(child, nodeElement);                
                 //then recurse
-                //recurseDown(left(child));
-                recurseDown(
-                    arrayList.get(childIndex)
-                );
+                if (childIndex < lastIndex()) {
+                    recurseDown(
+                        arrayList.get(childIndex)
+                    );
+                }
                 break;
             } else {
                 Debug.println("Not Swapping!");
