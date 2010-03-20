@@ -18,22 +18,26 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 	}
 	public E removeMin() throws BinaryTreeException {
 		Debug.println("Heap.removeMin()");
-		System.out.println("Heap.removeMin()");
+		Debug.println("Heap.removeMin()");
         TreeNode<Entry<E>> root = root();
-        E element = root.element().element();
-        bubbleDown();
-		return element;
+        if (root == null) {
+            return null;
+        } else {
+            E element = root.element().element();
+            bubbleDown();
+            return element;
+        }
 	}
 	private void bubbleUp() {
 		Debug.println("Heap.bubbleUp()");
         //start with last added entry
         int index = lastIndex();
         TreeNode<Entry<E>> node = arrayList.get(index);
-        System.out.println("Before bubbleUp:");
-        System.out.println(this);
+        Debug.println("Before bubbleUp:");
+        Debug.println(this);
         recurseUp(node);
-        System.out.println("After bubbleUp:");
-        System.out.println(this);
+        Debug.println("After bubbleUp:");
+        Debug.println(this);
     }
     private void recurseUp(TreeNode<Entry<E>> node) {
         TreeNode<Entry<E>> parent = parent(node);
@@ -70,8 +74,8 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
     }
 	private void bubbleDown() {
 		Debug.println("Heap.bubbleDown()");
-        System.out.println("Before pluck:");
-        System.out.println(this);
+        Debug.println("Before pluck:");
+        Debug.println(this);
         //Pluck the last entry and set it as the root
         Entry<E> lastEntry = null;
         try {
@@ -83,14 +87,14 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         if (root() == null) {
             return;
         }
-        System.out.println("Root before: " + root());
+        Debug.println("Root before: " + root());
         replace(root(), lastEntry);
-        System.out.println("Root after: " + root());
-        System.out.println("After pluck:");
-        System.out.println(this);
+        Debug.println("Root after: " + root());
+        Debug.println("After pluck:");
+        Debug.println(this);
         recurseDown(root());
-        System.out.println("After bubbleDown:");
-        System.out.println(this);
+        Debug.println("After bubbleDown:");
+        Debug.println(this);
         //start with root
         //is root lower than left?
         //if not, swap with
@@ -100,7 +104,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 	}
     private void recurseDown(TreeNode<Entry<E>> node) {
         Debug.println("RecurseDown");
-        //System.out.println(this);
+        //Debug.println(this);
         Entry<E> nodeElement = node.element();
         TreeNode<Entry<E>> left  = left(node);
         TreeNode<Entry<E>> right = right(node);

@@ -1,4 +1,4 @@
-<project name="heap" default="compile">
+<project name="priorityqueue" default="compile">
     <property name="src"     location="src/edu/mccc/cos210/${ant.project.name}"/>
     <property name="binarysrc"     location="src/edu/mccc/cos210/binarytree"/>
     <property name="prioritysrc"   location="src/edu/mccc/cos210/priorityqueue"/>
@@ -7,8 +7,9 @@
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
     <property name="classpath"  value="${build}/jar/${ant.project.name}.jar:${classes}:.:.." />
-    <property name="executable"  value="HeapTest" />
+    <property name="executable"  value="PriorityQueueTest" />
     <!--
+    <property name="executable"  value="HeapTest" />
     <property name="executable"  value="BinaryTreeTest" />
     <property name="executable"  value="CompleteBinaryTreeTest" />
     -->
@@ -19,19 +20,8 @@
 
     <target name="compile">
         <mkdir dir="${classes}"/>
-            <!--
-        <javac srcdir="${src}" destdir="${classes}" debug="true">
-            <compilerarg value="-g"/>
-            <compilerarg value="-Xlint:unchecked"/>
-            <compilerarg value="-Xlint:all"/>
-            <compilerarg value="-Xlint"/>
-            <classpath>
-                <pathelement path="${classpath}" />
-            </classpath>
-        </javac>
-            -->
         <javac srcdir="${binarysrc}" destdir="${classes}" debug="true">
-            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:all"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xlint:all"/>
@@ -42,7 +32,7 @@
             </classpath>
         </javac>
         <javac srcdir="${heapsrc}" destdir="${classes}" debug="true" debuglevel="lines,var,source">
-            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:all"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xlint:all"/>
@@ -53,11 +43,18 @@
             </classpath>
         </javac>
         <javac srcdir="${prioritysrc}" destdir="${classes}" debug="true">
+            <compilerarg value="-Xlint:all"/>
             <!--
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xlint:all"/>
             <compilerarg value="-Xlint"/>
             -->
+            <classpath>
+                <pathelement path="${classpath}" />
+            </classpath>
+        </javac>
+        <javac srcdir="${src}" destdir="${classes}" debug="true">
+            <compilerarg value="-Xlint:all"/>
             <classpath>
                 <pathelement path="${classpath}" />
             </classpath>
