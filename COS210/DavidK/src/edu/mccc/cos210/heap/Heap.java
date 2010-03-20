@@ -20,11 +20,8 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
 		Debug.println("Heap.removeMin()");
 		System.out.println("Heap.removeMin()");
         TreeNode<Entry<E>> root = root();
-        //Entry<E> entry = root.element();
-        //E element = entry.element();
         E element = root.element().element();
         bubbleDown();
-        //size--;
 		return element;
 	}
 	private void bubbleUp() {
@@ -83,7 +80,9 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             System.err.println(ex);
             return;
         }
-        //System.out.println("Root index: " + ((ArrayListTreeNode) root()).getIndex());
+        if (root() == null) {
+            return;
+        }
         System.out.println("Root before: " + root());
         replace(root(), lastEntry);
         System.out.println("Root after: " + root());
