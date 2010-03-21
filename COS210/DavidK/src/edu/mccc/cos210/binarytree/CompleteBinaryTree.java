@@ -9,11 +9,8 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
 		Debug.println("CompleteBinaryTree.add()");
 		// create and return a new TreeNode storing element as
 		// the last node of this CompleteBinaryTree
-        
-        //TreeNode<E> node = new TreeNode<E>(element);
         ArrayListTreeNode<E> node = new ArrayListTreeNode<E>( 
             new TreeNode<E>(element),
-            //lastIndex() + 1
             size()
         );
         if (arrayList.add(node)) {
@@ -31,7 +28,6 @@ public class CompleteBinaryTree<E> extends BinaryTree<E> {
         if (isEmpty()) {
             throw new BinaryTreeException();
         }
-        //TreeNode<E> node = arrayList.remove(lastIndex());
         ArrayListTreeNode<E> node = arrayList.remove(lastIndex());
         size--;
 		return node.element();

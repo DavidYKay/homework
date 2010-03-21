@@ -40,6 +40,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         Debug.println(this);
     }
     private void recurseUp(TreeNode<Entry<E>> node) {
+        Debug.println("Heap.recurseUp()");
         TreeNode<Entry<E>> parent = parent(node);
         Debug.println(
             String.format(
@@ -50,7 +51,6 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         );
         Entry<E> parentElement = parent.element();
         Entry<E> nodeElement = node.element();
-
         //is entry lower than parent?
         if (node.element().key() < parent.element().key()) {
             Debug.println("Swapping!");
@@ -58,8 +58,6 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             replace(node, parentElement);
             replace(parent, nodeElement);
             //then recurse
-            //recurseUp(node);
-            //FIXME Test
             recurseUp(parent);
         } else {
             Debug.println("Not Swapping!");
@@ -87,9 +85,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         if (root() == null) {
             return;
         }
-        Debug.println("Root before: " + root());
         replace(root(), lastEntry);
-        Debug.println("Root after: " + root());
         Debug.println("After pluck:");
         Debug.println(this);
         recurseDown(root());
@@ -103,7 +99,7 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         //else, done
 	}
     private void recurseDown(TreeNode<Entry<E>> node) {
-        Debug.println("RecurseDown");
+        Debug.println("Heap.recurseDown()");
         //Debug.println(this);
         Entry<E> nodeElement = node.element();
         TreeNode<Entry<E>> left  = left(node);
@@ -119,7 +115,6 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
         if (right != null) {
             rightElement = right.element();
         }
-
         TreeNode<Entry<E>> child = null;
         if ( 
             rightElement != null &&
@@ -131,7 +126,6 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
             //equal or left is lesser
             child = left;
         }
-        //Debug.println(child);
         Entry<E> childElement = child.element();
         //is entry lower than parent?
         if (nodeElement.key() > childElement.key()) {
@@ -156,13 +150,6 @@ public class Heap<E> extends CompleteBinaryTree<Entry<E>> {
                 node.element()
             )
         );
-        //Debug.println(
-        //    String.format(
-        //        "Child: %s, Parent: %s,",
-        //        child.hashCode(),
-        //        node.hashCode()
-        //    )
-        //);
     }
     public String toString() {
         Debug.println("Heap.toString()");

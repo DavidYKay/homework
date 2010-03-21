@@ -217,7 +217,6 @@ public class BinaryTree<E> {
 			return right;
 		}
 	}
-
 	private TreeNode<E> validate(TreeNode<E> treeNode) {
 		Debug.println("BinaryTree.validate()");
 		int index = ((ArrayListTreeNode<E>) treeNode).getIndex();
@@ -227,7 +226,6 @@ public class BinaryTree<E> {
 			return treeNode;
 		}
 	}
-
     protected int lastIndex() {
 		Debug.println("BinaryTree.lastIndex()");
         int index = arrayList.size() - 1;
@@ -252,48 +250,6 @@ public class BinaryTree<E> {
 		Debug.println("BinaryTree.parentIndex()");
         return (childIndex - 1) / 2;
     }
-    ///**
-    // * Adds placeholder nodes so that the arraylist doesn't complain about empty indicies
-    // */
-    //private void insertPlaceholders(int index) {
-    //    Debug.println("insertPlaceholders: " + index);
-    //    int delta = index - lastIndex();
-    //    for (int i = 1; i <= delta; i++) {
-    //        //Is null a valid element?
-    //        arrayList.add(new TreeNode<E>(null));
-    //    }
-    //}
-    ///**
-    // * Currently, we're defining placeholders as nodes with null elements
-    // */
-    //private boolean isPlaceholder(TreeNode<E> treeNode) {
-	//	Debug.println("BinaryTree.isPlaceholder()");
-    //    if (treeNode.element() == null) {
-    //        return true;
-    //    } else {
-    //        return false;
-    //    }
-    //}
-    //private boolean isLegalNode(TreeNode<E> treeNode) {
-	//	Debug.println("BinaryTree.isLegalNode()");
-    //    if (treeNode != null &&
-    //        !isPlaceholder(treeNode)
-    //    ) {
-    //        return true;
-    //    } else {
-    //        return false;
-    //    }
-    //}
-    //private TreeNode<E> getLegalNode(int index) {
-	//	Debug.println("BinaryTree.getLegalNode()");
-    //    if (index <= lastIndex()) {
-    //        TreeNode<E> node = arrayList.get(index);
-    //        if (isLegalNode(node)) {
-    //            return node;
-    //        } 
-    //    } 
-    //    return null;
-    //}
     public String toString() {
         Debug.println("BinaryTree.toString()");
         StringBuilder sb = new StringBuilder();
