@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import com.cbthinkx.util.Debug;
 public class HashTest {
+	//private static boolean VERBOSE = true;
 	private static boolean VERBOSE = false;
 	private static DecimalFormat df = new DecimalFormat("#,##0");
 	public HashTest() {
@@ -49,33 +50,52 @@ public class HashTest {
 		}
 
 		// your code goes here
+        int hashCode = word.hashCode();
 
-		return 0;
+		return hashCode;
 	}
 	private static boolean chcFirst = true;
 	public int compressHashCode(int hashCode) {
 
 		// MAD Method
 
-		int N = 0; // you pick
-		int p = 0; // you pick
-		int a = 0; // you pick
-		int b = 0; // you pick
+		//int N = array.length; // prime. capacity?
+		int N = 79;
+		int p = 83; // prime.
+		int a = 2; // multiplication constant, 'make room'. 
+                   // a < p, a != 0, [0..p-1] 
+		int b = 0; // shift
+                   // b < p, [0..p-1] 
 
 		if (chcFirst) {
 			System.out.println();
 			System.out.println("<Compress HashCode>");
 			System.out.println("         N:" + rightJustify(N, 17));
-			System.out.println("         p:" + rightJustify(a, 17));
-			System.out.println("         a:" + rightJustify(N, 17));
-			System.out.println("         b:" + rightJustify(a, 17));
+			System.out.println("         p:" + rightJustify(p, 17));
+			System.out.println("         a:" + rightJustify(a, 17));
+			System.out.println("         b:" + rightJustify(b, 17));
 			System.out.println();
 			chcFirst = false;
 		}
 
-		// your code goes here
+        //from forum:
+        //(a*hashcode + b) mod p mod N
+        //p and n are prime
+        //p > N
+        //a,b < p
+        //a,b are between 0[..p-1]
+        //a != 0
 
-		return 0;
+        //hash(key) = ( a * key + b ) % tableSize
+
+        //From book:
+        //((hashcode * scale + shift) % prime) % capacity
+
+        //Multiply-Add-Divide
+        //h(k) = |ak + b| mod N
+
+        int index = ((a * hashCode) % p) % N;
+		return index;
 	}
 	public void displayHashCodeCollisionCount() {
 		Debug.println("HashTest.displayHashCodeCollisionCount");
