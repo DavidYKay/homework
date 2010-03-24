@@ -21,9 +21,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `beds` (
-    `bedID`      int     (4)          NOT NULL,
-    `patientSSN` int     (9) unsigned NOT NULL,
-    `vacant`     tinyint (1)          NOT NULL,
+    `bedID`      int     (4)          NOT NULL AUTO_INCREMENT,
+    `patientSSN` int     (9) unsigned DEFAULT NULL, --NULL so we can have empty beds
+    `vacant`     tinyint (1)          NOT NULL, --Remove this
     `roomNum`    int     (4)          NOT NULL,
     KEY `roomNum` (`roomNum`),
     PRIMARY KEY  (`bedID`),
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `bills` (
 --
 
 CREATE TABLE IF NOT EXISTS `doctors` (
-    `doctorID`   int  (4 )   unsigned NOT NULL,
+    `doctorID`   int  (4 )   unsigned NOT NULL AUTO_INCREMENT,
     `firstName`  char (30)            NOT NULL,
     `lastName`   char (20)            NOT NULL,
     `DO/MD`      int  (4 )   unsigned NOT NULL,
@@ -74,14 +74,8 @@ CREATE TABLE IF NOT EXISTS `doctors` (
 CREATE TABLE IF NOT EXISTS `insurance` (
     `insuranceID` int(4) unsigned NOT NULL,
     `companyName` varchar(20)     NOT NULL,
-    `patientSSN`  int(9) unsigned NOT NULL,
-    `covered`     tinyint(1)      NOT NULL,
-    `price`       float unsigned  NOT NULL,
     PRIMARY KEY  (`insuranceID`),
-    FOREIGN KEY (`patientSSN`) REFERENCES patients (`patientSSN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 
 -- --------------------------------------------------------
 
@@ -122,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `procedure` (
     `date`           int(4) unsigned NOT NULL,
     `patientSSN`     int(9) unsigned NOT NULL,
     `completed`      tinyint(1)      NOT NULL,
-    `procedureNAME`  char(15)        NOT NULL,
+    `procedureName`  char(15)        NOT NULL,
     PRIMARY KEY  (`procedureID`),
     FOREIGN KEY (`doctorID`) REFERENCES doctors (`doctorID`),
     FOREIGN KEY (`patientSSN`) REFERENCES patients (`patientSSN`)

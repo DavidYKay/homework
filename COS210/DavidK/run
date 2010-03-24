@@ -1,4 +1,4 @@
 #ant rund
 #ant run
-ant
+#ant
 java -classpath .:build/classes edu.mccc.cos210.hash.HashTest $1 $2 $3 $4
