@@ -1,0 +1,119 @@
+M-N with attributes
+    Soft connections
+
+anager subordinate
+    Supervises
+
+Assoc Entity types for m-way relationships
+    Example:
+        Part 
+        Supplier
+        Project
+            These all depended on the Uses
+                Therefore, use solid lines
+        Uses
+            Associative entity type
+
+    Example 2:
+        Enrollment Registers Student
+        Enrollment Grants Offering
+        Attendance RecordedFor Enrollment 
+Replace M-N
+    
+Generalization Hierarchies
+    Employee
+    SalaryEmp
+    HourlyEmp
+
+Inheritance
+    Direct/indirect
+    inherit attributes from parent
+
+Constraints
+    Disjointness Constraint
+    Completeness Constraint
+
+Business Rules
+    Formal representation in ERD
+    Informal representation in documentation associated with an ERD
+
+Formal Representation
+    Primary key constraints -- main way of identifying business entities
+    Named relationships -- direct connetions between entitites
+    Identification dependency: knowledge of other entities for identification
+    Cardinalities: restrict num of related entities in a business situation
+        M-N?
+    Generalization hierarchies: classification of entities and organizational policies
+
+Informal Representation
+    Candidate key constraints
+    Reasonable values  - fixed collection of values or consistent with another attribute
+    Null value constraints: enforces completeness
+    Default values -- help to shorted data entry
+
+Diagram rules
+    Similar syntax rules to prog langages
+    Completeness rules
+    Consistency: no conflicts
+Completeness rules
+    PK Rule: all entities have a PK (direct, indirect, inherited)
+    Naming rule: Name entities consistently
+    Cardinality rule: cardinality specified in both directions
+    Entity participation rule: All entities participate in at least one relationship
+    ---
+
+Primary Key Rule
+    For some weak entities, the PK rule is subtle:
+        weak entity with 1-M 
+        Weak entity must have local key to augment borrowed PK from parent entity type
+        in Violation of PK rule if local key is missing
+
+Naming consistency rules
+    Inherited attribute rule: att names don't match inherited names
+
+relationship names
+    no uniqueness requirement
+    Participating entities provide context for relationship names
+
+Connection consistency rules
+    Relationship/Entity Connection Rule
+        Relationships conect TWO entity types (can be the same one)
+    Relationship/relationship Connection 
+
+Identification Dependency Rules
+    Weak entity rule
+    Indentifying relationship rule
+    Identification
+
+Redundant Foreign Key Rule
+    ---
+
+Chen ERD Notation
+    Course::CourseNo O:N -- Has -- 1:1 Offering::OfferNo
+
+UML
+    Standard notation for object-oriented modeling
+    Class diagrams, interface diagrams, and interaction diagrams
+    more complex than ERD notation
+    Can show (weak) association class with a dotted line, T-junction to strong relationship
+
+Generalization Relationship
+    Undergrad Graduate both point to Student 
+        Student is a generalization relationship
+
+Composition Relationship
+    Order has-a OrderLine
+
+Summary
+    Data modeling is an important skill
+    Crow's foot ERD notation is widely used
+    Use notation precisely
+    Use diagram rules to ensure structural consistency and completeness
+    Understanding ERD notation is a prereq to applying the notation on business problems
+
+Powerpoint
+    Due next week
+    ERD Diagram
+    Show the PK/FK
+    Show the joins!
+
