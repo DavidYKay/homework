@@ -1,0 +1,14 @@
+Ordered Binary tree methods
+    treenode add(element)
+    element remove()
+
+HEAP Methods
+    insert(key, element)
+        remember to bubble up
+    remove()
+        always removes the root
+        -Always put the last child in root after removing root
+        -Then bubble down
+            Pick the one with the lowest priority
+            Swap
+            Repeat

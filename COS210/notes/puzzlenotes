@@ -1,0 +1,36 @@
+Yellow highlight as mouse over
+Red highlight when clicked
+
+Assemble the picutre as quick as possible
+
+Coding: think about it and what's going on
+
+JFrame - fixed size
+
+Slice the photo into little squares
+
+intercept mouse clicks
+figure out which square we're in
+capture mousedown/mouseup
+
+Could be a gridlayout
+could be painting directly on a JPAnel
+
+What if the image isn't exactly divisble?
+    Center the image, make it as big as we can, minus some margin
+
+Mission one:
+    Code in place to get a JFrame up
+
+    eventqueue
+        invokelater
+            runnable
+
+Mission two:
+Get Jpanel we can draw on
+    mjp - passing num boxes x, num boxes y
+
+loadImage
+    Doesn't make any sense to continue without the image
+
+Set images by truncating anything less than SIDE

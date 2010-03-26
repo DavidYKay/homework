@@ -1,0 +1,20 @@
+Jump off:
+    JTable
+    CellEditor
+
+ignore:
+    printmode
+    
+final result:
+    1 extra column
+        called portion
+        display: (int) portionDefault + portionDisplayName
+    Calories have been fixed to real calories
+        actual calories = calories * portionDefault / portionAmount
+    Window a bit bigger
+    Columns three different sizes
+        -So that they're nice
+    Search now searches the food column, only
+    Calories are editable 
+        -Just for this session, not permanently
+        -Keep in mind it's still a double value, not an int
