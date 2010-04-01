@@ -1,0 +1,12 @@
+18.2
+    Perform integer divisions
+    Throw numberFormat Exception if either is not an int
+    Throw ArithmeticException if num2 is zero
+18.3
+    Array with 100 random ints
+    create text field to enter array index, another to show the array element
+    Show element button
+        display 'out of bound' if index is out of bounds
+18.8
+    Custom Exception called HexFormatException. implement parseHex 
+    public static int parseHex throws HexFormatException
