@@ -1,0 +1,84 @@
+Binary IO
+
+Serializing data/objects
+
+File Class
+    Represents both FILES and DIRECTORIES
+    Most basic
+        Wraps the File Descriptor of any file on disk
+    Contains all info about file
+    Doesn't allow write to file
+
+    Absolute Path
+        May use unix syntax for everything
+    Canonical Path
+        C:\COS210\file.jva
+        /home/dk/cos210/file.java
+
+
+Basic IO
+    Easy to use
+        high level
+    Fundamental to programming
+        not the most primitive
+    Writing:
+        PrintWriter, Scanner
+
+Constructors:
+    PrintWriter writer = new PrintWriter("file.txt");
+
+    File file = new File("file.txt");
+    PrintWriter writer = new PrintWriter(file);
+
+Tip:
+    Use FileInputStream as argument to scanner constructor
+        Can scan a binary file for specific data
+    Can use FileOutputStream as agument to PrintWriter
+        Can now append text to end of another file
+
+DataInputStream / DataOutputStream
+    Both FilteredStreams
+
+writeBytes
+    Only writes the low order byte of the unicode
+    effectively changes unicode to ascii
+
+writeChars
+    Writes the string as a sequence of 16-bit unicode characters.
+
+writeUTF
+    outputs UTF-8
+
+UTF-8
+    <= 0x7F
+        One byte, leading zero
+
+    <= 0x7FF
+        Stored in 2 bytes
+        Marked by: leading 110
+
+    > 0x7FF
+        Stored in 3 bytes
+        Marked by: leading 1110
+
+BufferedInputStream
+    512Byte default size
+    BufferedInputStream will read as much as possible and have it ready on the buffer
+
+BufferedOutputStream won't write data until buffer is full or the programer calls the flush method
+
+Tips:
+    Wrap FileXStream with BufferedXStream and good to go!
+    ALWAYS use BufferedStream in networkedIO
+
+ObjectInputStream / ObjectOutputStream
+    write whole Objects to a file
+    state can be loaded later
+
+
+HOMEWORK:
+---------------------------
+19.11 Splitting files
+19.12 Combining files
+
+19.20 Binary editor
