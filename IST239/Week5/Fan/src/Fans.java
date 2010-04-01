@@ -3,21 +3,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Fans {
+public class Fans extends JApplet {
     private static final int NUM_FANS = 3;
 
     private ArrayList<FanControlPanel> fans;
 
-	public static void main(String[] args) {
-		new Fans().test();
-	}
+    public void init() {
 
-	public void test() {
-		JFrame frame = new JFrame();
-		frame.setTitle("Fans");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());
 
         JPanel fansPanel = new JPanel();
         fansPanel.setLayout(new GridLayout(1, 3));
@@ -30,7 +23,7 @@ public class Fans {
             fansPanel.add(fan);
         }
 
-		frame.add(
+		this.add(
             fansPanel,
             BorderLayout.CENTER
         );
@@ -60,12 +53,23 @@ public class Fans {
         );
 
         buttonPanel.add(stopButton);
-		frame.add(
+		this.add(
             buttonPanel,
             BorderLayout.SOUTH
         );
+        
+		//this.pack();
+    }
 
-		frame.pack();
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setTitle("Fans");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+        frame.setSize(1024, 600);
+        Fans applet = new Fans();
+        frame.add(applet);
+        frame.pack();
 		frame.setVisible(true);
 	}
 }

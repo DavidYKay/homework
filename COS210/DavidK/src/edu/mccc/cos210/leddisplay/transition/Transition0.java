@@ -2,13 +2,8 @@ package edu.mccc.cos210.leddisplay.transition;
 import edu.mccc.cos210.leddisplay.*;
 import com.cbthinkx.util.Debug;
 
-import java.awt.Graphics.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.font.*;
 import java.util.*;
-
-public class Transition0 extends LEDDisplayTransition {
+public class Transition0 extends DKTransition {
     private static final int FLASH_TIME = 100;
     private static final int NUM_FLASHES = 3;
 	public void go(LEDDisplayView view, LEDDisplayView.LED[][] leds) {
@@ -16,24 +11,21 @@ public class Transition0 extends LEDDisplayTransition {
 
         flashLEDs(view);
 
-        //String toWrite = getData();
-        String toWrite = "Kento!";
-        LinkedList<boolean[][]> bitmaps = new LinkedList<boolean[][]>();
+        LinkedList<Drawable> bitmaps = getWordDrawableList();
+        int wordLength = getWordLength(bitmaps);
         /** Measures the length of the word in pixels */
-        int wordLength = 0;
-        for (char character : toWrite.toCharArray()) {
-            Letter letter = new Letter(character);
-            boolean[][] bmp = letter.getBitmap();
-            bitmaps.add(bmp);
-            wordLength += bmp.length;
-        }
+
+        Drawable blitter = new Drawable(
+            new boolean[leds.length][leds[0].length]
+        );
+        //Offset to center bitmap in frame
         int offset = (leds[0].length - wordLength) / 2;
-        Blitter blitter = new Blitter(leds, 0);
         blitter.incrementOffset(offset, 0);
 
-        for (boolean[][] bmp : bitmaps) {
-            blitter.blitBitmap(bmp);
+        for (Drawable blittable : bitmaps) {
+            blitter.blitBitmap(blittable.getBitmap());
         }
+        blitter.blitToBoard(leds);
 
 		try {
             Thread.sleep(3000);

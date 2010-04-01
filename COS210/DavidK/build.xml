@@ -1,9 +1,13 @@
-<project name="LED" default="compile">
-    <property name="src"     location="src/edu/mccc/cos210/leddisplay"/>
+<project name="hash" default="compile">
+    <property name="src"     location="src/edu/mccc/cos210/${ant.project.name}"/>
+    <property name="binarysrc"     location="src/edu/mccc/cos210/binarytree"/>
+    <property name="prioritysrc"   location="src/edu/mccc/cos210/priorityqueue"/>
+    <property name="heapsrc"   location="src/edu/mccc/cos210/heap"/>
     <property name="build"   location="build"/>
     <property name="classes" location="${build}/classes"/>
     <property name="dist"    location="dist"/>
-    <property name="classpath"  value="${build}/jar/${ant.project.name}}.jar:.:${classes}" />
+    <property name="classpath"  value="${build}/jar/${ant.project.name}.jar:${classes}:.:.." />
+    <property name="executable"  value="HashTest" />
 
     <target name="clean">
         <delete dir="${build}"/>
@@ -12,11 +16,10 @@
     <target name="compile">
         <mkdir dir="${classes}"/>
         <javac srcdir="${src}" destdir="${classes}" debug="true">
-            <compilerarg value="-g"/>
-            <!--
             <compilerarg value="-Xlint:all"/>
-            <compilerarg value="-Xlint"/>
-            -->
+            <classpath>
+                <pathelement path="${classpath}" />
+            </classpath>
         </javac>
     </target>
 
@@ -24,14 +27,14 @@
         <mkdir dir="${build}/jar"/>
         <jar destfile="${build}/jar/${ant.project.name}}.jar" basedir="${classes}">
             <manifest>
-                <attribute name="Main-Class" value="NBody"/>
+                <attribute name="Main-Class" value="${executable}"/>
             </manifest>
         </jar>
     </target>
 
     <target name="run" depends="compile">
         <java 
-            classname="edu.mccc.cos210.leddisplay.LEDDisplayTest"
+            classname="edu.mccc.cos210.${ant.project.name}.${executable}"
             classpath="${classpath}"
             fork="true" >
         </java>
@@ -39,7 +42,7 @@
 
     <target name="rund" depends="compile">
         <java 
-            classname="edu.mccc.cos210.leddisplay.LEDDisplayTest"
+            classname="edu.mccc.cos210.${ant.project.name}.${executable}"
             classpath="${classpath}"
             fork="true" >
 
@@ -54,13 +57,29 @@
     </target>
 
     <target name="debug" depends="compile">
+        <java 
+            classname="edu.mccc.cos210.${ant.project.name}.${executable}"
+            classpath="${classpath}"
+            fork="true" >
+
+            <sysproperty 
+                key= "com.cbthinkx.debug" 
+                value= "true" />
+            <arg value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y" />
+            <!--
+                <arg value="MommasBadBoy" />
+                <arg value="-Dcom.cbthinkx.debug" />
+            -->
+        </java>
+    </target>
+    <!--
+    <target name="debug" depends="compile">
          <property name="executable-full-path"
              location="/usr/bin/jdb"/>
          <exec executable="${executable-full-path}">
-             <arg value="-sourcepath ./src/" />
-             <arg value="-classpath .:build/classes" />
-             <arg value="edu.mccc.cos210.leddisplay.LEDDisplayTest"/>
+             <arg value="edu.mccc.cos210.${ant.project.name}.${executable}"/>
+             <arg value="-classpath build/classes:." />
          </exec>
-
-    </target>
+     </target>
+     -->
 </project>

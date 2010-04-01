@@ -1,0 +1,106 @@
+1. Why is creating a table like a chapter of book?
+    Creating a table is like writing a chapter of a book because a Table has a heading and a body. The heading is like the cover, or introduction of the book, and the body is akin to the content and story.
+    
+2. Terminology most comfortable?
+    Entity, relationship, table, row, column.
+
+3. primary vs candidate key
+    A candidate key is a minimal superkey (must be column-unique), while a primary key is a candidate key that cannot be null. The primary key is commonly used to index the table.
+4. candidate vs superkey
+    A candidate key is a 'minimal' superkey. This means that if one removes any column from the candidate key, the row will no longer be unique.
+5. Null values represent either empty, unavailable, or corrupt data. They are not equivalent to a zero, which IS a number. They are similar to the 'empty set' in mathematics.
+6. Motivation for entity integrity rule
+    Entity integrity ensures that entities (people, things, events) are uniquely identified in the database. It's important that these entities be traceable for auditing, security, and communication reasons.
+7. Motivation for referential integrity rule?
+    The referential integrity rule ensures that data in one table refers properly to data in another table. This reduces the chance of synchronization problems, where one table may be referring to obsolete or missing data.
+8. Relationship between referential integrity rule nad foreign keys?
+    Foreign keys are used to enforce the referential integrity rule.
+9. How are Candidate keys that are not primary keys indicated in the CREATE TABLE statement
+    "CONSTRAINT X Y", for example, "CONSTRAINT FKSSN FOREIGN KEY (FacSSN) REFERENCES Faculty"  or "CONSTRAINT UniuqeDesc UNIQUE (Desc)"
+10. What is the advantage of using constraint names when defining primary key, candidate key, and referential integrity constraints in CREATE TABLE statements
+        Using constraint names is important because they represent the referential integrity relationships between entitities.
+11. When is it not permissible for foreign keys to store null values
+    When a foreign key is part of a primary key, null values are not permitted.
+
+12. pupose of a database diagram such as the Access Relationship window
+
+13. How is a 1-M relationship represented in the Relational Model
+    By drawing a line from the "one" to the "many", and labeling the line with a "1" at the one, and an infinity sign on the side of the many.
+
+14. How is M-N relationship represented in the Relational Model
+    They are not directly represented in the Relational Model. To represent M-N, you need THREE tables. In the book's example, 'student' and 'offering' have an M-N relationship through table 'enrollment.'
+
+15. what is self-ref relationship
+    A self-referencing relationship is a relationship in which the foreign key refers to the smae table. Self-referencing relationships represent associations among members of the same set.
+
+16.  How is that represented in the Relational Model?
+    Self-referencing relationships are represented by a CONSTRAINT, similar to other referential integrity constraints. Example: On Table Faculty, where FacSuperVisor is the name of a supervisor, "CONSTRAINT FKFacSuperVisor FOREIGN KEY (FacSuperVisor) REFERENCES Faculty" -- this creates a new constraint, which references its OWN TABLE!
+
+17. What is a referenced row
+    A referenced row is a row where the parent table has primary key values identical to the foreign key values in the child table.
+
+18. What two actions on referenced rows can affect related rows in a child table?
+    Deleting and updating.
+
+19. What are the possible actions on related rows after a referenced row is deleted or its primary key is updated?
+    Restrict: Do not allow the action to occur.
+    Cascade: Perform the same action (cascading) on related rows.
+    Nullify: Set foreign key values to null.
+    Default: Set foreign key rows to default values.
+
+20. Why is the restrict action for referenced rows more common than the cascade action?
+    Because Restrict prevents potentially nasty situations from occuring (it maintains data integrity), nullify and default have potentially confusing side effects (orphaning data), and cascade has arguably the most powerful side effects, since it will cascade down the line and wipe out all the related rows.
+
+21. When is the nullify action not allowed?
+    It's not permitted when the foreign key does not allow null values.
+
+22. Why study the operators of relational algebra?
+    Because they are the foundations of information retrieval, derived from set theory, and help understand what actually goes on during a query.
+
+23. Why are the restrict and the project operators widely used?
+    Because they are used to subset a table of data, and it's rare for the user to want to see a complete table.
+
+24. Explain how the union, intersection, and difference operators for tables differ from the traditional operators for sets
+    In traditional sets, the difference operator produces the non-intersecting items from BOTH A and B. Difference(A,B) = Union(A,B) - Intersection(A,B). In tables, Intersection only produces items in the first table -- Difference(A,B) = Union(A,B) - B.
+
+25. Why is the join operator so important for retrieving useful information?
+    Because it allows us to combine rows from two tables! This is vital for relational data.
+
+26. What is the relationship between join and extended cross product?
+    An extended cross product shows us all of the possible joins between two tables.
+
+27. Why is the extended cross product used sparingly?
+    Because it's rare to want to see ALL combinations of rows from two different tables. A join only matches on a condition involving a column from each table.
+
+28. What happens to unmatched rows with the join operator?
+    They are not selected.
+
+29. What happens to unmatched rows with the full outer join operator?
+    They are selected, but null values are inserted to complete non-matching rows.
+
+30. Difference between full outer join and one-sided outer join
+    A full outer join shows both matching and nonmatching rows from both tables, while a one-sided outer join only maintains non-matching rows from ONE table.
+
+31. Define decision-making situation that may require summarize operator
+    In situations where you want to find the sum or average of many rows, summarize is very useful. For example, you may want to add up your revenues at the end of the year -- to do so, you may want to sum your revenues using the summarize operator.
+
+32. What is an aggregate function?
+    An aggregate function, such as sum, max, min, avg, is used mainly in conjunction with the summarize operator to calculate a single value from many rows.
+
+33. How are grouping columns used in the summarize operator?
+    Grouping columns are used to provide a single row for the many that are replaced. That is, in the grade example on p63, the many different columns in the enrollment table have been replaced by only two columns: the result from summarize (average grade), and the grouping column (StdNo).
+
+34. Why is the divide operator not as widely used as the join operator?
+    Divide is not used as much as join because divide requires you to specify the elements which you are NOT interested in.
+
+35. What are the requirements of union compatibility?
+    Input tables must have the same number of columns and each corresponding column must have a compatible data type.
+
+36. requirements of the natural join operator?
+    Matching condition is equality, one of the join columns is removed, and the join columns have the same unqualified name.
+
+37. Why is natural join widely used for combining tables?
+    Natural join is widely used because it provides a very simple way to consistently map relational data from one table to another. 
+
+38. How to visual tools facilitate the formulation of join operations?
+    Visual tools can assist in visualizing the relationships between different tables, which can make it easier to plan and implement join operations.

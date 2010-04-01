@@ -1,7 +1,4 @@
-#./compileCar
-#./car
-#./compile shifter
-#./shifter
-#./card
-./compile dddial
-./doit
+#ant rund
+#ant run
+#ant
+java -classpath .:build/classes edu.mccc.cos210.hash.HashTest $1 $2 $3 $4

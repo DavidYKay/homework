@@ -10,9 +10,9 @@ import java.awt.Graphics.*;
 import java.awt.geom.*;
 import java.awt.font.*;
 
+//public class Letter extends Drawable {
 public class Letter {
     private static final int HEIGHT = 10;
-    private boolean[][] bitmap;
 
     private static BufferedImage font;
     static {
@@ -28,91 +28,22 @@ public class Letter {
     }
     //if (font.getRGB(x, y) == -1) { }
 
-    public Letter(char letter) {
+    public static Drawable makeLetterWithChar(char letter) {
+        boolean[][] bitmap = null;
         switch (letter) {
-            case 'i':
-                bitmap = new boolean[1][HEIGHT];
-                for (int i = 0; i < bitmap.length; i++) {
-                    for (int j = 0; j < HEIGHT; j++) {
-                        switch (j) {
-                            case 0:
-                            case 1:
-                            case 3:
-                                break;
-                            default:
-                                bitmap[i][j] = true;
-                        }
-                    }
-                }
-                break;
-
-            case 'A':
-                bitmap = new boolean[8][HEIGHT];
-                for (int i = 0; i < bitmap.length; i++) {
-
-                    switch (i) {
-                        case 0: 
-                        case 7: 
-                            for (int j = 8; j < 10; j++) {
-                                bitmap[i][j] = true;
-
-                                if (bitmap[i][j]) {
-                                    System.out.print(1);
-                                } else {
-                                    System.out.print(0);
-                                }
-                            }
-                            break;
-                        case 1: 
-                        case 6: 
-                            for (int j = 5; j < 8; j++) {
-                                bitmap[i][j] = true;
-
-                                if (bitmap[i][j]) {
-                                    System.out.print(1);
-                                } else {
-                                    System.out.print(0);
-                                }
-                            }
-                            break;
-                        case 2: 
-                        case 5: 
-                            for (int j = 2; j < 6; j++) {
-                                bitmap[i][j] = true;
-
-                                if (bitmap[i][j]) {
-                                    System.out.print(1);
-                                } else {
-                                    System.out.print(0);
-                                }
-                            }
-                            break;
-                        case 3: 
-                        case 4: 
-                            bitmap[i][0] = true;
-                            bitmap[i][1] = true;
-                            bitmap[i][5] = true;
-                            break;
-                        //default:
-                    }
-                    System.out.println();
-                }
+            case ' ':
+                bitmap = new boolean[1][4];
                 break;
             default:
-                //Look up based on char index
-                bitmap = getBitmapFromFont(letter);
+                bitmap = getDrawableFromFont(letter);
         }
-    }
-
-
-    public boolean[][] getBitmap() {
-        return bitmap;
+        return new Drawable(bitmap);
     }
 
     /**
      * Attempt to programatically generate font bitmaps
      */
-    private void getGlyph() {
+    private static void getGlyph() {
         AffineTransform at = new AffineTransform();
         Font font = new Font(
             "Dialog",
@@ -126,7 +57,6 @@ public class Letter {
         );
 
         //String input = "Hello World";
-        //String input = "ABC";
         String input = "A";
         GlyphVector gv = font.createGlyphVector(
             frc,
@@ -152,21 +82,85 @@ public class Letter {
 
         }
     }
-    private boolean[][] getBitmapFromFont(char letter) {
-        //if (track.getRGB(x, y) == -1) { }
+    //private boolean[][] getDrawableFromFont(char letter) {
+    private static boolean[][] getDrawableFromFont(char letter) {
         int offset = 9 * letter;
         
         final int width = 8;
-        boolean[][] bitmap = new boolean[width][HEIGHT];
-        for (int i = 0; i < width; i++) {
-            int x = offset + i;
-            for (int j = 0; j < HEIGHT; j++) {
-                int y = j;
+
+        boolean[][] bitmap = new boolean[HEIGHT][width];
+        for (int i = 0; i < HEIGHT; i++) {
+            int y = i;
+            for (int j = 0; j < width; j++) {
+                int x = offset + j;
                 if (font.getRGB(x, y) == -1) { 
                     bitmap[i][j] = true;
                 }
             }
         }
+
+        bitmap = trimWhiteSpace(bitmap);
         return bitmap;
+    }
+    private static boolean[][] trimWhiteSpace(boolean[][] bitmap) {
+        boolean[][] newBmp;
+        int leftBound = 0;
+        int rightBound = bitmap[0].length - 1;
+
+    leftSearch:
+        for (int j = 0; j < bitmap[0].length; j++) {
+            for (int i = 0; i < bitmap.length; i++) {
+
+                int y = i;
+                int x = j;
+                //once we find a black dot, we know where the starting point is
+                //if (font.getRGB(x, y) == -1) { 
+                if (bitmap[i][j]) { 
+                    leftBound = x;
+                    break leftSearch;
+                }
+            }
+        }
+
+    rightSearch:
+            for (int j = bitmap[0].length - 1; j >= 0; j--) {
+                for (int i = bitmap.length - 1; i >= 0; i--) {
+                //once we find a black dot, we know where the ending point is
+                int y = i;
+                int x = j;
+                //if (font.getRGB(x, y) == -1) { 
+                if (bitmap[i][j]) { 
+                    rightBound = x;
+                    break rightSearch;
+                }
+            }
+        }
+        int width = 1 + rightBound - leftBound;
+
+        //System.out.println(
+        //    String.format(
+        //        "rightBound: %d leftBound: %d bitmap.length: %d bitmap[0].length: %d WIDTH: %d",
+        //        rightBound,
+        //        leftBound,
+        //        bitmap.length,
+        //        bitmap[0].length,
+        //        width
+        //    )
+        //);
+
+        //Create new bitmap for the cropped area
+        newBmp = new boolean[bitmap.length][width];
+        //blit the contents over
+        Drawable blitter = new Drawable(newBmp);
+        blitter.incrementOffset(-leftBound, 0);
+        blitter.blitBitmap(
+            bitmap,
+            leftBound,
+            rightBound,
+            0,
+            bitmap.length - 1,
+            false
+        );
+        return newBmp;
     }
 }
