@@ -1,0 +1,39 @@
+<project name="SplitFiles" default="compile">
+    <property name="src"     location="src"/>
+    <property name="build"   location="build"/>
+    <property name="classes" location="${build}/classes"/>
+    <property name="classpath"  value=".:${classes}" />
+    <property name="executable"  value="SplitFiles" />
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes}"/>
+        <javac srcdir="${src}" destdir="${classes}" debug="true">
+            <compilerarg value="-g"/>
+            <!--
+            <compilerarg value="-Xlint:all"/>
+            <compilerarg value="-Xlint"/>
+            -->
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${build}/jar"/>
+        <jar destfile="${build}/jar/${ant.project.name}}.jar" basedir="${classes}">
+            <manifest>
+                <attribute name="Main-Class" value="NBody"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="compile">
+        <java 
+            classname="${executable}"
+            classpath="${classpath}"
+            fork="true" >
+        </java>
+    </target>
+</project>
