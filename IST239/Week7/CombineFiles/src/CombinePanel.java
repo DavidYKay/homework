@@ -3,8 +3,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 
-public class SplitPanel extends JPanel {
-	public SplitPanel() {		
+public class CombinePanel extends JPanel {
+	public CombinePanel() {		
         setLayout(
             new BorderLayout()
         );
@@ -27,12 +27,12 @@ public class SplitPanel extends JPanel {
         );
         cellPanel.add(numField);
 
-        JButton button = new JButton("Split Files");
+        JButton button = new JButton("Combine Files");
         button.addActionListener(
             new ActionListener() {
                 public void actionPerformed (ActionEvent e) {
                     System.out.println("ActionPerformed");
-                    splitFile(
+                    combineFile(
                         nameField.getText().trim(),
                         Integer.parseInt(numField.getText())
                     );
@@ -52,54 +52,40 @@ public class SplitPanel extends JPanel {
         //    BorderLayout.SOUTH
         //);
 	}
-    private void splitFile(String fileName, int numPieces) {
-        System.out.println("Filename: " + fileName);
-        System.out.println("numPieces: " + numPieces);
+
+    /**
+     * Combine file chunks into one binary
+     */
+    private void combineFile(String fileName, int numPieces) {
         //Create a file handle
         File file = new File(fileName);
-        //Check file length
-        long bytes = file.length();
-        long perChunk = bytes / numPieces;
-        //excess from rounding error
-        long excess = bytes % perChunk; 
-
+        System.out.println("Filename: " + fileName);
+        System.out.println("numPieces: " + numPieces);
+        
         //Read in the file
         //Split the file
         //Output the pieces
         try {
-            FileInputStream  fIn  = new FileInputStream(file);
+            FileOutputStream fOut = new FileOutputStream(file);
             //for each chunk
             for (int i = 1; i <= numPieces; i++) {
-                FileOutputStream fOut = new FileOutputStream(
+                FileInputStream fIn = new FileInputStream(
                     new File(
                         fileName + "." + i
                     )
                 );
-                for (long outPos = 0; outPos < perChunk; outPos++) {
-                    //write up until the end of this chunk
-                    fOut.write(
-                        fIn.read()
-                    );
+                int nextUnsignedByte = 0;
+                while ((nextUnsignedByte = fIn.read()) != -1) {
+                    System.out.println("Read " + nextUnsignedByte);
+                    fOut.write(nextUnsignedByte);
                 }
-                if (i == numPieces) {
-                    //on the last chunk, write in the excess bytes
-                    //for (long outPos = 0; outPos < excess; outPos++) {
-                    //    fOut.write(
-                    //        fIn.read()
-                    //    );
-                    //}
-                    int nextUnsignedByte = 0;
-                    while ((nextUnsignedByte = fIn.read()) != -1) {
-                        System.out.println("Read " + nextUnsignedByte);
-                        fOut.write(nextUnsignedByte);
-                    }
-                }
-                fOut.close();
+                fIn.close();
             }
-            fIn.close();
+            fOut.close();
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
         }
+        //return file;
     }
 
     //private void writeFile(File file, int pieceNum, long begin, long end) {
