@@ -60,13 +60,50 @@ public class SplitPanel extends JPanel {
         //Check file length
         long bytes = file.length();
         long perChunk = bytes / numPieces;
-        //Don't forget rounding error
+        //excess from rounding error
+        long excess = bytes % perChunk; 
 
         //Read in the file
         //Split the file
         //Output the pieces
+        try {
+            FileInputStream  fIn  = new FileInputStream(file);
+            //for each chunk
+            for (int i = 1; i <= numPieces; i++) {
+                FileOutputStream fOut = new FileOutputStream(
+                    new File(
+                        fileName + "." + i
+                    )
+                );
+                long endPos = i * perChunk;
+                for (long outPos = 0; outPos < endPos; outPos++) {
+                    //write up until the end position
+                    fOut.write(
+                        fIn.read()
+                    );
+                }
+                if (i == numPieces) {
+                    //on the last chunk, write in the excess
+                    //for (long outPos = 0; outPos < excess; outPos++) {
+                    //    fOut.write(
+                    //        fIn.read()
+                    //    );
+                    //}
+                    int nextUnsignedByte = 0;
+                    while ((nextUnsignedByte = fIn.read()) != -1) {
+                        System.out.println("Read " + nextUnsignedByte);
+                        fOut.write(nextUnsignedByte);
+                    }
+                }
+                fOut.close();
+            }
+            fIn.close();
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
     }
 
+    //private void writeFile(File file, int pieceNum, long begin, long end) {
     private void writeFile(File file) {
         try {
             FileOutputStream fOut = new FileOutputStream(file);
