@@ -75,8 +75,7 @@ public class SplitPanel extends JPanel {
                         fileName + "." + i
                     )
                 );
-                long endPos = i * perChunk;
-                for (long outPos = 0; outPos < endPos; outPos++) {
+                for (long outPos = 0; outPos < perChunk; outPos++) {
                     //write up until the end position
                     fOut.write(
                         fIn.read()
