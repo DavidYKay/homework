@@ -7,6 +7,7 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
     private static final int FAN_TICK = 5;
 
     private FanPanel fanPanel;
+    private FanThread fanThread;
     private Timer fanTimer;
     private boolean forwards;
     private JScrollBar scrollBar;
@@ -74,15 +75,19 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
             scrollBar.getValue(), 
             this
         );
+        fanThread = new FanThread(100);
+        fanThread.start();
     }
 
     public void startFan() {
         System.out.println("start fan!");
-        fanTimer.start();
+        //fanTimer.start();
+        fanThread.setRunning(true);
     }
     public void stopFan() {
         System.out.println("stop fan!");
-        fanTimer.stop();
+        //fanTimer.stop();
+        fanThread.setRunning(false);
     }
     public void reverseFan() {
         System.out.println("reverse fan!");
@@ -93,6 +98,7 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
      * Adjust the current fan angle
      */
     private void bumpFanAngle() {
+        System.out.println("bumping fan!");
         int newAngle;
         if (forwards) {
             newAngle = fanPanel.getCurrentAngle() + FAN_TICK;
@@ -129,11 +135,14 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
         private int delay;
         public FanThread(int delay) {
             this.delay = delay;
+            this.running = false;
         }
         public void run() {
             for (;;) {
                 if (running) {
                     //bump
+                    System.out.println("thread running!");
+                    bumpFanAngle();
                 } 
                 try {
                     sleep(delay);
@@ -144,6 +153,9 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
         }
         public void setDelay(int delay) {
             this.delay = delay;
+        }
+        public void setRunning(boolean running) {
+            this.running = running;
         }
     }
 }
