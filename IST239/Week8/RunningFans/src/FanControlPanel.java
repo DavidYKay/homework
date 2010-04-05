@@ -75,7 +75,9 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
             scrollBar.getValue(), 
             this
         );
-        fanThread = new FanThread(100);
+        fanThread = new FanThread(
+            scrollBar.getMaximum() - scrollBar.getValue()
+        );
         fanThread.start();
     }
 
@@ -122,7 +124,8 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
     public void adjustmentValueChanged(AdjustmentEvent e) {
         System.out.println("Adjusted!");
         //Set the timer speed to the INVERSE of the value
-        fanTimer.setDelay(
+        //fanTimer.setDelay(
+        fanThread.setDelay(
             scrollBar.getMaximum() - e.getValue()
         );
     }
