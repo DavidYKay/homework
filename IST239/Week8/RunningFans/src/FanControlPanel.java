@@ -3,12 +3,11 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class FanControlPanel extends JPanel implements ActionListener, AdjustmentListener {
+public class FanControlPanel extends JPanel implements AdjustmentListener {
     private static final int FAN_TICK = 5;
 
     private FanPanel fanPanel;
     private FanThread fanThread;
-    private Timer fanTimer;
     private boolean forwards;
     private JScrollBar scrollBar;
     public FanControlPanel() {
@@ -71,10 +70,6 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
             BorderFactory.createLineBorder(Color.BLACK)
         );
         
-        fanTimer = new Timer(
-            scrollBar.getValue(), 
-            this
-        );
         fanThread = new FanThread(
             scrollBar.getMaximum() - scrollBar.getValue()
         );
@@ -83,12 +78,10 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
 
     public void startFan() {
         System.out.println("start fan!");
-        //fanTimer.start();
         fanThread.setRunning(true);
     }
     public void stopFan() {
         System.out.println("stop fan!");
-        //fanTimer.stop();
         fanThread.setRunning(false);
     }
     public void reverseFan() {
@@ -111,20 +104,11 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
     }
 
     /**
-     * Called by the timer event
-     */
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("Timer event!");
-        bumpFanAngle();
-    }
-
-    /**
      * Called by the scrollbar event
      */
     public void adjustmentValueChanged(AdjustmentEvent e) {
         System.out.println("Adjusted!");
-        //Set the timer speed to the INVERSE of the value
-        //fanTimer.setDelay(
+        //Set the thread delay to the INVERSE of the value
         fanThread.setDelay(
             scrollBar.getMaximum() - e.getValue()
         );
@@ -143,7 +127,6 @@ public class FanControlPanel extends JPanel implements ActionListener, Adjustmen
         public void run() {
             for (;;) {
                 if (running) {
-                    //bump
                     System.out.println("thread running!");
                     bumpFanAngle();
                 } 
