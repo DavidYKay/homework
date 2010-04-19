@@ -13,7 +13,6 @@ import javax.swing.event.EventListenerList;
 import com.cbthinkx.util.Debug;
 public class ChatClient {
 	//private Map<String, User> users;
-    //
 
 	private DatagramSocket socket;
 	private InetAddress ipaddr;
@@ -112,7 +111,6 @@ public class ChatClient {
 	}
 	private void notifyListeners(String msg) {
 		Debug.println("ChatClient.notifyListeners()");
-		//ChatClientEvent e = new ChatClientEvent(this, msg);
 		ChatClientEvent e = new ChatClientEvent(this, msg);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {

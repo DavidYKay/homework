@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 public class ChatTest extends JPanel implements ChatClientListener {
     private ChatClient chatClient;
+    private JTextArea nameField;
     private JTextArea chatText;
     private JTextField inputField;
     public ChatTest() {
@@ -24,6 +25,30 @@ public class ChatTest extends JPanel implements ChatClientListener {
                     sendMessage();
                 }
             }
+        );
+        //Init name panel
+        JPanel namePanel = new JPanel();
+        namePanel.setLayout(
+            //new FlowLayout()
+            //new GridLayout(1, 2)
+            new BorderLayout()
+        );
+        namePanel.setBorder(
+            BorderFactory.createLineBorder(
+                Color.BLACK
+            )
+        );
+        namePanel.add(
+            new JLabel(
+                "Name: "
+            ),
+            BorderLayout.WEST
+        );
+        nameField = new JTextArea();
+        nameField.setRows(1);
+        namePanel.add(
+            nameField,
+            BorderLayout.CENTER
         );
 
         inputField = new JTextField();
@@ -47,6 +72,10 @@ public class ChatTest extends JPanel implements ChatClientListener {
             BorderLayout.CENTER
         );
 
+        add(
+            namePanel,
+            BorderLayout.NORTH
+        );
         add(
             chatText,
             BorderLayout.CENTER
