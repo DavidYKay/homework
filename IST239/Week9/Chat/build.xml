@@ -61,7 +61,7 @@
 
     <target name="serverd" depends="compile">
         <java 
-            classname="${basepackage}.${ant.project.name}.GameServer"
+            classname="${basepackage}.${ant.project.name}.ChatServer"
             classpath="${classpath}"
             fork="true" >
 

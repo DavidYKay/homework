@@ -12,16 +12,11 @@ import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import com.cbthinkx.util.Debug;
 public class ChatClient {
-	//private Map<String, User> users;
-
 	private DatagramSocket socket;
 	private InetAddress ipaddr;
-	private Pattern p;
     public ChatClient(String username, String ip) {
-		this.p = Pattern.compile(
-            "(.+):(.+)"
-        );
-
+        //Use a regular expression to break incoming message into NAME, MESSAGE
+        //Note that "hi:" and "bye:" are commands for log on, log off
 		try {
 			String hello = "hi:" + username;
 			this.ipaddr = InetAddress.getByName(ip);
@@ -37,25 +32,18 @@ public class ChatClient {
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
-
 		new Thread() {
 			public void run() {
 				Debug.println("Thread:run()");
 				try {
+                    //Sit around forever, waiting for packets
 					for (;;) {
 						DatagramPacket dp = new DatagramPacket(new byte[256], 256);
 						socket.receive(dp);
 						String msg = new String(dp.getData()).trim();
 						Debug.println(msg);
-						Matcher m = p.matcher(msg);
 						try {
-							m.find();
                             fireChatClientMessageReceived(msg);
-							//User user = users.get(m.group(1));
-							//user.setSpeed(
-							//	Double.parseDouble(m.group(2))
-							//);
-							//jp.repaint();
 						} catch (Exception ex) {
 							System.err.println(ex.getMessage());
 							System.err.println(msg);
@@ -67,7 +55,9 @@ public class ChatClient {
 			}
 		}.start();
     }
-
+    public void logOut() {
+        sendMessage("bye");
+    }
     public void sendMessage(String message) {
         try {
         this.socket.send(
@@ -82,6 +72,7 @@ public class ChatClient {
             System.err.println(ex.getMessage());
         }
     }
+    //Event Listener code copied from earlier MVC example
 	private EventListenerList listenerList = new EventListenerList();
 	public void addChatClientListener(ChatClientListener l) {
 		Debug.println("ChatClient.addChatClientListener()");

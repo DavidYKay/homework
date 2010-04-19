@@ -3,13 +3,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The actual client GUI. A ChatClient object is used to send/received messages from the server.
+ */
 public class ChatTest extends JPanel implements ChatClientListener {
     private ChatClient chatClient;
     private JTextArea nameField;
     private JTextArea chatText;
     private JTextField inputField;
+
     public ChatTest() {
         this.chatClient = new ChatClient(
+            //This should the the actual user name. Currently just dead weight
             "Bob",
             "127.0.0.1"
         );
@@ -89,16 +94,15 @@ public class ChatTest extends JPanel implements ChatClientListener {
             )
         );
     }
+
     public static void main(String[] sa) {
 		JFrame frame = new JFrame();
 		frame.setTitle("Chat Demo");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
-
         frame.add(
             new ChatTest()
         );
-
 		frame.pack();
 		frame.setVisible(true);
     }
@@ -107,6 +111,7 @@ public class ChatTest extends JPanel implements ChatClientListener {
         System.out.println("Message received!: " + e.getMessage());
         chatText.append(e.getMessage() + "\n");
     }
+
     private void sendMessage() {
         chatClient.sendMessage(
             nameField.getText() + ": " + inputField.getText()

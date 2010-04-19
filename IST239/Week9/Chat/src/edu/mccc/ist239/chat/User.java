@@ -2,7 +2,12 @@ package edu.mccc.ist239.chat;
 
 import java.net.*;
 
+/**
+ * This class represents a user, connected to the server.
+ * This information is useful in directing packets back to him/her.
+ */
 public class User {
+    //Not currently used
     private String name;
 	private InetAddress inetaddr;
 	private int port;
