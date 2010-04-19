@@ -16,7 +16,6 @@ public class CombinePanel extends JPanel {
 
         final JTextField nameField = new JTextField();
         final JTextField numField = new JTextField();
-        //final JLabel result = new JLabel();
 
         cellPanel.add(
             new JLabel("File name:")
@@ -47,10 +46,6 @@ public class CombinePanel extends JPanel {
             button,
             BorderLayout.SOUTH
         );
-        //add(
-        //    result,
-        //    BorderLayout.SOUTH
-        //);
 	}
 
     /**
@@ -85,10 +80,8 @@ public class CombinePanel extends JPanel {
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
         }
-        //return file;
     }
 
-    //private void writeFile(File file, int pieceNum, long begin, long end) {
     private void writeFile(File file) {
         try {
             FileOutputStream fOut = new FileOutputStream(file);
