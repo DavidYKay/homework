@@ -26,11 +26,8 @@ public class ChatTest extends JPanel implements ChatClientListener {
                 }
             }
         );
-        //Init name panel
         JPanel namePanel = new JPanel();
         namePanel.setLayout(
-            //new FlowLayout()
-            //new GridLayout(1, 2)
             new BorderLayout()
         );
         namePanel.setBorder(
@@ -112,7 +109,7 @@ public class ChatTest extends JPanel implements ChatClientListener {
     }
     private void sendMessage() {
         chatClient.sendMessage(
-            inputField.getText()
+            nameField.getText() + ": " + inputField.getText()
         );
         inputField.setText("");
     }
