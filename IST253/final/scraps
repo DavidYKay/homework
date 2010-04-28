@@ -1,0 +1,58 @@
+ alter table CUSTOMER_PRODUCT add foreign key (`SerPlanNo`) REFERENCES `SERVICE_PLAN` (`SerPlanNo`)
+ 
+ 
+alter table INVOICE_SERVICE add foreign key (`InvNo`) REFERENCES `INVOICE` (`InvNo`);
+alter table INVOICE_SERVICE add foreign key (`SerPlanNo`) REFERENCES `SERVICE_PLAN` (`SerPlanNo`);
+
+
+
+
+alter table TEST_RESULTS drop foreign key TEST_RESULTS_ibfk_1;
+alter table TEST_RESULTS drop foreign key TEST_RESULTS_ibfk_2;
+alter table TEST_RESULTS drop foreign key TEST_RESULTS_ibfk_3;
+
+alter table TEST_RESULTS ADD FOREIGN KEY (`ProdSerNo`) REFERENCES `PRODUCT` (`ProdSerNo`);
+alter table TEST_RESULTS ADD FOREIGN KEY (`DiagNo`) REFERENCES `DIAGNOSTIC` (`DiagNo`);
+
+alter table TEST_RESULTS ADD FOREIGN KEY (`PartNo`) REFERENCES `INVENTORY` (`PartNo`);
+
+
+alter table INVOICE ADD FOREIGN KEY (`CustomerAccountNo`) REFERENCES `CUSTOMER` (`CustomerAccountNo`);
+
+
+
+SELECT column_names
+FROM table_name1
+INNER JOIN table_name2
+ON table_name1.column_name=table_name2.column_name
+
+SELECT Customers.FirstName, Customers.LastName, SUM(Sales.SaleAmount) AS SalesPerCustomer
+FROM Customers, Sales
+WHERE Customers.CustomerID = Sales.CustomerID
+GROUP BY Customers.FirstName, Customers.LastName
+
+
+
+SELECT *
+FROM CUSTOMER, PRODUCT
+WHERE CUSTOMER.
+ON table_name1.column_name=table_name2.column_name
+
+
+USE pubs
+SELECT a.au_lname, a.au_fname, t.title
+FROM authors a INNER JOIN titleauthor ta
+   ON a.au_id = ta.au_id JOIN titles t
+   ON ta.title_id = t.title_id
+WHERE t.type = 'trad_cook'
+ORDER BY t.title ASC
+
+SELECT a.CustomerAccountNo, a.au_fname, t.title
+
+SELECT *
+FROM CUSTOMER c INNER JOIN CUSTOMER_PRODUCT cp
+   ON c.CustomerAccountNo = cp.CustomerAccountNo JOIN PRODUCT p
+   ON cp.ProdSerNo = p.ProdSerNo
+ORDER BY p.ProdSerNo ASC
+---WHERE p.type = 'trad_cook'
+
