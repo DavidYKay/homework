@@ -1,0 +1,326 @@
+﻿CREATE TABLE CUSTOMER 
+(CustomerAccountNo VARCHAR2(18) PRIMARY KEY, 
+CustomerLName VARCHAR2(20), 
+CustomerFName VARCHAR2(20), 
+CustomerAddress VARCHAR2(18), 
+CustomerCity VARCHAR2(20), 
+CustomerState VARCHAR2(20), 
+CustomerZip VARCHAR2(18), 
+CustomerPhone VARCHAR2(15)) 
+; 
+
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0022', 'Ortiz', 'Albert', '574 West Side Ave', 
+'Hamilton', 'NJ', '08612', '(609)414-2398'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0023', 'Haney', 'Liz', '34 Lake Drive', 
+'West Windsor', 'NJ', '08550', '(609)453-9812'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0024', 'Smith', 'Beverly', '12 Pleasant Ave', 
+'East Windsor', 'NJ', '08520', '(609)435-8756’); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0025', 'Gutch', 'Mary', '544 Fairfield Road', 
+'East Windsor', 'NJ', '08520', '(609)332-9864); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0026', 'Nolan', 'Dorothy', '25 Seaview Drive', 
+'Lawrenceville', 'NJ', '08648', '(609)339-1298'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0027', 'Pierce', 'Nancy', '23 Williams Ave', 
+'Trenton', 'NJ', '08550', '(732)763-6539'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0028', 'Nocera', 'Elizabeth', '43 Ferry Street', 
+'West Windsor', 'NJ', '08550', '(609)120-4343'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0029', 'Halter ', 'Kristen', '23 Maple Ave', 
+'Lawrenceville', 'NJ', '08648', '(609)482-8952'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0030', 'Patel', 'Crishten', '24 West Travel', 
+'Hamilton', 'NJ', '08612', '(609)225-5312'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0031', 'Morin', 'Tom', '877 Wesley Court', 
+'Ewing', 'NJ', '08638', '(609)448-2222'); 
+INSERT INTO CUSTOMER (CustomerAccountNo, CustomerLName, CustomerFName, CustomerAddress, 
+CustomerCity, CustomerState, CustomerZip, CustomerPhone) 
+VALUES ('0032', 'Sterling', 'Katie', '932 Montgomery St.', 
+'East Windsor', 'NJ', '08520', '(609)448-9812'); 
+Commit; 
+
+
+
+
+
+CREATE TABLE Product_Type 
+(CustomerAccountNo VARCHAR(18), 
+ProdType VARCHAR2(20), 
+SerPlanName VARCHAR2(20), 
+ProdSerNo VARCHAR(18), 
+SerPlanNo VARCHAR2(15), 
+SerPlanIssued DATE) 
+; 
+
+CREATE UNIQUE INDEX DIAGNOSTIC_NDX5 ON Product_Type(CustomerAccountNo, ProdType, ProdSerNo); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0022', 'Dryer', 'D2102', 'A02222', 'Monthly', to_date('2010-02-05','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0023', 'Refrigerator', 'R2102', 'C03333', 'Yearly', to_date('2009-11-17','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0024', 'Oven', 'O2102', 'B04444', 'Half-yearly', to_date('2009-06-19','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0025', 'Dishwasher', 'DW2104', 'B05555', 'Half-yearly', to_date('2009-07-10','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0026', 'Microwave', 'M2104', 'D06666', 'On-call', to_date('2010-04-15','YYYY-MM-DD')); INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0027', 'Stove', 'S2102', 'A07777', 'Monthly', to_date('2010-01-29','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0028', 'Dishwasher', 'DW2105', 'B05555', 'Half-yearly', to_date('2009-12-14','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0029', 'Microwave', 'M2105', 'A06666', 'Monthly', to_date('2010-04-16','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0030', 'Washer', 'W2105', 'A01111', 'Monthly', to_date('2010-03-21','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0031', 'Washer', 'W2106', 'A01111', 'Monthly', to_date('2010-02-28','YYYY-MM-DD')); 
+INSERT INTO Product_Type (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued) 
+VALUES ('0032', 'Dryer', 'D2103', 'A02222', 'Monthly', to_date('2010-01-14','YYYY-MM-DD')); 
+Commit; 
+
+
+
+
+
+
+
+CREATE TABLE DIAGNOSTIC 
+(CustomerAccountNo VARCHAR(18), 
+ProdSerNo VARCHAR(18), 
+ProdType VARCHAR2(20), 
+DiagBeginDate DATE, 
+DiagEndDate DATE, 
+DiagResult VARCHAR2(20)) 
+; 
+
+
+CREATE UNIQUE INDEX DIAGNOSTIC_NDX1 ON DIAGNOSTIC(CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0022', 'D2102', 'Dryer', to_date('2010-02-05','YYYY-MM-DD'), to_date('2010-02-05','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0022', 'D2102', 'Dryer', to_date('2010-03-05','YYYY-MM-DD'), to_date('2010-03-05','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0022', 'D2102', 'Dryer', to_date('2010-04-05','YYYY-MM-DD'), to_date('2010-04-05','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0023', ' R2102', 'Refrigerator', to_date('2009-11-17','YYYY-MM-DD'), to_date('2009-11-17','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0024', 'O2102', 'Oven', to_date('2009-06-19','YYYY-MM-DD'), to_date('2009-06-19','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0024', 'O2102', 'Oven', to_date('2009-12-19','YYYY-MM-DD'), to_date('2009-12-19','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0025', 'DW2104', 'Dishwasher', to_date('2009-07-10','YYYY-MM-DD'), to_date('2009-07-10','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0025', 'DW2104', 'Dishwasher', to_date('2010-01-10','YYYY-MM-DD'), to_date('2010-01-10','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0026', 'M2104', 'Microwave', to_date('2010-04-15','YYYY-MM-DD'), to_date('2010-04-15','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0027', 'S2102', 'Stove', to_date('2010-01-29','YYYY-MM-DD'), to_date('2010-01-29','YYYY-MM-DD'), 'F'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0027', 'S2102', 'Stove', to_date('2010-02-29','YYYY-MM-DD'), to_date('2010-02-29','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0027', 'S2102', 'Stove', to_date('2010-03-29','YYYY-MM-DD'), to_date('2010-03-29','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0028', 'DW2105', 'Dishwasher', to_date('2009-12-14','YYYY-MM-DD'), to_date('2009-12-14','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0029', 'M2105', 'Microwave', to_date('2010-04-16','YYYY-MM-DD'), to_date('2010-04-16','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0030', 'W2105', 'Washer', to_date('2010-03-21','YYYY-MM-DD'), to_date('2010-03-21','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0030', 'W2105', 'Washer', to_date('2010-04-21','YYYY-MM-DD'), to_date('2010-04-21','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0031', 'W2106', 'Washer', to_date('2010-02-28','YYYY-MM-DD'), to_date('2010-02-28','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0031', 'W2106', 'Washer', to_date('2010-03-28','YYYY-MM-DD'), to_date('2010-03-28','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-01-14','YYYY-MM-DD'), to_date('2010-01-14','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-02-14','YYYY-MM-DD'), to_date('2010-02-14','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-03-14','YYYY-MM-DD'), to_date('2010-03-14','YYYY-MM-DD'), 'P'); 
+INSERT INTO DIAGNOSTIC (CustomerAccountNo, ProdSerNo, ProdType, DiagBeginDate, DiagEndDate, DiagResult) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-04-14','YYYY-MM-DD'), to_date('2010-04-14','YYYY-MM-DD'), 'P'); 
+Commit; 
+
+
+
+
+
+
+CREATE TABLE INVOICE 
+(CustomerAccountNo VARCHAR(18), 
+InvNo VARCHAR(18), 
+SerPlanNo VARCHAR(18), 
+ProdType VARCHAR2(20), 
+InvDate DATE, 
+SalesTax NUMBER(10,2), 
+AmountDue NUMBER(10,2), 
+InvDueDate DATE) 
+; 
+
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0022', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'A02222', 'Dryer', 
+to_date('2010-02-05','YYYY-MM-DD'), '', '', to_date('2010-02-15','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0023', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'C03333', 'Refrigerator', 
+to_date('2009-11-17','YYYY-MM-DD'), '', '', to_date('2009-11-27','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0024', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'B04444', 'Oven', 
+to_date('2009-06-19','YYYY-MM-DD'), '', '', to_date('2009-06-29','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0025', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'B05555', 'Dishwasher', 
+to_date('2009-07-10','YYYY-MM-DD'), '', '', to_date('2009-07-20','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0026', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'D06666', 'Microwave', 
+to_date('2009-07-10','YYYY-MM-DD'), '', '', to_date('2009-07-20','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0027', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'A07777', 'Stove', 
+to_date('2010-01-29','YYYY-MM-DD'), '', '', to_date('2010-02-08','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0028', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'B05555', 'Dishwasher', 
+to_date('2009-12-14','YYYY-MM-DD'), '', '', to_date('2009-12-24','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0029', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'A06666', 'Microwave', 
+to_date('2010-04-16','YYYY-MM-DD'), '', '', to_date('2010-04-26','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0030', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'D01111', 'Washer', 
+to_date('2010-03-21','YYYY-MM-DD'), '', '', to_date('2010-03-31','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0031', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'A01111', 'Washer', 
+to_date('2010-02-28','YYYY-MM-DD'), '', '', to_date('2010-03-10','YYYY-MM-DD')); 
+INSERT INTO INVOICE (CustomerAccountNo, InvNo, SerPlanNo, ProdType, 
+InvDate, SalesTax, AmountDue, InvDueDate) 
+VALUES ('0032', 'InvNo'||to_CHAR(InvSeqNo.NEXTVAL), 'A02222', 'Dryer', 
+to_date('2010-01-14','YYYY-MM-DD'), '', '', to_date('2010-01-24','YYYY-MM-DD')); 
+Commit; 
+
+
+
+
+
+CREATE TABLE TEST_RESULTS 
+(CustomerAccountNo CHAR(18), 
+ProdSerNo VARCHAR(18), 
+ProdType VARCHAR2(20), 
+DiagResultDate DATE, 
+DiagResult VARCHAR2(20), 
+Status VARCHAR(18), 
+PartNo VARCHAR(18), 
+PartAvail VARCHAR2(20), 
+EstSerDate DATE) 
+; 
+
+CREATE UNIQUE INDEX DIAGNOSTIC_NDX4 ON TEST_RESULTS(CustomerAccountNo, DiagResultDate); 
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0022', 'D2102', 'Dryer', to_date('2010-02-05','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate)
+VALUES ('0022', 'D2102', 'Dryer', to_date('2010-03-05','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate)
+VALUES ('0022', 'D2102', 'Dryer', to_date('2010-04-05','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0023', ' R2102', 'Refrigerator', to_date('2009-11-17','YYYY-MM-DD'), 'P', NULL, NULL, NULL, ''); 
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0024', 'O2102', 'Oven', to_date('2009-06-19','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, ''); 
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0024', 'O2102', 'Oven', to_date('2009-12-19','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, ''); 
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0025', 'DW2104', 'Dishwasher', 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0025', 'DW2104', 'Dishwasher', to_date('2010-01-10','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0026', 'M2104', 'Microwave', to_date('2010-04-15','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0027', 'S2102', 'Stove', to_date('2010-01-29','YYYY-MM-DD'), 
+'F', 'Active', 'ST001', Y, to_date('2010-02-03','YYYY-MM-DD')); 
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0027', 'S2102', 'Stove', to_date('2010-02-29','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0027', 'S2102', 'Stove', to_date('2010-03-29','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0028', 'DW2105', 'Dishwasher', to_date('2009-12-14','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0029', 'M2105', 'Microwave', to_date('2010-04-16','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0030', 'W2105', 'Washer', to_date('2010-03-21','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0030', 'W2105', 'Washer', to_date('2010-04-21','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0031', 'W2106', 'Washer', to_date('2010-02-28','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0031', 'W2106', 'Washer', to_date('2010-03-28','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-01-14','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-02-14','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-03-14','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+INSERT INTO TEST_RESULTS (CustomerAccountNo, ProdSerNo, ProdType, DiagResultDate, DiagResult, Status, PartNo, PartAvail, EstSerDate) 
+VALUES ('0032', 'D2103', ' Dryer', to_date('2010-04-14','YYYY-MM-DD'), 
+'P', NULL, NULL, NULL, '');
+Commit; 
+
+
+
+
+
+CREATE TABLE INVENTORY 
+(PartNo VARCHAR(18) PRIMARY KEY, 
+PartName VARCHAR2(20), 
+PartAvail VARCHAR2(20), 
+ProdType VARCHAR2(20)) 
+; 
+
+INSERT INTO INVENTORY (PartNo, PartName, PartAvail, ProdType) 
+VALUES ('ST001', 'Burners', 'Y', 'Stove'); 
+Commit; 
+
+
+
+UPDATE INVOICE I 
+SET SalesTax = (SELECT SerPlanRate FROM SERVICE_PLAN S 
+WHERE I.SerPlanNo = S.SerPlanNo) * 0.07; 
+UPDATE INVOICE I 
+SET AmountDue = (SELECT SerPlanRate FROM SERVICE_PLAN S 
+WHERE I.SerPlanNo = S.SerPlanNo) + I.SalesTax;
