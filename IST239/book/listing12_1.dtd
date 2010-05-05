@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!ELEMENT street ( #PCDATA ) >
+
+<!ELEMENT birthdate ( #PCDATA ) >
+
+<!ELEMENT ssn ( #PCDATA ) >
+
+<!ELEMENT student ( ssn, firstname, mi, lastname, birthdate, phone, street, zipcode ) >
+<!ATTLIST student num NMTOKEN #REQUIRED >
+
+<!ELEMENT firstname ( #PCDATA ) >
+
+<!ELEMENT mi ( #PCDATA ) >
+
+<!ELEMENT lastname ( #PCDATA ) >
+
+<!ELEMENT students ( student+ ) >
+
+<!ELEMENT phone ( #PCDATA ) >
+
+<!ELEMENT zipcode ( #PCDATA ) >
+

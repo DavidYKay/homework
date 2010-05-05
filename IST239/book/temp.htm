@@ -1,0 +1,994 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<head>
+<title>Introduction to Java Programming, Fifth Edtion</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<meta content="Introduction to Java Programming, Fifth Edition, Self Test" name="description">
+<meta content="Test, Java, Liang, Y. Daniel Liang, Introduction to Java Programming, 5E, Fifth Edition, Comprehensive, Core, Custom" name="keywords">
+<link rel="stylesheet" type="text/css" href="http://www.cs.armstrong.edu/liang/intro6e/intro6e.css" />
+<link rel="stylesheet" type="text/css" href="http://www.cs.armstrong.edu/liang/intro6e/intro6eselftest.css" />
+
+  <style>    
+
+    @media print {
+      body {font-size: 12px; font-family: "Times New Roman"}
+    }      
+  </style>
+
+</head>
+
+<body>
+
+<div style="text-align: center; margin-bottom: 0em">
+	<h3 style="text-align: center; margin-bottom: 0.2em; color: navy; font-family: Verdana, Helvetica, sans-serif">
+	Introduction to Java Programming, Fifth Edition, Y. Daniel Liang</h3>
+</div>
+<div id="subtabextendline">
+</div>
+<!-- main content -->
+<div id="maincontentstyle"; style="text-align: center; color: #edc100">
+	<div id="boxstyle" style="width: 90%; height: 1em; text-align: left; border-color: #edc100">
+
+<form method="post" action="selftest5e.SelfTest">
+<h3 id="h3style">Chapter 1 Introduction to Computers, Programs, and Java </h3><div style="text-align: right; margin-right: 1em"><input type="submit" value="Submit Your Answer"> </div>
+<br><span id = "sectiontitle">Section 1.2 What is a Computer?</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	1</em>&nbsp; ________ is the physical aspect of the computer that can be 
+	seen.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q0"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Hardware</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q0"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Software</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q0"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+operating system</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q0"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Application program</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">2</em>&nbsp; 
+	__________ is the brain of a computer. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q1"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Hardware</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q1"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+CPU</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q1"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Memory</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q1"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Disk</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">3</em>&nbsp; 
+	The speed of CPU is measured in __________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="checkbox" value="A" name="QA2"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+megabytes</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="B" name="QB2"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+gigabytes</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="C" name="QC2"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+megahertz</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="D" name="QD2"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+gigahertz</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">4</em>&nbsp; 
+	Why do computers use zeros and ones?<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q3"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+because combinations of zeros and ones can represent any numbers and characters.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q3"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+because digital devices have two stable states and it is natural to use one 
+state for 0 and the other for 1.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q3"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+because binary numbers are simplest.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q3"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+because binary numbers are the bases upon which all other number systems are 
+built.</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">5</em>&nbsp; 
+	One byte has ________ bits.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q4"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+4</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q4"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+8</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q4"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+12</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q4"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+16</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">6</em>&nbsp; 
+	A 3.5-inch floppy can hold up to _________ bytes.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q5"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+0.5 MB.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q5"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+1.44 MB.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q5"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+10 MB.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q5"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+100 MB.</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">7</em>&nbsp; 
+	A regular CD-ROM can hold up to _________ bytes.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q6"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+100 MB.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q6"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+650 MB.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q6"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+1 GB.</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q6"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+10 GB.</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">8</em>&nbsp; 
+	____________ is a device to connect a computer to a local area network 
+	(LAN).<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q7"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+regular modem</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q7"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+DSL</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q7"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Cable modem</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q7"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+NIC</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.3 Programs</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	9</em>&nbsp; ____________ are instructions to the computer. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="checkbox" value="A" name="QA8"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Hardware</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="B" name="QB8"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Software</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="C" name="QC8"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Programs</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="D" name="QD8"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Keyboards</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">10</em>&nbsp; 
+	Computer can execute the code in ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q9"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+machine language</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q9"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+assembly language</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q9"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+high-level language</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q9"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+none of the above</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">11</em>&nbsp; 
+	___________ translates high-level language program into machine language 
+	program.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q10"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+An assembler</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q10"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+A compiler</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q10"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+CPU</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q10"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+The operating system</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.4 Operating Systems</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	12</em>&nbsp; ____________ is an operating system. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q11"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q11"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+C++</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q11"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Windows XP</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q11"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Visual Basic</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q11"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+Ada</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">13</em>&nbsp; 
+	_____________ is a program that runs on a computer to manage and control a 
+	computer's activities.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q12"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Operating system</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q12"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q12"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Modem</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q12"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Interpreter</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q12"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+Compiler</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.5 Number Systems (Optional)</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	14</em>&nbsp; Decimal number 10 is binary number ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q13"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+10</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q13"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+2</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q13"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+1000</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q13"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+1100</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q13"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+1010</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">15</em>&nbsp; 
+	Decimal number 20 is hexadecimal number ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q14"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+A</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q14"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+FF</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q14"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+F1</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q14"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+14</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q14"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+1F</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">16</em>&nbsp; 
+	Binary number 1001 is decimal number ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q15"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+5</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q15"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+9</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q15"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+10</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q15"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+11</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q15"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+12</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">17</em>&nbsp; 
+	Binary number 1001 is hexadecimal number ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q16"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+5</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q16"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+9</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q16"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+A</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q16"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+B</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q16"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+C</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">18</em>&nbsp; 
+	Hexadecimal number A1 is decimal number ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q17"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+100</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q17"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+101</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q17"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+161</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q17"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+162</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q17"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+163</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">19</em>&nbsp; 
+	Hexadecimal number A1 is binary number ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q18"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+10010100</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q18"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+10100001</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q18"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+01100001</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q18"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+11100001</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q18"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+11001001</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.6 Java, World Wide Web, and Beyond</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	20</em>&nbsp; Java was developed by ____________. <br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q19"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Sun Microsystems</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q19"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Microsoft</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q19"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Oracle</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q19"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+IBM</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q19"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+Cisco Systems</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">21</em>&nbsp; 
+	Java ___________ can run from a Web browser.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q20"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+applications</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q20"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+applets</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q20"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+servlets</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q20"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Micro Edition programs</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.7 Characteristics of Java (Optional)</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	22</em>&nbsp; ________ is an object-oriented programming language.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="checkbox" value="A" name="QA21"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="B" name="QB21"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+C++</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="C" name="QC21"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+C</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="D" name="QD21"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Ada</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="E" name="QE21"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+Pascal</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">23</em>&nbsp; 
+	________ is interpreted.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q22"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q22"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+C++</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q22"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+C</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q22"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Ada</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q22"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+Pascal</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">24</em>&nbsp; 
+	________ is Architecture-Neutral.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q23"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q23"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+C++</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q23"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+C</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q23"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Ada</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q23"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+Pascal</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.8 The Java Language Specification, API, JDK, 
+and IDE</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	25</em>&nbsp; ________ is a technical definition of the language that 
+	includes the syntax and semantics of the Java programming language.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q24"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java language specification</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q24"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Java API</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q24"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Java JDK</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q24"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Java IDE</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">26</em>&nbsp; 
+	________ contains predefined classes and interfaces for developing Java 
+	programs.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q25"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java language specification</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q25"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Java API</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q25"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Java JDK</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q25"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Java IDE</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">27</em>&nbsp; 
+	________ consists of a set of separate programs for developing and testing 
+	Java programs, each of which is invoked from a command line.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q26"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java language specification</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q26"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Java API</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q26"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Java JDK</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q26"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Java IDE</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">28</em>&nbsp; 
+	________ provide an integrated development environment (IDE) for rapidly 
+	developing Java programs. Editing, compiling, building, debugging, and 
+	online help are integrated in one graphical user interface.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q27"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java language specification</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q27"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Java API</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q27"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Java JDK</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q27"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Java IDE</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.9 A Simple Java Program</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	29</em>&nbsp; The main method header is written as:<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q28"> <span id="choicelabel">A.</span> <span id="choicestatement">	
+public static void main(string[] args)</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q28"> <span id="choicelabel">B.</span> <span id="choicestatement">	
+public static void Main(String[] args)</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q28"> <span id="choicelabel">C.</span> <span id="choicestatement">	
+public static void main(String[] args)</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q28"> <span id="choicelabel">D.</span> <span id="choicestatement">	
+public static main(String[] args)</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q28"> <span id="choicelabel">E.</span> <span id="choicestatement">	
+public void main(String[] args)</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">30</em>&nbsp; 
+	Which of the following statements is correct to display Welcome to Java on 
+	the console?<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="checkbox" value="A" name="QA29"> <span id="choicelabel">A.</span> <span id="choicestatement">	
+System.out.println('Welcome to Java');</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="B" name="QB29"> <span id="choicelabel">B.</span> <span id="choicestatement">	
+System.out.println(&quot;Welcome to Java&quot;);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="C" name="QC29"> <span id="choicelabel">C.</span> <span id="choicestatement">	
+System.println('Welcome to Java');</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="D" name="QD29"> <span id="choicelabel">D.</span> <span id="choicestatement">	
+System.out.print('Welcome to Java');</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="E" name="QE29"> <span id="choicelabel">E.</span> <span id="choicestatement">	
+System.out.print(&quot;Welcome to Java&quot;);</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.10 Creating, Compiling, and Executing a Java 
+Program</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	31</em>&nbsp; The JDK command to compile a class in the file Test.java is<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q30"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+java Test</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q30"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+java Test.java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q30"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+javac Test.java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q30"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+javac Test</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q30"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+JAVAC Test.java</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">32</em>&nbsp; 
+	Which JDK command is correct to run a Java application in ByteCode.class?<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q31"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+java ByteCode</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q31"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+java ByteCode.class</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q31"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+javac ByteCode.java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q31"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+javac ByteCode</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q31"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+JAVAC ByteCode</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">33</em>&nbsp; 
+	Java compiler translates Java source code into _________.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q32"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java bytecode</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q32"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+machine code</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q32"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+assembly code</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q32"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+another high-level language code</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">34</em>&nbsp; 
+	_________ is a software that interprets Java bytecode.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q33"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Java virtual machine</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q33"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Java compiler</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q33"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Java debugger</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q33"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Java API</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">35</em>&nbsp; 
+	Suppose you define a Java class as follows:<br><br>public class Test {<br><br>
+	}<br><br>In order to compile this program, the source code should be stored 
+	in a file named<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q34"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+Test.class</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q34"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+Test.doc</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q34"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+Test.txt</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q34"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+Test.java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="E" name="Q34"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+Any name with extension .java</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">36</em>&nbsp; 
+	The extension name of a Java bytecode file is<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q35"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+.java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q35"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+.obj</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q35"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+.class</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q35"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+.exe</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">37</em>&nbsp; 
+	The extension name of a Java source code file is<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q36"> <span id="choicelabel">A.</span> <span id="choicestatement">	
+.java</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q36"> <span id="choicelabel">B.</span> <span id="choicestatement">	
+.obj</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q36"> <span id="choicelabel">C.</span> <span id="choicestatement">	
+.class</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q36"> <span id="choicelabel">D.</span> <span id="choicestatement">	
+.exe</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.11 Anatomy of the Java Program</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	38</em>&nbsp; Which of the following lines is not a Java comment?<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="checkbox" value="A" name="QA37"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+/** comments */</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="B" name="QB37"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+// comments</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="C" name="QC37"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+-- comments</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="D" name="QD37"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+/* comments */</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="E" name="QE37"> <span id="choicelabel">E.</span> <span id="choicestatement"> 
+** comments **</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">39</em>&nbsp; 
+	Which of the following are the reserved words?<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="checkbox" value="A" name="QA38"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+public</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="B" name="QB38"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+static</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="C" name="QC38"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+void</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="D" name="QD38"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+class</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">40</em>&nbsp; 
+	Every statement in Java ends with ________.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q39"> <span id="choicelabel">A.</span> <span id="choicestatement"> 
+a semicolon (;)</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q39"> <span id="choicelabel">B.</span> <span id="choicestatement"> 
+a comma (,)</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q39"> <span id="choicelabel">C.</span> <span id="choicestatement"> 
+a period (.)</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q39"> <span id="choicelabel">D.</span> <span id="choicestatement"> 
+an asterisk (*)</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">41</em>&nbsp; 
+	A block is enclosed inside __________.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q40"> <span id="choicelabel">A.</span> <span id="choicestatement">	
+Parentheses</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q40"> <span id="choicelabel">B.</span> <span id="choicestatement">	
+Braces</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q40"> <span id="choicelabel">C.</span> <span id="choicestatement">	
+Brackets</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q40"> <span id="choicelabel">D.</span> <span id="choicestatement">	
+Quotes</span><br>
+</div>
+<br></div></div>
+<span id = "sectiontitle">Section 1.12 Displaying Text in a Message Dialog Box</span><div id="question"><div id="questionstatement"><em id="questionnumber">
+	42</em>&nbsp; The __________ method terminates the program.<br><br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="radio" value="A" name="Q41"> <span id="choicelabel">A.</span> <span id="choicestatement">	
+System.terminate(0);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="B" name="Q41"> <span id="choicelabel">B.</span> <span id="choicestatement">	
+System.halt(0);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="C" name="Q41"> <span id="choicelabel">C.</span> <span id="choicestatement">	
+System.exit(0);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="radio" value="D" name="Q41"> <span id="choicelabel">D.</span> <span id="choicestatement">	
+System.stop(0);</span><br>
+</div>
+<br></div></div>
+<div id="question"><div id="questionstatement"><em id="questionnumber">43</em>&nbsp; 
+	The __________ method displays a message dialog box.<br></div>
+<div id="choices">
+<div id = "choicemargin">
+<input type="checkbox" value="A" name="QA42"> <span id="choicelabel">A.</span> <span id="choicestatement">	
+JOptionPane.showMessage(null, &quot;Welcome to Java!&quot;, &quot;Example 1.2 Output&quot;, 
+JOptionPane.INFORMATION_MESSAGE);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="B" name="QB42"> <span id="choicelabel">B.</span> <span id="choicestatement">	
+JOptionPane.displayMessage(null, &quot;Welcome to Java!&quot;, &quot;Example 1.2 Output&quot;, 
+JOptionPane.INFORMATION_MESSAGE);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="C" name="QC42"> <span id="choicelabel">C.</span> <span id="choicestatement">      
+JOptionPane.displayMessageDialog(null, &quot;Welcome to Java!&quot;, &quot;Example 1.2 Output&quot;, 
+JOptionPane.INFORMATION_MESSAGE);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="D" name="QD42"> <span id="choicelabel">D.</span> <span id="choicestatement">      
+JOptionPane.showMessageDialog(null, &quot;Welcome to Java!&quot;, &quot;Example 1.2 Output&quot;, 
+JOptionPane.INFORMATION_MESSAGE);</span><br>
+</div>
+<div id = "choicemargin">
+<input type="checkbox" value="E" name="QE42"> <span id="choicelabel">E.</span> <span id="choicestatement">      
+JOptionPane.showMessageDialog(null, &quot;Welcome to Java!&quot;);</span><br>
+</div>
+<br></div></div>
+<p><input type="hidden" value=1 name="chapter">
+<p><input type="hidden" value=43 name="totalQuestion">
+<div style="margin-left: 2em; text-align: center; margin-top: 1em">
+<p><input type="submit" value="Submit Your Answer" name="B1">
+</form>

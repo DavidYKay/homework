@@ -1,0 +1,10 @@
+<?xml version = '1.0'?>
+<!-- Use CDATA -->
+<examples>
+  <myxmldoc>
+     <![CDATA[ 
+     1 < 2 < 3 < 4 < 5 and 5 >= 5
+     ]]>
+  </myxmldoc>
+</examples>
+

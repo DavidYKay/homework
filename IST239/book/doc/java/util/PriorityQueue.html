@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><!--JBuilder QuickDoc-->
+<HEAD>
+<TITLE>Class java.util.PriorityQueue</TITLE><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+<H2>
+<FONT SIZE="-1">java.util</FONT>
+<BR>Class PriorityQueue</H2>
+<DL>
+<DT>public class <B>PriorityQueue</B><DT>extends java.util.AbstractQueue<DT>implements java.io.Serializable
+</DL>
+<DL><DD>An unbounded priority <A HREF="Queue queue">queue</A> based on a priority heap. This queue orders elements according to an order specified at construction time, which is specified either according to their <i>natural order</i> (see <A HREF="Comparable">Comparable</A>), or according to a <A HREF="java.util.Comparator">java.util.Comparator</A>, depending on which constructor is used. A priority queue does not permit <tt>null</tt> elements. A priority queue relying on natural ordering also does not permit insertion of non-comparable objects (doing so may result in <tt>ClassCastException</tt>). <p>The <em>head</em> of this queue is the <em>least</em> element with respect to the specified ordering. If multiple elements are tied for least value, the head is one of those elements -- ties are broken arbitrarily. The queue retrieval operations <tt>poll</tt>, <tt>remove</tt>, <tt>peek</tt>, and <tt>element</tt> access the element at the head of the queue. <p>A priority queue is unbounded, but has an internal <i>capacity</i> governing the size of an array used to store the elements on the queue. It is always at least as large as the queue size. As elements are added to a priority queue, its capacity grows automatically. The details of the growth policy are not specified. <p>This class and its iterator implement all of the <em>optional</em> methods of the <A HREF="Collection">Collection</A> and <A HREF="Iterator">Iterator</A> interfaces. The Iterator provided in method <A HREF="#iterator()">#iterator()</A> is <em>not</em> guaranteed to traverse the elements of the PriorityQueue in any particular order. If you need ordered traversal, consider using <tt>Arrays.sort(pq.toArray())</tt>. <p> <strong>Note that this implementation is not synchronized.</strong> Multiple threads should not access a <tt>PriorityQueue</tt> instance concurrently if any of the threads modifies the list structurally. Instead, use the thread-safe <A HREF="java.util.concurrent.PriorityBlockingQueue">java.util.concurrent.PriorityBlockingQueue</A> class. <p>Implementation note: this implementation provides O(log(n)) time for the insertion methods (<tt>offer</tt>, <tt>poll</tt>, <tt>remove()</tt> and <tt>add</tt>) methods; linear time for the <tt>remove(Object)</tt> and <tt>contains(Object)</tt> methods; and constant time for the retrieval methods (<tt>peek</tt>, <tt>element</tt>, and <tt>size</tt>). <p>This class is a member of the <a href="{@docRoot}/../guide/collections/index.html"> Java Collections Framework</a>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE><E></CODE> - the type of elements held in this collection</DD>
+<DT><B>Version:</B><DD>1.6, 06/11/04</DD>
+<DT><B>Author:</B><DD>Josh Bloch</DD>
+<DT><B>Since:</B><DD>1.5</DD>
+</DL>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Field Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="queue"></A>
+
+<H3>queue</H3>
+<PRE>
+private transient java.lang.Object[] <B>queue</B></PRE>
+<DL><DD>Priority queue represented as a balanced binary heap: the two children of queue[n] are queue[2*n] and queue[2*n + 1]. The priority queue is ordered by comparator, or by the elements' natural ordering, if comparator is null: For each node n in the heap and each descendant d of n, n <= d.The element with the lowest value is in queue[1], assuming the queue is nonempty. (A one-based array is used in preference to the traditional zero-based array to simplify parent and child calculations.) queue.length must be >= 2, even if size == 0.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="size"></A>
+
+<H3>size</H3>
+<PRE>
+private int <B>size</B></PRE>
+<DL><DD>The number of elements in the priority queue.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="comparator"></A>
+
+<H3>comparator</H3>
+<PRE>
+private final java.util.Comparator<? super E> <B>comparator</B></PRE>
+<DL><DD>The comparator, or null if priority queue uses elements' natural ordering.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="modCount"></A>
+
+<H3>modCount</H3>
+<PRE>
+private transient int <B>modCount</B></PRE>
+<DL><DD>The number of times this priority queue has been <i>structurally modified</i>. See AbstractList for gory details.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Constructor Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="PriorityQueue()"></A>
+
+<H3>PriorityQueue</H3>
+<PRE>
+public <B>PriorityQueue</B>()</PRE>
+<DL><DD>Creates a <tt>PriorityQueue</tt> with the default initial capacity (11) that orders its elements according to their natural ordering (using <tt>Comparable</tt>).<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="PriorityQueue(int)"></A>
+
+<H3>PriorityQueue</H3>
+<PRE>
+public <B>PriorityQueue</B>(int&nbsp;initialCapacity)</PRE>
+<DL><DD>Creates a <tt>PriorityQueue</tt> with the specified initial capacity that orders its elements according to their natural ordering (using <tt>Comparable</tt>).<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>initialCapacity</CODE> - the initial capacity for this priority queue.</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if <tt>initialCapacity</tt> is less than 1</DD>
+</DL>
+<HR>
+
+<A NAME="PriorityQueue(int, java.util.Comparator)"></A>
+
+<H3>PriorityQueue</H3>
+<PRE>
+public <B>PriorityQueue</B>(int&nbsp;initialCapacity,
+                     java.util.Comparator&nbsp;comparator)</PRE>
+<DL><DD>Creates a <tt>PriorityQueue</tt> with the specified initial capacity that orders its elements according to the specified comparator.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>initialCapacity</CODE> - the initial capacity for this priority queue.</DD>
+<DD><CODE>comparator</CODE> - the comparator used to order this priority queue. If <tt>null</tt> then the order depends on the elements' natural ordering.</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if <tt>initialCapacity</tt> is less than 1</DD>
+</DL>
+<HR>
+
+<A NAME="PriorityQueue(java.util.Collection)"></A>
+
+<H3>PriorityQueue</H3>
+<PRE>
+public <B>PriorityQueue</B>(java.util.Collection&nbsp;c)</PRE>
+<DL><DD>Creates a <tt>PriorityQueue</tt> containing the elements in the specified collection. The priority queue has an initial capacity of 110% of the size of the specified collection or 1 if the collection is empty. If the specified collection is an instance of a <A HREF="java.util.SortedSet">java.util.SortedSet</A> or is another <tt>PriorityQueue</tt>, the priority queue will be sorted according to the same comparator, or according to its elements' natural order if the collection is sorted according to its elements' natural order. Otherwise, the priority queue is ordered according to its elements' natural order.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>c</CODE> - the collection whose elements are to be placed into this priority queue.</DD>
+<DT><B>Throws:</B><DD><CODE>ClassCastException</CODE> - if elements of the specified collection cannot be compared to one another according to the priority queue's ordering.</DD>
+<DD><CODE>NullPointerException</CODE> - if <tt>c</tt> or any element within it is <tt>null</tt></DD>
+</DL>
+<HR>
+
+<A NAME="PriorityQueue(java.util.PriorityQueue)"></A>
+
+<H3>PriorityQueue</H3>
+<PRE>
+public <B>PriorityQueue</B>(java.util.PriorityQueue&nbsp;c)</PRE>
+<DL><DD>Creates a <tt>PriorityQueue</tt> containing the elements in the specified collection. The priority queue has an initial capacity of 110% of the size of the specified collection or 1 if the collection is empty. This priority queue will be sorted according to the same comparator as the given collection, or according to its elements' natural order if the collection is sorted according to its elements' natural order.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>c</CODE> - the collection whose elements are to be placed into this priority queue.</DD>
+<DT><B>Throws:</B><DD><CODE>ClassCastException</CODE> - if elements of the specified collection cannot be compared to one another according to the priority queue's ordering.</DD>
+<DD><CODE>NullPointerException</CODE> - if <tt>c</tt> or any element within it is <tt>null</tt></DD>
+</DL>
+<HR>
+
+<A NAME="PriorityQueue(java.util.SortedSet)"></A>
+
+<H3>PriorityQueue</H3>
+<PRE>
+public <B>PriorityQueue</B>(java.util.SortedSet&nbsp;c)</PRE>
+<DL><DD>Creates a <tt>PriorityQueue</tt> containing the elements in the specified collection. The priority queue has an initial capacity of 110% of the size of the specified collection or 1 if the collection is empty. This priority queue will be sorted according to the same comparator as the given collection, or according to its elements' natural order if the collection is sorted according to its elements' natural order.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>c</CODE> - the collection whose elements are to be placed into this priority queue.</DD>
+<DT><B>Throws:</B><DD><CODE>ClassCastException</CODE> - if elements of the specified collection cannot be compared to one another according to the priority queue's ordering.</DD>
+<DD><CODE>NullPointerException</CODE> - if <tt>c</tt> or any element within it is <tt>null</tt></DD>
+</DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="initializeArray(java.util.Collection)"></A>
+
+<H3>initializeArray</H3>
+<PRE>
+private void <B>initializeArray</B>(java.util.Collection&nbsp;c)</PRE>
+<DL><DD>Common code to initialize underlying queue array across constructors below.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="fillFromSorted(java.util.Collection)"></A>
+
+<H3>fillFromSorted</H3>
+<PRE>
+private void <B>fillFromSorted</B>(java.util.Collection&nbsp;c)</PRE>
+<DL><DD>Initially fill elements of the queue array under the knowledge that it is sorted or is another PQ, in which case we can just place the elements in the order presented.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="fillFromUnsorted(java.util.Collection)"></A>
+
+<H3>fillFromUnsorted</H3>
+<PRE>
+private void <B>fillFromUnsorted</B>(java.util.Collection&nbsp;c)</PRE>
+<DL><DD>Initially fill elements of the queue array that is not to our knowledge sorted, so we must rearrange the elements to guarantee the heap invariant.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="grow(int)"></A>
+
+<H3>grow</H3>
+<PRE>
+private void <B>grow</B>(int&nbsp;index)</PRE>
+<DL><DD>Resize array, if necessary, to be able to hold given index<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="offer(E)"></A>
+
+<H3>offer</H3>
+<PRE>
+public boolean <B>offer</B>(E&nbsp;o)</PRE>
+<DL><DD>Inserts the specified element into this priority queue.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD><tt>true</tt></DD>
+<DT><B>Throws:</B><DD><CODE>ClassCastException</CODE> - if the specified element cannot be compared with elements currently in the priority queue according to the priority queue's ordering.</DD>
+<DD><CODE>NullPointerException</CODE> - if the specified element is <tt>null</tt>.</DD>
+</DL>
+<HR>
+
+<A NAME="add(E)"></A>
+
+<H3>add</H3>
+<PRE>
+public boolean <B>add</B>(E&nbsp;o)</PRE>
+<DL><DD>Adds the specified element to this queue.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD><tt>true</tt> (as per the general contract of <tt>Collection.add</tt>).</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if the specified element is <tt>null</tt>.</DD>
+<DD><CODE>ClassCastException</CODE> - if the specified element cannot be compared with elements currently in the priority queue according to the priority queue's ordering.</DD>
+</DL>
+<HR>
+
+<A NAME="remove(java.lang.Object)"></A>
+
+<H3>remove</H3>
+<PRE>
+public boolean <B>remove</B>(java.lang.Object&nbsp;o)</PRE>
+<DL><DD>Removes a single instance of the specified element from this queue, if it is present.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="iterator()"></A>
+
+<H3>iterator</H3>
+<PRE>
+public java.util.Iterator <B>iterator</B>()</PRE>
+<DL><DD>Returns an iterator over the elements in this queue. The iterator does not return the elements in any particular order.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>an iterator over the elements in this queue.</DD>
+</DL>
+<HR>
+
+<A NAME="clear()"></A>
+
+<H3>clear</H3>
+<PRE>
+public void <B>clear</B>()</PRE>
+<DL><DD>Removes all elements from the priority queue. The queue will be empty after this call returns.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="removeAt(int)"></A>
+
+<H3>removeAt</H3>
+<PRE>
+private java.lang.Object <B>removeAt</B>(int&nbsp;i)</PRE>
+<DL><DD>Removes and returns the ith element from queue. (Recall that queue is one-based, so 1 <= i <= size.)Normally this method leaves the elements at positions from 1 up to i-1, inclusive, untouched. Under these circumstances, it returns null. Occasionally, in order to maintain the heap invariant, it must move the last element of the list to some index in the range [2, i-1], and move the element previously at position (i/2) to position i. Under these circumstances, this method returns the element that was previously at the end of the list and is now at some position between 2 and i-1 inclusive.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="fixUp(int)"></A>
+
+<H3>fixUp</H3>
+<PRE>
+private void <B>fixUp</B>(int&nbsp;k)</PRE>
+<DL><DD>Establishes the heap invariant (described above) assuming the heap satisfies the invariant except possibly for the leaf-node indexed by k (which may have a nextExecutionTime less than its parent's). This method functions by "promoting" queue[k] up the hierarchy (by swapping it with its parent) repeatedly until queue[k] is greater than or equal to its parent.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="fixDown(int)"></A>
+
+<H3>fixDown</H3>
+<PRE>
+private void <B>fixDown</B>(int&nbsp;k)</PRE>
+<DL><DD>Establishes the heap invariant (described above) in the subtree rooted at k, which is assumed to satisfy the heap invariant except possibly for node k itself (which may be greater than its children). This method functions by "demoting" queue[k] down the hierarchy (by swapping it with its smaller child) repeatedly until queue[k] is less than or equal to its children.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="heapify()"></A>
+
+<H3>heapify</H3>
+<PRE>
+private void <B>heapify</B>()</PRE>
+<DL><DD>Establishes the heap invariant (described above) in the entire tree, assuming nothing about the order of the elements prior to the call.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="comparator()"></A>
+
+<H3>comparator</H3>
+<PRE>
+public java.util.Comparator <B>comparator</B>()</PRE>
+<DL><DD>Returns the comparator used to order this collection, or <tt>null</tt> if this collection is sorted according to its elements natural ordering (using <tt>Comparable</tt>).<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the comparator used to order this collection, or <tt>null</tt> if this collection is sorted according to its elements natural ordering.</DD>
+</DL>
+<HR>
+
+<A NAME="writeObject(java.io.ObjectOutputStream)"></A>
+
+<H3>writeObject</H3>
+<PRE>
+private void <B>writeObject</B>(java.io.ObjectOutputStream&nbsp;s)</PRE>
+<DL><DD>Save the state of the instance to a stream (that is, serialize it).<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>s</CODE> - the stream</DD>
+</DL>
+<HR>
+
+<A NAME="readObject(java.io.ObjectInputStream)"></A>
+
+<H3>readObject</H3>
+<PRE>
+private void <B>readObject</B>(java.io.ObjectInputStream&nbsp;s)</PRE>
+<DL><DD>Reconstitute the <tt>ArrayList</tt> instance from a stream (that is, deserialize it).<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>s</CODE> - the stream</DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>

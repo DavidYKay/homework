@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- cssHorizontalMenuDemo.html -->
+<html>
+  <head>
+    <title>Creating Horizontal Menus</title>
+    <style type = "text/css">
+      #header {text-align: center; padding-bottom: 0.5em} 
+      #tabs {width: 80%; margin-bottom: 1em; list-style-type: none; 
+             border-bottom: 0.2em solid red}
+      li {display: inline; margin: 1em}
+      #center {width: 70%; text-align: center;
+             border: 1px red solid}
+      #bottom {padding: 0.1em; width: 80%; margin-top: 1em;
+             text-align: right; color: white; background-color: gray;
+             clear: left}
+      #active {color: red; border: red 1px solid}
+      a {text-decoration: none}
+    </style>
+  </head>
+
+  <body>
+    <!-- header pane -->
+    <div id = "header">
+	  <div>
+		Y. Daniel Liang</div>
+	  <div>
+		Department of Computer Science</div>
+	  <div>
+		Armstrong Atlantic State University</div>
+    </div>
+    
+    <!-- left pane -->
+    <div style = "text-align: center">
+	  <ul id = "tabs" style = "line-height: 1.5em">
+		<li><a href = "vita.html">Vita</a> </li>
+		<li><a id = "active" href = "courses.html">Courses</a></li>
+		<li><a href = "books.html">Books</a> </li>
+		<li><a href = "journals.html">Journals</a> </li>
+	  </ul>
+    </div>
+
+    <!-- center pane -->
+    <div style = "text-align: center">
+      <div id = "center">
+	    <h3 style = "background-color: red; color: white; 
+	                 text-align: center">Course</h3>
+	    <div style = "padding: 0.2em">
+	      CSCI 1301 Introduction to Java Programming<br />
+	      CSCI 1302 Advanced Java Programming<br />
+	      CSCI 3720 Introduction to Database Systems
+	    </div>
+      </div>
+    </div>
+    
+    <!-- bottom pane -->
+    <div style = "text-align: center">
+      <div id = "bottom">
+        Copyright &copy;1997-2007 by Y. Daniel Liang
+      </div>
+    </div>
+  </body>
+</html>

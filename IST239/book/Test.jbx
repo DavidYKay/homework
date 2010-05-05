@@ -1,0 +1,10 @@
+[PropertyInfo]
+appletInfo,String,false,false, , ,true,<default>
+borderLayout1,java.awt.BorderLayout,false,false, , ,false,<default>
+isStandalone,boolean,false,false, , ,false,<default>
+parameterInfo,String[][],false,false, , ,true,<default>
+[IconNames]
+
+
+
+

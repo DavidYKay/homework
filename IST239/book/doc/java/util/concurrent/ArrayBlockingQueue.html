@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><!--JBuilder QuickDoc-->
+<HEAD>
+<TITLE>Class java.util.concurrent.ArrayBlockingQueue</TITLE><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+<H2>
+<FONT SIZE="-1">java.util.concurrent</FONT>
+<BR>Class ArrayBlockingQueue</H2>
+<DL>
+<DT>public class <B>ArrayBlockingQueue</B><DT>extends java.util.AbstractQueue<DT>implements java.util.concurrent.BlockingQueue, java.io.Serializable
+</DL>
+<DL><DD>A bounded <A HREF="BlockingQueue blocking queue">blocking queue</A> backed by an array. This queue orders elements FIFO (first-in-first-out). The <em>head</em> of the queue is that element that has been on the queue the longest time. The <em>tail</em> of the queue is that element that has been on the queue the shortest time. New elements are inserted at the tail of the queue, and the queue retrieval operations obtain elements at the head of the queue. <p>This is a classic &quot;bounded buffer&quot;, in which a fixed-sized array holds elements inserted by producers and extracted by consumers. Once created, the capacity cannot be increased. Attempts to put an element to a full queue will result in the put operation blocking; attempts to retrieve an element from an empty queue will similarly block. <p> This class supports an optional fairness policy for ordering waiting producer and consumer threads. By default, this ordering is not guaranteed. However, a queue constructed with fairness set to <tt>true</tt> grants threads access in FIFO order. Fairness generally decreases throughput but reduces variability and avoids starvation. <p>This class and its iterator implement all of the <em>optional</em> methods of the <A HREF="Collection">Collection</A> and <A HREF="Iterator">Iterator</A> interfaces. <p>This class is a member of the <a href="{@docRoot}/../guide/collections/index.html"> Java Collections Framework</a>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE><E></CODE> - the type of elements held in this collection</DD>
+<DT><B>Author:</B><DD>Doug Lea</DD>
+<DT><B>Since:</B><DD>1.5</DD>
+</DL>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Field Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="serialVersionUID"></A>
+
+<H3>serialVersionUID</H3>
+<PRE>
+private static final long <B>serialVersionUID</B></PRE>
+<DL><DD>Serialization ID. This class relies on default serialization even for the items array, which is default-serialized, even if it is empty. Otherwise it could not be declared final, which is necessary here.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="items"></A>
+
+<H3>items</H3>
+<PRE>
+private final E[] <B>items</B></PRE>
+<DL><DD>The queued items<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="takeIndex"></A>
+
+<H3>takeIndex</H3>
+<PRE>
+private transient int <B>takeIndex</B></PRE>
+<DL><DD>items index for next take, poll or remove<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="putIndex"></A>
+
+<H3>putIndex</H3>
+<PRE>
+private transient int <B>putIndex</B></PRE>
+<DL><DD>items index for next put, offer, or add.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="count"></A>
+
+<H3>count</H3>
+<PRE>
+private int <B>count</B></PRE>
+<DL><DD>Number of items in the queue<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="lock"></A>
+
+<H3>lock</H3>
+<PRE>
+private final java.util.concurrent.locks.ReentrantLock <B>lock</B></PRE>
+<DL><DD>Main lock guarding all access<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="notEmpty"></A>
+
+<H3>notEmpty</H3>
+<PRE>
+private final java.util.concurrent.locks.Condition <B>notEmpty</B></PRE>
+<DL><DD>Condition for waiting takes<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="notFull"></A>
+
+<H3>notFull</H3>
+<PRE>
+private final java.util.concurrent.locks.Condition <B>notFull</B></PRE>
+<DL><DD>Condition for waiting puts<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Constructor Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="ArrayBlockingQueue(int)"></A>
+
+<H3>ArrayBlockingQueue</H3>
+<PRE>
+public <B>ArrayBlockingQueue</B>(int&nbsp;capacity)</PRE>
+<DL><DD>Creates an <tt>ArrayBlockingQueue</tt> with the given (fixed) capacity and default access policy.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>capacity</CODE> - the capacity of this queue</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if <tt>capacity</tt> is less than 1</DD>
+</DL>
+<HR>
+
+<A NAME="ArrayBlockingQueue(int, boolean)"></A>
+
+<H3>ArrayBlockingQueue</H3>
+<PRE>
+public <B>ArrayBlockingQueue</B>(int&nbsp;capacity,
+                          boolean&nbsp;fair)</PRE>
+<DL><DD>Creates an <tt>ArrayBlockingQueue</tt> with the given (fixed) capacity and the specified access policy.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>capacity</CODE> - the capacity of this queue</DD>
+<DD><CODE>fair</CODE> - if <tt>true</tt> then queue accesses for threads blocked on insertion or removal, are processed in FIFO order; if <tt>false</tt> the access order is unspecified.</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if <tt>capacity</tt> is less than 1</DD>
+</DL>
+<HR>
+
+<A NAME="ArrayBlockingQueue(int, boolean, java.util.Collection)"></A>
+
+<H3>ArrayBlockingQueue</H3>
+<PRE>
+public <B>ArrayBlockingQueue</B>(int&nbsp;capacity,
+                          boolean&nbsp;fair,
+                          java.util.Collection&nbsp;c)</PRE>
+<DL><DD>Creates an <tt>ArrayBlockingQueue</tt> with the given (fixed) capacity, the specified access policy and initially containing the elements of the given collection, added in traversal order of the collection's iterator.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>capacity</CODE> - the capacity of this queue</DD>
+<DD><CODE>fair</CODE> - if <tt>true</tt> then queue accesses for threads blocked on insertion or removal, are processed in FIFO order; if <tt>false</tt> the access order is unspecified.</DD>
+<DD><CODE>c</CODE> - the collection of elements to initially contain</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if <tt>capacity</tt> is less than <tt>c.size()</tt>, or less than 1.</DD>
+<DD><CODE>NullPointerException</CODE> - if <tt>c</tt> or any element within it is <tt>null</tt></DD>
+</DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="inc(int)"></A>
+
+<H3>inc</H3>
+<PRE>
+final int <B>inc</B>(int&nbsp;i)</PRE>
+<DL><DD>Circularly increment i.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="insert(E)"></A>
+
+<H3>insert</H3>
+<PRE>
+private void <B>insert</B>(E&nbsp;x)</PRE>
+<DL><DD>Insert element at current put position, advance, and signal. Call only when holding lock.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="extract()"></A>
+
+<H3>extract</H3>
+<PRE>
+private E <B>extract</B>()</PRE>
+<DL><DD>Extract element at current take position, advance, and signal. Call only when holding lock.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="removeAt(int)"></A>
+
+<H3>removeAt</H3>
+<PRE>
+void <B>removeAt</B>(int&nbsp;i)</PRE>
+<DL><DD>Utility for remove and iterator.remove: Delete item at position i. Call only when holding lock.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="offer(E)"></A>
+
+<H3>offer</H3>
+<PRE>
+public boolean <B>offer</B>(E&nbsp;o)</PRE>
+<DL><DD>Inserts the specified element at the tail of this queue if possible, returning immediately if this queue is full.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>o</CODE> - the element to add.</DD>
+<DT><B>Returns:</B><DD><tt>true</tt> if it was possible to add the element to this queue, else <tt>false</tt></DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if the specified element is <tt>null</tt></DD>
+</DL>
+<HR>
+
+<A NAME="offer(E, long, java.util.concurrent.TimeUnit)"></A>
+
+<H3>offer</H3>
+<PRE>
+public boolean <B>offer</B>(E&nbsp;o,
+                     long&nbsp;timeout,
+                     java.util.concurrent.TimeUnit&nbsp;unit)</PRE>
+<DL><DD>Inserts the specified element at the tail of this queue, waiting if necessary up to the specified wait time for space to become available.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>o</CODE> - the element to add</DD>
+<DD><CODE>timeout</CODE> - how long to wait before giving up, in units of <tt>unit</tt></DD>
+<DD><CODE>unit</CODE> - a <tt>TimeUnit</tt> determining how to interpret the <tt>timeout</tt> parameter</DD>
+<DT><B>Returns:</B><DD><tt>true</tt> if successful, or <tt>false</tt> if the specified waiting time elapses before space is available.</DD>
+<DT><B>Throws:</B><DD><CODE>InterruptedException</CODE> - if interrupted while waiting.</DD>
+<DD><CODE>NullPointerException</CODE> - if the specified element is <tt>null</tt>.</DD>
+</DL>
+<HR>
+
+<A NAME="remove(java.lang.Object)"></A>
+
+<H3>remove</H3>
+<PRE>
+public boolean <B>remove</B>(java.lang.Object&nbsp;o)</PRE>
+<DL><DD>Removes a single instance of the specified element from this queue, if it is present.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="put(E)"></A>
+
+<H3>put</H3>
+<PRE>
+public void <B>put</B>(E&nbsp;o)</PRE>
+<DL><DD>Adds the specified element to the tail of this queue, waiting if necessary for space to become available.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>o</CODE> - the element to add</DD>
+<DT><B>Throws:</B><DD><CODE>InterruptedException</CODE> - if interrupted while waiting.</DD>
+<DD><CODE>NullPointerException</CODE> - if the specified element is <tt>null</tt>.</DD>
+</DL>
+<HR>
+
+<A NAME="size()"></A>
+
+<H3>size</H3>
+<PRE>
+public int <B>size</B>()</PRE>
+<DL><DD>Returns the number of elements in this queue.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the number of elements in this queue.</DD>
+</DL>
+<HR>
+
+<A NAME="remainingCapacity()"></A>
+
+<H3>remainingCapacity</H3>
+<PRE>
+public int <B>remainingCapacity</B>()</PRE>
+<DL><DD>Returns the number of elements that this queue can ideally (in the absence of memory or resource constraints) accept without blocking. This is always equal to the initial capacity of this queue less the current <tt>size</tt> of this queue. <p>Note that you <em>cannot</em> always tell if an attempt to <tt>add</tt> an element will succeed by inspecting <tt>remainingCapacity</tt> because it may be the case that a waiting consumer is ready to <tt>take</tt> an element out of an otherwise full queue.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="clear()"></A>
+
+<H3>clear</H3>
+<PRE>
+public void <B>clear</B>()</PRE>
+<DL><DD>Atomically removes all of the elements from this queue. The queue will be empty after this call returns.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="iterator()"></A>
+
+<H3>iterator</H3>
+<PRE>
+public java.util.Iterator <B>iterator</B>()</PRE>
+<DL><DD>Returns an iterator over the elements in this queue in proper sequence. The returned <tt>Iterator</tt> is a "weakly consistent" iterator that will never throw <A HREF="java.util.ConcurrentModificationException">java.util.ConcurrentModificationException</A>, and guarantees to traverse elements as they existed upon construction of the iterator, and may (but is not guaranteed to) reflect any modifications subsequent to construction.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>an iterator over the elements in this queue in proper sequence.</DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><!--JBuilder QuickDoc-->
+<HEAD>
+<TITLE>Class java.util.concurrent.Callable</TITLE><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+<H2>
+<FONT SIZE="-1">java.util.concurrent</FONT>
+<BR>Interface Callable</H2>
+<DL>
+<DT>public interface <B>Callable</B>
+</DL>
+<DL><DD>A task that returns a result and may throw an exception. Implementors define a single method with no arguments called <tt>call</tt>. <p>The <tt>Callable</tt> interface is similar to <A HREF="java.lang.Runnable">java.lang.Runnable</A>, in that both are designed for classes whose instances are potentially executed by another thread. A <tt>Runnable</tt>, however, does not return a result and cannot throw a checked exception. <p> The <A HREF="Executors">Executors</A> class contains utility methods to convert from other common forms to <tt>Callable</tt> classes.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE><V></CODE> - the result type of method <tt>call</tt></DD>
+<DT><B>Author:</B><DD>Doug Lea</DD>
+<DT><B>Since:</B><DD>1.5</DD>
+<DT><B>See Also:</B><DD>Executor</DD>
+</DL>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="call()"></A>
+
+<H3>call</H3>
+<PRE>
+V <B>call</B>()</PRE>
+<DL><DD>Computes a result, or throws an exception if unable to do so.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>computed result</DD>
+<DT><B>Throws:</B><DD><CODE>Exception</CODE> - if unable to compute a result</DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>
