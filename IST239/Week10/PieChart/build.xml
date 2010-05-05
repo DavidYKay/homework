@@ -1,0 +1,73 @@
+<project name="piechart" default="compile">
+    <property name="src"     location="src/edu/mccc/ist239/${ant.project.name}"/>
+    <property name="build"   location="build"/>
+    <property name="classes" location="${build}/classes"/>
+    <property name="dist"    location="dist"/>
+    <property name="classpath"  value="${build}/jar/${ant.project.name}.jar:${classes}:.:.." />
+    <property name="basepackage"  value="edu.mccc.ist239" />
+    <property name="executable"  value="PieChartTest" />
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes}"/>
+        <javac srcdir="${src}" destdir="${classes}" debug="true">
+            <compilerarg value="-g"/>
+            <!--
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:all"/>
+            <compilerarg value="-Xlint"/>
+            -->
+            <classpath>
+                <pathelement path="${classpath}" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${build}/jar"/>
+        <jar destfile="${build}/jar/${ant.project.name}}.jar" basedir="${classes}">
+            <manifest>
+                <attribute name="Main-Class" value="${executable}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="compile">
+        <java 
+            classname="${basepackage}.${ant.project.name}.${executable}"
+            classpath="${classpath}"
+            fork="true" >
+        </java>
+    </target>
+
+    <target name="rund" depends="compile">
+        <java 
+            classname="${basepackage}.${ant.project.name}.${executable}"
+            classpath="${classpath}"
+            fork="true" >
+
+            <sysproperty 
+                key= "com.cbthinkx.debug" 
+                value= "true" />
+            <!--
+                <arg value="MommasBadBoy" />
+                <arg value="-Dcom.cbthinkx.debug" />
+            -->
+        </java>
+    </target>
+
+    <target name="debug" depends="compile">
+         <property name="executable-full-path"
+             location="/usr/bin/jdb"/>
+         <exec executable="${executable-full-path}">
+             <!--
+             <arg value="-sourcepath ./src/" />
+             -->
+             <arg value="-classpath .:build/classes" />
+             <arg value="${basepackage}.${ant.project.name}.${executable}"/>
+         </exec>
+    </target>
+</project>
