@@ -68,13 +68,14 @@ public class BarChart extends JPanel {
         );
 
         int x = (int) box.getX();
+        //int bottom = (int) box.getY();
+        int bottom = height;
         for (int i = 0; i < dataName.length; i++) {
             g.setColor(colors[i]);
             g.fillRect(
                 x,
-                (int) box.getY(),
+                bottom - barHeight[i],
                 widthBar,
-                //height
                 barHeight[i]
             );
             x += widthBar;
