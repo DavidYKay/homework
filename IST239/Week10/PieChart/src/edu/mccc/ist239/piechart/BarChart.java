@@ -4,12 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-public class BarChart extends JPanel {
-    private DataModel model;
+public class BarChart extends DKChart {
     private int currentAngle = 0;
 
     public BarChart(DataModel model) {
-        this.model = model;
+        super(model);
     }
 
     private String[] dataName = {

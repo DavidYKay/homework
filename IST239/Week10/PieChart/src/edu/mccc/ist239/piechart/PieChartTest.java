@@ -39,7 +39,7 @@ public class PieChartTest extends JPanel {
 
         //Create model
         DataModel model = new DataModel();
-        PieChart pieChart = new PieChart();
+        PieChart pieChart = new PieChart(model);
         chartPanel.add(
             pieChart
         );
