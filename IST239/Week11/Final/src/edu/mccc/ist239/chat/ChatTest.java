@@ -1,11 +1,6 @@
 package edu.mccc.ist239.chat;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -111,16 +106,63 @@ public class ChatTest extends JPanel implements ChatClientListener {
             }
         );
         add(
-            frameButton,
+            makeSidePanel(),
             BorderLayout.EAST
         );
 
         setPreferredSize(
             new Dimension(
-                500,
-                500
+                800,
+                600
             )
         );
+    }
+    private JPanel makeSidePanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(
+            new BorderLayout()
+        );
+        //BUDDY LIST
+        JPanel buddyListPanel = new JPanel();
+        buddyListPanel.add(
+            new JLabel("Buddy List")
+        );
+        buddyListPanel.setBackground(
+            Color.WHITE
+        );
+
+        //BUTTONS
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(
+            new GridLayout(
+                1, 
+                3
+            )
+        );
+        JButton addButton    = new JButton("Add");
+        JButton removeButton = new JButton("Remove");
+        JButton fileButton   = new JButton("File");
+
+        buttonPanel.add(
+            addButton
+        );
+        buttonPanel.add(
+            removeButton
+        );
+        buttonPanel.add(
+            fileButton
+        );
+
+        panel.add(
+            buddyListPanel,
+            BorderLayout.CENTER
+        );
+        panel.add(
+            buttonPanel,
+            BorderLayout.SOUTH
+        );
+
+        return panel;
     }
 
     public static void main(String[] sa) {

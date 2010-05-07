@@ -13,9 +13,11 @@ public class ChatWindow extends JFrame {
  
     public ChatWindow(Component c) {
         System.out.println("New ChatWindow");
-        setVisible(true);
 		setLocationRelativeTo(c);
+        add(new ChatPanel());
         //setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); 
+        pack();
+        setVisible(true);
     }
 }
