@@ -8,6 +8,11 @@ import javax.swing.event.EventListenerList;
 
 import com.cbthinkx.util.Debug;
 
+/**
+ * The headless client class
+ *
+ * Should have three threads by the time we're done: UI Thread, message thread, file thread?
+ */
 public class ChatClient {
 	private DatagramSocket socket;
 	private InetAddress ipaddr;

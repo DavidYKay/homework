@@ -103,6 +103,21 @@ public class ChatTest extends JPanel implements ChatClientListener {
             BorderLayout.SOUTH
         );
 
+        JButton frameButton = new JButton("New Conversation");
+        frameButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("newFrame Button pressed");
+                    //Open a new frame
+                    new ChatWindow(ChatTest.this);
+                }
+            }
+        );
+        add(
+            frameButton,
+            BorderLayout.EAST
+        );
+
         setPreferredSize(
             new Dimension(
                 500,

@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import com.cbthinkx.util.Debug;
 
-
 /**
  * Single-threaded chat server, which uses a basic infinite loop, awaiting 
  * incoming packets. Note: Connected users are currently tracked in a HashMap.
