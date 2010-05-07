@@ -7,13 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 
 /**
@@ -39,6 +33,8 @@ public class ChatTest extends JPanel implements ChatClientListener {
         setLayout(new BorderLayout());
         chatText = new JTextArea();
         chatText.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(chatText);
+
         JButton sendButton = new JButton("Send");
         sendButton.addActionListener(
             new ActionListener() {
@@ -95,7 +91,8 @@ public class ChatTest extends JPanel implements ChatClientListener {
             BorderLayout.NORTH
         );
         add(
-            chatText,
+            //chatText,
+            scrollPane,
             BorderLayout.CENTER
         );
         add(
