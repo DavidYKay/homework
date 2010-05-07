@@ -28,6 +28,11 @@ public class ChatTest extends JPanel implements ChatClientListener {
         setLayout(new BorderLayout());
         chatText = new JTextArea();
         chatText.setEditable(false);
+        chatText.setBorder(
+            BorderFactory.createTitledBorder(
+                "Chat"
+            )
+        );
         JScrollPane scrollPane = new JScrollPane(chatText);
 
         JButton sendButton = new JButton("Send");
@@ -95,16 +100,6 @@ public class ChatTest extends JPanel implements ChatClientListener {
             BorderLayout.SOUTH
         );
 
-        JButton frameButton = new JButton("New Conversation");
-        frameButton.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("newFrame Button pressed");
-                    //Open a new frame
-                    new ChatWindow(ChatTest.this);
-                }
-            }
-        );
         add(
             makeSidePanel(),
             BorderLayout.EAST
@@ -128,8 +123,10 @@ public class ChatTest extends JPanel implements ChatClientListener {
         );
         //BUDDY LIST
         JPanel buddyListPanel = new JPanel();
-        buddyListPanel.add(
-            new JLabel("Buddy List")
+        buddyListPanel.setBorder(
+            BorderFactory.createTitledBorder(
+                "Buddy List"
+            )
         );
         
         buddyListPanel.setBackground(
@@ -148,6 +145,17 @@ public class ChatTest extends JPanel implements ChatClientListener {
         JButton removeButton = new JButton("Remove");
         JButton fileButton   = new JButton("File");
 
+        JButton frameButton = new JButton("New");
+        frameButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("newFrame Button pressed");
+                    //Open a new frame
+                    new ChatWindow(ChatTest.this);
+                }
+            }
+        );
+
         buttonPanel.add(
             addButton
         );
@@ -156,6 +164,9 @@ public class ChatTest extends JPanel implements ChatClientListener {
         );
         buttonPanel.add(
             fileButton
+        );
+        buttonPanel.add(
+            frameButton
         );
 
         panel.add(
