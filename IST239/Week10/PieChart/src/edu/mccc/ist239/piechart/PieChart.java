@@ -4,7 +4,6 @@ import java.awt.event.*;
 import java.awt.geom.*;
 
 public class PieChart extends DKChart {
-    private final int BLADE_ANGLE = 20;
     
     public PieChart(DataModel model) {
         super(model);
@@ -28,13 +27,13 @@ public class PieChart extends DKChart {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("PaintComponent");
+        Graphics2D g2d = (Graphics2D) g;
         //Bounding box that holds the fan
         Rectangle2D box = getBoundingBox();
         g.setColor(Color.black);      
 
-        int[] data         = model.getData();
-        int[] pieSize      = getPieSize(data);
+        int[] data    = model.getData();
+        int[] pieSize = getPieSize(data);
 
         //Draw the fan's perimeter
         g.drawOval(
@@ -46,21 +45,26 @@ public class PieChart extends DKChart {
 
         int i = 0;
         int currentAngle = 0;
+        //int radius = 50;
+        int radius = (int) box.getHeight() / 4;
         while (currentAngle < 360) {
             int angle = 0;
             if (i < data.length) {
+                //We're still reading from the actual data
+                angle = pieSize[i];
+
                 //Increment the color
                 g.setColor(
                     colors[i]
                 );
-                //We're still reading from the actual data
-                //angle = data[i];
-                angle = pieSize[i];
             } else {
                 //Note: This only here to compensate for rounding errors!
                 //Round out the space, use the last color
                 angle = 360 - currentAngle;
                 //g.setColor(Color.GRAY);
+                g.setColor(
+                    colors[i - 1]
+                );
                 System.out.println(
                     "Filler angle: " + angle
                 );
@@ -81,8 +85,41 @@ public class PieChart extends DKChart {
                 currentAngle,
                 angle
             );
-            i++;
             currentAngle += angle;
+            i++;
+            if (i < data.length) {
+                int originX = (int) box.getX() + ((int) box.getWidth() / 2);
+                int originY = (int) box.getY() + ((int) box.getHeight() / 2);
+
+                double radians = Math.toRadians(angle);
+//                double radians = Math.toRadians(angle + currentAngle);
+                int textY = (int) (originY -
+                (radius * Math.sin(
+                    radians
+                )));
+                int textX = (int) (originX +
+                (radius * Math.cos(
+                    radians
+                )));
+                System.out.println(
+                    "Angle: " + angle
+                );
+                System.out.println(
+                    String.format(
+                        "Text: (%d, %d)",
+                        textX,
+                        textY
+                    )
+                );
+
+                g2d.setColor(Color.BLACK);
+                g2d.drawString(
+                    //dataName[i],
+                    "TEXT",
+                    textX,
+                    textY
+                );
+            }
         }
     }
 
@@ -99,8 +136,8 @@ public class PieChart extends DKChart {
         System.out.println(
             "Total: " + total
         );
-        //double multiplier = (double) total / 360;
-        double multiplier = (double) 360 / total; 
+        //double multiplier = (double) total / maxAngle;
+        double multiplier = (double) maxAngle / total; 
         System.out.println(
             "Multiplier: " + multiplier
         );
@@ -125,4 +162,4 @@ public class PieChart extends DKChart {
             (getHeight() * .8)
         );
     }
-} 
+}
