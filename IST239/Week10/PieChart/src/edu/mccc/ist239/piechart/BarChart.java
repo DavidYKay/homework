@@ -61,13 +61,11 @@ public class BarChart extends DKChart {
             );
         }
         int[] barHeight = getBarHeight(
-            //model.getData()
             data,
             height
         );
 
         int x = (int) box.getX();
-        //int bottom = (int) box.getY();
         int bottom = height;
         for (int i = 0; i < dataName.length; i++) {
             g.setColor(colors[i]);

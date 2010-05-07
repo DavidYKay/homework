@@ -3,7 +3,9 @@
 require "mysql"
 
 def insertData(dbh)
-    idNum = rand(4)
+    #idNum = rand(4)
+    #idNum = rand(0..4)
+    idNum = rand(5) 
     dbh.query("INSERT INTO Student (deptId)
         VALUES
         ('#{idNum}')

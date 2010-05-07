@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-//public class PieChart extends JPanel {
 public class PieChart extends DKChart {
     private final int BLADE_ANGLE = 20;
     
@@ -27,21 +26,6 @@ public class PieChart extends DKChart {
         Color.MAGENTA
     };
 
-    private double[] getPieAngles(int[] data) {
-        int total = 0;
-        double percentages[] = new double[data.length];
-        for (int i = 0; i < data.length; i++) {
-            total += data[i];
-        }
-        for (int i = 0; i < data.length; i++) {
-            percentages[i] = (double) data[i] / total;
-            System.out.println(
-                "Percentages: " + percentages[i]
-            );
-        }
-        return percentages;
-    }
-
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         System.out.println("PaintComponent");
@@ -50,7 +34,6 @@ public class PieChart extends DKChart {
         g.setColor(Color.black);      
 
         int[] data         = model.getData();
-        double[] pieAngles = getPieAngles(data);
         int[] pieSize      = getPieSize(data);
 
         //Draw the fan's perimeter
@@ -60,39 +43,32 @@ public class PieChart extends DKChart {
             (int) box.getWidth(),
             (int) box.getHeight()
         );
-        //Draw four fan blades
-        //for(int startAngle = currentAngle; startAngle < 360 + currentAngle; startAngle += 90) {
-        //    g.fillArc(
-        //        (int) box.getX(),
-        //        (int) box.getY(),
-        //        (int) box.getWidth(),
-        //        (int) box.getHeight(),
-        //        startAngle,
-        //        BLADE_ANGLE
-        //    );
-        //}
 
         int i = 0;
         int currentAngle = 0;
-        //for(int startAngle = 0; startAngle < 360; startAngle += currentAngle) {
         while (currentAngle < 360) {
             int angle = 0;
-            if (i < data.length - 1) {
-                //We're still reading from the actual data
-                angle = data[i];
+            if (i < data.length) {
                 //Increment the color
                 g.setColor(
                     colors[i]
                 );
+                //We're still reading from the actual data
+                //angle = data[i];
+                angle = pieSize[i];
             } else {
+                //Note: This only here to compensate for rounding errors!
                 //Round out the space, use the last color
                 angle = 360 - currentAngle;
+                //g.setColor(Color.GRAY);
+                System.out.println(
+                    "Filler angle: " + angle
+                );
             }
             System.out.println(
                 String.format(
                     "Filling arc from %s to %s, color: %s",
                     currentAngle,
-                    //angle,
                     currentAngle + angle,
                     g.getColor()
                 )
@@ -117,11 +93,19 @@ public class PieChart extends DKChart {
         for (int n : data) {
             total += n;
             System.out.println(
-                "Total: " + total
+                "n: " + n
             );
         }
+        System.out.println(
+            "Total: " + total
+        );
+        //double multiplier = (double) total / 360;
+        double multiplier = (double) 360 / total; 
+        System.out.println(
+            "Multiplier: " + multiplier
+        );
         for (int i = 0; i < data.length; i++) {
-            angle[i] = (int) (((double) data[i] / total) * maxAngle);
+            angle[i] = (int) ((double) data[i] * multiplier);
             System.out.println(
                 String.format(
                     "Angle[%d], %d",
