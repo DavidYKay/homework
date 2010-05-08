@@ -116,11 +116,14 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
         Debug.println("Login Event: " + success);
         //TODO Notify client?
         if (success) {
-            //Success!
             cleanup();
         } else {
             //show login failed
             System.err.println("Login FAILED");
+            JOptionPane.showMessageDialog(
+                this, 
+                "Login failed. Please check your username/password."
+            );
         }
     }
 
