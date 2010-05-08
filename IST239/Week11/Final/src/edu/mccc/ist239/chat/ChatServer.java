@@ -67,16 +67,26 @@ public class ChatServer {
                 //Logoff
 				users.remove(saddr);
 			} else if (msg.startsWith("chat")) {
-				String[] args = msg.split(":");
-                String chat = args[1];
-                chat = String.format(
-                    "%s: %s",
-                    users.get(saddr).toString(),
-                    chat
-                );
-                broadcastMessage(chat, dp.getAddress());
+                try {
+                    //Standard chat message
+                    String[] args = msg.split(":");
+                    String user = users.get(saddr).toString();
+                    String chat = args[1];
+                    chat = String.format(
+                        "%s: %s",
+                        user,
+                        chat
+                    );
+                    broadcastMessage(chat, dp.getAddress());
+                } catch(NullPointerException ex) {
+                    //User did not exist
+                    //Different message??
+                    targetMessage(
+                        "login:false",
+                        saddr
+                    );
+                }
             } else {
-                //Standard message
                 //broadcastMessage(msg, dp.getAddress());
 			}
 		}

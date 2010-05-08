@@ -21,26 +21,15 @@ public class ChatClient {
     /** The server IP address */
 	private InetAddress ipaddr;
     public ChatClient(String username, String password, String ip) {
+        this(ip);
+        login(username, password);
+    }
+    public ChatClient(String ip) {
         //Use a regular expression to break incoming message into NAME, MESSAGE
         //Note that "hi:" and "bye:" are commands for log on, log off
 		try {
 			this.ipaddr = InetAddress.getByName(ip);
 			this.socket = new DatagramSocket();
-            login(username, password);
-			//String hello = "hi:" + username;
-			//String hello = String.format(
-            //    "hi:%s:%s", 
-            //    username,
-            //    password
-            //);
-			//this.socket.send(
-			//	new DatagramPacket(
-			//		hello.getBytes(),
-			//		hello.length(),
-			//		ipaddr,
-			//		5972
-			//	)
-			//);
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}

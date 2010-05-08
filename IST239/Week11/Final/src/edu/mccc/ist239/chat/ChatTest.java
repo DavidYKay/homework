@@ -17,8 +17,8 @@ public class ChatTest extends JPanel implements ChatClientListener {
     public ChatTest() {
         this.chatClient = new ChatClient(
             //This should the the actual user name. Currently just dead weight
-            "dk",
-            "password",
+            //"dk",
+            //"password",
             "127.0.0.1"
         );
         chatClient.addChatClientListener(this);
