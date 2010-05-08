@@ -71,13 +71,15 @@ public class ChatServer {
                     //Standard chat message
                     String[] args = msg.split(":");
                     String user = users.get(saddr).toString();
-                    String chat = args[1];
-                    chat = String.format(
-                        "%s: %s",
-                        user,
-                        chat
-                    );
-                    broadcastMessage(chat, dp.getAddress());
+                    if (args.length >= 2) {
+                        String chat = args[1];
+                        chat = String.format(
+                            "%s: %s",
+                            user,
+                            chat
+                        );
+                        broadcastMessage(chat, dp.getAddress());
+                    }
                 } catch(NullPointerException ex) {
                     //User did not exist
                     //Different message??
