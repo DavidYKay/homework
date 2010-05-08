@@ -69,7 +69,7 @@ public class LoginWindow extends JFrame {
                         //TODO Notify client?
                         dispose();
                     } else {
-                        //
+                        //Show something on the gui? Maybe a pop-up?
                         System.err.println("Login failed!");
                     }
                 }
@@ -101,6 +101,10 @@ public class LoginWindow extends JFrame {
         setVisible(true);
     }
 
+    private void showLoginFailed() {
+        //TODO
+    }
+
     /**
      * MD5 hash the password and send it over the wire
      */
@@ -109,8 +113,8 @@ public class LoginWindow extends JFrame {
         MessageDigest m = null;
         try {
             byte[] bytes = ps.getBytes("UTF-8");
+            //byte[] bytes = ps.getBytes("ASCII");
             m = MessageDigest.getInstance("MD5");
-            //m.update(password.getBytes(), 0, password.length());
             m.update(bytes, 0, bytes.length);
         } catch (Exception ex) {
             

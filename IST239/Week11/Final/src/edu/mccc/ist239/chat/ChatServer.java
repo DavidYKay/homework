@@ -4,6 +4,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.util.HashMap;
+import java.sql.*;
 
 import com.cbthinkx.util.Debug;
 
@@ -14,18 +15,22 @@ import com.cbthinkx.util.Debug;
  * At the moment, the same functionality could be easy implemented using a List.
  */
 public class ChatServer {
+
     public static final int PASSWORD_LENGTH = 20;
 	private HashMap<SocketAddress, User> users = new HashMap<SocketAddress, User>();
 	private DatagramSocket socket;
+
 	public ChatServer() throws Exception {
 		Debug.println("ChatServer:ChatServer()");
 		this.socket = new DatagramSocket(5972);
 	}
+
 	public static void main(String[] sa) throws Exception {
 		Debug.println("ChatServer:main()");
 		ChatServer server = new ChatServer();
 		server.doit();
 	}
+
     /**
      * Main loop. Sits around, waiting for packets from users.
      */
@@ -53,6 +58,7 @@ public class ChatServer {
 			}
 		}
 	}
+
     /**
      * Send a message out to all connected users
      */
@@ -72,5 +78,61 @@ public class ChatServer {
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
+    }
+
+    private boolean validatePasswordWithDB(String userName, String userPass) {
+        boolean result = false;
+        //open db connection
+        Connection conn = null;
+
+        try {
+            String dbUser = "ist239";
+            String dbPassword = "dbPassword";
+            String url = "jdbc:mysql://localhost/ist239";
+            Class.forName ("com.mysql.jdbc.Driver").newInstance ();
+            conn = DriverManager.getConnection (url, dbUser, dbPassword);
+            System.out.println ("Database connection established");
+
+            //fetch that shit
+            String query = 
+                "SELECT password"
+                + " FROM user"
+                + " WHERE username = ?";
+            
+            PreparedStatement prepStatement = conn.prepareStatement(
+                query
+            );
+            prepStatement.setString(
+                1,
+                userName
+            );
+
+            //Statement statement = conn.createStatement();
+            //ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = prepStatement.executeQuery(query);
+            String password = null;
+            while (resultSet.next()) {
+                password = resultSet.getString(1);
+            }
+            if (password.equals(userPass)) {
+                //compare password with one from DB
+                result = true;
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Cannot connect to database server");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            if (conn != null) {
+                try {
+                    conn.close ();
+                    System.out.println ("Database connection terminated");
+                }
+                catch (Exception e) { /* ignore close errors */ }
+            }
+        }
+        return result;
     }
 }
