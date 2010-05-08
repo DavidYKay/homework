@@ -17,6 +17,8 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
         System.out.println("New LoginWindow");
         chatClient = client;
 
+        client.addChatLoginListener(this);
+
 		setTitle("Login Window");
 		setLocationRelativeTo(c);
 
@@ -42,6 +44,15 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
         );
         passField = new JPasswordField(ChatServer.PASSWORD_LENGTH);
         passField.enableInputMethods(true);
+        passField.addKeyListener(
+            new KeyAdapter() {
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        loginAction();
+                    }
+                }
+            }
+        );
         centerPanel.add(passField);
 
         add(
@@ -58,13 +69,7 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("OK Button pressed");
-                    //Pass credentials to client, wait for approval
-                    chatClient.login(
-                        userField.getText().trim(),
-                        new String(
-                            passField.getPassword()
-                        )
-                    );
+                    loginAction();
                 }
             }
         );
@@ -73,7 +78,7 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Cancel Button pressed");
-                    dispose();
+                    cleanup();
                 }
             }
         );
@@ -94,12 +99,25 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
         setVisible(true);
     }
 
+    /**
+     * Fired by either the enter key or the OK button
+     */
+    private void loginAction() {
+        //Pass credentials to client, wait for approval
+        chatClient.login(
+            userField.getText().trim(),
+            new String(
+                passField.getPassword()
+            )
+        );
+    }
+
     public void loginEvent(boolean success) {
         Debug.println("Login Event: " + success);
         //TODO Notify client?
         if (success) {
             //Success!
-            dispose();
+            cleanup();
         } else {
             //show login failed
             System.err.println("Login FAILED");
