@@ -78,7 +78,7 @@ public class BuddyList extends JPanel implements ListSelectionListener {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("newFrame Button pressed");
                     //Open a new frame
-                    new ChatWindow(BuddyList.this);
+                    //new ChatWindow(BuddyList.this, "TEST");
                 }
             }
         );

@@ -5,12 +5,16 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class ChatPanel extends JPanel {
+    /** The person the user is chatting with */
+    private String username;
     private ChatClient chatClient;
     private JTextArea chatText;
     private JTextField inputField;
 
-    public ChatPanel() {
+    public ChatPanel(ChatClient chatClient, String username) {
         System.out.println("New ChatPanel");
+        this.chatClient = chatClient;
+        this.username   = username;
         initGUI();
         System.out.println("ChatPanel GUI");
         setVisible(true);
@@ -101,10 +105,25 @@ public class ChatPanel extends JPanel {
         );
     }
 
+    /**
+     * Sends the currently input text to the other user in the conversation
+     */
     private void sendMessage() {
-        //TODO
+        String message = inputField.getText().trim();
+        if (message != null) {
+            chatClient.sendPrivateMessage(
+                username,
+                message
+            );
+        }
     }
+
+    /**
+     * Initiates a private connection with the other user and sends a file 
+     * across the wire.
+     */
     private void sendFile() {
         //TODO
+
     }
 }

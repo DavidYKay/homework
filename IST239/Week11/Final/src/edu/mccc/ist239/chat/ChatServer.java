@@ -1,8 +1,5 @@
 package edu.mccc.ist239.chat;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketAddress;
+import java.net.*;
 import java.util.HashMap;
 import java.sql.*;
 
@@ -87,6 +84,33 @@ public class ChatServer {
                         "login:false",
                         saddr
                     );
+                }
+			} else if (msg.startsWith("im")) {
+                String[] args = msg.split(":");
+                if (args.length >= 3) {
+                    String targetName = args[1];
+                    String message = args[2];
+                    //Grab user from our list
+                    User target = null;
+                    for (User u : users.values()) {
+                        if (u.toString().equals(targetName)) {
+                            target = u;
+                        }
+                    }
+                    if (target == null) {
+                        //Target not found
+                        System.err.println("Target not found.");
+                        return;
+                    }
+                    targetMessage(
+                        message,
+                        new InetSocketAddress(
+                            target.getInetAddress(),
+                            target.getPort()
+                        )
+                    );
+                } else {
+                    //improper # arguments
                 }
             } else {
                 //broadcastMessage(msg, dp.getAddress());

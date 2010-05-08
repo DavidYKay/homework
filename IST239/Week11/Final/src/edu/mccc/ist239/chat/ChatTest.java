@@ -314,7 +314,7 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
      * Start a new private IM conversation
      */
     public void privateIM(String username) {
-        new ChatWindow(ChatTest.this);
+        new ChatWindow(ChatTest.this, username, chatClient);
     }
      
     public void addBuddy(String username) {

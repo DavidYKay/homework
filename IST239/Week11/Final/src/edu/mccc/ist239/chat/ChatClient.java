@@ -85,7 +85,6 @@ public class ChatClient {
             username,
             md5Password
         );
-
         sendMessage(msg);
     }
 
@@ -103,7 +102,20 @@ public class ChatClient {
     }
 
     /**
-     * Send a message to the central server
+     * Send a private IM to a designated user
+     */
+    public void sendPrivateMessage(String user, String message) {
+        sendMessage(
+            String.format(
+                "im:%s:%s",
+                user,
+                message
+            )
+        );
+    }
+
+    /**
+     * Send a message to the central server, raw
      */
     public void sendMessage(String message) {
         try {
