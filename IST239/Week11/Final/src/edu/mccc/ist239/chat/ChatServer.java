@@ -44,11 +44,20 @@ public class ChatServer {
 			SocketAddress saddr = dp.getSocketAddress();
 			if (msg.startsWith("hi")) {
                 //Log on
-				String[] sa = msg.split(":");
-				User user = new User(sa[1]);
-				user.setInetAddress(dp.getAddress());
-				user.setPort(dp.getPort());
-				users.put(saddr, user);
+				String[] args = msg.split(":");
+				User user = new User(args[1]);
+				String password = args[2];
+                if (validatePasswordWithDB(user, password)) {
+                    user.setInetAddress(dp.getAddress());
+                    user.setPort(dp.getPort());
+                    users.put(saddr, user);
+                } else {
+                    //Send rejection notice to client
+                    targetMessage(
+                        "badPassword",
+                        saddr
+                    );
+                }
 			} else if (msg.startsWith("bye")) {
                 //Logoff
 				users.remove(saddr);
@@ -60,7 +69,26 @@ public class ChatServer {
 	}
 
     /**
-     * Send a message out to all connected users
+     * Send a message out to ONE user
+     */
+    private void targetMessage(String msg, SocketAddress saddr) {
+        Debug.println("ChatServer.targetMessage: " + msg);
+		try {
+            User target = users.get(saddr);
+            DatagramPacket dp = new DatagramPacket(
+                msg.getBytes(),
+                msg.length(),
+                target.getInetAddress(),
+                target.getPort()
+            );
+            socket.send(dp);
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+		}
+    }
+
+    /**
+     * Send a message out to ALL connected users
      */
     private void broadcastMessage(String msg, InetAddress iaddr) {
         Debug.println("ChatServer.broadcastMessage: " + msg);
@@ -95,7 +123,7 @@ public class ChatServer {
 
             //fetch that shit
             String query = 
-                "SELECT password"
+                "SELECT dbPassword"
                 + " FROM user"
                 + " WHERE username = ?";
             
@@ -110,9 +138,9 @@ public class ChatServer {
             //Statement statement = conn.createStatement();
             //ResultSet resultSet = statement.executeQuery(query);
             ResultSet resultSet = prepStatement.executeQuery(query);
-            String password = null;
+            String dbPassword = null;
             while (resultSet.next()) {
-                password = resultSet.getString(1);
+                dbPassword = resultSet.getString(1);
             }
             if (password.equals(userPass)) {
                 //compare password with one from DB

@@ -31,4 +31,7 @@ public class User {
     public void setInetAddress(InetAddress inetaddr) {
         this.inetaddr = inetaddr;
     }
+    public String toString() {
+        return name;
+    }
 }

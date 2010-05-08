@@ -14,7 +14,9 @@ import com.cbthinkx.util.Debug;
  * Should have three threads by the time we're done: UI Thread, message thread, file thread?
  */
 public class ChatClient {
+    /** The local socket */
 	private DatagramSocket socket;
+    /** The server IP address */
 	private InetAddress ipaddr;
     public ChatClient(String username, String ip) {
         //Use a regular expression to break incoming message into NAME, MESSAGE
@@ -57,8 +59,15 @@ public class ChatClient {
 			}
 		}.start();
     }
+
     public boolean login(String username, String md5Password) {
         //Send to server
+        String msg = String.format(
+            "hi:%s:%s",
+            username,
+            password
+        );
+        sendMessage(msg);
         //Success?
         if (true) {
             return true;
@@ -82,6 +91,7 @@ public class ChatClient {
             System.err.println(ex.getMessage());
         }
     }
+
     //Event Listener code copied from earlier MVC example
 	private EventListenerList listenerList = new EventListenerList();
 	public void addChatClientListener(ChatClientListener l) {
