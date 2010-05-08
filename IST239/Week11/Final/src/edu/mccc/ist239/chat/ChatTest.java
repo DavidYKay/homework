@@ -12,6 +12,7 @@ import com.cbthinkx.util.Debug;
 public class ChatTest extends JPanel implements ChatClientListener, ChatLoginListener {
     //private JFrame jFrame;
     private ChatClient chatClient;
+    private BuddyList buddyList;
     private JTextArea nameField;
     private JTextArea chatText;
     private JTextField inputField;
@@ -90,10 +91,6 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
             BorderLayout.CENTER
         );
 
-        //add(
-        //    namePanel,
-        //    BorderLayout.NORTH
-        //);
         add(
             //chatText,
             scrollPane,
@@ -104,9 +101,10 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
             BorderLayout.SOUTH
         );
 
+        buddyList = new BuddyList(this);
         add(
             //makeSidePanel(),
-            new BuddyList(),
+            buddyList,
             BorderLayout.EAST
         );
 
@@ -300,6 +298,9 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
         }
     }
 
+    /**
+     * Send a standard chat message
+     */
     private void sendMessage() {
         //chatClient.sendMessage(
         chatClient.sendChatMessage(
@@ -307,6 +308,13 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
             inputField.getText()
         );
         inputField.setText("");
+    }
+
+    /**
+     * Start a new private IM conversation
+     */
+    public void privateIM(String username) {
+        new ChatWindow(ChatTest.this);
     }
      
     public void addBuddy(String username) {

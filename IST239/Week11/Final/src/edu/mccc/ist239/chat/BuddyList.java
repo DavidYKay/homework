@@ -4,8 +4,12 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-/* BuddyList.java requires no other files. */
+/**
+ * JPanel to manage the user's buddy list
+ * Based on sun's JList example
+ */
 public class BuddyList extends JPanel implements ListSelectionListener {
+    private ChatTest chat;
     private JList list;
     private DefaultListModel listModel;
 
@@ -14,10 +18,13 @@ public class BuddyList extends JPanel implements ListSelectionListener {
     private JButton fireButton;
     private JTextField employeeName;
 
-    public BuddyList() {
+    public BuddyList(ChatTest chat) {
         super(new BorderLayout());
+        this.chat = chat;
 
         listModel = new DefaultListModel();
+        listModel.addElement("dk");
+        listModel.addElement("kyle");
         listModel.addElement("Debbie Scott");
         listModel.addElement("Scott Hommel");
         listModel.addElement("Sharon Zakhour");
@@ -27,6 +34,7 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
+        list.addMouseListener(new BuddyMouseListener());
         list.setVisibleRowCount(5);
         JScrollPane listScrollPane = new JScrollPane(list);
 
@@ -92,6 +100,9 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         add(buttonPanel, BorderLayout.PAGE_END);
     }
 
+    /**
+     * Delete buddies
+     */
     class FireListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
@@ -117,7 +128,10 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         }
     }
 
-    //This listener is shared by the text field and the hire button.
+    /**
+     * Add buddies
+     * This listener is shared by the text field and the hire button.
+     */
     class HireListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
@@ -198,6 +212,20 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         }
     }
 
+    class BuddyMouseListener extends MouseAdapter {
+        public void mouseClicked(MouseEvent e){
+            if (e.getClickCount() == 2) {
+                int index = list.locationToIndex(e.getPoint());
+                ListModel dlm = list.getModel();
+                Object item   = dlm.getElementAt(index);;
+                list.ensureIndexIsVisible(index);
+                System.out.println("Double clicked on " + item);
+
+                chat.privateIM(item.toString());
+            }
+        }
+    }
+
     //This method is required by ListSelectionListener.
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
@@ -211,36 +239,6 @@ public class BuddyList extends JPanel implements ListSelectionListener {
                 fireButton.setEnabled(true);
             }
         }
-    }
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("BuddyList");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        JComponent newContentPane = new BuddyList();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
     }
 }
 
