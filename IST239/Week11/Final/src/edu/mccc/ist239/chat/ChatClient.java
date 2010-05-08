@@ -3,6 +3,8 @@ import java.awt.EventQueue;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.security.*;
+import java.math.*;
 
 import javax.swing.event.EventListenerList;
 
@@ -22,23 +24,23 @@ public class ChatClient {
         //Use a regular expression to break incoming message into NAME, MESSAGE
         //Note that "hi:" and "bye:" are commands for log on, log off
 		try {
-			//String hello = "hi:" + username;
-			String hello = String.format(
-                "hi:%s:%s", 
-                username,
-                password
-            );
-
 			this.ipaddr = InetAddress.getByName(ip);
 			this.socket = new DatagramSocket();
-			this.socket.send(
-				new DatagramPacket(
-					hello.getBytes(),
-					hello.length(),
-					ipaddr,
-					5972
-				)
-			);
+            login(username, password);
+			//String hello = "hi:" + username;
+			//String hello = String.format(
+            //    "hi:%s:%s", 
+            //    username,
+            //    password
+            //);
+			//this.socket.send(
+			//	new DatagramPacket(
+			//		hello.getBytes(),
+			//		hello.length(),
+			//		ipaddr,
+			//		5972
+			//	)
+			//);
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
@@ -75,15 +77,27 @@ public class ChatClient {
 		}.start();
     }
 
-    public void login(String username, String md5Password) {
+    public void login(String username, String ps) {
+        MessageDigest m = null;
+        try {
+            byte[] bytes = ps.getBytes("UTF-8");
+            //byte[] bytes = ps.getBytes("ASCII");
+            m = MessageDigest.getInstance("MD5");
+            m.update(bytes, 0, bytes.length);
+        } catch (Exception ex) {
+            System.err.println("MD5 failed");
+        }
+        String md5Password = new BigInteger(1, m.digest()).toString(16);
+        System.out.println("MD5: " + md5Password);
+
         //Send to server
         String msg = String.format(
             "hi:%s:%s",
             username,
             md5Password
         );
+
         sendMessage(msg);
-        //Success?
     }
 
     public void logOut() {

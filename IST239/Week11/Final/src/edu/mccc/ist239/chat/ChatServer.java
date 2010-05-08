@@ -134,14 +134,17 @@ public class ChatServer {
             PreparedStatement prepStatement = conn.prepareStatement(
                 query
             );
+
             prepStatement.setString(
                 1,
-                userName
+                //userName
+                "dk"
             );
 
             //Statement statement = conn.createStatement();
             //ResultSet resultSet = statement.executeQuery(query);
-            ResultSet resultSet = prepStatement.executeQuery(query);
+            //ResultSet resultSet = prepStatement.executeQuery(query);
+            ResultSet resultSet = prepStatement.executeQuery();
             String password = null;
             while (resultSet.next()) {
                 password = resultSet.getString(1);
@@ -149,6 +152,15 @@ public class ChatServer {
             if (password.equals(userPass)) {
                 //compare password with one from DB
                 result = true;
+            } else {
+                System.out.println(
+                    String.format(
+                        "Invalid login for user: %s. Expected password: %s, received: %s",
+                        userName,
+                        password,
+                        userPass
+                    )
+                );
             }
         }
         catch (Exception e) {

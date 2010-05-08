@@ -1,8 +1,6 @@
 package edu.mccc.ist239.chat;
 import java.awt.*;
 import java.awt.event.*;
-import java.security.*;
-import java.math.*;
 
 import javax.swing.*;
 
@@ -61,9 +59,11 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("OK Button pressed");
                     //Pass credentials to client, wait for approval
-                    login(
+                    chatClient.login(
                         userField.getText().trim(),
-                        passField.getPassword()
+                        new String(
+                            passField.getPassword()
+                        )
                     );
                 }
             }
@@ -109,28 +109,5 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
     private void cleanup() {
         chatClient.removeChatLoginListener(this);
         dispose();
-    }
-
-    /**
-     * MD5 hash the password and send it over the wire
-     */
-    private void login(String user, char[] password) {
-        String ps = new String(password);
-        MessageDigest m = null;
-        try {
-            byte[] bytes = ps.getBytes("UTF-8");
-            //byte[] bytes = ps.getBytes("ASCII");
-            m = MessageDigest.getInstance("MD5");
-            m.update(bytes, 0, bytes.length);
-        } catch (Exception ex) {
-            
-        }
-        String passwordMD5 = new BigInteger(1, m.digest()).toString(16);
-        System.out.println("MD5: " + passwordMD5);
-        //send to server, return result
-        chatClient.login(
-            user,
-            passwordMD5
-        );
     }
 }
