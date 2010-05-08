@@ -8,7 +8,8 @@ import javax.swing.*;
 /**
  * The actual client GUI. A ChatClient object is used to send/received messages from the server.
  */
-public class ChatTest extends JPanel implements ChatClientListener {
+public class ChatTest extends JPanel implements ChatClientListener, ChatLoginListener {
+    //private JFrame jFrame;
     private ChatClient chatClient;
     private JTextArea nameField;
     private JTextArea chatText;
@@ -22,6 +23,7 @@ public class ChatTest extends JPanel implements ChatClientListener {
             "127.0.0.1"
         );
         chatClient.addChatClientListener(this);
+        chatClient.addChatLoginListener(this);
         initGUI();
     }
     private void initGUI() {
@@ -322,22 +324,46 @@ public class ChatTest extends JPanel implements ChatClientListener {
     }
 
     public static void main(String[] sa) {
-		JFrame frame = new JFrame();
-		frame.setTitle("Chat Demo");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
+		//JFrame frame = new JFrame();
+		JFrame jFrame = new JFrame();
+		jFrame.setTitle("Chat Demo");
+		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jFrame.setLocationRelativeTo(null);
         ChatTest ct = new ChatTest();
-        frame.add(
+        jFrame.add(
             ct
         );
-        ct.makeMenu(frame);
-		frame.pack();
-		frame.setVisible(true);
+        ct.makeMenu(jFrame);
+		jFrame.pack();
+		jFrame.setVisible(true);
     }
 
     public void messageReceived(ChatClientEvent e) {
         System.out.println("Message received!: " + e.getMessage());
         chatText.append(e.getMessage() + "\n");
+    }
+
+    public void loginEvent(boolean success) {
+        JFrame rootFrame = getRootFrame(this);
+        if (success) {
+            rootFrame.setTitle("Chat Demo: Online");
+        } else {
+            rootFrame.setTitle("Chat Demo: Offline");
+        }
+    }
+
+    private JFrame getRootFrame(Container container) {
+        Container parent = container.getParent();
+        if (parent == null) {
+            //if (container.class == JFrame.class) {
+            if (container instanceof JFrame) {
+                return (JFrame) container;
+            } else {
+                return null;
+            }
+        } else {
+            return getRootFrame(parent);
+        }
     }
 
     private void sendMessage() {
