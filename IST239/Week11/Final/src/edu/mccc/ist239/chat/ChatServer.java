@@ -37,7 +37,8 @@ public class ChatServer {
 	private void doit() throws Exception {
 		Debug.println("ChatServer:doit()");
 		for (;;) {
-			DatagramPacket dp = new DatagramPacket(new byte[32], 32);
+			//DatagramPacket dp = new DatagramPacket(new byte[32], 32);
+			DatagramPacket dp = new DatagramPacket(new byte[64], 64);
 			socket.receive(dp);
 			String msg = new String(dp.getData()).trim();
 			Debug.println(msg);
