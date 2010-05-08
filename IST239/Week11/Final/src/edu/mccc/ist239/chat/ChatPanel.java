@@ -15,7 +15,8 @@ public class ChatPanel extends JPanel implements ChatClientListener {
         System.out.println("New ChatPanel");
         this.chatClient = chatClient;
         this.userName   = userName;
-        chatClient.addChatClientListener(this);
+        //chatClient.addChatClientListener(this);
+        chatClient.addChatWindow(userName, this);
         initGUI();
         System.out.println("ChatPanel GUI");
         setVisible(true);
