@@ -116,7 +116,11 @@ public class ChatPanel extends JPanel implements ChatClientListener {
                 userName,
                 message
             );
+            chatText.append(
+                "Me: " + message + "\n"
+            );
         }
+        inputField.setText("");
     }
 
     /**

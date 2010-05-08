@@ -17,7 +17,7 @@ public class ChatWindow extends JFrame {
         //this.username = username;
 
         System.out.println("New ChatWindow");
-		setTitle("Chat Window");
+		setTitle("Chat with " + username);
 		setLocationRelativeTo(c);
         //add(new ChatPanel());
         add(
