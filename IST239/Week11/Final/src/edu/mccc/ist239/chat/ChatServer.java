@@ -71,11 +71,14 @@ public class ChatServer {
                     if (args.length >= 2) {
                         String chat = args[1];
                         chat = String.format(
-                            "%s: %s",
+                            "chat:%s: %s",
                             user,
                             chat
                         );
-                        broadcastMessage(chat, dp.getAddress());
+                        broadcastMessage(
+                            chat, 
+                            dp.getAddress()
+                        );
                     }
                 } catch(NullPointerException ex) {
                     //User did not exist
@@ -176,9 +179,9 @@ public class ChatServer {
         Connection conn = null;
 
         try {
-            String dbUser = "ist239";
+            String dbUser     = "ist239";
             String dbPassword = "password";
-            String url = "jdbc:mysql://localhost/ist239";
+            String url        = "jdbc:mysql://localhost/ist239";
             Class.forName ("com.mysql.jdbc.Driver").newInstance ();
             conn = DriverManager.getConnection (url, dbUser, dbPassword);
             System.out.println ("Database connection established");
@@ -195,8 +198,8 @@ public class ChatServer {
 
             prepStatement.setString(
                 1,
-                //userName
-                "dk"
+                userName
+                //"dk"
             );
 
             //Statement statement = conn.createStatement();

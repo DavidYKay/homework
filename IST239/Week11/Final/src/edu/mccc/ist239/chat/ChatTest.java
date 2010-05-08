@@ -272,7 +272,16 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
 
     public void messageReceived(ChatClientEvent e) {
         System.out.println("Message received!: " + e.getMessage());
-        chatText.append(e.getMessage() + "\n");
+        String msg = e.getMessage();
+        if (msg.startsWith("chat")) {
+            //Chop off the prefix
+            msg = msg.substring(
+                5,
+                msg.length() 
+            );
+        }
+        //chatText.append(e.getMessage() + "\n");
+        chatText.append(msg + "\n");
     }
 
     public void loginEvent(boolean success) {
