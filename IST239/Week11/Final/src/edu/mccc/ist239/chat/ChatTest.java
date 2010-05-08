@@ -275,6 +275,7 @@ public class ChatTest extends JPanel implements ChatClientListener {
                     System.out.println(
                         "Sign on pressed"
                     );
+                    new LoginWindow(ChatTest.this);
                 }
             }
         );
