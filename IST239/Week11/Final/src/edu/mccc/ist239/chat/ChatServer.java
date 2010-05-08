@@ -47,7 +47,7 @@ public class ChatServer {
 				String[] args = msg.split(":");
 				User user = new User(args[1]);
 				String password = args[2];
-                if (validatePasswordWithDB(user, password)) {
+                if (validatePasswordWithDB(user.toString(), password)) {
                     user.setInetAddress(dp.getAddress());
                     user.setPort(dp.getPort());
                     users.put(saddr, user);
@@ -115,7 +115,7 @@ public class ChatServer {
 
         try {
             String dbUser = "ist239";
-            String dbPassword = "dbPassword";
+            String dbPassword = "password";
             String url = "jdbc:mysql://localhost/ist239";
             Class.forName ("com.mysql.jdbc.Driver").newInstance ();
             conn = DriverManager.getConnection (url, dbUser, dbPassword);
@@ -123,7 +123,7 @@ public class ChatServer {
 
             //fetch that shit
             String query = 
-                "SELECT dbPassword"
+                "SELECT password"
                 + " FROM user"
                 + " WHERE username = ?";
             
@@ -138,9 +138,9 @@ public class ChatServer {
             //Statement statement = conn.createStatement();
             //ResultSet resultSet = statement.executeQuery(query);
             ResultSet resultSet = prepStatement.executeQuery(query);
-            String dbPassword = null;
+            String password = null;
             while (resultSet.next()) {
-                dbPassword = resultSet.getString(1);
+                password = resultSet.getString(1);
             }
             if (password.equals(userPass)) {
                 //compare password with one from DB

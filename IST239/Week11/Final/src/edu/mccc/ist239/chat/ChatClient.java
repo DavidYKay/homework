@@ -65,7 +65,7 @@ public class ChatClient {
         String msg = String.format(
             "hi:%s:%s",
             username,
-            password
+            md5Password
         );
         sendMessage(msg);
         //Success?
