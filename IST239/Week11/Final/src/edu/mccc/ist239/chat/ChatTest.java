@@ -199,7 +199,7 @@ public class ChatTest extends JPanel implements ChatClientListener {
         menu.setMnemonic(KeyEvent.VK_A);
         menu.getAccessibleContext().setAccessibleDescription(
                         "The only menu in this program that has menu items");
-        menuBar.add(menu);
+        //menuBar.add(menu);
 
         //a group of JMenuItems
         menuItem = new JMenuItem("A text-only menu item",
@@ -258,10 +258,62 @@ public class ChatTest extends JPanel implements ChatClientListener {
         menu.add(submenu);
 
         //Build second menu in the menu bar.
-        menu = new JMenu("Another Menu");
+        menu = new JMenu("Actions");
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription(
-                "This menu does nothing");
+                "Chat actions found here");
+
+        menuItem = new JMenuItem("Sign On",
+                KeyEvent.VK_O);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "Sign on to DKChat");
+        menuItem.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(
+                        "Sign on pressed"
+                    );
+                }
+            }
+        );
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Send File",
+                KeyEvent.VK_S);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This sends files to other users");
+        menuItem.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(
+                        "Menu Item Pressed"
+                    );
+                }
+            }
+        );
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Sign Off",
+                KeyEvent.VK_F);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_3, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "Sign off of DKChat");
+        menuItem.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(
+                        "Sign off pressed"
+                    );
+                }
+            }
+        );
+        menu.add(menuItem);
+
         menuBar.add(menu);
 
         frame.setJMenuBar(menuBar);
