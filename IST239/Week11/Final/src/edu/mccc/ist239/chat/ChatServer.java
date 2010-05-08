@@ -89,7 +89,7 @@ public class ChatServer {
                 String[] args = msg.split(":");
                 if (args.length >= 3) {
                     String targetName = args[1];
-                    String message = args[2];
+                    String sourceName = users.get(saddr).toString();
                     //Grab user from our list
                     User target = null;
                     for (User u : users.values()) {
@@ -100,12 +100,18 @@ public class ChatServer {
                                 String.format(
                                     "Target not found. Expected: %s Received: %s",
                                     targetName,
+                                    //sourceName,
                                     u.toString()
                                 )
                             );
                         }
                     }
                     if (target != null) {
+                        String message = String.format(
+                            "im:%s:%s",
+                            sourceName,
+                            args[2]
+                        );
                         //Target found
                         targetMessage(
                             message,
