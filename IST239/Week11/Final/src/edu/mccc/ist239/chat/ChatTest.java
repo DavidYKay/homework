@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import com.cbthinkx.util.Debug;
 
 /**
  * The actual client GUI. A ChatClient object is used to send/received messages from the server.
@@ -145,6 +146,16 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
             )
         );
         JButton addButton    = new JButton("Add");
+        addButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    new AddBuddyWindow(
+                        ChatTest.this, 
+                        ChatTest.this
+                    );
+                }
+            }
+        );
         JButton removeButton = new JButton("Remove");
         JButton fileButton   = new JButton("File");
 
@@ -373,5 +384,12 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
             inputField.getText()
         );
         inputField.setText("");
+    }
+     
+    public void addBuddy(String username) {
+        Debug.println("ChatTest.addBuddy: " + username);
+    }
+    public void removeBuddy(String username) {
+        Debug.println("ChatTest.removeBuddy: " + username);
     }
 }
