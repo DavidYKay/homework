@@ -4,17 +4,18 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class ChatPanel extends JPanel {
+public class ChatPanel extends JPanel implements ChatClientListener {
     /** The person the user is chatting with */
-    private String username;
+    private String userName;
     private ChatClient chatClient;
     private JTextArea chatText;
     private JTextField inputField;
 
-    public ChatPanel(ChatClient chatClient, String username) {
+    public ChatPanel(ChatClient chatClient, String userName) {
         System.out.println("New ChatPanel");
         this.chatClient = chatClient;
-        this.username   = username;
+        this.userName   = userName;
+        chatClient.addChatClientListener(this);
         initGUI();
         System.out.println("ChatPanel GUI");
         setVisible(true);
@@ -112,7 +113,7 @@ public class ChatPanel extends JPanel {
         String message = inputField.getText().trim();
         if (message != null) {
             chatClient.sendPrivateMessage(
-                username,
+                userName,
                 message
             );
         }
@@ -126,4 +127,24 @@ public class ChatPanel extends JPanel {
         //TODO
 
     }
+
+    /**
+     * On receipt of message
+     */
+    public void messageReceived(ChatClientEvent e) {
+        System.out.println("Message received!: " + e.getMessage());
+        //Check if it matches this conversation
+        String msg = e.getMessage();
+        if (msg.startsWith("im")) {
+            String[] args = msg.split(":");
+            String message = userName + ": " + args[2];
+            //Chop off the prefix
+            //msg = msg.substring(
+            //    3,
+            //    msg.length() 
+            //);
+            chatText.append(message + "\n");
+        }
+    }
+
 }
