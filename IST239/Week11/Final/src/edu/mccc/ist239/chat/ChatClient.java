@@ -57,6 +57,14 @@ public class ChatClient {
 			}
 		}.start();
     }
+    public boolean login(String username, String md5Password) {
+        //Send to server
+        //Success?
+        if (true) {
+            return true;
+        }
+        return false;
+    }
     public void logOut() {
         sendMessage("bye");
     }

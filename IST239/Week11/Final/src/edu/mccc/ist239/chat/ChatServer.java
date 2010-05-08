@@ -14,6 +14,7 @@ import com.cbthinkx.util.Debug;
  * At the moment, the same functionality could be easy implemented using a List.
  */
 public class ChatServer {
+    public static final int PASSWORD_LENGTH = 20;
 	private HashMap<SocketAddress, User> users = new HashMap<SocketAddress, User>();
 	private DatagramSocket socket;
 	public ChatServer() throws Exception {

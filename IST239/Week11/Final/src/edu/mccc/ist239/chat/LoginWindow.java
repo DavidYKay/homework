@@ -1,6 +1,8 @@
 package edu.mccc.ist239.chat;
 import java.awt.*;
 import java.awt.event.*;
+import java.security.*;
+import java.math.*;
 
 import javax.swing.*;
 
@@ -8,24 +10,44 @@ import javax.swing.*;
  * JFrame which allows the user to log in
  */
 public class LoginWindow extends JFrame {
-    public LoginWindow(Component c) {
+    private ChatClient chatClient;
+    private JTextField userField;
+    private JPasswordField passField;
+    public LoginWindow(Component c, ChatClient client) {
         System.out.println("New LoginWindow");
+        chatClient = client;
+
 		setTitle("Login Window");
 		setLocationRelativeTo(c);
 
         setLayout(
             new BorderLayout()
         );
+
         JPanel centerPanel = new JPanel();
-        centerPanel.add(
-            new JLabel("TEST")
+        centerPanel.setLayout(
+            new BoxLayout(
+                centerPanel,
+                BoxLayout.Y_AXIS
+            )
         );
+        //Credentials
+        centerPanel.add(
+            new JLabel("Username")
+        );
+        userField = new JTextField();
+        centerPanel.add(userField);
+        centerPanel.add(
+            new JLabel("Password")
+        );
+        passField = new JPasswordField(ChatServer.PASSWORD_LENGTH);
+        passField.enableInputMethods(true);
+        centerPanel.add(passField);
 
         add(
             centerPanel,
             BorderLayout.CENTER
         );
-
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(
@@ -37,7 +59,19 @@ public class LoginWindow extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("OK Button pressed");
                     //Pass credentials to client, wait for approval
-
+                    if (
+                        login(
+                            userField.getText().trim(),
+                            passField.getPassword()
+                        )
+                    ) {
+                        //Success!
+                        //TODO Notify client?
+                        dispose();
+                    } else {
+                        //
+                        System.err.println("Login failed!");
+                    }
                 }
             }
         );
@@ -67,5 +101,26 @@ public class LoginWindow extends JFrame {
         setVisible(true);
     }
 
-
+    /**
+     * MD5 hash the password and send it over the wire
+     */
+    private boolean login(String user, char[] password) {
+        String ps = new String(password);
+        MessageDigest m = null;
+        try {
+            byte[] bytes = ps.getBytes("UTF-8");
+            m = MessageDigest.getInstance("MD5");
+            //m.update(password.getBytes(), 0, password.length());
+            m.update(bytes, 0, bytes.length);
+        } catch (Exception ex) {
+            
+        }
+        String passwordMD5 = new BigInteger(1, m.digest()).toString(16);
+        System.out.println("MD5: " + passwordMD5);
+        //send to server, return result
+        return chatClient.login(
+            user,
+            passwordMD5
+        );
+    }
 }

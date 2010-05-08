@@ -86,10 +86,10 @@ public class ChatTest extends JPanel implements ChatClientListener {
             BorderLayout.CENTER
         );
 
-        add(
-            namePanel,
-            BorderLayout.NORTH
-        );
+        //add(
+        //    namePanel,
+        //    BorderLayout.NORTH
+        //);
         add(
             //chatText,
             scrollPane,
@@ -275,7 +275,7 @@ public class ChatTest extends JPanel implements ChatClientListener {
                     System.out.println(
                         "Sign on pressed"
                     );
-                    new LoginWindow(ChatTest.this);
+                    new LoginWindow(ChatTest.this, chatClient);
                 }
             }
         );
