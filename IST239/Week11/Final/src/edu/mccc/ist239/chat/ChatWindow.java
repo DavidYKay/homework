@@ -10,24 +10,27 @@ import javax.swing.*;
  * Has a send button and a file button
  */
 public class ChatWindow extends JFrame {
-    /** The person the user is chatting with */
-    //private String username;
- 
-    public ChatWindow(Component c, String username, ChatClient chatClient) {
-        //this.username = username;
 
+    public ChatWindow(Component c, ChatPanel panel) {
         System.out.println("New ChatWindow");
-		setTitle("Chat with " + username);
+		setTitle("Chat with " + panel.getUsername());
 		setLocationRelativeTo(c);
         //add(new ChatPanel());
         add(
+            panel
+        );
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); 
+        pack();
+        setVisible(true);
+    }
+
+    public ChatWindow(Component c, String username, ChatClient chatClient) {
+        this(
+            c,
             new ChatPanel(
                 chatClient, 
                 username
             )
         );
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); 
-        pack();
-        setVisible(true);
     }
 }

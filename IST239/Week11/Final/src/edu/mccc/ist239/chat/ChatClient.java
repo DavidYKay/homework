@@ -1,8 +1,7 @@
 package edu.mccc.ist239.chat;
 import java.awt.EventQueue;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.util.*;
+import java.net.*;
 import java.security.*;
 import java.math.*;
 
@@ -50,6 +49,35 @@ public class ChatClient {
                                     fireLoginEvent(true);
                                 } else {
                                     fireLoginEvent(false);
+                                }
+                            } else if (msg.startsWith("im")) {
+                                String[] args = msg.split(":");
+                                String username = args[1];
+                                //find the right window
+                                ChatClientListener l = chatWindows.get(username);
+                                if (l == null) {
+                                    ChatPanel cp = new ChatPanel(
+                                        ChatClient.this,
+                                        username
+                                    );
+                                    new ChatWindow(
+                                        null,
+                                        cp
+                                    );
+                                    cp.messageReceived(
+                                        new ChatClientEvent(
+                                            ChatClient.this, 
+                                            msg
+                                        )
+                                    );
+                                } else {
+                                    //send it to them
+                                    l.messageReceived(
+                                        new ChatClientEvent(
+                                            ChatClient.this, 
+                                            msg
+                                        )
+                                    );
                                 }
                             } else {
                                 fireChatClientMessageReceived(msg);
@@ -211,4 +239,19 @@ public class ChatClient {
 			}
 		}
 	}
+
+    //This keeps track of the IM windows and is used to detect when a new 
+    //one must be spawned 
+    private HashMap<String, ChatClientListener> chatWindows = new HashMap<String, ChatClientListener>();
+    public void addChatWindow(String buddyName, ChatClientListener l) {
+        chatWindows.put(
+            buddyName,
+            l
+        );
+    }
+    public void removeChatWindow(String buddyName) {
+        chatWindows.remove(
+            buddyName
+        );
+    }
 }

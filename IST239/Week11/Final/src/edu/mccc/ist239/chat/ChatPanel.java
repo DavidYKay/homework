@@ -21,6 +21,29 @@ public class ChatPanel extends JPanel implements ChatClientListener {
         setVisible(true);
     }
 
+    /**
+     * On receipt of message
+     */
+    public void messageReceived(ChatClientEvent e) {
+        System.out.println("Message received!: " + e.getMessage());
+        //Check if it matches this conversation
+        String msg = e.getMessage();
+        if (msg.startsWith("im")) {
+            String[] args = msg.split(":");
+            String message = userName + ": " + args[2];
+            //Chop off the prefix
+            //msg = msg.substring(
+            //    3,
+            //    msg.length() 
+            //);
+            chatText.append(message + "\n");
+        }
+    }
+
+    public String getUsername() {
+        return userName;
+    }
+
     private void initGUI() {
         //GUI
         setLayout(new BorderLayout());
@@ -132,23 +155,5 @@ public class ChatPanel extends JPanel implements ChatClientListener {
 
     }
 
-    /**
-     * On receipt of message
-     */
-    public void messageReceived(ChatClientEvent e) {
-        System.out.println("Message received!: " + e.getMessage());
-        //Check if it matches this conversation
-        String msg = e.getMessage();
-        if (msg.startsWith("im")) {
-            String[] args = msg.split(":");
-            String message = userName + ": " + args[2];
-            //Chop off the prefix
-            //msg = msg.substring(
-            //    3,
-            //    msg.length() 
-            //);
-            chatText.append(message + "\n");
-        }
-    }
 
 }
