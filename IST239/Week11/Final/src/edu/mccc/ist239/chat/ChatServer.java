@@ -95,20 +95,26 @@ public class ChatServer {
                     for (User u : users.values()) {
                         if (u.toString().equals(targetName)) {
                             target = u;
+                        } else {
+                            System.err.println(
+                                String.format(
+                                    "Target not found. Expected: %s Received: %s",
+                                    targetName,
+                                    u.toString()
+                                )
+                            );
                         }
                     }
-                    if (target == null) {
-                        //Target not found
-                        System.err.println("Target not found.");
-                        return;
+                    if (target != null) {
+                        //Target found
+                        targetMessage(
+                            message,
+                            new InetSocketAddress(
+                                target.getInetAddress(),
+                                target.getPort()
+                            )
+                        );
                     }
-                    targetMessage(
-                        message,
-                        new InetSocketAddress(
-                            target.getInetAddress(),
-                            target.getPort()
-                        )
-                    );
                 } else {
                     //improper # arguments
                 }
