@@ -105,6 +105,15 @@ public class ChatClient {
     }
 
     /**
+     * Prepends the chat marker and sends the message to the server
+     */
+    public void sendChatMessage(String message) {
+        sendMessage(
+            "chat:" + message
+        );
+    }
+
+    /**
      * Send a message to the central server
      */
     public void sendMessage(String message) {

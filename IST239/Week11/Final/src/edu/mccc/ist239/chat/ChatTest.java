@@ -341,8 +341,10 @@ public class ChatTest extends JPanel implements ChatClientListener {
     }
 
     private void sendMessage() {
-        chatClient.sendMessage(
-            nameField.getText() + ": " + inputField.getText()
+        //chatClient.sendMessage(
+        chatClient.sendChatMessage(
+            //nameField.getText() + ": " + inputField.getText()
+            inputField.getText()
         );
         inputField.setText("");
     }

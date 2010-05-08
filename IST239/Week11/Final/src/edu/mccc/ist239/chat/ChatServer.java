@@ -66,9 +66,18 @@ public class ChatServer {
 			} else if (msg.startsWith("bye")) {
                 //Logoff
 				users.remove(saddr);
+			} else if (msg.startsWith("chat")) {
+				String[] args = msg.split(":");
+                String chat = args[1];
+                chat = String.format(
+                    "%s: %s",
+                    users.get(saddr).toString(),
+                    chat
+                );
+                broadcastMessage(chat, dp.getAddress());
             } else {
                 //Standard message
-                broadcastMessage(msg, dp.getAddress());
+                //broadcastMessage(msg, dp.getAddress());
 			}
 		}
 	}
