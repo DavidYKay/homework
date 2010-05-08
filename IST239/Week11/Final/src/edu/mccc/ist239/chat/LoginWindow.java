@@ -6,10 +6,12 @@ import java.math.*;
 
 import javax.swing.*;
 
+import com.cbthinkx.util.Debug;
+
 /**
  * JFrame which allows the user to log in
  */
-public class LoginWindow extends JFrame {
+public class LoginWindow extends JFrame implements ChatLoginListener {
     private ChatClient chatClient;
     private JTextField userField;
     private JPasswordField passField;
@@ -59,19 +61,10 @@ public class LoginWindow extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("OK Button pressed");
                     //Pass credentials to client, wait for approval
-                    if (
-                        login(
-                            userField.getText().trim(),
-                            passField.getPassword()
-                        )
-                    ) {
-                        //Success!
-                        //TODO Notify client?
-                        dispose();
-                    } else {
-                        //Show something on the gui? Maybe a pop-up?
-                        System.err.println("Login failed!");
-                    }
+                    login(
+                        userField.getText().trim(),
+                        passField.getPassword()
+                    );
                 }
             }
         );
@@ -101,14 +94,27 @@ public class LoginWindow extends JFrame {
         setVisible(true);
     }
 
-    private void showLoginFailed() {
-        //TODO
+    public void loginEvent(boolean success) {
+        Debug.println("Login Event: " + success);
+        //TODO Notify client?
+        if (success) {
+            //Success!
+            dispose();
+        } else {
+            //show login failed
+            System.err.println("Login FAILED");
+        }
+    }
+
+    private void cleanup() {
+        chatClient.removeChatLoginListener(this);
+        dispose();
     }
 
     /**
      * MD5 hash the password and send it over the wire
      */
-    private boolean login(String user, char[] password) {
+    private void login(String user, char[] password) {
         String ps = new String(password);
         MessageDigest m = null;
         try {
@@ -122,7 +128,7 @@ public class LoginWindow extends JFrame {
         String passwordMD5 = new BigInteger(1, m.digest()).toString(16);
         System.out.println("MD5: " + passwordMD5);
         //send to server, return result
-        return chatClient.login(
+        chatClient.login(
             user,
             passwordMD5
         );

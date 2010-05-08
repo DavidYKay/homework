@@ -18,11 +18,17 @@ public class ChatClient {
 	private DatagramSocket socket;
     /** The server IP address */
 	private InetAddress ipaddr;
-    public ChatClient(String username, String ip) {
+    public ChatClient(String username, String password, String ip) {
         //Use a regular expression to break incoming message into NAME, MESSAGE
         //Note that "hi:" and "bye:" are commands for log on, log off
 		try {
-			String hello = "hi:" + username;
+			//String hello = "hi:" + username;
+			String hello = String.format(
+                "hi:%s:%s", 
+                username,
+                password
+            );
+
 			this.ipaddr = InetAddress.getByName(ip);
 			this.socket = new DatagramSocket();
 			this.socket.send(
@@ -47,7 +53,16 @@ public class ChatClient {
 						String msg = new String(dp.getData()).trim();
 						Debug.println(msg);
 						try {
-                            fireChatClientMessageReceived(msg);
+                            if (msg.startsWith("login")) {
+                                String[] args = msg.split(":");
+                                if (args[1].equals("true")) {
+                                    fireLoginEvent(true);
+                                } else {
+                                    fireLoginEvent(false);
+                                }
+                            } else {
+                                fireChatClientMessageReceived(msg);
+                            }
 						} catch (Exception ex) {
 							System.err.println(ex.getMessage());
 							System.err.println(msg);
@@ -60,7 +75,7 @@ public class ChatClient {
 		}.start();
     }
 
-    public boolean login(String username, String md5Password) {
+    public void login(String username, String md5Password) {
         //Send to server
         String msg = String.format(
             "hi:%s:%s",
@@ -69,14 +84,15 @@ public class ChatClient {
         );
         sendMessage(msg);
         //Success?
-        if (true) {
-            return true;
-        }
-        return false;
     }
+
     public void logOut() {
         sendMessage("bye");
     }
+
+    /**
+     * Send a message to the central server
+     */
     public void sendMessage(String message) {
         try {
         this.socket.send(
@@ -94,6 +110,7 @@ public class ChatClient {
 
     //Event Listener code copied from earlier MVC example
 	private EventListenerList listenerList = new EventListenerList();
+	//public void addChatClientListener(ChatClientListener l) {
 	public void addChatClientListener(ChatClientListener l) {
 		Debug.println("ChatClient.addChatClientListener()");
 		listenerList.add(ChatClientListener.class, l);
@@ -102,6 +119,16 @@ public class ChatClient {
 		Debug.println("ChatClient.removeChatClientListener()");
 		listenerList.remove(ChatClientListener.class, l);
 	}
+    
+	public void addChatLoginListener(ChatLoginListener l) {
+		Debug.println("ChatLogin.addChatLoginListener()");
+		listenerList.add(ChatLoginListener.class, l);
+	}
+	public void removeChatLoginListener(ChatLoginListener l) {
+		Debug.println("ChatLogin.removeChatLoginListener()");
+		listenerList.remove(ChatLoginListener.class, l);
+	}
+
 	protected void fireChatClientMessageReceived(final String msg) {
 		Debug.println("ChatClient.fireChatClientMessageReceived()");
 		if (!EventQueue.isDispatchThread()) {
@@ -120,6 +147,26 @@ public class ChatClient {
 			notifyListeners(msg);
 		}
 	}
+
+	protected void fireLoginEvent(final boolean success) {
+		Debug.println("ChatClient.fireLoginEvent()");
+		if (!EventQueue.isDispatchThread()) {
+			try {
+				EventQueue.invokeAndWait(
+					new Runnable() {
+						public void run() {
+							notifyLogin(success);
+						}
+					}
+				);
+			} catch (Exception ex) {
+				System.err.println(ex.getMessage());
+			}
+		} else {
+			notifyLogin(success);
+		}
+	}
+
 	private void notifyListeners(String msg) {
 		Debug.println("ChatClient.notifyListeners()");
 		ChatClientEvent e = new ChatClientEvent(this, msg);
@@ -127,6 +174,16 @@ public class ChatClient {
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
 			if (listeners[i] == ChatClientListener.class) {
                 ((ChatClientListener) listeners[i + 1]).messageReceived(e);
+			}
+		}
+	}
+
+	private void notifyLogin(boolean success) {
+		Debug.println("ChatClient.notifyLogin()");
+		Object[] listeners = listenerList.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == ChatLoginListener.class) {
+                ((ChatLoginListener) listeners[i + 1]).loginEvent(success);
 			}
 		}
 	}

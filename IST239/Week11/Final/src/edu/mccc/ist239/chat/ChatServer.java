@@ -51,10 +51,14 @@ public class ChatServer {
                     user.setInetAddress(dp.getAddress());
                     user.setPort(dp.getPort());
                     users.put(saddr, user);
+                    targetMessage(
+                        "login:true",
+                        saddr
+                    );
                 } else {
                     //Send rejection notice to client
                     targetMessage(
-                        "badPassword",
+                        "login:false",
                         saddr
                     );
                 }
