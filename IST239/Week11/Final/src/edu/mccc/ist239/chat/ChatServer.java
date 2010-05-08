@@ -92,7 +92,14 @@ public class ChatServer {
                 String[] args = msg.split(":");
                 if (args.length >= 3) {
                     String targetName = args[1];
-                    String sourceName = users.get(saddr).toString();
+                    String sourceName = null;
+                    try {
+                        sourceName = users.get(saddr).toString();
+                    //} catch (NullPointerException ex) {
+                    } catch (Exception ex) {
+                        //User not found
+                        continue;
+                    }
                     //Grab user from our list
                     User target = null;
                     for (User u : users.values()) {
@@ -139,12 +146,12 @@ public class ChatServer {
     private void targetMessage(String msg, SocketAddress saddr) {
         Debug.println("ChatServer.targetMessage: " + msg);
 		try {
-            User target = users.get(saddr);
+            //User target = users.get(saddr);
             DatagramPacket dp = new DatagramPacket(
                 msg.getBytes(),
                 msg.length(),
-                target.getInetAddress(),
-                target.getPort()
+                ((InetSocketAddress) saddr).getAddress(),
+                ((InetSocketAddress) saddr).getPort()
             );
             socket.send(dp);
 		} catch (Exception ex) {
@@ -228,8 +235,7 @@ public class ChatServer {
             System.err.println("Cannot connect to database server");
             System.err.println(e.getMessage());
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (conn != null) {
                 try {
                     conn.close ();
