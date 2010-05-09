@@ -1,55 +1,81 @@
 package edu.mccc.ist239.chat;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 
 import javax.swing.*;
 
 /**
  * Window that allows the user to select a file to send
- * Modified from FileWindow, http://www.java2s.com/Code/Java/Swing-JFC/DemonstrationofFiledialogboxes.htm
+ * Modified from example at:
+ * http://www.java2s.com/Code/Java/Swing-JFC/DemonstrationofFiledialogboxes.htm
  */
 public class FileWindow extends JFrame {
+    private ChatClient chatClient;
     
-    private JTextField filename = new JTextField(), 
-                       dir      = new JTextField();
+    private JTextField fileField = new JTextField(), 
+                       dirField  = new JTextField();
 
-    private JButton open = new JButton("Open"), 
-                    save = new JButton("Save");
+    private JButton browseButton = new JButton("Browse"), 
+                    sendButton   = new JButton("Send");
 
-    public FileWindow() {
+    public FileWindow(ChatClient chatClient) {
+        this.chatClient = chatClient;
 		setTitle("File Select");
         JPanel p = new JPanel();
-        open.addActionListener(new OpenL());
-        p.add(open);
-        save.addActionListener(new SaveL());
-        p.add(save);
+        browseButton.addActionListener(new BrowseL());
+        p.add(browseButton);
+        sendButton.addActionListener(new SendL());
+        p.add(sendButton);
         Container cp = getContentPane();
         cp.add(p, BorderLayout.SOUTH);
-        dir.setEditable(false);
-        filename.setEditable(false);
+        dirField.setEditable(false);
+        fileField.setEditable(false);
         p = new JPanel();
-        p.setLayout(new GridLayout(2, 1));
-        p.add(filename);
-        p.add(dir);
+        p.setLayout(
+            new GridLayout(
+                2, 
+                1
+            )
+        );
+        p.add(fileField);
+        p.add(dirField);
         cp.add(p, BorderLayout.NORTH);
         pack();
 		setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    class OpenL implements ActionListener {
+    class BrowseL implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JFileChooser c = new JFileChooser();
             // Demonstrate "Open" dialog:
             int rVal = c.showOpenDialog(FileWindow.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(c.getSelectedFile().getName());
-                dir.setText(c.getCurrentDirectory().toString());
+                fileField.setText(c.getSelectedFile().getName());
+                dirField.setText(c.getCurrentDirectory().toString());
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
-                dir.setText("");
+                fileField.setText("You pressed cancel");
+                dirField.setText("");
             }
+        }
+    }
+
+    class SendL implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            //Speak to callback
+            String fileName = fileField.getText();
+            String dirName  = dirField.getText();
+            System.out.println("FileName: " + fileName);
+            System.out.println("DirName: " + dirName);
+            File file = new File(
+                dirName + '/' + fileName
+            );
+            System.out.println("File: " + file);
+
+            //readFile(file);
+            chatClient.sendFile(file);
         }
     }
 
@@ -59,12 +85,12 @@ public class FileWindow extends JFrame {
             // Demonstrate "Save" dialog:
             int rVal = c.showSaveDialog(FileWindow.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(c.getSelectedFile().getName());
-                dir.setText(c.getCurrentDirectory().toString());
+                fileField.setText(c.getSelectedFile().getName());
+                dirField.setText(c.getCurrentDirectory().toString());
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
-                dir.setText("");
+                fileField.setText("You pressed cancel");
+                dirField.setText("");
             }
         }
     }
@@ -76,13 +102,15 @@ public class FileWindow extends JFrame {
         );
     }
 
-    //public static void main(String[] args) {
-    //    run(new FileWindow(), 250, 110);
-    //}
-
-    //public static void run(JFrame frame, int width, int height) {
-    //    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //    frame.setSize(width, height);
-    //    frame.setVisible(true);
-    //}
+    private void readFile(File file) {
+        try {
+            FileInputStream fin = new FileInputStream(file);
+            int nextUnsignedByte = 0;
+            while ((nextUnsignedByte = fin.read()) != -1) {
+                System.out.println("Read " + nextUnsignedByte);
+            }
+            fin.close();
+        } catch (IOException ioe) {
+        }
+    }
 }

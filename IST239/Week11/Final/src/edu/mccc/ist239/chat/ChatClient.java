@@ -4,6 +4,7 @@ import java.util.*;
 import java.net.*;
 import java.security.*;
 import java.math.*;
+import java.io.*;
 
 import javax.swing.event.EventListenerList;
 
@@ -164,6 +165,13 @@ public class ChatClient {
         }
     }
 
+    /**
+     * Begin a file transfer request to another client
+     */
+    public void sendFile(File file) {
+        //TODO
+    }
+
     //Event Listener code copied from earlier MVC example
 	private EventListenerList listenerList = new EventListenerList();
 	//public void addChatClientListener(ChatClientListener l) {
@@ -244,8 +252,10 @@ public class ChatClient {
 		}
 	}
 
-    //This keeps track of the IM windows and is used to detect when a new 
-    //one must be spawned 
+    /**
+     * This keeps track of the IM windows and is used to detect when a new 
+     * one must be spawned 
+     */
     private HashMap<String, ChatClientListener> chatWindows = new HashMap<String, ChatClientListener>();
     public void addChatWindow(String buddyName, ChatClientListener l) {
         chatWindows.put(
