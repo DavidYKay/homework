@@ -19,7 +19,7 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
 
         client.addChatLoginListener(this);
 
-		setTitle("Login Window");
+		setTitle("Login");
 		setLocationRelativeTo(c);
 
         setLayout(

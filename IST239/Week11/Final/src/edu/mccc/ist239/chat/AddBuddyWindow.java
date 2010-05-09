@@ -19,21 +19,12 @@ public class AddBuddyWindow extends JFrame {
 		setTitle("Add Buddy");
 		setLocationRelativeTo(c);
 
-        //setLayout(
-        //    //new FlowLayout()
-        //    //new BorderLayout()
-        //    new BoxLayout(
-        //        AddBuddyWindow.this,
-        //        BoxLayout.Y_AXIS
-        //    )
-        //);
         getContentPane().setLayout(
             new BoxLayout(
                 getContentPane(), 
                 BoxLayout.PAGE_AXIS
             )
         );
-
         
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(

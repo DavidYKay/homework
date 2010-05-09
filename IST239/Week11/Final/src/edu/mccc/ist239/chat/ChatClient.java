@@ -70,6 +70,10 @@ public class ChatClient {
                                             msg
                                         )
                                     );
+                                } else if (msg.startsWith("file")) {
+                                    //Is this the start of the transfer?
+                                    //String[] args = msg.split(":");
+                                    //String username = args[0];
                                 } else {
                                     //send it to them
                                     l.messageReceived(

@@ -110,8 +110,10 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
 
         setPreferredSize(
             new Dimension(
-                800,
-                600
+                //800,
+                //600
+                640,
+                480
             )
         );
     }
@@ -260,13 +262,13 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
 		JFrame jFrame = new JFrame();
 		jFrame.setTitle("Chat Demo");
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jFrame.setLocationRelativeTo(null);
         ChatTest ct = new ChatTest();
         jFrame.add(
             ct
         );
         ct.makeMenu(jFrame);
 		jFrame.pack();
+		jFrame.setLocationRelativeTo(null);
 		jFrame.setVisible(true);
     }
 
