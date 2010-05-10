@@ -102,8 +102,8 @@ public class ChatClient {
     public void login(String username, String ps) {
         MessageDigest m = null;
         try {
-            byte[] bytes = ps.getBytes("UTF-8");
             //byte[] bytes = ps.getBytes("ASCII");
+            byte[] bytes = ps.getBytes("UTF-8");
             m = MessageDigest.getInstance("MD5");
             m.update(bytes, 0, bytes.length);
         } catch (Exception ex) {

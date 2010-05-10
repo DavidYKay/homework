@@ -1,6 +1,7 @@
 package edu.mccc.ist239.chat;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 
 import javax.swing.*;
 
@@ -60,6 +61,17 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
             BorderLayout.CENTER
         );
 
+        JPanel southPanel  = new JPanel();
+        southPanel.setLayout(
+            //new BoxLayout(
+            //    southPanel,
+            //    BoxLayout.Y_AXIS
+            //)
+            new GridLayout(
+                2,
+                1
+            )
+        );
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(
             new FlowLayout()
@@ -82,14 +94,31 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
                 }
             }
         );
+        JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Register Button pressed");
+                    registerPage();
+                }
+            }
+        );
         buttonPanel.add(
             okButton
         );
         buttonPanel.add(
             cancelButton
         );
+
+        southPanel.add(
+            registerButton
+        );
+        southPanel.add(
+            buttonPanel
+        );
+
         add(
-            buttonPanel,
+            southPanel,
             BorderLayout.SOUTH
         );
 
@@ -130,5 +159,34 @@ public class LoginWindow extends JFrame implements ChatLoginListener {
     private void cleanup() {
         chatClient.removeChatLoginListener(this);
         dispose();
+    }
+
+    /**
+     * Opens the registration page in a web browser.
+     * Taken from example at:
+     * http://johnbokma.com/mexit/2008/08/19/java-open-url-default-browser.html
+     */
+    private void registerPage() {
+        //String url = "http://davidykay.com:8080/dk/register";
+        String url = "http://localhost:8080/dk/register";
+
+        if(!java.awt.Desktop.isDesktopSupported() ) {
+            System.err.println( "Desktop is not supported (fatal)" );
+            return;
+            //System.exit( 1 );
+        }
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        if(!desktop.isSupported( java.awt.Desktop.Action.BROWSE ) ) {
+            System.err.println( "Desktop doesn't support the browse action (fatal)" );
+            //System.exit( 1 );
+            return;
+        }
+        try {
+            java.net.URI uri = new java.net.URI( url );
+            desktop.browse( uri );
+        }
+        catch ( Exception e ) {
+            System.err.println( e.getMessage() );
+        }
     }
 }

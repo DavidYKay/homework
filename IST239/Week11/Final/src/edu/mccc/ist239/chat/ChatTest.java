@@ -92,7 +92,6 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
         );
 
         add(
-            //chatText,
             scrollPane,
             BorderLayout.CENTER
         );
@@ -103,7 +102,6 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
 
         buddyList = new BuddyList(this);
         add(
-            //makeSidePanel(),
             buddyList,
             BorderLayout.EAST
         );
