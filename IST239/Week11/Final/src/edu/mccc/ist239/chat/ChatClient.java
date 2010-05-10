@@ -166,6 +166,13 @@ public class ChatClient {
     }
 
     /**
+     * Open a socket and wait
+     */
+    private void receiveFile(int port) {
+        
+    }
+
+    /**
      * Begin a file transfer request to another client
      */
     public void sendFile(File file) {
