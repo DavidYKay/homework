@@ -110,7 +110,8 @@ public class ChatClient {
         private ServerSocket serverSocket; 
         public void run() {
             try {
-                serverSocket = new ServerSocket(4973);
+                //serverSocket = new ServerSocket(4973);
+                serverSocket = new ServerSocket();
             } catch (IOException e) {
                 System.out.println("Could not listen on port: 4973");
                 //break;
@@ -308,10 +309,11 @@ public class ChatClient {
             String.format(
                 //"file:%s:%s",
                 //fileSocket.toString(),
-                "file:%d:%s:",
+                "file:%d:%s:%s",
                 fileThread.getSocket().getLocalPort(),
                 userName,
-                file.getName()
+                //file.getName()
+                file.getAbsolutePath()
             )
         );
     }
