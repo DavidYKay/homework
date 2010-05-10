@@ -312,8 +312,8 @@ public class ChatClient {
                 "file:%d:%s:%s",
                 fileThread.getSocket().getLocalPort(),
                 userName,
-                //file.getName()
                 file.getAbsolutePath()
+                //file.getName()
             )
         );
     }

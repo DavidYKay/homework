@@ -63,6 +63,28 @@ public class ChatServer {
 			} else if (msg.startsWith("bye")) {
                 //Logoff
 				users.remove(saddr);
+			} else if (msg.startsWith("file")) {
+                //File transfer
+                //pass user socket information to recipient
+                String[] args = msg.split(":");
+                int port = Integer.parseInt(
+                    args[1]
+                );
+                String userName = args[2];
+                String fileName = args[3];
+                User source = users.get(saddr);
+                User target = getUser(userName);
+                String message = String.format(
+                    "file:%s:%s",
+                    fileName,
+                    saddr.toString()
+                );
+                
+                targetMessage(
+                    message,
+                    target.getInetAddress(),
+                    target.getPort() 
+                );
 			} else if (msg.startsWith("chat")) {
                 try {
                     //Standard chat message
@@ -101,21 +123,7 @@ public class ChatServer {
                         continue;
                     }
                     //Grab user from our list
-                    User target = null;
-                    for (User u : users.values()) {
-                        if (u.toString().equals(targetName)) {
-                            target = u;
-                        } else {
-                            System.err.println(
-                                String.format(
-                                    "Target not found. Expected: %s Received: %s",
-                                    targetName,
-                                    //sourceName,
-                                    u.toString()
-                                )
-                            );
-                        }
-                    }
+                    User target = getUser(targetName);
                     if (target != null) {
                         String message = String.format(
                             "im:%s:%s",
@@ -141,22 +149,52 @@ public class ChatServer {
 	}
 
     /**
-     * Send a message out to ONE user
+     * Ugly, linear method of finding a user from a username
      */
-    private void targetMessage(String msg, SocketAddress saddr) {
+    private User getUser(String targetName) {
+        User target = null;
+        for (User u : users.values()) {
+            if (u.toString().equals(targetName)) {
+                target = u;
+            } else {
+                System.err.println(
+                    String.format(
+                        "Target not found. Expected: %s Received: %s",
+                        targetName,
+                        //sourceName,
+                        u.toString()
+                    )
+                );
+            }
+        }
+        return target;
+    }
+
+    private void targetMessage(String msg, InetAddress iaddr, int port) {
         Debug.println("ChatServer.targetMessage: " + msg);
 		try {
             //User target = users.get(saddr);
             DatagramPacket dp = new DatagramPacket(
                 msg.getBytes(),
                 msg.length(),
-                ((InetSocketAddress) saddr).getAddress(),
-                ((InetSocketAddress) saddr).getPort()
+                iaddr,
+                port
             );
             socket.send(dp);
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
+    }
+
+    /**
+     * Send a message out to ONE user
+     */
+    private void targetMessage(String msg, SocketAddress saddr) {
+        targetMessage(
+            msg,
+            ((InetSocketAddress) saddr).getAddress(),
+            ((InetSocketAddress) saddr).getPort()
+        );
     }
 
     /**
