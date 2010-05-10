@@ -75,10 +75,6 @@ public class ChatClient {
                                             msg
                                         )
                                     );
-                                } else if (msg.startsWith("file")) {
-                                    //Is this the start of the transfer?
-                                    //String[] args = msg.split(":");
-                                    //String username = args[0];
                                 } else {
                                     //send it to them
                                     l.messageReceived(
@@ -88,6 +84,26 @@ public class ChatClient {
                                         )
                                     );
                                 }
+                            } else if (msg.startsWith("file")) {
+                                System.out.println("file message");
+                                //file:/home/dk/client_state.xml:/127.0.0.1:45663
+                                //Is this the start of the transfer?
+                                String[] args = msg.split(":");
+                                String username = args[1];
+                                String fileName = args[2];
+                                String ip = args[3];
+                                int port = Integer.parseInt(
+                                    args[4]
+                                );
+                                ip = ip.substring(1);
+                                System.out.println("IP: " + ip);
+                                System.out.println("Port: " + port);
+                                //InetSocketAddress hostSaddr = new InetSocketAddress (ip, port);
+                                Socket hostSocket = new Socket(
+                                    ip,
+                                    port
+                                );
+                                receiveFile(hostSocket, fileName);
                             } else {
                                 fireChatClientMessageReceived(msg);
                             }
@@ -122,10 +138,13 @@ public class ChatClient {
                     clientSocket = serverSocket.accept();
                     clientSocket.setSoTimeout(10000);
                 } catch (IOException e) {
-                    System.out.println("Accept failed: 4973");
+                    //System.out.println("Accept failed: 4973");
                     //break;
                 }
-                receiveFile(clientSocket);
+                if (clientSocket != null) {
+                    //receiveFile(clientSocket);
+                    transferFile(clientSocket);
+                }
             }
         }
         public ServerSocket getSocket() {
@@ -222,19 +241,22 @@ public class ChatClient {
     /**
      * Open a socket and wait
      */
-    private void receiveFile(Socket senderSocket) {
+    private void receiveFile(Socket senderSocket, String fileName) {
         System.out.println("receiveFile()");
 
-        DataInputStream in = null;
-        FileOutputStream out = null;
+        DataInputStream in    = null;
+        DataOutputStream dOut  = null;
+        FileOutputStream fOut = null;
         try {
             //connect to the other client
-            in = new DataInputStream(senderSocket.getInputStream());
+            in   = new DataInputStream(senderSocket.getInputStream());
+            dOut = new DataOutputStream(senderSocket.getOutputStream());
             
-            String fileName = in.readUTF();
+            dOut.writeUTF(fileName);
+            //String fileName = in.readUTF();
             //pull the file down the wire
             //FileOutputStream out = new FileOutputStream(new File(saveDirectory.getAbsolutePath() + "/" + fileName));
-            out = new FileOutputStream("~/" + fileName);
+            fOut = new FileOutputStream("~/" + fileName);
 
             byte[] buffer = new byte[512];
             int bufRead;
@@ -242,7 +264,7 @@ public class ChatClient {
 
             while((bufRead = in.read(buffer)) != -1) {
                 totsize = totsize + bufRead;
-                out.write(buffer, 0, bufRead);
+                fOut.write(buffer, 0, bufRead);
             }
             System.out.println("bytes read: " + totsize);
         } catch (Exception ex) {
@@ -250,7 +272,8 @@ public class ChatClient {
             System.err.println(ex.getMessage());
         } finally {
             try {
-                out.close();
+                dOut.close();
+                fOut.close();
                 in.close();
                 senderSocket.close();
             } catch (Exception ex) {
@@ -261,17 +284,19 @@ public class ChatClient {
 
     public void transferFile(Socket outSocket) {
         System.out.println("transferFile()");
-        File file = new File("test.dat");
-            FileInputStream fin   = null;
+            FileInputStream  fin  = null;
             DataOutputStream dOut = null;
+            DataInputStream dIn  = null;
         try {
-            fin  = new FileInputStream(file);
             dOut = new DataOutputStream(outSocket.getOutputStream());
-            long bytes = file.length();
+            dIn  = new DataInputStream(outSocket.getInputStream());
 
-            dOut.writeUTF(
-                file.getName()
-            );
+            String fileName = dIn.readUTF();
+            File file = new File(fileName);
+            fin  = new FileInputStream(file);
+            long bytes = file.length();
+            //dOut.writeUTF(file.getName());
+
             //dOut.writeUTF(
             //    "size:" + bytes
             //);

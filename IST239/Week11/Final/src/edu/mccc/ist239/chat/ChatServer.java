@@ -75,7 +75,8 @@ public class ChatServer {
                 User source = users.get(saddr);
                 User target = getUser(userName);
                 String message = String.format(
-                    "file:%s:%s",
+                    "file:%s:%s:%s",
+                    source.getName(),
                     fileName,
                     saddr.toString()
                 );
