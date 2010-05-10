@@ -153,6 +153,6 @@ public class ChatPanel extends JPanel implements ChatClientListener {
      */
     private void sendFile() {
         //TODO
-        new FileWindow(chatClient);
+        new FileWindow(chatClient, userName);
     }
 }

@@ -12,6 +12,7 @@ import javax.swing.*;
  */
 public class FileWindow extends JFrame {
     private ChatClient chatClient;
+    private String userName;
     
     private JTextField fileField = new JTextField(), 
                        dirField  = new JTextField();
@@ -19,8 +20,9 @@ public class FileWindow extends JFrame {
     private JButton browseButton = new JButton("Browse"), 
                     sendButton   = new JButton("Send");
 
-    public FileWindow(ChatClient chatClient) {
+    public FileWindow(ChatClient chatClient, String userName) {
         this.chatClient = chatClient;
+        this.userName   = userName;
 		setTitle("File Select");
         JPanel p = new JPanel();
         browseButton.addActionListener(new BrowseL());
@@ -75,7 +77,7 @@ public class FileWindow extends JFrame {
             System.out.println("File: " + file);
 
             //readFile(file);
-            chatClient.sendFile(file);
+            chatClient.sendFile(userName, file);
         }
     }
 

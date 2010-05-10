@@ -20,6 +20,7 @@ public class ChatClient {
 	private DatagramSocket socket;
     /** The server IP address */
 	private InetAddress ipaddr;
+    private FileThread fileThread;
     public ChatClient(String username, String password, String ip) {
         this(ip);
         login(username, password);
@@ -33,6 +34,9 @@ public class ChatClient {
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
+        /**
+         * Main thread
+         */
 		new Thread() {
 			public void run() {
 				Debug.println("Thread:run()");
@@ -97,6 +101,35 @@ public class ChatClient {
 				}
 			}
 		}.start();
+        fileThread = new FileThread();
+        fileThread.start();
+    }
+
+    class FileThread extends Thread {
+        public static final int MAX_BUFFER_SIZE = 1024; //1 Kb of data
+        private ServerSocket serverSocket; 
+        public void run() {
+            try {
+                serverSocket = new ServerSocket(4973);
+            } catch (IOException e) {
+                System.out.println("Could not listen on port: 4973");
+                //break;
+            }
+            for (;;) {
+                Socket clientSocket = null;
+                try {
+                    clientSocket = serverSocket.accept();
+                    clientSocket.setSoTimeout(10000);
+                } catch (IOException e) {
+                    System.out.println("Accept failed: 4973");
+                    //break;
+                }
+                receiveFile(clientSocket);
+            }
+        }
+        public ServerSocket getSocket() {
+            return serverSocket;
+        }
     }
 
     public void login(String username, String ps) {
@@ -151,32 +184,136 @@ public class ChatClient {
      * Send a message to the central server, raw
      */
     public void sendMessage(String message) {
-        try {
-        this.socket.send(
-            new DatagramPacket(
-                message.getBytes(),
-                message.length(),
-                ipaddr,
-                5972
-            )
+        sendMessage(
+            message,
+            ipaddr,
+            5972
         );
+    }
+
+    /**
+     * Send a message to the central server, raw
+     */
+    public void sendMessage(String message, InetAddress ip, int port) {
+        try {
+            this.socket.send(
+                new DatagramPacket(
+                    message.getBytes(),
+                    message.length(),
+                    ip,
+                    port
+                )
+            );
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
     }
 
     /**
+     * Notify other client that we're cancelling the transfer
+     */
+    public void cancelFile(String userName) {
+        sendMessage(
+            "fileCancel:" + userName
+        );
+    }
+
+    /**
      * Open a socket and wait
      */
-    private void receiveFile(int port) {
-        
+    private void receiveFile(Socket senderSocket) {
+        System.out.println("receiveFile()");
+
+        DataInputStream in = null;
+        FileOutputStream out = null;
+        try {
+            //connect to the other client
+            in = new DataInputStream(senderSocket.getInputStream());
+            
+            String fileName = in.readUTF();
+            //pull the file down the wire
+            //FileOutputStream out = new FileOutputStream(new File(saveDirectory.getAbsolutePath() + "/" + fileName));
+            out = new FileOutputStream("~/" + fileName);
+
+            byte[] buffer = new byte[512];
+            int bufRead;
+            int totsize = 0;
+
+            while((bufRead = in.read(buffer)) != -1) {
+                totsize = totsize + bufRead;
+                out.write(buffer, 0, bufRead);
+            }
+            System.out.println("bytes read: " + totsize);
+        } catch (Exception ex) {
+            System.err.println("receiveFile failed");
+            System.err.println(ex.getMessage());
+        } finally {
+            try {
+                out.close();
+                in.close();
+                senderSocket.close();
+            } catch (Exception ex) {
+                //Do nothing
+            }
+        }
+    }
+
+    public void transferFile(Socket outSocket) {
+        System.out.println("transferFile()");
+        File file = new File("test.dat");
+            FileInputStream fin   = null;
+            DataOutputStream dOut = null;
+        try {
+            fin  = new FileInputStream(file);
+            dOut = new DataOutputStream(outSocket.getOutputStream());
+            long bytes = file.length();
+
+            dOut.writeUTF(
+                file.getName()
+            );
+            //dOut.writeUTF(
+            //    "size:" + bytes
+            //);
+
+            byte[] buffer = new byte[512];
+            int bufRead;
+            int totsize = 0;
+
+            while((bufRead = fin.read(buffer)) != -1) {
+                totsize = totsize + bufRead;
+                dOut.write(buffer, 0, bufRead);
+            }
+            System.out.println("bytes read: " + totsize);
+        } catch (Exception ex) {
+            System.err.println("transferFile failed");
+            System.err.println(ex.getMessage());
+        } finally {
+            try {
+                fin.close();
+                dOut.close();
+                outSocket.close();
+            } catch (Exception ex) {
+                //Do nothing
+            }
+        }
     }
 
     /**
      * Begin a file transfer request to another client
      */
-    public void sendFile(File file) {
-        //TODO
+    public void sendFile(String userName, File file) {
+        //Open a socket, wait for one minute
+        //notify server that we're waiting
+        sendMessage(
+            String.format(
+                //"file:%s:%s",
+                //fileSocket.toString(),
+                "file:%d:%s:",
+                fileThread.getSocket().getLocalPort(),
+                userName,
+                file.getName()
+            )
+        );
     }
 
     //Event Listener code copied from earlier MVC example
@@ -250,6 +387,16 @@ public class ChatClient {
 	}
 
 	private void notifyLogin(boolean success) {
+		Debug.println("ChatClient.notifyLogin()");
+		Object[] listeners = listenerList.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == ChatLoginListener.class) {
+                ((ChatLoginListener) listeners[i + 1]).loginEvent(success);
+			}
+		}
+	}
+
+	private void notifyTransfer(boolean success) {
 		Debug.println("ChatClient.notifyLogin()");
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
