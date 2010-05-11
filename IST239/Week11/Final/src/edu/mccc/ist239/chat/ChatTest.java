@@ -1,6 +1,8 @@
 package edu.mccc.ist239.chat;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.net.*;
 
 import javax.swing.*;
 
@@ -9,7 +11,7 @@ import com.cbthinkx.util.Debug;
 /**
  * The actual client GUI. A ChatClient object is used to send/received messages from the server.
  */
-public class ChatTest extends JPanel implements ChatClientListener, ChatLoginListener {
+public class ChatTest extends JPanel implements ChatClientListener, ChatLoginListener, ChatFileListener {
     //private JFrame jFrame;
     private ChatClient chatClient;
     private BuddyList buddyList;
@@ -108,8 +110,6 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
 
         setPreferredSize(
             new Dimension(
-                //800,
-                //600
                 640,
                 480
             )
@@ -333,4 +333,17 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
     public void removeBuddy(String username) {
         Debug.println("ChatTest.removeBuddy: " + username);
     }
+
+	/**
+	 * Draw a confirmation window to accept file transfer and provide filename
+	 */
+    public void fileEvent(Socket hostSocket, String remoteFileName) {
+        Debug.println("ChatTest.fileEvent: " + hostSocket + ": " + remoteFileName);
+		//Launch file dialog
+		new FileAcceptWindow(
+			chatClient,
+			hostSocket,
+			remoteFileName
+		);
+	}
 }

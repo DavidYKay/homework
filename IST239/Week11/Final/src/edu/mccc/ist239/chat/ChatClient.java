@@ -103,8 +103,13 @@ public class ChatClient {
                                     ip,
                                     port
                                 );
+                                //Notify file recipient
                                 System.out.println("File Socket Created!");
-                                receiveFile(hostSocket, fileName);
+                                //receiveFile(hostSocket, fileName);
+                                fireTransferEvent(
+                                    hostSocket,
+                                    fileName
+                                );
                             } else {
                                 fireChatClientMessageReceived(msg);
                             }
@@ -128,12 +133,10 @@ public class ChatClient {
         public void run() {
             try {
                 serverSocket = new ServerSocket(4973);
-                //serverSocket = new ServerSocket();
             } catch (IOException e) {
                 System.out.println("Could not listen on port: 4973, Listening on port 4974");
                 try {
                     serverSocket = new ServerSocket(4974);
-                    //break;
                 } catch (IOException ioe) {
                     System.out.println("Could not listen on port: 4974, Epic fail");
                 }
@@ -247,7 +250,8 @@ public class ChatClient {
     /**
      * Open a socket and wait
      */
-    private void receiveFile(Socket senderSocket, String fileName) {
+    //private void receiveFile(Socket senderSocket, String fileName) {
+    public void receiveFile(Socket senderSocket, String remoteFileName, String localFileName) {
         System.out.println("receiveFile()");
 
         DataInputStream  in   = null;
@@ -258,12 +262,11 @@ public class ChatClient {
             in   = new DataInputStream(senderSocket.getInputStream());
             dOut = new DataOutputStream(senderSocket.getOutputStream());
             
-            dOut.writeUTF(fileName);
+            dOut.writeUTF(remoteFileName);
             //String fileName = in.readUTF();
             //pull the file down the wire
             //FileOutputStream out = new FileOutputStream(new File(saveDirectory.getAbsolutePath() + "/" + fileName));
-            fileName = fileName + ".new";
-            fOut = new FileOutputStream(fileName);
+            fOut = new FileOutputStream(localFileName);
 
             byte[] buffer = new byte[512];
             int bufRead;
@@ -375,6 +378,15 @@ public class ChatClient {
 		listenerList.remove(ChatLoginListener.class, l);
 	}
 
+	public void addChatFileListener(ChatFileListener l) {
+		Debug.println("ChatFile.addChatFileListener()");
+		listenerList.add(ChatFileListener.class, l);
+	}
+	public void removeChatFileListener(ChatFileListener l) {
+		Debug.println("ChatFile.removeChatFileListener()");
+		listenerList.remove(ChatFileListener.class, l);
+	}
+
 	protected void fireChatClientMessageReceived(final String msg) {
 		Debug.println("ChatClient.fireChatClientMessageReceived()");
 		if (!EventQueue.isDispatchThread()) {
@@ -413,6 +425,26 @@ public class ChatClient {
 		}
 	}
 
+	protected void fireTransferEvent(final Socket hostSocket, final String fileName) {
+		Debug.println("ChatClient.fireLoginEvent()");
+		if (!EventQueue.isDispatchThread()) {
+			try {
+				EventQueue.invokeAndWait(
+					new Runnable() {
+						public void run() {
+                            notifyTransfer(hostSocket, fileName);
+						}
+					}
+				);
+			} catch (Exception ex) {
+				System.err.println(ex.getMessage());
+			}
+		} else {
+			notifyTransfer(hostSocket, fileName);
+		}
+	}
+
+
 	private void notifyListeners(String msg) {
 		Debug.println("ChatClient.notifyListeners()");
 		ChatClientEvent e = new ChatClientEvent(this, msg);
@@ -434,12 +466,12 @@ public class ChatClient {
 		}
 	}
 
-	private void notifyTransfer(boolean success) {
+	private void notifyTransfer(Socket hostSocket, String fileName) {
 		Debug.println("ChatClient.notifyLogin()");
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
 			if (listeners[i] == ChatLoginListener.class) {
-                ((ChatLoginListener) listeners[i + 1]).loginEvent(success);
+                ((ChatFileListener) listeners[i + 1]).fileEvent(hostSocket, fileName);
 			}
 		}
 	}
