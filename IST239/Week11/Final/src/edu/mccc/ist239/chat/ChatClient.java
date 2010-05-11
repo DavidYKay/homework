@@ -85,7 +85,7 @@ public class ChatClient {
                                     );
                                 }
                             } else if (msg.startsWith("file")) {
-                                System.out.println("file message");
+                                System.out.println("file message received");
                                 //file:/home/dk/client_state.xml:/127.0.0.1:45663
                                 //Is this the start of the transfer?
                                 String[] args = msg.split(":");
@@ -103,6 +103,7 @@ public class ChatClient {
                                     ip,
                                     port
                                 );
+                                System.out.println("File Socket Created!");
                                 receiveFile(hostSocket, fileName);
                             } else {
                                 fireChatClientMessageReceived(msg);
@@ -126,11 +127,16 @@ public class ChatClient {
         private ServerSocket serverSocket; 
         public void run() {
             try {
-                //serverSocket = new ServerSocket(4973);
-                serverSocket = new ServerSocket();
+                serverSocket = new ServerSocket(4973);
+                //serverSocket = new ServerSocket();
             } catch (IOException e) {
-                System.out.println("Could not listen on port: 4973");
-                //break;
+                System.out.println("Could not listen on port: 4973, Listening on port 4974");
+                try {
+                    serverSocket = new ServerSocket(4974);
+                    //break;
+                } catch (IOException ioe) {
+                    System.out.println("Could not listen on port: 4974, Epic fail");
+                }
             }
             for (;;) {
                 Socket clientSocket = null;
@@ -244,8 +250,8 @@ public class ChatClient {
     private void receiveFile(Socket senderSocket, String fileName) {
         System.out.println("receiveFile()");
 
-        DataInputStream in    = null;
-        DataOutputStream dOut  = null;
+        DataInputStream  in   = null;
+        DataOutputStream dOut = null;
         FileOutputStream fOut = null;
         try {
             //connect to the other client
@@ -267,6 +273,7 @@ public class ChatClient {
                 fOut.write(buffer, 0, bufRead);
             }
             System.out.println("bytes read: " + totsize);
+            //EOF exception!
         } catch (Exception ex) {
             System.err.println("receiveFile failed");
             System.err.println(ex.getMessage());
@@ -330,16 +337,19 @@ public class ChatClient {
     public void sendFile(String userName, File file) {
         //Open a socket, wait for one minute
         //notify server that we're waiting
+        String msg = String.format(
+            //"file:%s:%s",
+            //fileSocket.toString(),
+            "file:%d:%s:%s",
+            fileThread.getSocket().getLocalPort(),
+            userName,
+            file.getAbsolutePath()
+            //file.getName()
+        );
+        System.out.println("sending file.");
+        System.out.println("Message:" + msg);
         sendMessage(
-            String.format(
-                //"file:%s:%s",
-                //fileSocket.toString(),
-                "file:%d:%s:%s",
-                fileThread.getSocket().getLocalPort(),
-                userName,
-                file.getAbsolutePath()
-                //file.getName()
-            )
+            msg
         );
     }
 

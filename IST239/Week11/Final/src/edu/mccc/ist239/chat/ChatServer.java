@@ -85,6 +85,7 @@ public class ChatServer {
                     message,
                     target.getInetAddress(),
                     target.getPort() 
+					//port
                 );
 			} else if (msg.startsWith("chat")) {
                 try {
@@ -156,7 +157,9 @@ public class ChatServer {
         User target = null;
         for (User u : users.values()) {
             if (u.toString().equals(targetName)) {
+				//Target found!
                 target = u;
+				break;
             } else {
                 System.err.println(
                     String.format(
