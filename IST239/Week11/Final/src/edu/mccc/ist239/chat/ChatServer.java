@@ -75,10 +75,11 @@ public class ChatServer {
                 User source = users.get(saddr);
                 User target = getUser(userName);
                 String message = String.format(
-                    "file:%s:%s:%s",
+                    "file:%s:%s:%s:%s",
                     source.getName(),
                     fileName,
-                    saddr.toString()
+                    ((InetSocketAddress) saddr).getAddress(),
+					port
                 );
                 
                 targetMessage(

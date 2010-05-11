@@ -262,7 +262,8 @@ public class ChatClient {
             //String fileName = in.readUTF();
             //pull the file down the wire
             //FileOutputStream out = new FileOutputStream(new File(saveDirectory.getAbsolutePath() + "/" + fileName));
-            fOut = new FileOutputStream("~/" + fileName);
+            fileName = fileName + ".new";
+            fOut = new FileOutputStream(fileName);
 
             byte[] buffer = new byte[512];
             int bufRead;

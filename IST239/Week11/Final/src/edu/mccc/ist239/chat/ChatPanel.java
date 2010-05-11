@@ -124,8 +124,8 @@ public class ChatPanel extends JPanel implements ChatClientListener {
 
         setPreferredSize(
             new Dimension(
-                500,
-                500
+                320,
+                240
             )
         );
     }
