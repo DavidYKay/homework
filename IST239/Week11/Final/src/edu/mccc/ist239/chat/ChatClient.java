@@ -113,6 +113,7 @@ public class ChatClient {
                             } else if (msg.startsWith("buddy")) {
                                 //Add a buddy, inbound from server
                                 System.out.println("ChatClient.Buddy received");
+                                //Ideally, this would use a different type of notification
                                 fireChatClientMessageReceived(msg);
                             } else {
                                 fireChatClientMessageReceived(msg);
@@ -210,6 +211,15 @@ public class ChatClient {
                 user,
                 message
             )
+        );
+    }
+
+    /**
+     * Prepends the chat marker and sends the message to the server
+     */
+    public void sendBuddyMessage(String message) {
+        sendMessage(
+            "addbuddy:" + message
         );
     }
 

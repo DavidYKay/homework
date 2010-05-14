@@ -100,8 +100,16 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         add(buttonPanel, BorderLayout.PAGE_END);
     }
 
-    public void addBuddy(String username) {
+    /**
+     * Add buddy button clicked
+     */
+    public void addBuddy(String username, boolean local) {
         listModel.addElement(username);
+        if (local) {
+            //Send it to the server
+            ChatClient client = chat.getChatClient();
+            client.sendBuddyMessage(username);
+        }
     }
 
     /**

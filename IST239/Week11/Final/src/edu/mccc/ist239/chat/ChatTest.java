@@ -270,6 +270,10 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
 		jFrame.setVisible(true);
     }
 
+    public ChatClient getChatClient() {
+        return chatClient;
+    }
+
     public void messageReceived(ChatClientEvent e) {
         System.out.println("Message received!: " + e.getMessage());
         String msg = e.getMessage();
@@ -286,7 +290,7 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
                 6,
                 msg.length() 
             );
-            buddyList.addBuddy(msg);
+            buddyList.addBuddy(msg, false);
         }
     }
 
@@ -334,7 +338,7 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
      
     public void addBuddy(String username) {
         Debug.println("ChatTest.addBuddy: " + username);
-        buddyList.addBuddy(username);
+        buddyList.addBuddy(username, true);
     }
     public void removeBuddy(String username) {
         Debug.println("ChatTest.removeBuddy: " + username);

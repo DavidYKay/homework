@@ -149,6 +149,12 @@ public class ChatServer {
                 } else {
                     //improper # arguments
                 }
+            } else if (msg.startsWith("addbuddy")) {
+                String[] args = msg.split(":");
+                addBuddy(
+                    users.get(saddr),
+                    args[1]
+                );
             } else {
                 //broadcastMessage(msg, dp.getAddress());
 			}
@@ -170,7 +176,6 @@ public class ChatServer {
                     String.format(
                         "Target not found. Expected: %s Received: %s",
                         targetName,
-                        //sourceName,
                         u.toString()
                     )
                 );
@@ -361,6 +366,91 @@ public class ChatServer {
                         user.getPort()
                     );
                 }
+            }
+        }.run();
+    }
+
+    /**
+     * This is a bit of a hack since I didn't plan ahead and use 
+     * integer IDs for everything
+     */
+    private int getBuddyId(String userName) {
+        int buddyId = -1;
+        Connection conn = null;
+
+        try {
+            conn = getDbConnection();
+
+            //fetch that shit
+            String query = 
+                "SELECT id"
+                + " FROM user"
+                + " WHERE username = ?";
+            
+            PreparedStatement prepStatement = conn.prepareStatement(
+                query
+            );
+
+            prepStatement.setString(
+                1,
+                userName
+            );
+
+            ResultSet resultSet = prepStatement.executeQuery();
+            while (resultSet.next()) {
+                buddyId = resultSet.getInt(1);
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Cannot connect to database server");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeDbConnection(conn);
+        }
+        return buddyId;
+    }
+
+    /**
+     * Add a buddy to the user's buddy list
+     */
+    private void addBuddy(final User user, final String buddyName) {
+		new Thread() {
+			public void run() {
+				Debug.println("addBuddy.Thread:run()");
+                //Look up buddies in the database
+                
+                Connection conn = getDbConnection();
+
+                String query = 
+                    "INSERT INTO buddies"
+                    + "(user_id, buddy_id) VALUES (?, ?)";
+                
+                try {
+                    PreparedStatement prepStatement = conn.prepareStatement(
+                        query
+                    );
+                    prepStatement.setInt(
+                        1,
+                        getBuddyId(
+                            user.getName()
+                        )
+                        //userId
+                    );
+                    prepStatement.setInt(
+                        2,
+                        getBuddyId(
+                            buddyName
+                        )
+                        //buddyId
+                    );
+                    prepStatement.execute();
+                } catch (Exception ex) {
+                    //SQL exception
+					System.err.println("Database exception:");
+					System.err.println(ex.getMessage());
+                }
+                closeDbConnection(conn);
             }
         }.run();
     }
