@@ -474,7 +474,7 @@ public class ChatServer {
 
                 String query = 
                     "delete from buddies"
-                    + "WHERE user_id = ? AND buddy_id = ?";
+                    + " WHERE user_id = ? AND buddy_id = ?";
                 
                 try {
                     PreparedStatement prepStatement = conn.prepareStatement(
