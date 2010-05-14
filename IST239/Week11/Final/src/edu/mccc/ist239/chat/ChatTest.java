@@ -19,16 +19,16 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
     private JTextArea chatText;
     private JTextField inputField;
 
-    public ChatTest() {
+    public ChatTest(String hostIp) {
         this.chatClient = new ChatClient(
-            //This should the the actual user name. Currently just dead weight
-            //"dk",
-            //"password",
-            "127.0.0.1"
+            hostIp
         );
         chatClient.addChatClientListener(this);
         chatClient.addChatLoginListener(this);
         initGUI();
+    }
+    public ChatTest() {
+        this("127.0.0.1");
     }
     private void initGUI() {
         //GUI
@@ -246,7 +246,14 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
 		JFrame jFrame = new JFrame();
 		jFrame.setTitle("Chat Demo");
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ChatTest ct = new ChatTest();
+        ChatTest ct = null;
+        if (sa.length == 1) {
+            ct = new ChatTest(
+                sa[0]
+            );
+        } else {
+            ct = new ChatTest();
+        }
         jFrame.add(
             ct
         );

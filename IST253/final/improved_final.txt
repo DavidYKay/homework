@@ -66,7 +66,7 @@ SerPlanNo VARCHAR(15),
 SerPlanIssued DATE)
 ;
 
-CREATE UNIQUE INDEX DIAGNOSTIC_NDX5 ON PRODUCT_TYPE(CustomerAccountNo, ProdType, ProdSerNo);
+---CREATE UNIQUE INDEX DIAGNOSTIC_NDX5 ON PRODUCT_TYPE(CustomerAccountNo, ProdType, ProdSerNo);
 INSERT INTO  PRODUCT_TYPE (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued)
 VALUES ('0001', 'Washer', 'W2100', 'A01111', 'Monthly', DATE('2009-10-01'));
 INSERT INTO PRODUCT_TYPE (CustomerAccountNo, ProdType, ProdSerNo, SerPlanNo, SerPlanName, SerPlanIssued)
