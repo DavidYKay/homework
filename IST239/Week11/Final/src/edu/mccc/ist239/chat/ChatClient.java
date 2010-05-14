@@ -110,6 +110,10 @@ public class ChatClient {
                                     hostSocket,
                                     fileName
                                 );
+                            } else if (msg.startsWith("buddy")) {
+                                //Add a buddy, inbound from server
+                                System.out.println("Buddy received");
+                                
                             } else {
                                 fireChatClientMessageReceived(msg);
                             }

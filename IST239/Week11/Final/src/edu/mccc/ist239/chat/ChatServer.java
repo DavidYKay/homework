@@ -2,6 +2,7 @@ package edu.mccc.ist239.chat;
 import java.net.*;
 import java.util.HashMap;
 import java.sql.*;
+import java.util.*;
 
 import com.cbthinkx.util.Debug;
 
@@ -52,6 +53,9 @@ public class ChatServer {
                     targetMessage(
                         "login:true",
                         saddr
+                    );
+                    sendBuddies(
+                        user
                     );
                 } else {
                     //Send rejection notice to client
@@ -223,18 +227,38 @@ public class ChatServer {
 		}
     }
 
+    private Connection getDbConnection() {
+        Connection conn = null;
+        try {
+            String dbUser     = "ist239";
+            String dbPassword = "password";
+            String dbUrl      = "jdbc:mysql://localhost/ist239";
+            Class.forName ("com.mysql.jdbc.Driver").newInstance ();
+            conn = DriverManager.getConnection (dbUrl, dbUser, dbPassword);
+            System.out.println ("Database connection established");
+        } catch (Exception e) {
+            System.out.println ("Database connection failed");
+        }
+        return conn;
+    }
+
+    private void closeDbConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close ();
+                System.out.println ("Database connection terminated");
+            }
+            catch (Exception e) { /* ignore close errors */ }
+        }
+    }
+
     private boolean validatePasswordWithDB(String userName, String userPass) {
         boolean result = false;
         //open db connection
         Connection conn = null;
 
         try {
-            String dbUser     = "ist239";
-            String dbPassword = "password";
-            String url        = "jdbc:mysql://localhost/ist239";
-            Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-            conn = DriverManager.getConnection (url, dbUser, dbPassword);
-            System.out.println ("Database connection established");
+            conn = getDbConnection();
 
             //fetch that shit
             String query = 
@@ -279,14 +303,65 @@ public class ChatServer {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close ();
-                    System.out.println ("Database connection terminated");
-                }
-                catch (Exception e) { /* ignore close errors */ }
-            }
+            closeDbConnection(conn);
         }
         return result;
+    }
+
+    /**
+     * Send buddies on a separate thread, since it takes some time
+     */
+    private void sendBuddies(final User user) {
+		new Thread() {
+			public void run() {
+				Debug.println("sendBuddies.Thread:run()");
+                //Look up buddies in the database
+                
+                Connection conn = getDbConnection();
+
+                String query = 
+                    "SELECT buddies.buddy_id, user.username"
+                    + " FROM user"
+                    + " LEFT JOIN buddies"
+                    + " ON buddies.buddy_id = user.id"
+                    + " WHERE buddy_id = ?";
+                
+                ArrayList<String> buddyNames = new ArrayList<String>();
+                try {
+                    PreparedStatement prepStatement = conn.prepareStatement(
+                        query
+                    );
+
+                    prepStatement.setInt(
+                        1,
+                        2
+                    );
+
+                    ResultSet resultSet = prepStatement.executeQuery();
+                    while (resultSet.next()) {
+                        String buddyName = resultSet.getString(2);
+                        buddyNames.add(
+                            buddyName
+                        );
+                    }
+
+                } catch (Exception ex) {
+                    //SQL exception
+					System.err.println("Database exception:");
+					System.err.println(ex.getMessage());
+                }
+                closeDbConnection(conn);
+                
+                //send all names to user
+                for (String buddyName : buddyNames) {
+                    String msg = "buddy:" + buddyName;
+                    targetMessage(
+                        msg,
+                        user.getInetAddress(),
+                        user.getPort()
+                    );
+                }
+            }
+        }.run();
     }
 }
