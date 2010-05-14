@@ -228,6 +228,8 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
                     System.out.println(
                         "Sign off pressed"
                     );
+                    //Clear out the buddy list
+                    buddyList.clearBuddies();
                     chatClient.logOut();
                 }
             }

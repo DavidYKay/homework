@@ -116,6 +116,14 @@ public class BuddyList extends JPanel implements ListSelectionListener {
     /**
      * Delete buddies
      */
+
+    /**
+     * Just clear the local list
+     */
+    public void clearBuddies() {
+        listModel.clear();
+    }
+
     class RemoveListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
