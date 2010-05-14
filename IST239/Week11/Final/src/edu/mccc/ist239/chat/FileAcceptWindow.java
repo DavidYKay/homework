@@ -69,15 +69,16 @@ public class FileAcceptWindow extends JFrame {
             String dirName       = dirField.getText();
             System.out.println("FileName: " + localFileName);
             System.out.println("DirName: " + dirName);
+            String fullLocalName = dirName + '/' + localFileName;
             File file = new File(
-                dirName + '/' + localFileName
+                fullLocalName
             );
             System.out.println("File: " + file);
 
             chatClient.receiveFile(
 				hostSocket, 
 				remoteFileName,
-				localFileName
+                fullLocalName
 			);
         }
     }

@@ -145,7 +145,7 @@ public class ChatClient {
                 Socket clientSocket = null;
                 try {
                     clientSocket = serverSocket.accept();
-                    clientSocket.setSoTimeout(10000);
+                    clientSocket.setSoTimeout(60000);
                 } catch (IOException e) {
                     //System.out.println("Accept failed: 4973");
                     //break;
@@ -252,7 +252,8 @@ public class ChatClient {
      */
     //private void receiveFile(Socket senderSocket, String fileName) {
     public void receiveFile(Socket senderSocket, String remoteFileName, String localFileName) {
-        System.out.println("receiveFile()");
+        System.out.println("receiveFile() From: " + remoteFileName);
+        System.out.println("receiveFile() To: " + localFileName);
 
         DataInputStream  in   = null;
         DataOutputStream dOut = null;
