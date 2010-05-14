@@ -1,0 +1,2 @@
+#!/bin/bash
+java -cp .:../lib/mysql.jar:../lib/glassfish-javaee.jar $1

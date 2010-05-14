@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+	<display-name>First Servlet</display-name>
+	<description> 
+		This is a simple hello world application that will display the current local time to the user 
+    </description>
+
+	<servlet>
+		<servlet-name>Register</servlet-name>
+		<servlet-class>RegisterServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>HelloServlet</servlet-name>
+		<servlet-class>FirstServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HelloServlet</servlet-name>
+		<url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Register</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
+</web-app>
