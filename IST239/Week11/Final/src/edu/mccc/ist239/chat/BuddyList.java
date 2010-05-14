@@ -20,14 +20,16 @@ public class BuddyList extends JPanel implements ListSelectionListener {
 
     public BuddyList(ChatTest chat) {
         super(new BorderLayout());
+        setBorder(
+            BorderFactory.createTitledBorder(
+                "Buddy List"
+            )
+        );
         this.chat = chat;
 
         listModel = new DefaultListModel();
-        listModel.addElement("server");
+        //listModel.addElement("");
         //listModel.addElement("kyle");
-        //listModel.addElement("Debbie Scott");
-        //listModel.addElement("Scott Hommel");
-        //listModel.addElement("Sharon Zakhour");
 
         //Create the list and put it in a scroll pane.
         list = new JList(listModel);
@@ -51,8 +53,7 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         employeeName = new JTextField(10);
         employeeName.addActionListener(addListener);
         employeeName.getDocument().addDocumentListener(addListener);
-        String name = listModel.getElementAt(
-                              list.getSelectedIndex()).toString();
+        //String name = listModel.getElementAt(list.getSelectedIndex()).toString();
 
         //Create a panel that uses BoxLayout.
 

@@ -216,23 +216,6 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
         );
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Send File",
-                KeyEvent.VK_S);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription(
-                "This sends files to other users");
-        menuItem.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println(
-                        "Menu Item Pressed"
-                    );
-                }
-            }
-        );
-        menu.add(menuItem);
-
         menuItem = new JMenuItem("Sign Off",
                 KeyEvent.VK_F);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -245,6 +228,7 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
                     System.out.println(
                         "Sign off pressed"
                     );
+                    chatClient.logOut();
                 }
             }
         );
