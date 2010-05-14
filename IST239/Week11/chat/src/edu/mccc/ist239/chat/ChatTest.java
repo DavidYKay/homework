@@ -242,11 +242,10 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
     }
 
     public static void main(String[] sa) {
-		//JFrame frame = new JFrame();
-		JFrame jFrame = new JFrame();
+		final JFrame jFrame = new JFrame();
 		jFrame.setTitle("Chat Demo");
-		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ChatTest ct = null;
+		//jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        final ChatTest ct;
         if (sa.length == 1) {
             ct = new ChatTest(
                 sa[0]
@@ -258,6 +257,18 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
             ct
         );
         ct.makeMenu(jFrame);
+
+        jFrame.addWindowListener(
+            new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    System.out.println("Window Closing");
+                    //Disconnect from the server
+                    ct.getChatClient().logOut();
+                    jFrame.dispose();
+                    System.exit(0);
+                }
+            }
+        );
 		jFrame.pack();
 		jFrame.setLocationRelativeTo(null);
 		jFrame.setVisible(true);

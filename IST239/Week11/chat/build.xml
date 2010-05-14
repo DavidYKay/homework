@@ -59,6 +59,24 @@
         </java>
     </target>
 
+    <target name="run-remote" depends="compile">
+        <java 
+            classname="${basepackage}.${ant.project.name}.${executable}"
+            classpath="${classpath}"
+            fork="true" >
+
+            <sysproperty 
+                key= "com.cbthinkx.debug" 
+                value= "true" />
+                <arg value="davidykay.com" />
+            <!--
+                <arg value="69.164.208.58" />
+                <arg value="MommasBadBoy" />
+                <arg value="-Dcom.cbthinkx.debug" />
+            -->
+        </java>
+    </target>
+
     <target name="serverd" depends="compile">
         <java 
             classname="${basepackage}.${ant.project.name}.ChatServer"
