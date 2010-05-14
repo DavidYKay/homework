@@ -328,6 +328,7 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
     }
     public void removeBuddy(String username) {
         Debug.println("ChatTest.removeBuddy: " + username);
+        buddyList.removeBuddy(username, true);
     }
 
 	/**

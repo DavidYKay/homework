@@ -217,9 +217,18 @@ public class ChatClient {
     /**
      * Prepends the chat marker and sends the message to the server
      */
-    public void sendBuddyMessage(String message) {
+    public void sendAddBuddyMessage(String message) {
         sendMessage(
             "addbuddy:" + message
+        );
+    }
+
+    /**
+     * Prepends the chat marker and sends the message to the server
+     */
+    public void sendRemoveBuddyMessage(String message) {
+        sendMessage(
+            "removebuddy:" + message
         );
     }
 

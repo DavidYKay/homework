@@ -155,6 +155,12 @@ public class ChatServer {
                     users.get(saddr),
                     args[1]
                 );
+            } else if (msg.startsWith("removebuddy")) {
+                String[] args = msg.split(":");
+                removeBuddy(
+                    users.get(saddr),
+                    args[1]
+                );
             } else {
                 //broadcastMessage(msg, dp.getAddress());
 			}
@@ -329,7 +335,7 @@ public class ChatServer {
                     + " FROM user"
                     + " LEFT JOIN buddies"
                     + " ON buddies.buddy_id = user.id"
-                    + " WHERE buddy_id = ?";
+                    + " WHERE buddies.user_id = ?";
                 
                 ArrayList<String> buddyNames = new ArrayList<String>();
                 try {
@@ -339,7 +345,7 @@ public class ChatServer {
 
                     prepStatement.setInt(
                         1,
-                        2
+                        getBuddyId(user.getName())
                     );
 
                     ResultSet resultSet = prepStatement.executeQuery();
@@ -425,6 +431,50 @@ public class ChatServer {
                 String query = 
                     "INSERT INTO buddies"
                     + "(user_id, buddy_id) VALUES (?, ?)";
+                
+                try {
+                    PreparedStatement prepStatement = conn.prepareStatement(
+                        query
+                    );
+                    prepStatement.setInt(
+                        1,
+                        getBuddyId(
+                            user.getName()
+                        )
+                        //userId
+                    );
+                    prepStatement.setInt(
+                        2,
+                        getBuddyId(
+                            buddyName
+                        )
+                        //buddyId
+                    );
+                    prepStatement.execute();
+                } catch (Exception ex) {
+                    //SQL exception
+					System.err.println("Database exception:");
+					System.err.println(ex.getMessage());
+                }
+                closeDbConnection(conn);
+            }
+        }.run();
+    }
+
+    /**
+     * Add a buddy to the user's buddy list
+     */
+    private void removeBuddy(final User user, final String buddyName) {
+		new Thread() {
+			public void run() {
+				Debug.println("removeBuddy.Thread:run()");
+                //Look up buddies in the database
+                
+                Connection conn = getDbConnection();
+
+                String query = 
+                    "delete from buddies"
+                    + "WHERE user_id = ? AND buddy_id = ?";
                 
                 try {
                     PreparedStatement prepStatement = conn.prepareStatement(

@@ -108,15 +108,31 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         listModel.addElement(username);
         if (local) {
             //Send it to the server
-            ChatClient client = chat.getChatClient();
-            client.sendBuddyMessage(username);
+            notifyAdd(username);
         }
     }
 
     /**
-     * Delete buddies
+     * Notifies the server we have added a buddy
      */
+    private void notifyAdd(String username) {
+        System.out.println("NotifyAdd: " + username);
+        ChatClient client = chat.getChatClient();
+        client.sendAddBuddyMessage(username);
+    }
 
+    /**
+     * Delete buddy
+     */
+    public void removeBuddy(String username, boolean local) {
+        listModel.removeElement(username);
+        if (local) {
+            //Send it to the server
+            ChatClient client = chat.getChatClient();
+            client.sendRemoveBuddyMessage(username);
+        }
+    }
+    
     /**
      * Just clear the local list
      */
@@ -130,7 +146,10 @@ public class BuddyList extends JPanel implements ListSelectionListener {
             //there's a valid selection
             //so go ahead and remove whatever's selected.
             int index = list.getSelectedIndex();
-            listModel.remove(index);
+            removeBuddy(
+                (String) listModel.get(index), 
+                true
+            );
 
             int size = listModel.getSize();
 
@@ -181,6 +200,9 @@ public class BuddyList extends JPanel implements ListSelectionListener {
             }
 
             listModel.insertElementAt(employeeName.getText(), index);
+            notifyAdd(
+                employeeName.getText()
+            );
             //If we just wanted to add to the end, we'd do this:
             //listModel.addElement(employeeName.getText());
 
