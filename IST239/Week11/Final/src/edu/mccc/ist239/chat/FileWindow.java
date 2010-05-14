@@ -23,7 +23,7 @@ public class FileWindow extends JFrame {
     public FileWindow(ChatClient chatClient, String userName) {
         this.chatClient = chatClient;
         this.userName   = userName;
-		setTitle("File Select");
+		setTitle("Send File");
         JPanel p = new JPanel();
         browseButton.addActionListener(new BrowseL());
         p.add(browseButton);

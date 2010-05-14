@@ -21,7 +21,7 @@ public class FileAcceptWindow extends JFrame {
         this.chatClient = chatClient;
         this.hostSocket = hostSocket;
         this.remoteFileName   = remoteFileName;
-		setTitle("File Select");
+		setTitle("Accept File");
         JPanel p = new JPanel();
         browseButton.addActionListener(new BrowseL());
         p.add(browseButton);
