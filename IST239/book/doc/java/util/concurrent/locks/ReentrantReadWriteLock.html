@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><!--JBuilder QuickDoc-->
+<HEAD>
+<TITLE>Class java.util.concurrent.locks.ReentrantReadWriteLock</TITLE><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+<H2>
+<FONT SIZE="-1">java.util.concurrent.locks</FONT>
+<BR>Class ReentrantReadWriteLock</H2>
+<DL>
+<DT>public class <B>ReentrantReadWriteLock</B><DT>implements java.util.concurrent.locks.ReadWriteLock, java.io.Serializable
+</DL>
+<DL><DD>An implementation of <A HREF="ReadWriteLock">ReadWriteLock</A> supporting similar semantics to <A HREF="ReentrantLock">ReentrantLock</A>. <p>This class has the following properties: <ul> <li><b>Acquisition order</b> <p> This class does not impose a reader or writer preference ordering for lock access. However, it does support an optional <em>fairness</em> policy. When constructed as fair, threads contend for entry using an approximately arrival-order policy. When the write lock is released either the longest-waiting single writer will be assigned the write lock, or if there is a reader waiting longer than any writer, the set of readers will be assigned the read lock. When constructed as non-fair, the order of entry to the lock need not be in arrival order. In either case, if readers are active and a writer enters the lock then no subsequent readers will be granted the read lock until after that writer has acquired and released the write lock. <li><b>Reentrancy</b> <p>This lock allows both readers and writers to reacquire read or write locks in the style of a <A HREF="ReentrantLock">ReentrantLock</A>. Readers are not allowed until all write locks held by the writing thread have been released. <p>Additionally, a writer can acquire the read lock - but not vice-versa. Among other applications, reentrancy can be useful when write locks are held during calls or callbacks to methods that perform reads under read locks. If a reader tries to acquire the write lock it will never succeed. <li><b>Lock downgrading</b> <p>Reentrancy also allows downgrading from the write lock to a read lock, by acquiring the write lock, then the read lock and then releasing the write lock. However, upgrading from a read lock to the write lock is <b>not</b> possible. <li><b>Interruption of lock acquisition</b> <p>The read lock and write lock both support interruption during lock acquisition. <li><b><A HREF="Condition">Condition</A> support</b> <p>The write lock provides a <A HREF="Condition">Condition</A> implementation that behaves in the same way, with respect to the write lock, as the <A HREF="Condition">Condition</A> implementation provided by <A HREF="ReentrantLock#newCondition">ReentrantLock#newCondition</A> does for <A HREF="ReentrantLock">ReentrantLock</A>. This <A HREF="Condition">Condition</A> can, of course, only be used with the write lock. <p>The read lock does not support a <A HREF="Condition">Condition</A> and <tt>readLock().newCondition()</tt> throws <tt>UnsupportedOperationException</tt>. <li><b>Instrumentation</b> <P> This class supports methods to determine whether locks are held or contended. These methods are designed for monitoring system state, not for synchronization control. </ul> <p> Serialization of this class behaves in the same way as built-in locks: a deserialized lock is in the unlocked state, regardless of its state when serialized. <p><b>Sample usages</b>. Here is a code sketch showing how to exploit reentrancy to perform lock downgrading after updating a cache (exception handling is elided for simplicity): <pre>
+class CachedData {
+Object data;
+volatile boolean cacheValid;
+ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+void processCachedData() {
+rwl.readLock().lock();
+if (!cacheValid) {
+// upgrade lock manually
+rwl.readLock().unlock();   // must unlock first to obtain writelock
+rwl.writeLock().lock();
+if (!cacheValid) { // recheck
+data = ...
+cacheValid = true;
+}
+// downgrade lock
+rwl.readLock().lock();  // reacquire read without giving up write lock
+rwl.writeLock().unlock(); // unlock write, still hold read
+}
+use(data);
+rwl.readLock().unlock();
+}
+}
+</pre> ReentrantReadWriteLocks can be used to improve concurrency in some uses of some kinds of Collections. This is typically worthwhile only when the collections are expected to be large, accessed by more reader threads than writer threads, and entail operations with overhead that outweighs synchronization overhead. For example, here is a class using a TreeMap that is expected to be large and concurrently accessed. <pre>
+class RWDictionary {
+private final Map&lt;String, Data&gt;  m = new TreeMap&lt;String, Data&gt;();
+private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+private final Lock r = rwl.readLock();
+private final Lock w = rwl.writeLock();
+public Data get(String key) {
+r.lock(); try { return m.get(key); } finally { r.unlock(); }
+}
+public String[] allKeys() {
+r.lock(); try { return m.keySet().toArray(); } finally { r.unlock(); }
+}
+public Data put(String key, Data value) {
+w.lock(); try { return m.put(key, value); } finally { w.unlock(); }
+}
+public void clear() {
+w.lock(); try { m.clear(); } finally { w.unlock(); }
+}
+}
+</pre> <h3>Implementation Notes</h3> <p>A reentrant write lock intrinsically defines an owner and can only be released by the thread that acquired it. In contrast, in this implementation, the read lock has no concept of ownership, and there is no requirement that the thread releasing a read lock is the same as the one that acquired it. However, this property is not guaranteed to hold in future implementations of this class. <p> This lock supports a maximum of 65536 recursive write locks and 65536 read locks. Attempts to exceed these limits result in <A HREF="Error">Error</A> throws from locking methods.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Author:</B><DD>Doug Lea</DD>
+<DT><B>Since:</B><DD>1.5</DD>
+</DL>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Field Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="readerLock"></A>
+
+<H3>readerLock</H3>
+<PRE>
+private final java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock <B>readerLock</B></PRE>
+<DL><DD>Inner class providing readlock<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="writerLock"></A>
+
+<H3>writerLock</H3>
+<PRE>
+private final java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock <B>writerLock</B></PRE>
+<DL><DD>Inner class providing writelock<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="sync"></A>
+
+<H3>sync</H3>
+<PRE>
+private final java.util.concurrent.locks.ReentrantReadWriteLock.Sync <B>sync</B></PRE>
+<DL><DD>Performs all synchronization mechanics<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Constructor Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="ReentrantReadWriteLock()"></A>
+
+<H3>ReentrantReadWriteLock</H3>
+<PRE>
+public <B>ReentrantReadWriteLock</B>()</PRE>
+<DL><DD>Creates a new <tt>ReentrantReadWriteLock</tt> with default ordering properties.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="ReentrantReadWriteLock(boolean)"></A>
+
+<H3>ReentrantReadWriteLock</H3>
+<PRE>
+public <B>ReentrantReadWriteLock</B>(boolean&nbsp;fair)</PRE>
+<DL><DD>Creates a new <tt>ReentrantReadWriteLock</tt> with the given fairness policy.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>fair</CODE> - true if this lock should use a fair ordering policy</DD>
+</DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="sharedCount(int)"></A>
+
+<H3>sharedCount</H3>
+<PRE>
+static int <B>sharedCount</B>(int&nbsp;c)</PRE>
+<DL><DD>Returns the number of shared holds represented in count<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="exclusiveCount(int)"></A>
+
+<H3>exclusiveCount</H3>
+<PRE>
+static int <B>exclusiveCount</B>(int&nbsp;c)</PRE>
+<DL><DD>Returns the number of exclusive holds represented in count<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="isFair()"></A>
+
+<H3>isFair</H3>
+<PRE>
+public final boolean <B>isFair</B>()</PRE>
+<DL><DD>Returns true if this lock has fairness set true.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if this lock has fairness set true.</DD>
+</DL>
+<HR>
+
+<A NAME="getOwner()"></A>
+
+<H3>getOwner</H3>
+<PRE>
+protected java.lang.Thread <B>getOwner</B>()</PRE>
+<DL><DD>Returns the thread that currently owns the write lock, or <tt>null</tt> if not owned. Note that the owner may be momentarily <tt>null</tt> even if there are threads trying to acquire the lock but have not yet done so. This method is designed to facilitate construction of subclasses that provide more extensive lock monitoring facilities.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the owner, or <tt>null</tt> if not owned.</DD>
+</DL>
+<HR>
+
+<A NAME="getReadLockCount()"></A>
+
+<H3>getReadLockCount</H3>
+<PRE>
+public int <B>getReadLockCount</B>()</PRE>
+<DL><DD>Queries the number of read locks held for this lock. This method is designed for use in monitoring system state, not for synchronization control.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the number of read locks held.</DD>
+</DL>
+<HR>
+
+<A NAME="isWriteLocked()"></A>
+
+<H3>isWriteLocked</H3>
+<PRE>
+public boolean <B>isWriteLocked</B>()</PRE>
+<DL><DD>Queries if the write lock is held by any thread. This method is designed for use in monitoring system state, not for synchronization control.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD><tt>true</tt> if any thread holds the write lock and <tt>false</tt> otherwise.</DD>
+</DL>
+<HR>
+
+<A NAME="isWriteLockedByCurrentThread()"></A>
+
+<H3>isWriteLockedByCurrentThread</H3>
+<PRE>
+public boolean <B>isWriteLockedByCurrentThread</B>()</PRE>
+<DL><DD>Queries if the write lock is held by the current thread.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD><tt>true</tt> if the current thread holds the write lock and <tt>false</tt> otherwise.</DD>
+</DL>
+<HR>
+
+<A NAME="getWriteHoldCount()"></A>
+
+<H3>getWriteHoldCount</H3>
+<PRE>
+public int <B>getWriteHoldCount</B>()</PRE>
+<DL><DD>Queries the number of reentrant write holds on this lock by the current thread. A writer thread has a hold on a lock for each lock action that is not matched by an unlock action.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the number of holds on the write lock by the current thread, or zero if the write lock is not held by the current thread.</DD>
+</DL>
+<HR>
+
+<A NAME="getQueuedWriterThreads()"></A>
+
+<H3>getQueuedWriterThreads</H3>
+<PRE>
+protected java.util.Collection <B>getQueuedWriterThreads</B>()</PRE>
+<DL><DD>Returns a collection containing threads that may be waiting to acquire the write lock. Because the actual set of threads may change dynamically while constructing this result, the returned collection is only a best-effort estimate. The elements of the returned collection are in no particular order. This method is designed to facilitate construction of subclasses that provide more extensive lock monitoring facilities.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the collection of threads</DD>
+</DL>
+<HR>
+
+<A NAME="getQueuedReaderThreads()"></A>
+
+<H3>getQueuedReaderThreads</H3>
+<PRE>
+protected java.util.Collection <B>getQueuedReaderThreads</B>()</PRE>
+<DL><DD>Returns a collection containing threads that may be waiting to acquire the read lock. Because the actual set of threads may change dynamically while constructing this result, the returned collection is only a best-effort estimate. The elements of the returned collection are in no particular order. This method is designed to facilitate construction of subclasses that provide more extensive lock monitoring facilities.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the collection of threads</DD>
+</DL>
+<HR>
+
+<A NAME="hasQueuedThreads()"></A>
+
+<H3>hasQueuedThreads</H3>
+<PRE>
+public final boolean <B>hasQueuedThreads</B>()</PRE>
+<DL><DD>Queries whether any threads are waiting to acquire the read or write lock. Note that because cancellations may occur at any time, a <tt>true</tt> return does not guarantee that any other thread will ever acquire a lock. This method is designed primarily for use in monitoring of the system state.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if there may be other threads waiting to acquire the lock.</DD>
+</DL>
+<HR>
+
+<A NAME="hasQueuedThread(java.lang.Thread)"></A>
+
+<H3>hasQueuedThread</H3>
+<PRE>
+public final boolean <B>hasQueuedThread</B>(java.lang.Thread&nbsp;thread)</PRE>
+<DL><DD>Queries whether the given thread is waiting to acquire either the read or write lock. Note that because cancellations may occur at any time, a <tt>true</tt> return does not guarantee that this thread will ever acquire a lock. This method is designed primarily for use in monitoring of the system state.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>thread</CODE> - the thread</DD>
+<DT><B>Returns:</B><DD>true if the given thread is queued waiting for this lock.</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if thread is null</DD>
+</DL>
+<HR>
+
+<A NAME="getQueueLength()"></A>
+
+<H3>getQueueLength</H3>
+<PRE>
+public final int <B>getQueueLength</B>()</PRE>
+<DL><DD>Returns an estimate of the number of threads waiting to acquire either the read or write lock. The value is only an estimate because the number of threads may change dynamically while this method traverses internal data structures. This method is designed for use in monitoring of the system state, not for synchronization control.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the estimated number of threads waiting for this lock</DD>
+</DL>
+<HR>
+
+<A NAME="getQueuedThreads()"></A>
+
+<H3>getQueuedThreads</H3>
+<PRE>
+protected java.util.Collection <B>getQueuedThreads</B>()</PRE>
+<DL><DD>Returns a collection containing threads that may be waiting to acquire either the read or write lock. Because the actual set of threads may change dynamically while constructing this result, the returned collection is only a best-effort estimate. The elements of the returned collection are in no particular order. This method is designed to facilitate construction of subclasses that provide more extensive monitoring facilities.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the collection of threads</DD>
+</DL>
+<HR>
+
+<A NAME="hasWaiters(java.util.concurrent.locks.Condition)"></A>
+
+<H3>hasWaiters</H3>
+<PRE>
+public boolean <B>hasWaiters</B>(java.util.concurrent.locks.Condition&nbsp;condition)</PRE>
+<DL><DD>Queries whether any threads are waiting on the given condition associated with the write lock. Note that because timeouts and interrupts may occur at any time, a <tt>true</tt> return does not guarantee that a future <tt>signal</tt> will awaken any threads. This method is designed primarily for use in monitoring of the system state.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>condition</CODE> - the condition</DD>
+<DT><B>Returns:</B><DD><tt>true</tt> if there are any waiting threads.</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalMonitorStateException</CODE> - if this lock is not held</DD>
+<DD><CODE>IllegalArgumentException</CODE> - if the given condition is not associated with this lock</DD>
+<DD><CODE>NullPointerException</CODE> - if condition null</DD>
+</DL>
+<HR>
+
+<A NAME="getWaitQueueLength(java.util.concurrent.locks.Condition)"></A>
+
+<H3>getWaitQueueLength</H3>
+<PRE>
+public int <B>getWaitQueueLength</B>(java.util.concurrent.locks.Condition&nbsp;condition)</PRE>
+<DL><DD>Returns an estimate of the number of threads waiting on the given condition associated with the write lock. Note that because timeouts and interrupts may occur at any time, the estimate serves only as an upper bound on the actual number of waiters. This method is designed for use in monitoring of the system state, not for synchronization control.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>condition</CODE> - the condition</DD>
+<DT><B>Returns:</B><DD>the estimated number of waiting threads.</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalMonitorStateException</CODE> - if this lock is not held</DD>
+<DD><CODE>IllegalArgumentException</CODE> - if the given condition is not associated with this lock</DD>
+<DD><CODE>NullPointerException</CODE> - if condition null</DD>
+</DL>
+<HR>
+
+<A NAME="getWaitingThreads(java.util.concurrent.locks.Condition)"></A>
+
+<H3>getWaitingThreads</H3>
+<PRE>
+protected java.util.Collection <B>getWaitingThreads</B>(java.util.concurrent.locks.Condition&nbsp;condition)</PRE>
+<DL><DD>Returns a collection containing those threads that may be waiting on the given condition associated with the write lock. Because the actual set of threads may change dynamically while constructing this result, the returned collection is only a best-effort estimate. The elements of the returned collection are in no particular order. This method is designed to facilitate construction of subclasses that provide more extensive condition monitoring facilities.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>condition</CODE> - the condition</DD>
+<DT><B>Returns:</B><DD>the collection of threads</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalMonitorStateException</CODE> - if this lock is not held</DD>
+<DD><CODE>IllegalArgumentException</CODE> - if the given condition is not associated with this lock</DD>
+<DD><CODE>NullPointerException</CODE> - if condition null</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"></A>
+
+<H3>toString</H3>
+<PRE>
+public java.lang.String <B>toString</B>()</PRE>
+<DL><DD>Returns a string identifying this lock, as well as its lock state. The state, in brackets, includes the String &quot;Write locks =&quot; followed by the number of reentrantly held write locks, and the String &quot;Read locks =&quot; followed by the number of held read locks.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>a string identifying this lock, as well as its lock state.</DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>

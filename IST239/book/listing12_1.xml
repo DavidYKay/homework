@@ -1,0 +1,25 @@
+<?xml version = "1.0"?>
+<!-- XML document for students -->
+<!-- Second student -->
+<students>
+  <student num = "1">
+    <ssn>444111110</ssn>
+    <firstname>Jacob</firstname>
+    <mi>R</mi>
+    <lastname>Smith</lastname>
+    <birthdate>4/9/1985</birthdate>
+    <phone>9129219434</phone>
+    <street>99 Kingston Street</street>
+    <zipcode>31435</zipcode>
+  </student>
+  <student num = "2">
+    <ssn>444111111</ssn>
+    <firstname>John</firstname>
+    <mi>K</mi>
+    <lastname>Stevenson</lastname>
+    <birthdate>4/9/1985</birthdate>
+    <phone>9129219434</phone>
+    <street>100 Main Street</street>
+    <zipcode>31411</zipcode>
+  </student>
+</students>

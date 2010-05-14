@@ -1,0 +1,107 @@
+verticalTextPosition
+    relative to the icon
+    weird things will happen if the icon is small
+
+selected()
+    used in checkedBox and radioButton
+
+AbstractButton
+    -Extend AbstractButton if making custom button
+
+JButton
+    setPressiCon
+    setRolloverIcon
+    can setIcon or specify it in the constructor
+
+    setHorizontalAlignment(JButton.LEFT)
+    setVerticalAlignment(JButton.TOP)
+    All SwingConstants:
+        LEADING (currently same as left)
+        LEFT
+        CENTER
+        RIGHT
+        TRAILING (currently same as right)
+
+JRadioButton
+    buttonGroups to make them mutually exclusive
+    bg.add(JRadioButton)
+
+*Remember that you can set a border on a LayoutManager
+
+TextBuilder
+    one of Slocum's objects
+    makes a blinking piece of text
+
+Blinking
+    if (blinking) //in the process of blinking
+        if (blk)  // in a blink state
+
+
+JLabel
+    can display text, images, or both
+    can set horizontal/vertical alignment/textposition
+    ***Can style JLabels using HTML!!!!!
+
+HTML
+    JLabel
+    Button
+    ToggleButton
+    Menu
+    MenuItem
+    Tabs in TabbedPane
+    List
+    ComboBox
+    Table
+    Tree
+
+JTextField
+    editable - false
+    String - default text
+    ***requestFocusInWindow
+
+JTextArea
+    MULTIPLE LINES OF TEXT
+    by default, can't scroll
+    can be added to scrollpanes, which handle scrolling for you
+    ***Use append to slap text on the end
+    ***insert
+    Wrap words vs wrap characters
+
+Validation
+
+//Getting fonts
+e = GraphicsEnvironment.getLocalGraphicsEnvironment()
+e.getAvailableFontFamilyNames()
+
+List
+    Multiple selections
+    single, grup, multi-interval selections
+    ***int[] indicies = jlst.getSelectedIndicies()
+JScrollBar
+    maximum value, minimum value
+    "BUBBLE" - represents visible amount of data
+    unit decrement, unit increment
+    extent - size of the viewable area
+    *AdjustmentListener
+        adjustmentValueChanged
+
+Multiple Windows
+    Frames can't contain frames
+    program can use multiple frames!
+    Main frame - handles other frames
+    other frames MUST:
+        set DefaultCloseOperation to Jframe.DISPOSE_ON_CLOSE
+
+
+HOMEWORK
+
+Lab
+X16.6  - Investment calculator
+
+Inter
+16.9 - JLabel properties
+    -Clean up!
+X16.3 - Traffic Light
+
+Advanced
+X16.17 -Calendar

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- cssPositionDemo.html -->
+<html>
+  <head>
+    <title>CSS Position Demo</title>
+  </head>
+
+  <body>
+    <div style = "position: absolute; left: 24em; top: 16em">
+      This line is placed using absolute position</div>
+      
+    <div style = "border: solid; margin-top: 1em; padding: 1em">
+	  <div style = "color: red">This line is in normal position
+	  </div>
+	  <div style = "position: relative; left: 1em; color: green">
+	    This line is 1em left of its normal position
+	  </div>
+	  <div style = "position: relative; right: 1em; color: blue">
+	    This line is 1em right of its normal position
+	  </div>
+	</div>
+	
+    <div style = "border: solid; margin-top: 1em; padding: 1em">
+	  <div style = "color: red">This line is in normal position
+	    <span style = "position: relative; top: -1em; color: green">
+	      This line is 1em higher than its normal position
+	    </span>
+	  </div>
+	  <div style = "color: red">This line is in normal position
+	    <span style = "position: relative; top: 1em; color: green">
+	      This line is 1em lower than its normal position
+	    </span>
+	  </div>
+	</div>
+	
+    <div style = "border: solid; margin-top: 1em; padding: 1em;
+          width: 20em; height: 5em; overflow: scroll">
+	   The overflow property decides what to do if the content 
+	   inside an element exceeds the given width and height properties.
+	</div>
+  </body>
+</html>

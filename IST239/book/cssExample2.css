@@ -1,0 +1,7 @@
+/* cssExample2.css */
+/* Style sheet file */
+/* Define styles for h1, p, and em */
+h1 {font-family: "Times New Roman", sans-serif; font-size: 20pt;
+   color: green}
+p {color: red}
+em {color: #808080; background-color: yellow}

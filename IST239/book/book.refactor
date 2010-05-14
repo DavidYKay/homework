@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE refactor PUBLIC "-//Borland Software Corporation//Refactor 1.0//EN" "http://www.borland.com/devsupport/jbuilder/dtds/refactor_1_0.dtd">
+<refactor>
+  <rename-package id="BBO0Z5KFIU8EXJ1Y6B01QKH0" creation-time="Tue May 17 20:46:02.312 EDT 2005">
+    <old-package-name>chapter27</old-package-name>
+    <new-package-name>chapter33</new-package-name>
+  </rename-package>
+  <rename-package id="J3P00HN9ABEEZGML6C01QKH0" creation-time="Sun Oct 02 12:04:35.968 EDT 2005">
+    <old-package-name>chapter34</old-package-name>
+    <new-package-name>chapter35</new-package-name>
+  </rename-package>
+</refactor>

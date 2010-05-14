@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><!--JBuilder QuickDoc-->
+<HEAD>
+<TITLE>Class java.util.concurrent.Executors</TITLE><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+<H2>
+<FONT SIZE="-1">java.util.concurrent</FONT>
+<BR>Class Executors</H2>
+<DL>
+<DT>public class <B>Executors</B>
+</DL>
+<DL><DD>Factory and utility methods for <A HREF="Executor">Executor</A>, <A HREF="ExecutorService">ExecutorService</A>, <A HREF="ScheduledExecutorService">ScheduledExecutorService</A>, <A HREF="ThreadFactory">ThreadFactory</A>, and <A HREF="Callable">Callable</A> classes defined in this package. This class supports the following kinds of methods: <ul> <li> Methods that create and return an <A HREF="ExecutorService">ExecutorService</A> set up with commonly useful configuration settings. <li> Methods that create and return a <A HREF="ScheduledExecutorService">ScheduledExecutorService</A> set up with commonly useful configuration settings. <li> Methods that create and return a "wrapped" ExecutorService, that disables reconfiguration by making implementation-specific methods inaccessible. <li> Methods that create and return a <A HREF="ThreadFactory">ThreadFactory</A> that sets newly created threads to a known state. <li> Methods that create and return a <A HREF="Callable">Callable</A> out of other closure-like forms, so they can be used in execution methods requiring <tt>Callable</tt>. </ul><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Author:</B><DD>Doug Lea</DD>
+<DT><B>Since:</B><DD>1.5</DD>
+</DL>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Constructor Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="Executors()"></A>
+
+<H3>Executors</H3>
+<PRE>
+private <B>Executors</B>()</PRE>
+<DL><DD>Cannot instantiate.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="newFixedThreadPool(int)"></A>
+
+<H3>newFixedThreadPool</H3>
+<PRE>
+public static java.util.concurrent.ExecutorService <B>newFixedThreadPool</B>(int&nbsp;nThreads)</PRE>
+<DL><DD>Creates a thread pool that reuses a fixed set of threads operating off a shared unbounded queue. If any thread terminates due to a failure during execution prior to shutdown, a new one will take its place if needed to execute subsequent tasks.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>nThreads</CODE> - the number of threads in the pool</DD>
+<DT><B>Returns:</B><DD>the newly created thread pool</DD>
+</DL>
+<HR>
+
+<A NAME="newFixedThreadPool(int, java.util.concurrent.ThreadFactory)"></A>
+
+<H3>newFixedThreadPool</H3>
+<PRE>
+public static java.util.concurrent.ExecutorService <B>newFixedThreadPool</B>(int&nbsp;nThreads,
+                                                                      java.util.concurrent.ThreadFactory&nbsp;threadFactory)</PRE>
+<DL><DD>Creates a thread pool that reuses a fixed set of threads operating off a shared unbounded queue, using the provided ThreadFactory to create new threads when needed.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>nThreads</CODE> - the number of threads in the pool</DD>
+<DD><CODE>threadFactory</CODE> - the factory to use when creating new threads</DD>
+<DT><B>Returns:</B><DD>the newly created thread pool</DD>
+</DL>
+<HR>
+
+<A NAME="newSingleThreadExecutor()"></A>
+
+<H3>newSingleThreadExecutor</H3>
+<PRE>
+public static java.util.concurrent.ExecutorService <B>newSingleThreadExecutor</B>()</PRE>
+<DL><DD>Creates an Executor that uses a single worker thread operating off an unbounded queue. (Note however that if this single thread terminates due to a failure during execution prior to shutdown, a new one will take its place if needed to execute subsequent tasks.) Tasks are guaranteed to execute sequentially, and no more than one task will be active at any given time. Unlike the otherwise equivalent <tt>newFixedThreadPool(1)</tt> the returned executor is guaranteed not to be reconfigurable to use additional threads.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the newly created single-threaded Executor</DD>
+</DL>
+<HR>
+
+<A NAME="newSingleThreadExecutor(java.util.concurrent.ThreadFactory)"></A>
+
+<H3>newSingleThreadExecutor</H3>
+<PRE>
+public static java.util.concurrent.ExecutorService <B>newSingleThreadExecutor</B>(java.util.concurrent.ThreadFactory&nbsp;threadFactory)</PRE>
+<DL><DD>Creates an Executor that uses a single worker thread operating off an unbounded queue, and uses the provided ThreadFactory to create a new thread when needed. Unlike the otherwise equivalent <tt>newFixedThreadPool(1, threadFactory)</tt> the returned executor is guaranteed not to be reconfigurable to use additional threads.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>threadFactory</CODE> - the factory to use when creating new threads</DD>
+<DT><B>Returns:</B><DD>the newly created single-threaded Executor</DD>
+</DL>
+<HR>
+
+<A NAME="newCachedThreadPool()"></A>
+
+<H3>newCachedThreadPool</H3>
+<PRE>
+public static java.util.concurrent.ExecutorService <B>newCachedThreadPool</B>()</PRE>
+<DL><DD>Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available. These pools will typically improve the performance of programs that execute many short-lived asynchronous tasks. Calls to <tt>execute</tt> will reuse previously constructed threads if available. If no existing thread is available, a new thread will be created and added to the pool. Threads that have not been used for sixty seconds are terminated and removed from the cache. Thus, a pool that remains idle for long enough will not consume any resources. Note that pools with similar properties but different details (for example, timeout parameters) may be created using <A HREF="ThreadPoolExecutor">ThreadPoolExecutor</A> constructors.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the newly created thread pool</DD>
+</DL>
+<HR>
+
+<A NAME="newCachedThreadPool(java.util.concurrent.ThreadFactory)"></A>
+
+<H3>newCachedThreadPool</H3>
+<PRE>
+public static java.util.concurrent.ExecutorService <B>newCachedThreadPool</B>(java.util.concurrent.ThreadFactory&nbsp;threadFactory)</PRE>
+<DL><DD>Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available, and uses the provided ThreadFactory to create new threads when needed.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>threadFactory</CODE> - the factory to use when creating new threads</DD>
+<DT><B>Returns:</B><DD>the newly created thread pool</DD>
+</DL>
+<HR>
+
+<A NAME="newSingleThreadScheduledExecutor()"></A>
+
+<H3>newSingleThreadScheduledExecutor</H3>
+<PRE>
+public static java.util.concurrent.ScheduledExecutorService <B>newSingleThreadScheduledExecutor</B>()</PRE>
+<DL><DD>Creates a single-threaded executor that can schedule commands to run after a given delay, or to execute periodically. (Note however that if this single thread terminates due to a failure during execution prior to shutdown, a new one will take its place if needed to execute subsequent tasks.) Tasks are guaranteed to execute sequentially, and no more than one task will be active at any given time. Unlike the otherwise equivalent <tt>newScheduledThreadPool(1)</tt> the returned executor is guaranteed not to be reconfigurable to use additional threads.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the newly created scheduled executor</DD>
+</DL>
+<HR>
+
+<A NAME="newSingleThreadScheduledExecutor(java.util.concurrent.ThreadFactory)"></A>
+
+<H3>newSingleThreadScheduledExecutor</H3>
+<PRE>
+public static java.util.concurrent.ScheduledExecutorService <B>newSingleThreadScheduledExecutor</B>(java.util.concurrent.ThreadFactory&nbsp;threadFactory)</PRE>
+<DL><DD>Creates a single-threaded executor that can schedule commands to run after a given delay, or to execute periodically. (Note however that if this single thread terminates due to a failure during execution prior to shutdown, a new one will take its place if needed to execute subsequent tasks.) Tasks are guaranteed to execute sequentially, and no more than one task will be active at any given time. Unlike the otherwise equivalent <tt>newScheduledThreadPool(1, threadFactory)</tt> the returned executor is guaranteed not to be reconfigurable to use additional threads.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>threadFactory</CODE> - the factory to use when creating new threads</DD>
+<DT><B>Returns:</B><DD>a newly created scheduled executor</DD>
+</DL>
+<HR>
+
+<A NAME="newScheduledThreadPool(int)"></A>
+
+<H3>newScheduledThreadPool</H3>
+<PRE>
+public static java.util.concurrent.ScheduledExecutorService <B>newScheduledThreadPool</B>(int&nbsp;corePoolSize)</PRE>
+<DL><DD>Creates a thread pool that can schedule commands to run after a given delay, or to execute periodically.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>corePoolSize</CODE> - the number of threads to keep in the pool, even if they are idle.</DD>
+<DT><B>Returns:</B><DD>a newly created scheduled thread pool</DD>
+</DL>
+<HR>
+
+<A NAME="newScheduledThreadPool(int, java.util.concurrent.ThreadFactory)"></A>
+
+<H3>newScheduledThreadPool</H3>
+<PRE>
+public static java.util.concurrent.ScheduledExecutorService <B>newScheduledThreadPool</B>(int&nbsp;corePoolSize,
+                                                                                   java.util.concurrent.ThreadFactory&nbsp;threadFactory)</PRE>
+<DL><DD>Creates a thread pool that can schedule commands to run after a given delay, or to execute periodically.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>corePoolSize</CODE> - the number of threads to keep in the pool, even if they are idle.</DD>
+<DD><CODE>threadFactory</CODE> - the factory to use when the executor creates a new thread.</DD>
+<DT><B>Returns:</B><DD>a newly created scheduled thread pool</DD>
+</DL>
+<HR>
+
+<A NAME="unconfigurableExecutorService(java.util.concurrent.ExecutorService)"></A>
+
+<H3>unconfigurableExecutorService</H3>
+<PRE>
+public static java.util.concurrent.ExecutorService <B>unconfigurableExecutorService</B>(java.util.concurrent.ExecutorService&nbsp;executor)</PRE>
+<DL><DD>Returns an object that delegates all defined <A HREF="ExecutorService">ExecutorService</A> methods to the given executor, but not any other methods that might otherwise be accessible using casts. This provides a way to safely "freeze" configuration and disallow tuning of a given concrete implementation.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>executor</CODE> - the underlying implementation</DD>
+<DT><B>Returns:</B><DD>an <tt>ExecutorService</tt> instance</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if executor null</DD>
+</DL>
+<HR>
+
+<A NAME="unconfigurableScheduledExecutorService(java.util.concurrent.ScheduledExecutorService)"></A>
+
+<H3>unconfigurableScheduledExecutorService</H3>
+<PRE>
+public static java.util.concurrent.ScheduledExecutorService <B>unconfigurableScheduledExecutorService</B>(java.util.concurrent.ScheduledExecutorService&nbsp;executor)</PRE>
+<DL><DD>Returns an object that delegates all defined <A HREF="ScheduledExecutorService">ScheduledExecutorService</A> methods to the given executor, but not any other methods that might otherwise be accessible using casts. This provides a way to safely "freeze" configuration and disallow tuning of a given concrete implementation.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>executor</CODE> - the underlying implementation</DD>
+<DT><B>Returns:</B><DD>a <tt>ScheduledExecutorService</tt> instance</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if executor null</DD>
+</DL>
+<HR>
+
+<A NAME="defaultThreadFactory()"></A>
+
+<H3>defaultThreadFactory</H3>
+<PRE>
+public static java.util.concurrent.ThreadFactory <B>defaultThreadFactory</B>()</PRE>
+<DL><DD>Returns a default thread factory used to create new threads. This factory creates all new threads used by an Executor in the same <A HREF="ThreadGroup">ThreadGroup</A>. If there is a <A HREF="java.lang.SecurityManager">java.lang.SecurityManager</A>, it uses the group of <A HREF="System#getSecurityManager">System#getSecurityManager</A>, else the group of the thread invoking this <tt>defaultThreadFactory</tt> method. Each new thread is created as a non-daemon thread with priority <tt>Thread.NORM_PRIORITY</tt>. New threads have names accessible via <A HREF="Thread#getName">Thread#getName</A> of <em>pool-N-thread-M</em>, where <em>N</em> is the sequence number of this factory, and <em>M</em> is the sequence number of the thread created by this factory.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>a thread factory</DD>
+</DL>
+<HR>
+
+<A NAME="privilegedThreadFactory()"></A>
+
+<H3>privilegedThreadFactory</H3>
+<PRE>
+public static java.util.concurrent.ThreadFactory <B>privilegedThreadFactory</B>()</PRE>
+<DL><DD>Returns a thread factory used to create new threads that have the same permissions as the current thread. This factory creates threads with the same settings as <A HREF="Executors#defaultThreadFactory">Executors#defaultThreadFactory</A>, additionally setting the AccessControlContext and contextClassLoader of new threads to be the same as the thread invoking this <tt>privilegedThreadFactory</tt> method. A new <tt>privilegedThreadFactory</tt> can be created within an <A HREF="AccessController#doPrivileged">AccessController#doPrivileged</A> action setting the current thread's access control context to create threads with the selected permission settings holding within that action. <p> Note that while tasks running within such threads will have the same access control and class loader settings as the current thread, they need not have the same <A HREF="java.lang.ThreadLocal">java.lang.ThreadLocal</A> or <A HREF="java.lang.InheritableThreadLocal">java.lang.InheritableThreadLocal</A> values. If necessary, particular values of thread locals can be set or reset before any task runs in <A HREF="ThreadPoolExecutor">ThreadPoolExecutor</A> subclasses using <A HREF="ThreadPoolExecutor#beforeExecute">ThreadPoolExecutor#beforeExecute</A>. Also, if it is necessary to initialize worker threads to have the same InheritableThreadLocal settings as some other designated thread, you can create a custom ThreadFactory in which that thread waits for and services requests to create others that will inherit its values.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>a thread factory</DD>
+<DT><B>Throws:</B><DD><CODE>AccessControlException</CODE> - if the current access control context does not have permission to both get and set context class loader.</DD>
+</DL>
+<HR>
+
+<A NAME="callable(java.lang.Runnable, T)"></A>
+
+<H3>callable</H3>
+<PRE>
+public static java.util.concurrent.Callable <B>callable</B>(java.lang.Runnable&nbsp;task,
+                                                     T&nbsp;result)</PRE>
+<DL><DD>Returns a <A HREF="Callable">Callable</A> object that, when called, runs the given task and returns the given result. This can be useful when applying methods requiring a <tt>Callable</tt> to an otherwise resultless action.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>task</CODE> - the task to run</DD>
+<DD><CODE>result</CODE> - the result to return</DD>
+<DT><B>Returns:</B><DD>a callable object</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if task null</DD>
+</DL>
+<HR>
+
+<A NAME="callable(java.lang.Runnable)"></A>
+
+<H3>callable</H3>
+<PRE>
+public static java.util.concurrent.Callable <B>callable</B>(java.lang.Runnable&nbsp;task)</PRE>
+<DL><DD>Returns a <A HREF="Callable">Callable</A> object that, when called, runs the given task and returns <tt>null</tt>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>task</CODE> - the task to run</DD>
+<DT><B>Returns:</B><DD>a callable object</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if task null</DD>
+</DL>
+<HR>
+
+<A NAME="callable(java.security.PrivilegedAction)"></A>
+
+<H3>callable</H3>
+<PRE>
+public static java.util.concurrent.Callable <B>callable</B>(java.security.PrivilegedAction&nbsp;action)</PRE>
+<DL><DD>Returns a <A HREF="Callable">Callable</A> object that, when called, runs the given privileged action and returns its result.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>action</CODE> - the privileged action to run</DD>
+<DT><B>Returns:</B><DD>a callable object</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if action null</DD>
+</DL>
+<HR>
+
+<A NAME="callable(java.security.PrivilegedExceptionAction)"></A>
+
+<H3>callable</H3>
+<PRE>
+public static java.util.concurrent.Callable <B>callable</B>(java.security.PrivilegedExceptionAction&nbsp;action)</PRE>
+<DL><DD>Returns a <A HREF="Callable">Callable</A> object that, when called, runs the given privileged exception action and returns its result.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>action</CODE> - the privileged exception action to run</DD>
+<DT><B>Returns:</B><DD>a callable object</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if action null</DD>
+</DL>
+<HR>
+
+<A NAME="privilegedCallable(java.util.concurrent.Callable)"></A>
+
+<H3>privilegedCallable</H3>
+<PRE>
+public static java.util.concurrent.Callable <B>privilegedCallable</B>(java.util.concurrent.Callable&nbsp;callable)</PRE>
+<DL><DD>Returns a <A HREF="Callable">Callable</A> object that will, when called, execute the given <tt>callable</tt> under the current access control context. This method should normally be invoked within an <A HREF="AccessController#doPrivileged">AccessController#doPrivileged</A> action to create callables that will, if possible, execute under the selected permission settings holding within that action; or if not possible, throw an associated <A HREF="AccessControlException">AccessControlException</A>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>callable</CODE> - the underlying task</DD>
+<DT><B>Returns:</B><DD>a callable object</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if callable null</DD>
+</DL>
+<HR>
+
+<A NAME="privilegedCallableUsingCurrentClassLoader(java.util.concurrent.Callable)"></A>
+
+<H3>privilegedCallableUsingCurrentClassLoader</H3>
+<PRE>
+public static java.util.concurrent.Callable <B>privilegedCallableUsingCurrentClassLoader</B>(java.util.concurrent.Callable&nbsp;callable)</PRE>
+<DL><DD>Returns a <A HREF="Callable">Callable</A> object that will, when called, execute the given <tt>callable</tt> under the current access control context, with the current context class loader as the context class loader. This method should normally be invoked within an <A HREF="AccessController#doPrivileged">AccessController#doPrivileged</A> action to create callables that will, if possible, execute under the selected permission settings holding within that action; or if not possible, throw an associated <A HREF="AccessControlException">AccessControlException</A>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>callable</CODE> - the underlying task</DD>
+<DT><B>Returns:</B><DD>a callable object</DD>
+<DT><B>Throws:</B><DD><CODE>NullPointerException</CODE> - if callable null</DD>
+<DD><CODE>AccessControlException</CODE> - if the current access control context does not have permission to both set and get context class loader.</DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>

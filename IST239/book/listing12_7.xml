@@ -1,0 +1,15 @@
+<?xml version = '1.0'?>
+<!DOCTYPE school [
+  <!ELEMENT school (department+)>
+  <!ELEMENT department (#PCDATA)>
+  <!ENTITY CS "Computer Science">
+  <!ENTITY MATH "Mathematics">
+]>
+<school>
+  <department>
+    &CS;
+  </department>
+  <department>
+    &MATH;
+  </department>
+</school>

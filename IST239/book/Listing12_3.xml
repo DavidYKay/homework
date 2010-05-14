@@ -1,0 +1,15 @@
+<?xml version = '1.0'?>
+<!-- Use Special Characters and Unicode Characters -->
+<examples>
+  <example num="1">
+    &lt; &gt; &amp; &apos; &quot; 
+  </example>
+  <example num="2">
+    &#x00C4; &#x00D6; &#x00DC; &#x00DF; 
+    &#x00E4; &#x00F6; &#x00FC;
+  </example>
+  <example num="3">
+    &#x03B1; &#x03B2; &#x03B3; &#x03B4; 
+    &#x03B5; &#x03B6; &#x03B7;
+  </example>
+</examples>

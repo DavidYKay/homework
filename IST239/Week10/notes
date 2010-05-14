@@ -1,0 +1,101 @@
+Database
+    
+Very important
+vital to most business
+
+Everything on the internet - stored in databases
+
+JDBC:
+    Driver
+    Connection
+    Statement
+    ResultSet
+
+Drivers:
+    Oracle
+    Access
+
+***Must explicitly add the JAR to classpath
+
+Class.forName("JDBCDriverClass")
+    -Use this to enumerate the particular driver
+    -Not always necessary in Java6, but good practice
+
+
+Connection c = DriverManager.getConnection("DatabaseURL");
+MySQL  - jdbc:mysql://hostname/dbname
+Oracle - jdbc:oracle:thin:@hostname:port:oracleDBSID
+
+MySQL
+Database named test
+getConnection("jdbc:mysql://localhost/test", "james". "password")
+
+Oracle
+getConnection("jdbc:oracle:thin:@localhost:1521:test" , "james". "password");
+
+Password policy:
+    If hardcode, create a select-only account 
+    Ideally, store user/password on load
+        OR: Store hash/de-hash
+
+Connection c = .....();
+Statement s = c.createStatement();
+
+s.executeUpdate("insert into tree values (oak)");
+ResultSet r = s.executequery("Select * from tree");
+
+ResultSet - 0 indexed
+set.getString(2)
+
+
+Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/testdb", "istuser", "water");
+
+Strings are in the order of the select query
+
+
+rs = statement.executeQuert("select * from president where lastname='harrison'");
+    while(rs.next()) {
+        String presidentName
+        System.out.println(presidentName);
+    }
+    connection.close();
+
+} catch (ClassNotFoundException e) {
+    //Missing driver
+
+} catch (SQLException sqle) {
+
+}
+
+Prepared statements
+Statement ps = connection.prepareStatement(
+    "SELECT * FROM student WHERE last_name = ?"
+);
+Guards against SQL injection
+
+Use setX() methods to plug in the values
+
+Statement ps = Connection.prepareStatement("SELECT * from student where last_name = ?");
+ps.setString(1, queryString);
+Result rs = ps.executeQuery();
+
+MetaData
+    All the rage
+    Data about data
+    
+DatabaseMetaData metaData = connection.getMetaData();
+    Examples:
+        Driver version
+        Max # connections
+        Max columns in table
+        getTables()
+ResultSet rs = connection.executeQuery("some query");
+ResultSetMetaData rsMeta = rs.getMetaData();
+
+for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+    System.out.print(rsMetaData.getColumnName(i));
+}
+
+
+Program 37.2
+    Displaying data

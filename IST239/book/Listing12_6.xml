@@ -1,0 +1,36 @@
+<?xml version = '1.0'?>
+<!DOCTYPE students [
+  <!ELEMENT student (ssn, firstname, mi, lastname, birthdate,
+    phone, street, zipcode)>
+  <!ELEMENT ssn (#PCDATA)>
+  <!ELEMENT firstname (#PCDATA)>
+  <!ELEMENT mi (#PCDATA)>
+  <!ELEMENT lastname (#PCDATA)>
+  <!ELEMENT birthdate (#PCDATA)>
+  <!ELEMENT phone (#PCDATA)>
+  <!ELEMENT street (#PCDATA)>
+  <!ELEMENT zipcode (#PCDATA)>
+  <!ELEMENT students (student+)> 
+]>
+<students>
+  <student>
+    <ssn>444111110</ssn>
+    <firstname>Jacob</firstname>
+    <mi>R</mi>
+    <lastname>Smith</lastname>
+    <birthdate>4/9/1985</birthdate>
+    <phone>9129219434</phone>
+    <street>99 Kingston Street</street>
+    <zipcode>31435</zipcode>
+  </student>
+  <student>
+    <ssn>444111111</ssn>
+    <firstname>John</firstname>
+    <mi>K</mi>
+    <lastname>Stevenson</lastname>
+    <birthdate>4/9/1985</birthdate>
+    <phone>9129219434</phone>
+    <street>100 Main Street</street>
+    <zipcode>31411</zipcode>
+  </student>
+</students>

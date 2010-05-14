@@ -1,0 +1,185 @@
+#
+# An unexpected error has been detected by HotSpot Virtual Machine:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x6d0f0763, pid=1264, tid=2216
+#
+# Java VM: Java HotSpot(TM) Client VM (1.5.0-beta-b32c mixed mode)
+# Problematic frame:
+# C  [awt.dll+0xe0763]
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00a83ff0):  JavaThread "AWT-EventQueue-0" [_thread_in_native, id=2216]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x00000004
+
+Registers:
+EAX=0x018efce0, EBX=0x72128548, ECX=0x00000000, EDX=0x00a840ac
+ESP=0x018ef75c, EBP=0x018ef7ac, ESI=0x00000000, EDI=0x00a83ff0
+EIP=0x6d0f0763, EFLAGS=0x00010212
+
+Top of Stack: (sp=0x018ef75c)
+0x018ef75c:   00a83ff0 72128548 72128548 0000000a
+0x018ef76c:   00000000 018ef808 00a772b8 018ef8b8
+0x018ef77c:   00a83ff0 6d77232c ffffffff 00a83ff0
+0x018ef78c:   018ef778 7201e568 018ef90c 00000000
+0x018ef79c:   018ef75c 018efce0 6d0fbcfb ffffffff
+0x018ef7ac:   018ef7f0 6d0f1de2 00a840ac 00000001
+0x018ef7bc:   72128548 7d6f81af 00a840ac 018ef808
+0x018ef7cc:   00000000 00000001 018ef7d4 00000000 
+
+Instructions: (pc=0x6d0f0763)
+0x6d0f0753:   25 00 00 00 00 83 ec 38 53 56 8b f1 57 89 65 f0
+0x6d0f0763:   8b 4e 04 8b 41 04 83 f8 18 75 29 8b 45 08 68 d4 
+
+
+Stack: [0x017f0000,0x018f0000),  sp=0x018ef75c,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [awt.dll+0xe0763]
+C  [awt.dll+0xe1de2]
+j  sun.awt.Win32GraphicsDevice.getDynamicColorModel()Ljava/awt/image/ColorModel;+14
+j  sun.awt.Win32GraphicsConfig.getDeviceColorModel()Ljava/awt/image/ColorModel;+4
+j  sun.awt.windows.WComponentPeer.getDeviceColorModel()Ljava/awt/image/ColorModel;+13
+j  sun.awt.windows.Win32SurfaceData.createData(Lsun/awt/windows/WComponentPeer;I)Lsun/awt/windows/Win32SurfaceData;+1
+j  sun.awt.windows.WComponentPeer.replaceSurfaceData(I)V+48
+j  sun.awt.windows.WComponentPeer.replaceSurfaceData()V+5
+j  sun.awt.windows.WComponentPeer.displayChanged()V+1
+j  sun.awt.windows.WCanvasPeer.displayChanged()V+9
+j  sun.awt.windows.WPanelPeer.displayChanged()V+1
+j  sun.awt.windows.WWindowPeer.displayChanged()V+59
+j  sun.awt.SunDisplayChanger.notifyListeners()V+65
+j  sun.awt.Win32GraphicsDevice.displayChanged()V+19
+j  sun.awt.Win32GraphicsEnvironment.displayChanged()V+31
+j  sun.awt.windows.WToolkit+4.run()V+6
+j  java.awt.event.InvocationEvent.dispatch()V+47
+j  java.awt.EventQueue.dispatchEvent(Ljava/awt/AWTEvent;)V+26
+j  java.awt.EventDispatchThread.pumpOneEventForHierarchy(ILjava/awt/Component;)Z+200
+j  java.awt.EventDispatchThread.pumpEventsForHierarchy(ILjava/awt/Conditional;Ljava/awt/Component;)V+26
+j  java.awt.EventDispatchThread.pumpEvents(ILjava/awt/Conditional;)V+4
+j  java.awt.EventDispatchThread.pumpEvents(Ljava/awt/Conditional;)V+3
+j  java.awt.EventDispatchThread.run()V+9
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x7e22a]
+V  [jvm.dll+0xf4d6b]
+V  [jvm.dll+0x7e0fb]
+V  [jvm.dll+0x7de58]
+V  [jvm.dll+0x97998]
+V  [jvm.dll+0x11eba7]
+V  [jvm.dll+0x11eb75]
+C  [MSVCRT.dll+0x85bc]
+C  [KERNEL32.DLL+0xb382]
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  sun.awt.Win32GraphicsDevice.makeColorModel(IZ)Ljava/awt/image/ColorModel;+0
+j  sun.awt.Win32GraphicsDevice.getDynamicColorModel()Ljava/awt/image/ColorModel;+14
+j  sun.awt.Win32GraphicsConfig.getDeviceColorModel()Ljava/awt/image/ColorModel;+4
+j  sun.awt.windows.WComponentPeer.getDeviceColorModel()Ljava/awt/image/ColorModel;+13
+j  sun.awt.windows.Win32SurfaceData.createData(Lsun/awt/windows/WComponentPeer;I)Lsun/awt/windows/Win32SurfaceData;+1
+j  sun.awt.windows.WComponentPeer.replaceSurfaceData(I)V+48
+j  sun.awt.windows.WComponentPeer.replaceSurfaceData()V+5
+j  sun.awt.windows.WComponentPeer.displayChanged()V+1
+j  sun.awt.windows.WCanvasPeer.displayChanged()V+9
+j  sun.awt.windows.WPanelPeer.displayChanged()V+1
+j  sun.awt.windows.WWindowPeer.displayChanged()V+59
+j  sun.awt.SunDisplayChanger.notifyListeners()V+65
+j  sun.awt.Win32GraphicsDevice.displayChanged()V+19
+j  sun.awt.Win32GraphicsEnvironment.displayChanged()V+31
+j  sun.awt.windows.WToolkit+4.run()V+6
+j  java.awt.event.InvocationEvent.dispatch()V+47
+j  java.awt.EventQueue.dispatchEvent(Ljava/awt/AWTEvent;)V+26
+j  java.awt.EventDispatchThread.pumpOneEventForHierarchy(ILjava/awt/Component;)Z+200
+j  java.awt.EventDispatchThread.pumpEventsForHierarchy(ILjava/awt/Conditional;Ljava/awt/Component;)V+26
+j  java.awt.EventDispatchThread.pumpEvents(ILjava/awt/Conditional;)V+4
+j  java.awt.EventDispatchThread.pumpEvents(Ljava/awt/Conditional;)V+3
+j  java.awt.EventDispatchThread.run()V+9
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00235ec8 JavaThread "DestroyJavaVM" [_thread_blocked, id=1412]
+=>0x00a83ff0 JavaThread "AWT-EventQueue-0" [_thread_in_native, id=2216]
+  0x00a72a00 JavaThread "AWT-Windows" daemon [_thread_in_native, id=2264]
+  0x00a72740 JavaThread "AWT-Shutdown" [_thread_blocked, id=1844]
+  0x00a6c840 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=1932]
+  0x009ef118 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=1652]
+  0x009edd60 JavaThread "CompilerThread0" daemon [_thread_blocked, id=1560]
+  0x009ecfd0 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=1780]
+  0x009e4110 JavaThread "Finalizer" daemon [_thread_blocked, id=2252]
+  0x009e3a38 JavaThread "Reference Handler" daemon [_thread_blocked, id=2168]
+
+Other Threads:
+  0x0023f340 VMThread [id=1140]
+  0x009f0328 WatcherThread [id=1320]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ def new generation   total 576K, used 399K [0x6de60000, 0x6df00000, 0x6e340000)
+  eden space 512K,  65% used [0x6de60000, 0x6deb3c68, 0x6dee0000)
+  from space 64K, 100% used [0x6dee0000, 0x6def0000, 0x6def0000)
+  to   space 64K,   0% used [0x6def0000, 0x6def0000, 0x6df00000)
+ tenured generation   total 1408K, used 300K [0x6e340000, 0x6e4a0000, 0x71e60000)
+   the space 1408K,  21% used [0x6e340000, 0x6e38b3f8, 0x6e38b400, 0x6e4a0000)
+ compacting perm gen  total 8192K, used 4452K [0x71e60000, 0x72660000, 0x75e60000)
+   the space 8192K,  54% used [0x71e60000, 0x722b90e0, 0x722b9200, 0x72660000)
+No shared spaces configured.
+
+Dynamic libraries:
+0x00400000 - 0x0040b000 	C:\j2sdk1.5.0\bin\java.exe
+0x77f80000 - 0x77ffb000 	C:\WINNT\system32\ntdll.dll
+0x7c2d0000 - 0x7c332000 	C:\WINNT\system32\ADVAPI32.dll
+0x7c570000 - 0x7c623000 	C:\WINNT\system32\KERNEL32.DLL
+0x77d30000 - 0x77d9e000 	C:\WINNT\system32\RPCRT4.DLL
+0x78000000 - 0x78045000 	C:\WINNT\system32\MSVCRT.dll
+0x6d630000 - 0x6d7d7000 	C:\j2sdk1.5.0\jre\bin\client\jvm.dll
+0x77e10000 - 0x77e6f000 	C:\WINNT\system32\USER32.dll
+0x77f40000 - 0x77f79000 	C:\WINNT\system32\GDI32.dll
+0x77570000 - 0x775a0000 	C:\WINNT\system32\WINMM.dll
+0x75e60000 - 0x75e7a000 	C:\WINNT\system32\IMM32.DLL
+0x6d270000 - 0x6d277000 	C:\j2sdk1.5.0\jre\bin\hpi.dll
+0x690a0000 - 0x690ab000 	C:\WINNT\system32\PSAPI.DLL
+0x6d600000 - 0x6d60b000 	C:\j2sdk1.5.0\jre\bin\verify.dll
+0x6d2e0000 - 0x6d2fc000 	C:\j2sdk1.5.0\jre\bin\java.dll
+0x6d620000 - 0x6d62e000 	C:\j2sdk1.5.0\jre\bin\zip.dll
+0x6d010000 - 0x6d16b000 	C:\j2sdk1.5.0\jre\bin\awt.dll
+0x77800000 - 0x7781e000 	C:\WINNT\system32\WINSPOOL.DRV
+0x76620000 - 0x76631000 	C:\WINNT\system32\MPR.DLL
+0x77a50000 - 0x77b3c000 	C:\WINNT\system32\ole32.dll
+0x51000000 - 0x51047000 	C:\WINNT\system32\ddraw.dll
+0x01190000 - 0x01196000 	C:\WINNT\system32\DCIMAN32.dll
+0x5c000000 - 0x5c0c8000 	C:\WINNT\system32\D3DIM700.DLL
+0x6d230000 - 0x6d26e000 	C:\j2sdk1.5.0\jre\bin\fontmanager.dll
+0x014d0000 - 0x014d6000 	C:\WINNT\system32\INDICDLL.dll
+0x782f0000 - 0x78538000 	C:\WINNT\system32\shell32.dll
+0x014f0000 - 0x01555000 	C:\WINNT\system32\SHLWAPI.DLL
+0x01560000 - 0x015e4000 	C:\WINNT\system32\COMCTL32.DLL
+0x11c00000 - 0x11c3d000 	C:\Program Files\Network Associates\VirusScan\Wbhook32.dll
+0x77820000 - 0x77827000 	C:\WINNT\system32\VERSION.dll
+0x018f0000 - 0x018f6000 	C:\WINNT\system32\LZ32.DLL
+0x10000000 - 0x10009000 	C:\Program Files\Network Associates\VirusScan\Res09\WbhkRes.dll
+
+VM Arguments:
+java_command: Test
+
+Environment Variables:
+CLASSPATH=.;c:\jakarta-tomcat-4.1.27\common\lib\servlet.jar
+PATH=C:\j2sdk1.5.0\bin;C:\oracle\ora90\bin;C:\oracle\ora90\Apache\Perl\5.00503\bin\mswin32-x86;C:\Program Files\Oracle\jre\1.1.8\bin;C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;C:\Program Files\Common Files\Adaptec Shared\System
+USERNAME=Daniel Liang
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 15 Model 2 Stepping 4, GenuineIntel
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 2000 Build 2195 Service Pack 4
+
+CPU:total 1(active 1) family 15, cmov, cx8, fxsr, mmx, sse, sse2
+
+Memory: 4k page, physical 523704k(154628k free), swap 1276576k(734524k free)
+
+vm_info: Java HotSpot(TM) Client VM (1.5.0-beta-b32c) for windows-x86, built on Jan 23 2004 01:52:20 by "java_re" with MS VC++ 6.0
+

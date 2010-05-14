@@ -1,0 +1,944 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><!--JBuilder QuickDoc-->
+<HEAD>
+<TITLE>Class java.util.Scanner</TITLE><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+<H2>
+<FONT SIZE="-1">java.util</FONT>
+<BR>Class Scanner</H2>
+<DL>
+<DT>public final class <B>Scanner</B><DT>implements java.util.Iterator
+</DL>
+<DL><DD>A simple text scanner which can parse primitive types and strings using regular expressions. <p>A <code>Scanner</code> breaks its input into tokens using a delimiter pattern, which by default matches whitespace. The resulting tokens may then be converted into values of different types using the various <tt>next</tt> methods. <p>For example, this code allows a user to read a number from <tt>System.in</tt>: <blockquote><pre>
+Scanner sc = new Scanner(System.in);
+int i = sc.nextInt();
+</pre></blockquote> <p>As another example, this code allows <code>long</code> types to be assigned from entries in a file <code>myNumbers</code>: <blockquote><pre>
+Scanner sc = new Scanner(new File("myNumbers"));
+while (sc.hasNextLong()) {
+long aLong = sc.nextLong();
+}</pre></blockquote> <p>The scanner can also use delimiters other than whitespace. This example reads several items in from a string: <blockquote><pre>
+String input = "1 fish 2 fish red fish blue fish";
+Scanner s = new Scanner(input).useDelimiter("\\s*fish\\s*");
+System.out.println(s.nextInt());
+System.out.println(s.nextInt());
+System.out.println(s.next());
+System.out.println(s.next());
+s.close(); </pre></blockquote> <p> prints the following output: <blockquote><pre>
+1
+2
+red
+blue </pre></blockquote> <p>The same output can be generated with this code, which uses a regular expression to parse all four tokens at once: <blockquote><pre>
+String input = "1 fish 2 fish red fish blue fish";
+Scanner s = new Scanner(input);
+s.findInLine("(\\d+) fish (\\d+) fish (\\w+) fish (\\w+)");
+MatchResult result = s.match();
+for (int i=1; i<=result.groupCount(); i++)
+System.out.println(result.group(i);
+s.close(); </pre></blockquote> <p>The default whitespace delimiter used by a scanner is as recognized by <A HREF="java.lang.Character">java.lang.Character</A>.<A HREF="java.lang.Character#isWhitespace(char) isWhitespace">isWhitespace</A>. <p>A scanning operation may block waiting for input. <p>The <A HREF="#next">#next</A> and <A HREF="#hasNext">#hasNext</A> methods and their primitive-type companion methods (such as <A HREF="#nextInt">#nextInt</A> and <A HREF="#hasNextInt">#hasNextInt</A>) first skip any input that matches the delimiter pattern, and then attempt to return the next token. Both <tt>hasNext</tt> and <tt>next</tt> methods may block waiting for further input. Whether a <tt>hasNext</tt> method blocks has no connection to whether or not its associated <tt>next</tt> method will block. <p> The <A HREF="#findInLine">#findInLine</A>, <A HREF="#findWithinHorizon">#findWithinHorizon</A>, and <A HREF="#skip">#skip</A> methods operate independently of the delimiter pattern. These methods will attempt to match the specified pattern with no regard to delimiters in the input and thus can be used in special circumstances where delimiters are not relevant. These methods may block waiting for more input. <p>When a scanner throws an <A HREF="InputMismatchException">InputMismatchException</A>, the scanner will not pass the token that caused the exception, so that it may be retrieved or skipped via some other method. <p>Depending upon the type of delimiting pattern, empty tokens may be returned. For example, the pattern <tt>"\\s+"</tt> will return no empty tokens since it matches multiple instances of the delimiter. The delimiting pattern <tt>"\\s"</tt> could return empty tokens since it only passes one space at a time. <p> A scanner can read text from any object which implements the <A HREF="java.lang.Readable">java.lang.Readable</A> interface. If an invocation of the underlying readable's <A HREF="java.lang.Readable#read">java.lang.Readable#read</A> method throws an <A HREF="java.io.IOException">java.io.IOException</A> then the scanner assumes that the end of the input has been reached. The most recent <tt>IOException</tt> thrown by the underlying readable can be retrieved via the <A HREF="#ioException">#ioException</A> method. <p>When a <code>Scanner</code> is closed, it will close its input source if the source implements the <A HREF="java.io.Closeable">java.io.Closeable</A> interface. <p>A <code>Scanner</code> is not safe for multithreaded use without external synchronization. <p>Unless otherwise mentioned, passing a <code>null</code> parameter into any method of a <code>Scanner</code> will cause a <code>NullPointerException</code> to be thrown. <p>A scanner will default to interpreting numbers as decimal unless a different radix has been set by using the <A HREF="#useRadix">#useRadix</A> method. <a name="localized-numbers"> <h4> Localized numbers </h4> <p> An instance of this class is capable of scanning numbers in the standard formats as well as in the formats of the scanner's locale. A scanner's initial locale is the value returned by the <A HREF="java.util.Locale#getDefault">java.util.Locale#getDefault</A> method; it may be changed via the <A HREF="#useLocale">#useLocale</A> method. <p>The localized formats are defined in terms of the following parameters, which for a particular locale are taken from that locale's <A HREF="java.text.DecimalFormat DecimalFormat">DecimalFormat</A> object, <tt>df</tt>, and its and <A HREF="java.text.DecimalFormatSymbols DecimalFormatSymbols">DecimalFormatSymbols</A> object, <tt>dfs</tt>. <blockquote><table> <tr><td valign="top"><i>LocalGroupSeparator&nbsp;&nbsp;</i></td> <td valign="top">The character used to separate thousands groups, <i>i.e.,</i>&nbsp;<tt>dfs.</tt><A HREF="java.text.DecimalFormatSymbols#getGroupingSeparator getGroupingSeparator()">getGroupingSeparator()</A></td></tr> <tr><td valign="top"><i>LocalDecimalSeparator&nbsp;&nbsp;</i></td> <td valign="top">The character used for the decimal point, <i>i.e.,</i>&nbsp;<tt>dfs.</tt><A HREF="java.text.DecimalFormatSymbols#getDecimalSeparator getDecimalSeparator()">getDecimalSeparator()</A></td></tr> <tr><td valign="top"><i>LocalPositivePrefix&nbsp;&nbsp;</i></td> <td valign="top">The string that appears before a positive number (may be empty), <i>i.e.,</i>&nbsp;<tt>df.</tt><A HREF="java.text.DecimalFormat#getPositivePrefix getPositivePrefix()">getPositivePrefix()</A></td></tr> <tr><td valign="top"><i>LocalPositiveSuffix&nbsp;&nbsp;</i></td> <td valign="top">The string that appears after a positive number (may be empty), <i>i.e.,</i>&nbsp;<tt>df.</tt><A HREF="java.text.DecimalFormat#getPositiveSuffix getPositiveSuffix()">getPositiveSuffix()</A></td></tr> <tr><td valign="top"><i>LocalNegativePrefix&nbsp;&nbsp;</i></td> <td valign="top">The string that appears before a negative number (may be empty), <i>i.e.,</i>&nbsp;<tt>df.</tt><A HREF="java.text.DecimalFormat#getNegativePrefix getNegativePrefix()">getNegativePrefix()</A></td></tr> <tr><td valign="top"><i>LocalNegativeSuffix&nbsp;&nbsp;</i></td> <td valign="top">The string that appears after a negative number (may be empty), <i>i.e.,</i>&nbsp;<tt>df.</tt><A HREF="java.text.DecimalFormat#getNegativeSuffix getNegativeSuffix()">getNegativeSuffix()</A></td></tr> <tr><td valign="top"><i>LocalNaN&nbsp;&nbsp;</i></td> <td valign="top">The string that represents not-a-number for floating-point values, <i>i.e.,</i>&nbsp;<tt>dfs.</tt><A HREF="java.text.DecimalFormatSymbols#getInfinity getInfinity()">getInfinity()</A></td></tr> <tr><td valign="top"><i>LocalInfinity&nbsp;&nbsp;</i></td> <td valign="top">The string that represents infinity for floating-point values, <i>i.e.,</i>&nbsp;<tt>dfs.</tt><A HREF="java.text.DecimalFormatSymbols#getInfinity getInfinity()">getInfinity()</A></td></tr> </table></blockquote> <a name="number-syntax"> <h4> Number syntax </h4> <p> The strings that can be parsed as numbers by an instance of this class are specified in terms of the following regular-expression grammar, where Rmax is the highest digit in the radix being used (for example, Rmax is 9 in base 10). <p> <table cellspacing=0 cellpadding=0 align=center> <tr><td valign=top align=right><i>NonASCIIDigit</i>&nbsp;&nbsp;::</td> <td valign=top>= A non-ASCII character c for which <A HREF="java.lang.Character#isDigit Character.isDigit">Character.isDigit</A><tt>(c)</tt> returns&nbsp;true</td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>Non0Digit</i>&nbsp;&nbsp;::</td> <td><tt>= [1-</tt><i>Rmax</i><tt>] | </tt><i>NonASCIIDigit</i></td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>Digit</i>&nbsp;&nbsp;::</td> <td><tt>= [0-</tt><i>Rmax</i><tt>] | </tt><i>NonASCIIDigit</i></td></tr> <tr><td>&nbsp;</td></tr> <tr><td valign=top align=right><i>GroupedNumeral</i>&nbsp;&nbsp;::</td> <td valign=top> <table cellpadding=0 cellspacing=0> <tr><td><tt>= (&nbsp;</tt></td> <td><i>Non0Digit</i><tt> </tt><i>Digit</i><tt>? </tt><i>Digit</i><tt>?</tt></td></tr> <tr><td></td> <td><tt>(&nbsp;</tt><i>LocalGroupSeparator</i><tt> </tt><i>Digit</i><tt> </tt><i>Digit</i><tt> </tt><i>Digit</i><tt> )+ )</tt></td></tr> </table></td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>Numeral</i>&nbsp;&nbsp;::</td> <td><tt>= ( ( </tt><i>Digit</i><tt>+ ) | </tt><i>GroupedNumeral</i><tt> )</tt></td></tr> <tr><td>&nbsp;</td></tr> <tr><td valign=top align=right> <a name="Integer-regex"><i>Integer</i>&nbsp;&nbsp;::</td> <td valign=top><tt>= ( [-+]? ( </tt><i>Numeral</i><tt> ) )</tt></td></tr> <tr><td></td> <td><tt>| </tt><i>LocalPositivePrefix</i><tt> </tt><i>Numeral</i><tt> </tt><i>LocalPositiveSuffix</i></td></tr> <tr><td></td> <td><tt>| </tt><i>LocalNegativePrefix</i><tt> </tt><i>Numeral</i><tt> </tt><i>LocalNegativeSuffix</i></td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>DecimalNumeral</i>&nbsp;&nbsp;::</td> <td><tt>= </tt><i>Numeral</i></td></tr> <tr><td></td> <td><tt>| </tt><i>Numeral</i><tt> </tt><i>LocalDecimalSeparator</i><tt> </tt><i>Digit</i><tt>*</tt></td></tr> <tr><td></td> <td><tt>| </tt><i>LocalDecimalSeparator</i><tt> </tt><i>Digit</i><tt>+</tt></td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>Exponent</i>&nbsp;&nbsp;::</td> <td><tt>= ( [eE] [+-]? </tt><i>Digit</i><tt>+ )</tt></td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right> <a name="Decimal-regex"><i>Decimal</i>&nbsp;&nbsp;::</td> <td><tt>= ( [-+]? </tt><i>DecimalNumeral</i><tt> </tt><i>Exponent</i><tt>? )</tt></td></tr> <tr><td></td> <td><tt>| </tt><i>LocalPositivePrefix</i><tt> </tt><i>DecimalNumeral</i><tt> </tt><i>LocalPositiveSuffix</i> </tt><i>Exponent</i><tt>?</td></tr> <tr><td></td> <td><tt>| </tt><i>LocalNegativePrefix</i><tt> </tt><i>DecimalNumeral</i><tt> </tt><i>LocalNegativeSuffix</i> </tt><i>Exponent</i><tt>?</td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>HexFloat</i>&nbsp;&nbsp;::</td> <td><tt>= [-+]? 0[xX][0-9a-fA-F]*\.[0-9a-fA-F]+ ([pP][-+]?[0-9]+)?</tt></td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>NonNumber</i>&nbsp;&nbsp;::</td> <td valign=top><tt>= NaN | </tt><i>LocalNan</i><tt> | Infinity | </tt><i>LocalInfinity</i></td></tr> <tr><td>&nbsp;</td></tr> <tr><td align=right><i>SignedNonNumber</i>&nbsp;&nbsp;::</td> <td><tt>= ( [-+]? </tt><i>NonNumber</i><tt> )</tt></td></tr> <tr><td></td> <td><tt>| </tt><i>LocalPositivePrefix</i><tt> </tt><i>NonNumber</i><tt> </tt><i>LocalPositiveSuffix</i></td></tr> <tr><td></td> <td><tt>| </tt><i>LocalNegativePrefix</i><tt> </tt><i>NonNumber</i><tt> </tt><i>LocalNegativeSuffix</i></td></tr> <tr><td>&nbsp;</td></tr> <tr><td valign=top align=right> <a name="Float-regex"><i>Float</i>&nbsp;&nbsp;::</td> <td valign=top><tt>= </tt><i>Decimal</i><tt></td></tr> <tr><td></td> <td><tt>| </tt><i>HexFloat</i><tt></td></tr> <tr><td></td> <td><tt>| </tt><i>SignedNonNumber</i><tt></td></tr> </table> </center> <p> Whitespace is not significant in the above regular expressions.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Version:</B><DD>1.15, 07/15/04</DD>
+<DT><B>Since:</B><DD>1.5</DD>
+</DL>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Field Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="groupSeparator"></A>
+
+<H3>groupSeparator</H3>
+<PRE>
+private java.lang.String <B>groupSeparator</B></PRE>
+<DL><DD>Locale dependent values used to scan numbers<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="boolPattern"></A>
+
+<H3>boolPattern</H3>
+<PRE>
+private static volatile java.util.regex.Pattern <B>boolPattern</B></PRE>
+<DL><DD>Fields and an accessor method to match booleans<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="integerPattern"></A>
+
+<H3>integerPattern</H3>
+<PRE>
+private java.util.regex.Pattern <B>integerPattern</B></PRE>
+<DL><DD>Fields and methods to match bytes, shorts, ints, and longs<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="separatorPattern"></A>
+
+<H3>separatorPattern</H3>
+<PRE>
+private static volatile java.util.regex.Pattern <B>separatorPattern</B></PRE>
+<DL><DD>Fields and an accessor method to match line separators<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="floatPattern"></A>
+
+<H3>floatPattern</H3>
+<PRE>
+private java.util.regex.Pattern <B>floatPattern</B></PRE>
+<DL><DD>Fields and methods to match floats and doubles<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Constructor Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="Scanner(java.lang.Readable, java.util.regex.Pattern)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+private <B>Scanner</B>(java.lang.Readable&nbsp;source,
+                java.util.regex.Pattern&nbsp;pattern)</PRE>
+<DL><DD>Constructs a <code>Scanner</code> that returns values scanned from the specified source delimited by the specified pattern.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - A character source implementing the Readable interface</DD>
+<DD><CODE>pattern</CODE> - A delimiting pattern</DD>
+<DT><B>Returns:</B><DD>A scanner with the specified source and pattern</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.lang.Readable)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.lang.Readable&nbsp;source)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified source.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - A character source implementing the <A HREF="Readable">Readable</A> interface</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.io.InputStream)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.io.InputStream&nbsp;source)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified input stream. Bytes from the stream are converted into characters using the underlying platform's <A HREF="java.nio.charset.Charset#defaultCharset default charset">default charset</A>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - An input stream to be scanned</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.io.InputStream, java.lang.String)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.io.InputStream&nbsp;source,
+               java.lang.String&nbsp;charsetName)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified input stream. Bytes from the stream are converted into characters using the specified charset.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - An input stream to be scanned</DD>
+<DD><CODE>charsetName</CODE> - The encoding type used to convert bytes from the stream into characters to be scanned</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if the specified character set does not exist</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.io.File)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.io.File&nbsp;source)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified file. Bytes from the file are converted into characters using the underlying platform's <A HREF="java.nio.charset.Charset#defaultCharset default charset">default charset</A>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - A file to be scanned</DD>
+<DT><B>Throws:</B><DD><CODE>FileNotFoundException</CODE> - if source is not found</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.io.File, java.lang.String)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.io.File&nbsp;source,
+               java.lang.String&nbsp;charsetName)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified file. Bytes from the file are converted into characters using the specified charset.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - A file to be scanned</DD>
+<DD><CODE>charsetName</CODE> - The encoding type used to convert bytes from the file into characters to be scanned</DD>
+<DT><B>Throws:</B><DD><CODE>FileNotFoundException</CODE> - if source is not found</DD>
+<DD><CODE>IllegalArgumentException</CODE> - if the specified encoding is not found</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.lang.String)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.lang.String&nbsp;source)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified string.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - A string to scan</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.nio.channels.ReadableByteChannel)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.nio.channels.ReadableByteChannel&nbsp;source)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified channel. Bytes from the source are converted into characters using the underlying platform's <A HREF="java.nio.charset.Charset#defaultCharset default charset">default charset</A>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - A channel to scan</DD>
+</DL>
+<HR>
+
+<A NAME="Scanner(java.nio.channels.ReadableByteChannel, java.lang.String)"></A>
+
+<H3>Scanner</H3>
+<PRE>
+public <B>Scanner</B>(java.nio.channels.ReadableByteChannel&nbsp;source,
+               java.lang.String&nbsp;charsetName)</PRE>
+<DL><DD>Constructs a new <code>Scanner</code> that produces values scanned from the specified channel. Bytes from the source are converted into characters using the specified charset.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>source</CODE> - A channel to scan</DD>
+<DD><CODE>charsetName</CODE> - The encoding type used to convert bytes from the channel into characters to be scanned</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if the specified character set does not exist</DD>
+</DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="close()"></A>
+
+<H3>close</H3>
+<PRE>
+public void <B>close</B>()</PRE>
+<DL><DD>Closes this scanner. <p> If this scanner has not yet been closed then if its underlying <A HREF="java.lang.Readable readable">readable</A> also implements the <A HREF="java.io.Closeable">java.io.Closeable</A> interface then the readable's <tt>close</tt> method will be invoked. If this scanner is already closed then invoking this method will have no effect. <p>Attempting to perform search operations after a scanner has been closed will result in an <A HREF="IllegalStateException">IllegalStateException</A>.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="ioException()"></A>
+
+<H3>ioException</H3>
+<PRE>
+public java.io.IOException <B>ioException</B>()</PRE>
+<DL><DD>Returns the <code>IOException</code> last thrown by this <code>Scanner</code>'s underlying <code>Readable</code>. This method returns <code>null</code> if no such exception exists.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the last exception thrown by this scanner's readable</DD>
+</DL>
+<HR>
+
+<A NAME="delimiter()"></A>
+
+<H3>delimiter</H3>
+<PRE>
+public java.util.regex.Pattern <B>delimiter</B>()</PRE>
+<DL><DD>Returns the <code>Pattern</code> this <code>Scanner</code> is currently using to match delimiters.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>this scanner's delimiting pattern.</DD>
+</DL>
+<HR>
+
+<A NAME="useDelimiter(java.util.regex.Pattern)"></A>
+
+<H3>useDelimiter</H3>
+<PRE>
+public java.util.Scanner <B>useDelimiter</B>(java.util.regex.Pattern&nbsp;pattern)</PRE>
+<DL><DD>Sets this scanner's delimiting pattern to the specified pattern.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - A delimiting pattern</DD>
+<DT><B>Returns:</B><DD>this scanner</DD>
+</DL>
+<HR>
+
+<A NAME="useDelimiter(java.lang.String)"></A>
+
+<H3>useDelimiter</H3>
+<PRE>
+public java.util.Scanner <B>useDelimiter</B>(java.lang.String&nbsp;pattern)</PRE>
+<DL><DD>Sets this scanner's delimiting pattern to a pattern constructed from the specified <code>String</code>. <p> An invocation of this method of the form <tt>useDelimiter(pattern)</tt> behaves in exactly the same way as the invocation <tt>hasDelimiter(Pattern.compile(pattern))</tt>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - A string specifying a delimiting pattern</DD>
+<DT><B>Returns:</B><DD>this scanner</DD>
+</DL>
+<HR>
+
+<A NAME="locale()"></A>
+
+<H3>locale</H3>
+<PRE>
+public java.util.Locale <B>locale</B>()</PRE>
+<DL><DD>Returns this scanner's locale. <p>A scanner's locale affects many elements of its default primitive matching regular expressions; see <a href= "#localized-numbers">localized numbers</a> above.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>this scanner's locale</DD>
+</DL>
+<HR>
+
+<A NAME="useLocale(java.util.Locale)"></A>
+
+<H3>useLocale</H3>
+<PRE>
+public java.util.Scanner <B>useLocale</B>(java.util.Locale&nbsp;locale)</PRE>
+<DL><DD>Sets this scanner's locale to the specified locale. <p>A scanner's locale affects many elements of its default primitive matching regular expressions; see <a href= "#localized-numbers">localized numbers</a> above.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>locale</CODE> - A string specifying the locale to use</DD>
+<DT><B>Returns:</B><DD>this scanner</DD>
+</DL>
+<HR>
+
+<A NAME="radix()"></A>
+
+<H3>radix</H3>
+<PRE>
+public int <B>radix</B>()</PRE>
+<DL><DD>Returns this scanner's default radix. <p>A scanner's radix affects elements of its default number matching regular expressions; see <a href= "#localized-numbers">localized numbers</a> above.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the default radix of this scanner</DD>
+</DL>
+<HR>
+
+<A NAME="useRadix(int)"></A>
+
+<H3>useRadix</H3>
+<PRE>
+public java.util.Scanner <B>useRadix</B>(int&nbsp;radix)</PRE>
+<DL><DD>Sets this scanner's default radix to the specified radix. <p>A scanner's radix affects elements of its default number matching regular expressions; see <a href= "#localized-numbers">localized numbers</a> above. <p>If the radix is less than <code>Character.MIN_RADIX</code> or greater than <code>Character.MAX_RADIX</code>, then an <code>IllegalArgumentException</code> is thrown.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - The radix to use when scanning numbers</DD>
+<DT><B>Returns:</B><DD>this scanner</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalArgumentException</CODE> - if radix is out of range</DD>
+</DL>
+<HR>
+
+<A NAME="match()"></A>
+
+<H3>match</H3>
+<PRE>
+public java.util.regex.MatchResult <B>match</B>()</PRE>
+<DL><DD>Returns the match result of the last scanning operation performed by this scanner. This method throws <code>IllegalStateException</code> if no match has been performed, or if the last match was not successful. <p>The various <code>next</code>methods of <code>Scanner</code> make a match result available if they complete without throwing an exception. For instance, after an invocation of the <A HREF="#nextInt">#nextInt</A> method that returned an int, this method returns a <code>MatchResult</code> for the search of the <a href="#Integer-regex"><i>Integer</i></a> regular expression defined above. Similarly the <A HREF="#findInLine">#findInLine</A>, <A HREF="#findWithinHorizon">#findWithinHorizon</A>, and <A HREF="#skip">#skip</A> methods will make a match available if they succeed.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>a match result for the last match operation</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - If no match result is available</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"></A>
+
+<H3>toString</H3>
+<PRE>
+public java.lang.String <B>toString</B>()</PRE>
+<DL><DD><p>Returns the string representation of this <code>Scanner</code>. The string representation of a <code>Scanner</code> contains information that may be useful for debugging. The exact format is unspecified.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>The string representation of this scanner</DD>
+</DL>
+<HR>
+
+<A NAME="hasNext()"></A>
+
+<H3>hasNext</H3>
+<PRE>
+public boolean <B>hasNext</B>()</PRE>
+<DL><DD>Returns true if this scanner has another token in its input. This method may block while waiting for input to scan. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner has another token</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+<DT><B>See Also:</B><DD>java.util.Iterator</DD>
+</DL>
+<HR>
+
+<A NAME="next()"></A>
+
+<H3>next</H3>
+<PRE>
+public java.lang.String <B>next</B>()</PRE>
+<DL><DD>Finds and returns the next complete token from this scanner. A complete token is preceded and followed by input that matches the delimiter pattern. This method may block while waiting for input to scan, even if a previous invocation of <A HREF="#hasNext">#hasNext</A> returned <code>true</code>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the next token</DD>
+<DT><B>Throws:</B><DD><CODE>NoSuchElementException</CODE> - if no more tokens are available</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+<DT><B>See Also:</B><DD>java.util.Iterator</DD>
+</DL>
+<HR>
+
+<A NAME="remove()"></A>
+
+<H3>remove</H3>
+<PRE>
+public void <B>remove</B>()</PRE>
+<DL><DD>The remove operation is not supported by this implementation of <code>Iterator</code>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Throws:</B><DD><CODE>UnsupportedOperationException</CODE> - if this method is invoked.</DD>
+<DT><B>See Also:</B><DD>java.util.Iterator</DD>
+</DL>
+<HR>
+
+<A NAME="hasNext(java.lang.String)"></A>
+
+<H3>hasNext</H3>
+<PRE>
+public boolean <B>hasNext</B>(java.lang.String&nbsp;pattern)</PRE>
+<DL><DD>Returns true if the next token matches the pattern constructed from the specified string. The scanner does not advance past any input. <p> An invocation of this method of the form <tt>hasNext(pattern)</tt> behaves in exactly the same way as the invocation <tt>hasNext(Pattern.compile(pattern))</tt>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - a string specifying the pattern to scan</DD>
+<DT><B>Returns:</B><DD>true if and only if this scanner has another token matching the specified pattern</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="next(java.lang.String)"></A>
+
+<H3>next</H3>
+<PRE>
+public java.lang.String <B>next</B>(java.lang.String&nbsp;pattern)</PRE>
+<DL><DD>Returns the next token if it matches the pattern constructed from the specified string. If the match is successful, the scanner advances past the input that matched the pattern. <p> An invocation of this method of the form <tt>next(pattern)</tt> behaves in exactly the same way as the invocation <tt>next(Pattern.compile(pattern))</tt>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - a string specifying the pattern to scan</DD>
+<DT><B>Returns:</B><DD>the next token</DD>
+<DT><B>Throws:</B><DD><CODE>NoSuchElementException</CODE> - if no such tokens are available</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNext(java.util.regex.Pattern)"></A>
+
+<H3>hasNext</H3>
+<PRE>
+public boolean <B>hasNext</B>(java.util.regex.Pattern&nbsp;pattern)</PRE>
+<DL><DD>Returns true if the next complete token matches the specified pattern. A complete token is prefixed and postfixed by input that matches the delimiter pattern. This method may block while waiting for input. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - the pattern to scan for</DD>
+<DT><B>Returns:</B><DD>true if and only if this scanner has another token matching the specified pattern</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="next(java.util.regex.Pattern)"></A>
+
+<H3>next</H3>
+<PRE>
+public java.lang.String <B>next</B>(java.util.regex.Pattern&nbsp;pattern)</PRE>
+<DL><DD>Returns the next token if it matches the specified pattern. This method may block while waiting for input to scan, even if a previous invocation of <A HREF="#hasNext(Pattern)">#hasNext(Pattern)</A> returned <code>true</code>. If the match is successful, the scanner advances past the input that matched the pattern.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - the pattern to scan for</DD>
+<DT><B>Returns:</B><DD>the next token</DD>
+<DT><B>Throws:</B><DD><CODE>NoSuchElementException</CODE> - if no more tokens are available</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextLine()"></A>
+
+<H3>hasNextLine</H3>
+<PRE>
+public boolean <B>hasNextLine</B>()</PRE>
+<DL><DD>Returns true if there is another line in the input of this scanner. This method may block while waiting for input. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner has another line of input</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextLine()"></A>
+
+<H3>nextLine</H3>
+<PRE>
+public java.lang.String <B>nextLine</B>()</PRE>
+<DL><DD>Advances this scanner past the current line and returns the input that was skipped. This method returns the rest of the current line, excluding any line separator at the end. The position is set to the beginning of the next line. <p>Since this method continues to search through the input looking for a line separator, it may buffer all of the input searching for the line to skip if no line separators are present.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the line that was skipped</DD>
+<DT><B>Throws:</B><DD><CODE>NoSuchElementException</CODE> - if no line was found</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="findInLine(java.lang.String)"></A>
+
+<H3>findInLine</H3>
+<PRE>
+public java.lang.String <B>findInLine</B>(java.lang.String&nbsp;pattern)</PRE>
+<DL><DD>Attempts to find the next occurrence of a pattern constructed from the specified string, ignoring delimiters. <p>An invocation of this method of the form <tt>findInLine(pattern)</tt> behaves in exactly the same way as the invocation <tt>findInLine(Pattern.compile(pattern))</tt>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - a string specifying the pattern to search for</DD>
+<DT><B>Returns:</B><DD>the text that matched the specified pattern</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="findInLine(java.util.regex.Pattern)"></A>
+
+<H3>findInLine</H3>
+<PRE>
+public java.lang.String <B>findInLine</B>(java.util.regex.Pattern&nbsp;pattern)</PRE>
+<DL><DD>Attempts to find the next occurrence of the specified pattern ignoring delimiters. If the pattern is found before the next line separator, the scanner advances past the input that matched and returns the string that matched the pattern. If no such pattern is detected in the input up to the next line separator, then <code>null</code> is returned and the scanner's position is unchanged. This method may block waiting for input that matches the pattern. <p>Since this method continues to search through the input looking for the specified pattern, it may buffer all of the input searching for the desired token if no line separators are present.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - the pattern to scan for</DD>
+<DT><B>Returns:</B><DD>the text that matched the specified pattern</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="findWithinHorizon(java.lang.String, int)"></A>
+
+<H3>findWithinHorizon</H3>
+<PRE>
+public java.lang.String <B>findWithinHorizon</B>(java.lang.String&nbsp;pattern,
+                                          int&nbsp;horizon)</PRE>
+<DL><DD>Attempts to find the next occurrence of a pattern constructed from the specified string, ignoring delimiters. <p>An invocation of this method of the form <tt>findWithinHorizon(pattern)</tt> behaves in exactly the same way as the invocation <tt>findWithinHorizon(Pattern.compile(pattern, horizon))</tt>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - a string specifying the pattern to search for</DD>
+<DT><B>Returns:</B><DD>the text that matched the specified pattern</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+<DD><CODE>IllegalArgumentException</CODE> - if horizon is negative</DD>
+</DL>
+<HR>
+
+<A NAME="findWithinHorizon(java.util.regex.Pattern, int)"></A>
+
+<H3>findWithinHorizon</H3>
+<PRE>
+public java.lang.String <B>findWithinHorizon</B>(java.util.regex.Pattern&nbsp;pattern,
+                                          int&nbsp;horizon)</PRE>
+<DL><DD>Attempts to find the next occurrence of the specified pattern. <p>This method searches through the input up to the specified search horizon, ignoring delimiters. If the pattern is found the scanner advances past the input that matched and returns the string that matched the pattern. If no such pattern is detected then the null is returned and the scanner's position remains unchanged. This method may block waiting for input that matches the pattern. <p>A scanner will never search more than <code>horizon</code> code points beyond its current position. Note that a match may be clipped by the horizon; that is, an arbitrary match result may have been different if the horizon had been larger. The scanner treats the horizon as a transparent, non-anchoring bound (see <A HREF="Matcher#useTransparentBounds">Matcher#useTransparentBounds</A> and <A HREF="Matcher#useAnchoringBounds">Matcher#useAnchoringBounds</A>). <p>If horizon is <code>0</code>, then the horizon is ignored and this method continues to search through the input looking for the specified pattern without bound. In this case it may buffer all of the input searching for the pattern. <p>If horizon is negative, then an IllegalArgumentException is thrown.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - the pattern to scan for</DD>
+<DT><B>Returns:</B><DD>the text that matched the specified pattern</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+<DD><CODE>IllegalArgumentException</CODE> - if horizon is negative</DD>
+</DL>
+<HR>
+
+<A NAME="skip(java.util.regex.Pattern)"></A>
+
+<H3>skip</H3>
+<PRE>
+public java.util.Scanner <B>skip</B>(java.util.regex.Pattern&nbsp;pattern)</PRE>
+<DL><DD>Skips input that matches the specified pattern, ignoring delimiters. This method will skip input if an anchored match of the specified pattern succeeds. <p>If a match to the specified pattern is not found at the current position, then no input is skipped and a <tt>NoSuchElementException</tt> is thrown. <p>Since this method seeks to match the specified pattern starting at the scanner's current position, patterns that can match a lot of input (".*", for example) may cause the scanner to buffer a large amount of input. <p>Note that it is possible to skip something without risking a <code>NoSuchElementException</code> by using a pattern that can match nothing, e.g., <code>sc.skip("[ \t]*")</code>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - a string specifying the pattern to skip over</DD>
+<DT><B>Returns:</B><DD>this scanner</DD>
+<DT><B>Throws:</B><DD><CODE>NoSuchElementException</CODE> - if the specified pattern is not found</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="skip(java.lang.String)"></A>
+
+<H3>skip</H3>
+<PRE>
+public java.util.Scanner <B>skip</B>(java.lang.String&nbsp;pattern)</PRE>
+<DL><DD>Skips input that matches a pattern constructed from the specified string. <p> An invocation of this method of the form <tt>skip(pattern)</tt> behaves in exactly the same way as the invocation <tt>skip(Pattern.compile(pattern))</tt>.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>pattern</CODE> - a string specifying the pattern to skip over</DD>
+<DT><B>Returns:</B><DD>this scanner</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextBoolean()"></A>
+
+<H3>hasNextBoolean</H3>
+<PRE>
+public boolean <B>hasNextBoolean</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a boolean value using a case insensitive pattern created from the string "true|false". The scanner does not advance past the input that matched.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid boolean value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextBoolean()"></A>
+
+<H3>nextBoolean</H3>
+<PRE>
+public boolean <B>nextBoolean</B>()</PRE>
+<DL><DD>Scans the next token of the input into a boolean value and returns that value. This method will throw <code>InputMismatchException</code> if the next token cannot be translated into a valid boolean value. If the match is successful, the scanner advances past the input that matched.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the boolean scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token is not a valid boolean</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextByte()"></A>
+
+<H3>hasNextByte</H3>
+<PRE>
+public boolean <B>hasNextByte</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a byte value in the default radix using the <A HREF="#nextByte">#nextByte</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid byte value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextByte(int)"></A>
+
+<H3>hasNextByte</H3>
+<PRE>
+public boolean <B>hasNextByte</B>(int&nbsp;radix)</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a byte value in the specified radix using the <A HREF="#nextByte">#nextByte</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as a byte value</DD>
+<DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid byte value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextByte()"></A>
+
+<H3>nextByte</H3>
+<PRE>
+public byte <B>nextByte</B>()</PRE>
+<DL><DD>Scans the next token of the input as a <tt>byte</tt>. <p> An invocation of this method of the form <tt>nextByte()</tt> behaves in exactly the same way as the invocation <tt>nextByte(radix)</tt>, where <code>radix</code> is the default radix of this scanner.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>byte</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextByte(int)"></A>
+
+<H3>nextByte</H3>
+<PRE>
+public byte <B>nextByte</B>(int&nbsp;radix)</PRE>
+<DL><DD>Scans the next token of the input as a <tt>byte</tt>. This method will throw <code>InputMismatchException</code> if the next token cannot be translated into a valid byte value as described below. If the translation is successful, the scanner advances past the input that matched. <p> If the next token matches the <ahref="#Integer-regex"><i>Integer</i></a> regular expression defined above then the token is converted into a <tt>byte</tt> value as if by removing all locale specific prefixes, group separators, and locale specific suffixes, then mapping non-ASCII digits into ASCII digits via <A HREF="Character#digit Character.digit">Character.digit</A>, prepending a negative sign (-) if the locale specific negative prefixes and suffixes were present, and passing the resulting string to <A HREF="Byte#parseByte(String, int) Byte.parseByte">int) Byte.parseByte</A> with the specified radix.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as a byte value</DD>
+<DT><B>Returns:</B><DD>the <tt>byte</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextShort()"></A>
+
+<H3>hasNextShort</H3>
+<PRE>
+public boolean <B>hasNextShort</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a short value in the default radix using the <A HREF="#nextShort">#nextShort</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid short value in the default radix</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextShort(int)"></A>
+
+<H3>hasNextShort</H3>
+<PRE>
+public boolean <B>hasNextShort</B>(int&nbsp;radix)</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a short value in the specified radix using the <A HREF="#nextShort">#nextShort</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as a short value</DD>
+<DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid short value in the specified radix</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextShort()"></A>
+
+<H3>nextShort</H3>
+<PRE>
+public short <B>nextShort</B>()</PRE>
+<DL><DD>Scans the next token of the input as a <tt>short</tt>. <p> An invocation of this method of the form <tt>nextShort()</tt> behaves in exactly the same way as the invocation <tt>nextShort(radix)</tt>, where <code>radix</code> is the default radix of this scanner.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>short</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextShort(int)"></A>
+
+<H3>nextShort</H3>
+<PRE>
+public short <B>nextShort</B>(int&nbsp;radix)</PRE>
+<DL><DD>Scans the next token of the input as a <tt>short</tt>. This method will throw <code>InputMismatchException</code> if the next token cannot be translated into a valid short value as described below. If the translation is successful, the scanner advances past the input that matched. <p> If the next token matches the <ahref="#Integer-regex"><i>Integer</i></a> regular expression defined above then the token is converted into a <tt>short</tt> value as if by removing all locale specific prefixes, group separators, and locale specific suffixes, then mapping non-ASCII digits into ASCII digits via <A HREF="Character#digit Character.digit">Character.digit</A>, prepending a negative sign (-) if the locale specific negative prefixes and suffixes were present, and passing the resulting string to <A HREF="Short#parseShort(String, int) Short.parseShort">int) Short.parseShort</A> with the specified radix.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as a short value</DD>
+<DT><B>Returns:</B><DD>the <tt>short</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextInt()"></A>
+
+<H3>hasNextInt</H3>
+<PRE>
+public boolean <B>hasNextInt</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as an int value in the default radix using the <A HREF="#nextInt">#nextInt</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid int value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextInt(int)"></A>
+
+<H3>hasNextInt</H3>
+<PRE>
+public boolean <B>hasNextInt</B>(int&nbsp;radix)</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as an int value in the specified radix using the <A HREF="#nextInt">#nextInt</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as an int value</DD>
+<DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid int value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="processIntegerToken(java.lang.String)"></A>
+
+<H3>processIntegerToken</H3>
+<PRE>
+private java.lang.String <B>processIntegerToken</B>(java.lang.String&nbsp;token)</PRE>
+<DL><DD>The integer token must be stripped of prefixes, group separators, and suffixes, non ascii digits must be converted into ascii digits before parse will accept it.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="nextInt()"></A>
+
+<H3>nextInt</H3>
+<PRE>
+public int <B>nextInt</B>()</PRE>
+<DL><DD>Scans the next token of the input as an <tt>int</tt>. <p> An invocation of this method of the form <tt>nextInt()</tt> behaves in exactly the same way as the invocation <tt>nextInt(radix)</tt>, where <code>radix</code> is the default radix of this scanner.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>int</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextInt(int)"></A>
+
+<H3>nextInt</H3>
+<PRE>
+public int <B>nextInt</B>(int&nbsp;radix)</PRE>
+<DL><DD>Scans the next token of the input as an <tt>int</tt>. This method will throw <code>InputMismatchException</code> if the next token cannot be translated into a valid int value as described below. If the translation is successful, the scanner advances past the input that matched. <p> If the next token matches the <ahref="#Integer-regex"><i>Integer</i></a> regular expression defined above then the token is converted into an <tt>int</tt> value as if by removing all locale specific prefixes, group separators, and locale specific suffixes, then mapping non-ASCII digits into ASCII digits via <A HREF="Character#digit Character.digit">Character.digit</A>, prepending a negative sign (-) if the locale specific negative prefixes and suffixes were present, and passing the resulting string to <A HREF="Integer#parseInt(String, int) Integer.parseInt">int) Integer.parseInt</A> with the specified radix.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as an int value</DD>
+<DT><B>Returns:</B><DD>the <tt>int</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextLong()"></A>
+
+<H3>hasNextLong</H3>
+<PRE>
+public boolean <B>hasNextLong</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a long value in the default radix using the <A HREF="#nextLong">#nextLong</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid long value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextLong(int)"></A>
+
+<H3>hasNextLong</H3>
+<PRE>
+public boolean <B>hasNextLong</B>(int&nbsp;radix)</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a long value in the specified radix using the <A HREF="#nextLong">#nextLong</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as a long value</DD>
+<DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid long value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextLong()"></A>
+
+<H3>nextLong</H3>
+<PRE>
+public long <B>nextLong</B>()</PRE>
+<DL><DD>Scans the next token of the input as a <tt>long</tt>. <p> An invocation of this method of the form <tt>nextLong()</tt> behaves in exactly the same way as the invocation <tt>nextLong(radix)</tt>, where <code>radix</code> is the default radix of this scanner.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>long</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextLong(int)"></A>
+
+<H3>nextLong</H3>
+<PRE>
+public long <B>nextLong</B>(int&nbsp;radix)</PRE>
+<DL><DD>Scans the next token of the input as a <tt>long</tt>. This method will throw <code>InputMismatchException</code> if the next token cannot be translated into a valid long value as described below. If the translation is successful, the scanner advances past the input that matched. <p> If the next token matches the <ahref="#Integer-regex"><i>Integer</i></a> regular expression defined above then the token is converted into an <tt>long</tt> value as if by removing all locale specific prefixes, group separators, and locale specific suffixes, then mapping non-ASCII digits into ASCII digits via <A HREF="Character#digit Character.digit">Character.digit</A>, prepending a negative sign (-) if the locale specific negative prefixes and suffixes were present, and passing the resulting string to <A HREF="Long#parseLong(String, int) Long.parseLong">int) Long.parseLong</A> with the specified radix.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as an int value</DD>
+<DT><B>Returns:</B><DD>the <tt>long</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="processFloatToken(java.lang.String)"></A>
+
+<H3>processFloatToken</H3>
+<PRE>
+private java.lang.String <B>processFloatToken</B>(java.lang.String&nbsp;token)</PRE>
+<DL><DD>The float token must be stripped of prefixes, group separators, and suffixes, non ascii digits must be converted into ascii digits before parseFloat will accept it. If there are non-ascii digits in the token these digits must be processed before the token is passed to parseFloat.<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<A NAME="hasNextFloat()"></A>
+
+<H3>hasNextFloat</H3>
+<PRE>
+public boolean <B>hasNextFloat</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a float value using the <A HREF="#nextFloat">#nextFloat</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid float value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextFloat()"></A>
+
+<H3>nextFloat</H3>
+<PRE>
+public float <B>nextFloat</B>()</PRE>
+<DL><DD>Scans the next token of the input as a <tt>float</tt>. This method will throw <code>InputMismatchException</code> if the next token cannot be translated into a valid float value as described below. If the translation is successful, the scanner advances past the input that matched. <p> If the next token matches the <ahref="#Float-regex"><i>Float</i></a> regular expression defined above then the token is converted into a <tt>float</tt> value as if by removing all locale specific prefixes, group separators, and locale specific suffixes, then mapping non-ASCII digits into ASCII digits via <A HREF="Character#digit Character.digit">Character.digit</A>, prepending a negative sign (-) if the locale specific negative prefixes and suffixes were present, and passing the resulting string to <A HREF="Float#parseFloat Float.parseFloat">Float.parseFloat</A>. If the token matches the localized NaN or infinity strings, then either "Nan" or "Infinity" is passed to <A HREF="Float#parseFloat(String) Float.parseFloat">Float.parseFloat</A> as appropriate.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>float</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Float</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextDouble()"></A>
+
+<H3>hasNextDouble</H3>
+<PRE>
+public boolean <B>hasNextDouble</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a double value using the <A HREF="#nextDouble">#nextDouble</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid double value</DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextDouble()"></A>
+
+<H3>nextDouble</H3>
+<PRE>
+public double <B>nextDouble</B>()</PRE>
+<DL><DD>Scans the next token of the input as a <tt>double</tt>. This method will throw <code>InputMismatchException</code> if the next token cannot be translated into a valid double value. If the translation is successful, the scanner advances past the input that matched. <p> If the next token matches the <ahref="#Float-regex"><i>Float</i></a> regular expression defined above then the token is converted into a <tt>double</tt> value as if by removing all locale specific prefixes, group separators, and locale specific suffixes, then mapping non-ASCII digits into ASCII digits via <A HREF="Character#digit Character.digit">Character.digit</A>, prepending a negative sign (-) if the locale specific negative prefixes and suffixes were present, and passing the resulting string to <A HREF="Double#parseDouble Double.parseDouble">Double.parseDouble</A>. If the token matches the localized NaN or infinity strings, then either "Nan" or "Infinity" is passed to <A HREF="Double#parseDouble(String) Double.parseDouble">Double.parseDouble</A> as appropriate.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>double</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Float</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if the input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextBigInteger()"></A>
+
+<H3>hasNextBigInteger</H3>
+<PRE>
+public boolean <B>hasNextBigInteger</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a <code>BigInteger</code> in the default radix using the <A HREF="#nextBigInteger">#nextBigInteger</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid <code>BigInteger</code></DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextBigInteger(int)"></A>
+
+<H3>hasNextBigInteger</H3>
+<PRE>
+public boolean <B>hasNextBigInteger</B>(int&nbsp;radix)</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a <code>BigInteger</code> in the specified radix using the <A HREF="#nextBigInteger">#nextBigInteger</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token as an integer</DD>
+<DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid <code>BigInteger</code></DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextBigInteger()"></A>
+
+<H3>nextBigInteger</H3>
+<PRE>
+public java.math.BigInteger <B>nextBigInteger</B>()</PRE>
+<DL><DD>Scans the next token of the input as a <A HREF="java.math.BigInteger BigInteger">BigInteger</A>. <p> An invocation of this method of the form <tt>nextBigInteger()</tt> behaves in exactly the same way as the invocation <tt>nextBigInteger(radix)</tt>, where <code>radix</code> is the default radix of this scanner.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>BigInteger</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if the input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextBigInteger(int)"></A>
+
+<H3>nextBigInteger</H3>
+<PRE>
+public java.math.BigInteger <B>nextBigInteger</B>(int&nbsp;radix)</PRE>
+<DL><DD>Scans the next token of the input as a <A HREF="java.math.BigInteger BigInteger">BigInteger</A>. <p> If the next token matches the <ahref="#Integer-regex"><i>Integer</i></a> regular expression defined above then the token is converted into a <tt>BigInteger</tt> value as if by removing all group separators, mapping non-ASCII digits into ASCII digits via the <A HREF="Character#digit Character.digit">Character.digit</A>, and passing the resulting string to the <A HREF="java.math.BigInteger#BigInteger(java.lang.String) BigInteger(String, int)">BigInteger(String, int)</A> constructor with the specified radix.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>radix</CODE> - the radix used to interpret the token</DD>
+<DT><B>Returns:</B><DD>the <tt>BigInteger</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Integer</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if the input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="hasNextBigDecimal()"></A>
+
+<H3>hasNextBigDecimal</H3>
+<PRE>
+public boolean <B>hasNextBigDecimal</B>()</PRE>
+<DL><DD>Returns true if the next token in this scanner's input can be interpreted as a <code>BigDecimal</code> using the <A HREF="#nextBigDecimal">#nextBigDecimal</A> method. The scanner does not advance past any input.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>true if and only if this scanner's next token is a valid <code>BigDecimal</code></DD>
+<DT><B>Throws:</B><DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+<A NAME="nextBigDecimal()"></A>
+
+<H3>nextBigDecimal</H3>
+<PRE>
+public java.math.BigDecimal <B>nextBigDecimal</B>()</PRE>
+<DL><DD>Scans the next token of the input as a <A HREF="java.math.BigDecimal BigDecimal">BigDecimal</A>. <p> If the next token matches the <ahref="#Decimal-regex"><i>Decimal</i></a> regular expression defined above then the token is converted into a <tt>BigDecimal</tt> value as if by removing all group separators, mapping non-ASCII digits into ASCII digits via the <A HREF="Character#digit Character.digit">Character.digit</A>, and passing the resulting string to the <A HREF="java.math.BigDecimal#BigDecimal(java.lang.String) BigDecimal(String)">BigDecimal(String)</A> constructor.<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>the <tt>BigDecimal</tt> scanned from the input</DD>
+<DT><B>Throws:</B><DD><CODE>InputMismatchException</CODE> - if the next token does not match the <i>Decimal</i> regular expression, or is out of range</DD>
+<DD><CODE>NoSuchElementException</CODE> - if the input is exhausted</DD>
+<DD><CODE>IllegalStateException</CODE> - if this scanner is closed</DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>
