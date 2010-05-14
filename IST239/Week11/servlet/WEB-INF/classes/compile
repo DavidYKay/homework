@@ -1,0 +1,2 @@
+javac *.java -cp /usr/share/java/glassfish-javaee.jar
+
