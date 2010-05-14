@@ -6,16 +6,16 @@ import javax.swing.event.*;
 
 /**
  * JPanel to manage the user's buddy list
- * Based on sun's JList example
+ * Based on Sun's JList example
  */
 public class BuddyList extends JPanel implements ListSelectionListener {
     private ChatTest chat;
     private JList list;
     private DefaultListModel listModel;
 
-    private static final String hireString = "Add";
-    private static final String fireString = "Remove";
-    private JButton fireButton;
+    private static final String addString = "Add";
+    private static final String removeString = "Remove";
+    private JButton removeButton;
     private JTextField employeeName;
 
     public BuddyList(ChatTest chat) {
@@ -23,11 +23,11 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         this.chat = chat;
 
         listModel = new DefaultListModel();
-        listModel.addElement("dk");
-        listModel.addElement("kyle");
-        listModel.addElement("Debbie Scott");
-        listModel.addElement("Scott Hommel");
-        listModel.addElement("Sharon Zakhour");
+        listModel.addElement("server");
+        //listModel.addElement("kyle");
+        //listModel.addElement("Debbie Scott");
+        //listModel.addElement("Scott Hommel");
+        //listModel.addElement("Sharon Zakhour");
 
         //Create the list and put it in a scroll pane.
         list = new JList(listModel);
@@ -38,19 +38,19 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         list.setVisibleRowCount(5);
         JScrollPane listScrollPane = new JScrollPane(list);
 
-        JButton hireButton = new JButton(hireString);
-        HireListener hireListener = new HireListener(hireButton);
-        hireButton.setActionCommand(hireString);
-        hireButton.addActionListener(hireListener);
-        hireButton.setEnabled(false);
+        JButton addButton = new JButton(addString);
+        AddListener addListener = new AddListener(addButton);
+        addButton.setActionCommand(addString);
+        addButton.addActionListener(addListener);
+        addButton.setEnabled(false);
 
-        fireButton = new JButton(fireString);
-        fireButton.setActionCommand(fireString);
-        fireButton.addActionListener(new FireListener());
+        removeButton = new JButton(removeString);
+        removeButton.setActionCommand(removeString);
+        removeButton.addActionListener(new RemoveListener());
 
         employeeName = new JTextField(10);
-        employeeName.addActionListener(hireListener);
-        employeeName.getDocument().addDocumentListener(hireListener);
+        employeeName.addActionListener(addListener);
+        employeeName.getDocument().addDocumentListener(addListener);
         String name = listModel.getElementAt(
                               list.getSelectedIndex()).toString();
 
@@ -60,12 +60,12 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         JPanel addRemovePane = new JPanel();
         addRemovePane.setLayout(new BoxLayout(addRemovePane,
                                            BoxLayout.LINE_AXIS));
-        addRemovePane.add(fireButton);
+        addRemovePane.add(removeButton);
         addRemovePane.add(Box.createHorizontalStrut(5));
         addRemovePane.add(new JSeparator(SwingConstants.VERTICAL));
         addRemovePane.add(Box.createHorizontalStrut(5));
         addRemovePane.add(employeeName);
-        addRemovePane.add(hireButton);
+        addRemovePane.add(addButton);
         addRemovePane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         add(listScrollPane, BorderLayout.CENTER);
@@ -100,10 +100,14 @@ public class BuddyList extends JPanel implements ListSelectionListener {
         add(buttonPanel, BorderLayout.PAGE_END);
     }
 
+    public void addBuddy(String username) {
+        listModel.addElement(username);
+    }
+
     /**
      * Delete buddies
      */
-    class FireListener implements ActionListener {
+    class RemoveListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
             //there's a valid selection
@@ -114,7 +118,7 @@ public class BuddyList extends JPanel implements ListSelectionListener {
             int size = listModel.getSize();
 
             if (size == 0) { //Nobody's left, disable firing.
-                fireButton.setEnabled(false);
+                removeButton.setEnabled(false);
 
             } else { //Select an index.
                 if (index == listModel.getSize()) {
@@ -130,13 +134,13 @@ public class BuddyList extends JPanel implements ListSelectionListener {
 
     /**
      * Add buddies
-     * This listener is shared by the text field and the hire button.
+     * This listener is shared by the text field and the add button.
      */
-    class HireListener implements ActionListener, DocumentListener {
+    class AddListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
 
-        public HireListener(JButton button) {
+        public AddListener(JButton button) {
             this.button = button;
         }
 
@@ -229,16 +233,13 @@ public class BuddyList extends JPanel implements ListSelectionListener {
     //This method is required by ListSelectionListener.
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
-
             if (list.getSelectedIndex() == -1) {
-            //No selection, disable fire button.
-                fireButton.setEnabled(false);
-
+                //No selection, disable remove button.
+                removeButton.setEnabled(false);
             } else {
-            //Selection, enable the fire button.
-                fireButton.setEnabled(true);
+                //Selection, enable the remove button.
+                removeButton.setEnabled(true);
             }
         }
     }
 }
-

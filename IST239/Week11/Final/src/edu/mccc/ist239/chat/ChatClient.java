@@ -112,8 +112,8 @@ public class ChatClient {
                                 );
                             } else if (msg.startsWith("buddy")) {
                                 //Add a buddy, inbound from server
-                                System.out.println("Buddy received");
-                                
+                                System.out.println("ChatClient.Buddy received");
+                                fireChatClientMessageReceived(msg);
                             } else {
                                 fireChatClientMessageReceived(msg);
                             }

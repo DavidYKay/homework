@@ -279,9 +279,15 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
                 5,
                 msg.length() 
             );
+            chatText.append(msg + "\n");
+        } else if (msg.startsWith("buddy")) {
+            //Add buddy to list
+            msg = msg.substring(
+                6,
+                msg.length() 
+            );
+            buddyList.addBuddy(msg);
         }
-        //chatText.append(e.getMessage() + "\n");
-        chatText.append(msg + "\n");
     }
 
     public void loginEvent(boolean success) {
@@ -328,7 +334,7 @@ public class ChatTest extends JPanel implements ChatClientListener, ChatLoginLis
      
     public void addBuddy(String username) {
         Debug.println("ChatTest.addBuddy: " + username);
-
+        buddyList.addBuddy(username);
     }
     public void removeBuddy(String username) {
         Debug.println("ChatTest.removeBuddy: " + username);
